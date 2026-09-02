@@ -167,6 +167,9 @@ others.
   catalogues plus the MITRE technique files the Heat Coverage tab fetches
   at runtime), `docs/*`, `schema/*.schema.json`, `tools/*.py`, and its own
   `README.md`, `CHANGELOG.md`, `VERSION`.
+- `Events_Other/` — raw reference data that doesn't belong to any of the
+  three catalogues above; not wired into `index.html`. See its own
+  `README.md`.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
 into Splunk, or to extend a catalogue — see each source repo's README for
