@@ -3,6 +3,12 @@
 *(Previously "Event Catalogue Compendium" / `catalogue-compendium` — moved
 here.)*
 
+The mark next to the name — a paw print behind a magnifying glass — is the
+"Paw + Magnifier" concept from a five-direction logo exploration, picked
+to run with. It appears twice: inline (themed, next to the wordmark in the
+menu bar) and as the browser-tab favicon (fixed colors, since favicons
+can't reference the page's own light/dark tokens).
+
 A single entry point for [`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue)
 (4,737 Windows Event Log events),
 [`linuxevent-catalogue`](https://github.com/adamliq/linuxevent-catalogue)
