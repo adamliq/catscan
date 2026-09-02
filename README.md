@@ -27,6 +27,12 @@ detail views, reference tables, and so on), running independently side by
 side on the same page. Your last-chosen tab is remembered (`localStorage`)
 across visits.
 
+Windows Events, Linux Events, and Threat Detection all cap their page width
+the same way — `max-width: min(1600px, 94vw)` — so every tab fills a wide
+screen instead of sitting in a narrow column with unused margin either
+side; on anything narrower than ~1700px the `94vw` term takes over and the
+page just fills the viewport as before.
+
 A **light/dark toggle** at the right of the menu bar switches the whole
 page — the menu bar and Search pill, plus all three embedded apps — between
 light and dark at once (it defaults to your OS preference until you click
@@ -126,6 +132,16 @@ So each app was mechanically namespaced before merging:
   ever absent), so either button drives all three apps and stays
   persisted under both a shared `compendium-theme` key and the source
   app's own pre-existing `tdl-theme` key.
+
+(Found while making that width change, and fixed alongside it: the CSS
+namespacer that prefixes every selector with `#app-win`/`#app-lnx`/`#app-td`
+split each rule's selector list on commas *before* stripping CSS comments,
+so a comment containing a comma — plain English, not code — before a
+selector could shear a stray word off the front of the next selector
+instead of the real prefix. It only ever mis-scoped three Threat Detection
+selectors that happen not to collide with anything in the other two apps
+(`.lib-stats-wrap`, `.view-tabs-wrap`, `.heat-view`), so it was invisible in
+practice, but it's fixed now regardless.)
 
 Every app's script, and the merged file as a whole, was verified with
 `node --check` and exercised end-to-end in headless Chromium (search,
