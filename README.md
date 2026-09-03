@@ -203,15 +203,30 @@ tables had the exact same bug, just less obvious against their own
 color choices. Adding the doctype puts the page in Standards Mode, which
 fixes ordinary inheritance for every table at once.)
 
+Windows's own **Cloud Actions Explorer** sub-tab (next to its Cloud logs
+tab — 1,390 Microsoft Entra ID/Azure resource-log/Intune operations,
+mapped to their diagnostic-setting category, resource provider, and
+resource type) is a good example of why the id/CSS-scoping and
+container-scoped-query machinery above earns its keep even *inside* a
+single app: it reuses Schema explorer's own table/modal CSS classes for a
+consistent look, and that reuse surfaced a real bug in Schema explorer's
+own code (a `table.se-table th[data-sort]` click-sort selector with no
+`#panel-schema` scoping, harmless until a second such table existed on
+the page) — fixed upstream in Winevent-catalogue, not patched around
+here.
+
 Every app's script, and the merged file as a whole, was verified with
 `node --check` and exercised end-to-end in headless Chromium (search,
 filters, detail views, reference tables, combo boxes, the auditd/
-fapolicyd subpanels, the Windows schema-explorer field modal, cross-link
-jump buttons, dark-mode theming, the Threat Detection Heat Coverage
-matrix and Validations tab, the AWS Events Action Explorer's own search/
-service-filter/sort/detail-modal, cross-catalogue search finding and
-opening an AWS action, and repeated tab-switching in every direction) to
-confirm none of the four apps leaks into or interferes with the others.
+fapolicyd subpanels, the Windows schema-explorer field modal, the Windows
+Cloud Actions Explorer's own search/service-filter/sort/detail-modal
+(independent of Schema explorer's), cross-link jump buttons, dark-mode
+theming, the Threat Detection Heat Coverage matrix and Validations tab,
+the AWS Events Action Explorer's own search/service-filter/sort/detail-
+modal, cross-catalogue search finding and opening an AWS action, and
+repeated tab-switching in every direction) to confirm none of the four
+apps — or, here, none of two sub-tabs *within* the same app — leaks into
+or interferes with the others.
 
 ## Structure
 
