@@ -15,7 +15,9 @@ than left out of the repo, without being wired into `index.html`.
   Condition` (populated on those same 38 rows — e.g. `All`, `Errors` —
   describing which calls to that action ACSC recommends logging).
 
-Not read by `index.html` and not part of the Windows/Linux/Threat
+Not read by `index.html` directly and not part of the Windows/Linux/Threat
 Detection lookup tools — this is a holding area for source data, the same
 way `windows/`, `linux/`, and `threat-detection/` hold each catalogue's
-raw data.
+raw data. It does feed the **AWS Events** tab indirectly: `aws/tools/build_aws_json.py`
+turns this CSV into `aws/data/aws_iam_actions.json`, which that tab fetches
+at runtime — see `aws/README.md`.
