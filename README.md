@@ -185,6 +185,24 @@ pill — once that resolves; the tab shows a loading message (and, under
 `file://`, an explanatory error) until then, the same pattern Threat
 Detection's own Heat Coverage tab already used for its runtime fetches.
 
+(Found while checking the AWS Events table's text color against the other
+tables on the page, and fixed with a one-line change: `index.html` never
+had a `<!DOCTYPE html>` — none of the three source apps carried one into
+the merge (two had none in the first place; Threat-detection-library's
+was dropped since only its `<body>`/`<style>` content is extracted), so
+the whole page was rendering in the browser's legacy Quirks Mode rather
+than Standards Mode. Quirks Mode carries an old, still-replicated
+behavior where `<table>`/`<tr>`/`<td>` don't inherit `color` from
+ancestors outside the table, falling back to whatever `<body>` has
+instead — which, since every embedded app's tables never set `color`
+explicitly (relying on ordinary inheritance from their own `--ink`
+token), silently pulled *every* table's text on the page to the shell's
+own dark title color regardless of which app or theme it was in. This
+wasn't new to AWS Events: Windows's own schema-explorer and pivot-explorer
+tables had the exact same bug, just less obvious against their own
+color choices. Adding the doctype puts the page in Standards Mode, which
+fixes ordinary inheritance for every table at once.)
+
 Every app's script, and the merged file as a whole, was verified with
 `node --check` and exercised end-to-end in headless Chromium (search,
 filters, detail views, reference tables, combo boxes, the auditd/
