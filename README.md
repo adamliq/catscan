@@ -255,6 +255,17 @@ or interferes with the others.
   to the xlsx and `tools/export_schema_json.py` regenerates the JSON from
   it — both idempotent, safe to re-run after either input changes.
 
+  This enrichment isn't just a standalone data file anymore — Cloud
+  Actions Explorer's own detail view shows it directly (provider/
+  resource-type display names, API versions, region count, the four
+  `supports_*` capability flags, and a same-resource-type "other
+  operations here" cross-reference computed from the tab's own already-
+  embedded data) on whichever of its 1,868 matched rows you open, one
+  more reason to keep it and `MicrosoftCloud_Schema.json` in sync:
+  Winevent-catalogue's own `index.html` embeds this exact enriched
+  array, copied over each time it's regenerated the normal way (see
+  Winevent-catalogue's own README for how that embedding works).
+
   The link runs the other way too: `tools/roll_schema_into_arm_types.py`
   rolls `MicrosoftCloud_Schema.json` back into `azureresourcetypes.json`,
   adding a `schemaOperations` array to every ARM resource type that has
