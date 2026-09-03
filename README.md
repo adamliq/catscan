@@ -217,13 +217,26 @@ own code (a `table.se-table th[data-sort]` click-sort selector with no
 the page) — fixed upstream in Winevent-catalogue, not patched around
 here.
 
+Cloud Actions Explorer also carries Schema explorer's Search/Explore view
+toggle, same reuse: Search is the sortable/filterable table; Explore
+groups rows into collapsible cards by `(service, category)` — the one
+grouping every row can join, since `resource_type`/`provider` are `N/A`
+for four of the six services — each card showing its operations as
+clickable chips (falling back to `resource_type`, then `provider`, then
+the category name itself) that open the same detail modal a table row
+does. The search box and Service filter apply to whichever view is
+active, and switching between the two toggles doesn't disturb the
+other's — Schema explorer's own Explore view still renders its 892 cards
+untouched.
+
 Every app's script, and the merged file as a whole, was verified with
 `node --check` and exercised end-to-end in headless Chromium (search,
 filters, detail views, reference tables, combo boxes, the auditd/
 fapolicyd subpanels, the Windows schema-explorer field modal, the Windows
-Cloud Actions Explorer's own search/service-filter/sort/detail-modal
-(independent of Schema explorer's), cross-link jump buttons, dark-mode
-theming, the Threat Detection Heat Coverage matrix and Validations tab,
+Cloud Actions Explorer's own search/service-filter/sort/detail-modal and
+Search/Explore toggle (independent of Schema explorer's), cross-link jump
+buttons, dark-mode theming, the Threat Detection Heat Coverage matrix and
+Validations tab,
 the AWS Events Action Explorer's own search/service-filter/sort/detail-
 modal, cross-catalogue search finding and opening an AWS action, and
 repeated tab-switching in every direction) to confirm none of the four
