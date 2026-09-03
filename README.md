@@ -204,9 +204,11 @@ color choices. Adding the doctype puts the page in Standards Mode, which
 fixes ordinary inheritance for every table at once.)
 
 Windows's own **Cloud Actions Explorer** sub-tab (next to its Cloud logs
-tab — 1,390 Microsoft Entra ID/Azure resource-log/Intune operations,
-mapped to their diagnostic-setting category, resource provider, and
-resource type) is a good example of why the id/CSS-scoping and
+tab — 3,670 operations across six Microsoft cloud audit/log schemas
+(Microsoft Entra ID, Azure resource logs, the Azure Activity Log,
+Microsoft Intune, Microsoft Purview's unified audit log, and Azure
+DevOps), mapped to their category, resource provider, and resource type)
+is a good example of why the id/CSS-scoping and
 container-scoped-query machinery above earns its keep even *inside* a
 single app: it reuses Schema explorer's own table/modal CSS classes for a
 consistent look, and that reuse surfaced a real bug in Schema explorer's
