@@ -19,28 +19,33 @@ merged into one self-contained web app with a menu to switch between them —
 plus an **AWS Events** Action Explorer (21,164 AWS IAM actions across 455
 services, each mapped to its CloudTrail event and ACSC logging guidance
 where one exists) built directly in this repo from a [`Events_Other`](Events_Other/README.md)
-data export rather than merged from an external source repo.
+data export rather than merged from an external source repo, and an
+**Other Events** menu for vendor log/event references that don't belong to
+any of the above — starting with FortiGate's 40 log types (see
+[`other/`](other/README.md)) and built to hold more vendors over time,
+each keeping its own schema shape rather than a forced common one.
 
 ## Web lookup
 
 `index.html` is a single, self-contained page (no build step, one runtime
 fetch — see below) — open it directly in a browser. A menu bar at the top
 switches between **Microsoft Events**, **AWS Events**, **Linux Events**,
-**Threat Detection**, and **Search**; Microsoft Events, Linux Events, and
+**Threat Detection**, **Other Events**, and **Search**; Microsoft Events, Linux Events, and
 Threat Detection are the exact lookup tool from their source repo (search,
 filters, detail views, reference tables, and so on), running independently
 side by side on the same page. AWS Events is this repo's own Action
-Explorer, built to match that same look and feel (see below). Your
-last-chosen tab is remembered (`localStorage`) across visits.
+Explorer, and Other Events its own vendor log-reference tab, both built to
+match that same look and feel (see below). Your last-chosen tab is
+remembered (`localStorage`) across visits.
 
-All four catalogue tabs cap their page width the same way —
+All five catalogue tabs cap their page width the same way —
 `max-width: min(1600px, 94vw)` — so every tab fills a wide screen instead
 of sitting in a narrow column with unused margin either side; on anything
 narrower than ~1700px the `94vw` term takes over and the page just fills
 the viewport as before.
 
 A **light/dark toggle** at the right of the menu bar switches the whole
-page — the menu bar and Search pill, plus all four embedded apps — between
+page — the menu bar and Search pill, plus all five embedded apps — between
 light and dark at once (it defaults to your OS preference until you click
 it, then remembers your explicit choice). Threat Detection also ships its
 own theme button in its own header, left over from the source app; the two
@@ -52,57 +57,68 @@ checked against the [WCAG contrast formula](https://www.w3.org/TR/WCAG21/#contra
 — not eyeballed — and the handful that fell short (a few de-emphasized
 "faint" tokens, and Windows's accent color doubling as body-text link
 color, all in light mode) were darkened just enough to clear AA, keeping
-the same hue. AWS Events is new rather than merged from an existing app,
-so its own palette (a blue accent, distinct from the other three tabs'
-amber/teal/red) was checked the same way from the start instead of
+the same hue. AWS Events and Other Events are both new rather than merged from an
+existing app, so their own palettes (AWS's blue accent, Other Events'
+crimson — a nod to FortiGate's own brand red — each distinct from the
+other tabs') were checked the same way from the start instead of
 retrofitted.
 
-**Search** is a fifth, shell-only pill: a single box that searches
-Windows events, AWS IAM actions, Linux events, and every Threat Detection
-entry (detections and validations) at once, grouped by source with up to
-40 results per source. A **Sources** filter row toggles Microsoft
-Events/AWS Events/Linux Events/Threat Detection in or out of the results,
-and a **Threat Detection type** row (only meaningful when that source is
-on) separately toggles Detections and Validations — both default to
-everything on. It's a thin layer on top of the four apps, not a fifth
-schema — each app exposes a small `{items, open}` index (id, title, a
+**Search** is a sixth, shell-only pill: a single box that searches
+Windows events, AWS IAM actions, Linux events, every Threat Detection
+entry (detections and validations), and FortiGate log types at once,
+grouped by source with up to 40 results per source. A **Sources** filter
+row toggles Microsoft Events/AWS Events/Linux Events/Threat Detection/
+Other Events in or out of the results, and a **Threat Detection type** row
+(only meaningful when that source is on) separately toggles Detections
+and Validations — both default to everything on. It's a thin layer on top
+of the five apps, not a sixth schema — each app exposes a small
+`{items, open}` index (id, title, a
 short meta line, and a lowercased haystack of its own already-existing
 fields) on `window.__compHub` for this to search over; clicking a result
 switches to that catalogue's own tab and calls back into its own existing
 selection/detail-opening code (`jumpToEvent`-style for Windows/Linux,
 `openDetail`/`openValidationDetail` for Threat Detection, opening the
-Action Explorer's own detail modal for AWS Events) to actually show it
-there — so results render exactly like they do from that app's own
-search, because they *are* that app's own render path. AWS Events
-registers itself on `window.__compHub` only once its data has finished
-loading (see below), so a search fired in the instant before that finishes
-just won't have AWS results yet.
+Action Explorer's own detail modal for AWS Events, the FortiGate log-type
+detail modal for Other Events) to actually show it there — so results
+render exactly like they do from that app's own search, because they
+*are* that app's own render path. AWS Events and Other Events each
+register themselves on `window.__compHub` only once their own data has
+finished loading (see below), so a search fired in the instant before
+that finishes just won't have their results yet.
 
-The four catalogues are **not** merged at the data level: they keep their
+The five catalogues are **not** merged at the data level: they keep their
 own ID schemes, column schemas, and reference tables exactly as authored
 (Microsoft Events, Linux Events, and Threat Detection in their source
 repos — see each repo's README for the full field reference; AWS Events in
 [`Events_Other/aws_iam_actions_expanded.csv`](Events_Other/README.md), via
-[`aws/`](aws/README.md)). This page only merges the *presentation* — one
-URL, one menu — not the underlying schemas.
+[`aws/`](aws/README.md); Other Events in [`other/data/fortigate_log_reference.json`](other/README.md),
+compiled from FortiOS's own documentation). This page only merges the
+*presentation* — one URL, one menu — not the underlying schemas, and each
+Other Events vendor keeps whatever shape its own source material actually
+has rather than being forced into a common row shape.
 
-Two tabs fetch their data at runtime instead of embedding it inline, so
+Three tabs fetch their data at runtime instead of embedding it inline, so
 this page isn't fully "no external requests": the Threat Detection tab's
 **Heat Coverage** sub-tab fetches its eleven `mitre-attack-*.json` files
-(from `threat-detection/data/`, see below), and the **AWS Events** tab
+(from `threat-detection/data/`, see below), the **AWS Events** tab
 fetches its one `aws_iam_actions.json` file (from `aws/data/`, see below;
 21,164 actions makes for a 6.5&nbsp;MB file, too large to comfortably
-embed inline the way the other three catalogues' data is). Both degrade
-gracefully under `file://` (browsers block `fetch()` of local files) with
-an explanatory message — Heat Coverage the same way the source repo
-already did, AWS Events the same way Heat Coverage does; serve the repo
-over http(s) (GitHub Pages, `python3 -m http.server`, etc.) for those two
-spots specifically. Everything else, including the other 4,017 detections
-and every non-Heat-Coverage tab, works identically either way.
+embed inline the way the other three catalogues' data is), and the
+**Other Events** tab fetches `fortigate_log_reference.json` (from
+`other/data/`, see below — a modest ~46&nbsp;KB on its own, but fetched
+rather than embedded for consistency with the other two runtime-loaded
+tabs and because Other Events is meant to grow more vendor files over
+time). All three degrade gracefully under `file://` (browsers block
+`fetch()` of local files) with an explanatory message — Heat Coverage the
+same way the source repo already did, AWS Events and Other Events the
+same way Heat Coverage does; serve the repo over http(s) (GitHub Pages,
+`python3 -m http.server`, etc.) for those three spots specifically.
+Everything else, including the other 4,017 detections and every
+non-Heat-Coverage tab, works identically either way.
 
 ### How the merge was built
 
-Three of the four catalogues arrive as source `index.html` files that
+Three of the five catalogues arrive as source `index.html` files that
 embed their app (styles, markup, data) in one file, and reuse a lot of the
 same generic naming (`.panel`, `.card`, `.tab`, ids like
 `search`/`list`/`detail`/`tabs`, etc.) — Winevent-catalogue and
@@ -110,11 +126,12 @@ linuxevent-catalogue deliberately share UI conventions, and
 Threat-detection-library independently converges on the same common
 patterns. Concatenating them naively would collide: matching CSS selectors
 would bleed across apps, and shared `id="..."` values would make
-`getElementById` return the wrong app's element. AWS Events is the fourth
-— see its own paragraph below — but it's built directly into this repo
-following the same conventions, so it participates in everything else
-described here (the shared container-scoping pattern, the shared theme
-toggle, `window.__compHub`) exactly like the other three.
+`getElementById` return the wrong app's element. AWS Events and Other
+Events are the other two — see their own paragraphs below — but each is
+built directly into this repo following the same conventions, so both
+participate in everything else described here (the shared
+container-scoping pattern, the shared theme toggle, `window.__compHub`)
+exactly like the other three.
 
 So each of the three source apps was mechanically namespaced before
 merging:
@@ -149,14 +166,15 @@ merging:
   `data/mitre-attack-*.json` fetch paths are also repointed at
   `threat-detection/data/…` to match this repo's layout (see Structure).
 - The shell's own light/dark toggle sets `data-theme` on `<body>` and on
-  all four app containers at once, so Windows/Linux/AWS's existing (but,
+  all five app containers at once, so Windows/Linux/AWS/Other Events'
+  existing (but,
   before this toggle existed, unreachable-without-changing-your-OS-theme)
   `:root[data-theme="…"]` CSS and Threat Detection's own become live
   together. Its click handler is the one place this repo reaches back into
   Threat-detection-library's own code: `td-theme-toggle`'s listener now
   tries `document.getElementById('shell-theme-toggle').click()` first
   (falling back to its original self-contained logic if that element is
-  ever absent), so either button drives all four apps and stays
+  ever absent), so either button drives all five apps and stays
   persisted under both a shared `compendium-theme` key and the source
   app's own pre-existing `tdl-theme` key.
 
@@ -171,19 +189,54 @@ with anything in the other two apps (`.lib-stats-wrap`, `.view-tabs-wrap`,
 `.heat-view`), so it was invisible in practice, but it's fixed now
 regardless.)
 
-**AWS Events**, unlike the other three, has no source repo to namespace —
-it's written directly under the `#app-aws` container id, so its markup,
-`<style>` block, and script follow the same conventions the namespacing
-step above produces for the others (own IIFE, own CSS custom properties
-scoped to `#app-aws`/`#app-aws[data-theme="dark"]`, every query scoped to
-its own container) rather than needing to be transformed into them. Its
-data isn't embedded like Windows/Linux/Threat Detection's core catalogues
-are, either: on load it `fetch()`es `aws/data/aws_iam_actions.json` (see
-Structure), and only builds its stats tiles, service list, and search
-table — and registers itself on `window.__compHub` for the shell Search
-pill — once that resolves; the tab shows a loading message (and, under
-`file://`, an explanatory error) until then, the same pattern Threat
-Detection's own Heat Coverage tab already used for its runtime fetches.
+**AWS Events** and **Other Events**, unlike the other three, have no
+source repo to namespace — each is written directly under its own
+container id (`#app-aws`, `#app-other`), so its markup, `<style>` block,
+and script follow the same conventions the namespacing step above
+produces for the others (own IIFE, own CSS custom properties scoped to
+its own container and that container's `[data-theme="dark"]`, every
+query scoped to its own container) rather than needing to be transformed
+into them. Neither app's data is embedded like Windows/Linux/Threat
+Detection's core catalogues are, either: on load AWS Events `fetch()`es
+`aws/data/aws_iam_actions.json` and Other Events
+`other/data/fortigate_log_reference.json` (see Structure), and only
+builds its stats tiles, rail list, and search table — and registers
+itself on `window.__compHub` for the shell Search pill — once that
+resolves; each tab shows a loading message (and, under `file://`, an
+explanatory error) until then, the same pattern Threat Detection's own
+Heat Coverage tab already used for its runtime fetches.
+
+**Other Events** is built to hold more than one vendor over time, so its
+header carries a vendor picker — right now a single always-active
+"FortiGate" pill, since a real selector isn't worth building for one
+option; it becomes a real picker when a second vendor arrives, not ahead
+of that need. FortiGate's own data has a shape no other tab's does — 40
+log types (grouped `traffic`/`event`/`utm`) each with CLI/GUI instructions
+for turning it on, an example raw log line, and its own field list, plus
+material that doesn't belong repeated per row (8 severity levels, 26
+fields common to every log line) — so on top of the familiar rail +
+toolbar + table + detail-modal shell every other tab here uses, it adds a
+second **Log Types / Reference** mode toggle (visually modeled on Schema
+explorer's own Search/Explore toggle) to hold that shared material
+separately instead of repeating it in every row's modal. This is the
+shape the tab's own generic parts (container, theme wiring,
+`window.__compHub` registration, rail/toolbar/table CSS) are meant to
+carry forward for a second vendor without a rewrite; the parts specific
+to *reading* a vendor's data — flattening FortiGate's `types` →
+`subtypes` nesting into rows, rendering its enable/example/fields modal
+sections — are written for FortiGate's own shape and are exactly what a
+second vendor's own (likely differently-shaped) data would need its own
+version of, rather than trying to force a one-size-fits-all row schema
+ahead of seeing what a second vendor's data actually looks like.
+
+(Also fixed while adding this tab: `.compendium-tabs` had no
+`flex-wrap`, so six tabs no longer fit one row on narrow/mobile
+viewports — the row silently overflowed and, worse, clicking a tab
+scrolled to it, dragging the whole page into an unwanted page-level
+horizontal scroll rather than the tab row just wrapping onto a second
+line the way `.compendium-menu` itself already does. One-line fix,
+verified by clicking Other Events at a 375px viewport and confirming the
+page no longer scrolls sideways.)
 
 (Found while checking the AWS Events table's text color against the other
 tables on the page, and fixed with a one-line change: `index.html` never
@@ -236,12 +289,15 @@ fapolicyd subpanels, the Windows schema-explorer field modal, the Windows
 Cloud Actions Explorer's own search/service-filter/sort/detail-modal and
 Search/Explore toggle (independent of Schema explorer's), cross-link jump
 buttons, dark-mode theming, the Threat Detection Heat Coverage matrix and
-Validations tab,
-the AWS Events Action Explorer's own search/service-filter/sort/detail-
-modal, cross-catalogue search finding and opening an AWS action, and
-repeated tab-switching in every direction) to confirm none of the four
-apps — or, here, none of two sub-tabs *within* the same app — leaks into
-or interferes with the others.
+Validations tab, the AWS Events Action Explorer's own
+search/service-filter/sort/detail-modal, the Other Events Log Types table
+(all 40 FortiGate rows, its type-rail filter, and its own Log Types/
+Reference toggle — severity levels, common fields, and sources all
+rendering correctly), cross-catalogue search finding and opening both an
+AWS action and a FortiGate log type, and repeated tab-switching in every
+direction) to confirm none of the five apps — or, here, none of two
+sub-tabs *within* the same app — leaks into or interferes with the
+others.
 
 ## Structure
 
@@ -310,13 +366,19 @@ or interferes with the others.
   (fetched by `index.html` at runtime, generated from `Events_Other`'s
   CSV) and `tools/build_aws_json.py` (regenerates it). See its own
   `README.md`.
+- `other/` — data for the Other Events tab: `data/fortigate_log_reference.json`
+  (fetched by `index.html` at runtime; compiled from FortiOS's own
+  documentation, kept exactly as compiled rather than reshaped — see its
+  own `README.md`). No build tooling here, unlike `aws/`: the JSON is used
+  as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
 into Splunk, or to extend a catalogue — see each source repo's README for
 how). `index.html` doesn't read from `windows/` or `linux/` at runtime
 (each of those apps' data is already embedded in the page); it does read
-from `threat-detection/data/` for the Heat Coverage fetches, and from
-`aws/data/` for the AWS Events tab, both described above.
+from `threat-detection/data/` for the Heat Coverage fetches, from
+`aws/data/` for the AWS Events tab, and from `other/data/` for the Other
+Events tab, all described above.
 
 ## Source repos
 
@@ -324,12 +386,19 @@ from `threat-detection/data/` for the Heat Coverage fetches, and from
 - [`linuxevent-catalogue`](https://github.com/adamliq/linuxevent-catalogue)
 - [`Threat-detection-library`](https://github.com/adamliq/Threat-detection-library)
 
-AWS Events has no separate source repo — it's maintained directly in this
-one (see `Events_Other/` and `aws/` above).
+AWS Events and Other Events have no separate source repo — both are
+maintained directly in this one (see `Events_Other/`/`aws/` and `other/`
+above, respectively).
 
 To extend Microsoft Events, Linux Events, or Threat Detection, edit the
 source repo the normal way, then regenerate this repo's `index.html` from
 its updated `index.html` export. To extend AWS Events, update
 `Events_Other/aws_iam_actions_expanded.csv`, run
 `python3 aws/tools/build_aws_json.py`, then regenerate `index.html` the
-same way.
+same way. To extend Other Events, either update
+`other/data/fortigate_log_reference.json` in place (for FortiGate) or add
+a new vendor's own data file, both followed by regenerating `index.html`;
+a genuinely new vendor also needs its own small `build_app_*`-style
+addition to the merge script's `main()` (own container id, own rail/
+toolbar/table CSS, own data-shape-specific rendering) — see `other/`'s own
+README for why that part isn't generic across vendors.

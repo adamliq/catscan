@@ -1,0 +1,519 @@
+{
+  "title": "FortiGate Log Reference",
+  "description": "FortiGate log types, subtypes, field schema, and the setting that turns each one on, compiled from the FortiOS 7.6.0 / 8.0.0 documentation.",
+  "source_versions": ["FortiOS 7.6.0", "FortiOS 8.0.0"],
+  "confidence_key": {
+    "verified": "Field list and example log line pulled directly from Fortinet's published Log Reference.",
+    "typical": "Schema follows FortiOS's standard log field conventions for that feature; log IDs confirmed, but not confirmed field-by-field against a specific build in this pass."
+  },
+  "logging_prerequisites": "Every subtype below also needs a log destination turned on: config log disk setting / config log memory setting (set status enable) for local logging, or config log fortianalyzer setting / config log syslogd setting (set status enable) to ship logs off-box. For traffic and utm subtypes, the relevant profile must be attached to a firewall policy whose logtraffic is set to 'all' or 'utm' (not 'disable') — a security-profile log toggle with logtraffic disabled never produces a log line.",
+  "severity_levels": [
+    { "value": 0, "level": "emergency",    "meaning": "System is unusable",             "typically_emitted_by": "Hardware/kernel failure" },
+    { "value": 1, "level": "alert",        "meaning": "Immediate action required",      "typically_emitted_by": "HA failover, disk full" },
+    { "value": 2, "level": "critical",     "meaning": "Functionality affected",         "typically_emitted_by": "Antivirus/IPS engine failure" },
+    { "value": 3, "level": "error",        "meaning": "Error condition",                "typically_emitted_by": "Failed config push, auth failure" },
+    { "value": 4, "level": "warning",      "meaning": "Warning condition",              "typically_emitted_by": "UTM blocks (virus, IPS, webfilter deny)" },
+    { "value": 5, "level": "notification", "meaning": "Normal but significant",         "typically_emitted_by": "Traffic sessions, UTM passes/monitors" },
+    { "value": 6, "level": "information",  "meaning": "Informational",                  "typically_emitted_by": "Routine admin/system events" },
+    { "value": 7, "level": "debug",        "meaning": "Debug-level messages",           "typically_emitted_by": "Diagnostic logging only" }
+  ],
+  "common_fields": [
+    { "field": "date / time",   "description": "Calendar date and local time the log was recorded." },
+    { "field": "eventtime",     "description": "Event timestamp in epoch (nanosecond-scale) format — the authoritative sort key." },
+    { "field": "logid",         "description": "10-digit unique ID identifying the exact log message definition." },
+    { "field": "type / subtype","description": "The two header fields this reference is keyed on." },
+    { "field": "level",         "description": "Severity: emergency, alert, critical, error, warning, notification, information, debug." },
+    { "field": "vd",            "description": "Virtual domain (VDOM) the log was recorded in." },
+    { "field": "devid / devname","description": "Serial number and hostname of the originating FortiGate." },
+    { "field": "sessionid",     "description": "Kernel session ID, used to correlate traffic and UTM logs for the same flow." },
+    { "field": "srcip / srcport","description": "Source IP address and port of the traffic." },
+    { "field": "srcintf / srcintfrole","description": "Ingress interface name and its role (lan/wan/dmz/undefined)." },
+    { "field": "srccountry",    "description": "GeoIP country of the source address." },
+    { "field": "srcname / srcmac","description": "Resolved hostname and MAC address of the source device, when known." },
+    { "field": "devtype / osname","description": "Identified device type and OS, from device/user identification." },
+    { "field": "dstip / dstport","description": "Destination IP address and port of the traffic." },
+    { "field": "dstintf / dstintfrole","description": "Egress interface name and its role." },
+    { "field": "dstcountry",    "description": "GeoIP country of the destination address." },
+    { "field": "policyid / poluuid","description": "Matched firewall (or security) policy ID and its UUID." },
+    { "field": "policytype",    "description": "Policy category: policy, policy6, DoS-policy, interface-policy, etc." },
+    { "field": "service / proto","description": "Named service (from the service object) and IP protocol number." },
+    { "field": "action",        "description": "Verdict for the event: allow/close, deny, blocked, pass, dropped, etc. (meaning is subtype-specific)." },
+    { "field": "trandisp / transip / transport","description": "NAT disposition (snat/dnat/noop) and the translated IP/port." },
+    { "field": "duration",      "description": "Session duration in seconds (traffic logs)." },
+    { "field": "sentbyte / rcvdbyte / sentpkt / rcvdpkt","description": "Byte and packet counters for the session." },
+    { "field": "app / appcat / appid / apprisk","description": "Identified application, its category, FortiGuard app ID, and risk rating." },
+    { "field": "utmaction / utmref","description": "Combined UTM verdict for the session and a cross-reference ID into the UTM log." },
+    { "field": "msg",           "description": "Free-text, human-readable summary of the event — present on nearly every log type." }
+  ],
+  "types": {
+    "traffic": {
+      "description": "Records traffic flow information, such as an HTTP/HTTPS request and its response, if any.",
+      "subtypes": {
+        "forward": {
+          "confidence": "verified",
+          "note": "The default policy-matched session log — the log you'll see the most of.",
+          "enable": {
+            "cli": "config firewall policy\n    edit <id>\n        set logtraffic all\n        set logtraffic-start enable\n    next\nend",
+            "gui": "Policy & Objects > Firewall Policy > edit the policy > Log Allowed Traffic > All Sessions (or Security Events for UTM-only).",
+            "explanation": "set logtraffic {all | utm | disable} on the policy: 'all' logs every session, 'utm' logs only sessions a security profile acted on, 'disable' logs neither. logtraffic-start enable additionally logs the session open, not just its close."
+          },
+          "example": "date=2024-11-04 time=09:12:37 logid=\"0000000013\" type=\"traffic\" subtype=\"forward\" level=\"notice\" vd=\"vdom1\" eventtime=1730714157 srcip=10.1.100.11 srcname=\"pc1\" srcport=52134 srcintf=\"port12\" srcintfrole=\"lan\" dstip=172.16.200.55 dstport=443 dstintf=\"port11\" dstintfrole=\"wan\" poluuid=\"5a9c...\" sessionid=8058 proto=6 action=\"close\" policyid=1 policytype=\"policy\" service=\"HTTPS\" dstcountry=\"United-States\" srccountry=\"Reserved\" trandisp=\"snat\" transip=172.16.200.1 transport=40772 appid=40568 app=\"HTTPS.BROWSER\" appcat=\"Web.Client\" apprisk=\"medium\" duration=2 sentbyte=3521 rcvdbyte=15024 sentpkt=18 rcvdpkt=21 utmaction=\"allow\"",
+          "fields": [
+            { "field": "srcname / dstname", "description": "Resolved hostnames for source and destination, when known." },
+            { "field": "dstcountry / srccountry", "description": "GeoIP country for each address." },
+            { "field": "trandisp / transip / transport", "description": "NAT type applied and the translated source IP/port." },
+            { "field": "appid / app / appcat / apprisk", "description": "Application identification results for the session." },
+            { "field": "duration", "description": "Session length in seconds." },
+            { "field": "sentbyte / rcvdbyte / sentpkt / rcvdpkt", "description": "Traffic volume counters." },
+            { "field": "utmaction", "description": "Combined verdict across all UTM profiles applied to this session." },
+            { "field": "devtype / osname / mastersrcmac / srcmac / srcserver", "description": "Endpoint identification fields from FortiOS device/user detection." },
+            { "field": "utmref / countapp", "description": "Cross-reference into related UTM log entries and app count for the session." },
+            { "field": "emstag / emstag2", "description": "FortiClient EMS compliance tags matched by the endpoint, if any." },
+            { "field": "hostname / httpmethod / referralurl / reqlength / reqtime / respfinishtime / resplength / resptime / resptype / scheme / statuscode / transid", "description": "HTTP-transaction detail fields, populated when the forward session carries HTTP(S)." }
+          ]
+        },
+        "local": {
+          "confidence": "typical",
+          "note": "Traffic to/from the FortiGate itself. Same base schema as forward, dstintf=\"root\" or a local interface, policyid=0 for implicit local-in traffic.",
+          "enable": {
+            "cli": "config log setting\n    set local-in-allow enable\n    set local-in-deny-unicast enable\n    set local-in-deny-broadcast enable\nend\n\n! FortiOS 7.6+, explicit local-in policies:\nconfig firewall local-in-policy\n    edit <id>\n        set logtraffic-start enable\n    next\nend\nconfig log setting\n    set local-in-policy-log enable\nend",
+            "gui": "Log & Report > Log Settings > Local Traffic Logging (or per local-in policy under Policy & Objects > Local-In Policy).",
+            "explanation": "local-in-allow / local-in-deny-unicast / local-in-deny-broadcast (config log setting) log implicit traffic to the FortiGate that isn't matched by an explicit local-in policy. On 7.6+, explicit local-in policies additionally need local-in-policy-log enabled."
+          },
+          "fields": []
+        },
+        "multicast": {
+          "confidence": "typical",
+          "note": "Multicast forwarding (PIM/IGMP). Same base schema as forward, keyed by a multicast policy.",
+          "enable": {
+            "cli": "config firewall multicast-policy\n    edit <id>\n        set logtraffic all\n    next\nend",
+            "gui": "Policy & Objects > Multicast Policy > edit the policy > Log Allowed Traffic.",
+            "explanation": "set logtraffic {all | utm | disable} on the multicast policy (older builds use enable/disable)."
+          },
+          "fields": []
+        },
+        "sniffer": {
+          "confidence": "typical",
+          "note": "One-arm sniffer / traffic mirror interfaces. Captured, not forwarded, traffic.",
+          "enable": {
+            "cli": "config firewall sniffer-policy\n    edit <id>\n        set logtraffic all\n    next\nend",
+            "gui": "Policy & Objects > Sniffer Policy > edit the policy > Log Allowed Traffic.",
+            "explanation": "Same logtraffic {all | utm | disable} toggle as a regular firewall policy, set on the sniffer policy attached to the one-arm interface."
+          },
+          "fields": []
+        },
+        "http-transaction": {
+          "confidence": "typical",
+          "note": "New in FortiOS 7.6 — per-HTTP-transaction detail inside a forward session.",
+          "enable": {
+            "cli": "config firewall policy\n    edit <id>\n        set logtraffic all\n        set log-http-transaction enable\n    next\nend",
+            "gui": "Policy & Objects > Firewall Policy > edit the policy > enable Log HTTP Transactions (under Logging Options).",
+            "explanation": "log-http-transaction enable on top of logtraffic all breaks each forward session's HTTP activity into its own transaction-level log line."
+          },
+          "fields": []
+        },
+        "ztna": {
+          "confidence": "typical",
+          "note": "Zero Trust Network Access proxy sessions.",
+          "enable": {
+            "cli": "config firewall policy\n    edit <id>\n        set ztna-ems-tag <tag>\n        set logtraffic all\n    next\nend",
+            "gui": "Policy & Objects > Firewall Policy (ZTNA rule) > edit the rule > Log Allowed Traffic > All Sessions.",
+            "explanation": "ZTNA access rules are firewall policies matched on a ZTNA tag/certificate; logging is the same logtraffic setting as any other firewall policy — there's no separate ZTNA-only log toggle."
+          },
+          "fields": []
+        }
+      }
+    },
+    "event": {
+      "description": "Records system and administrative events, such as downloading a backup copy of the configuration, or daemon activities.",
+      "subtypes": {
+        "system": {
+          "confidence": "verified",
+          "note": "Config, admin session, daemon, license events.",
+          "enable": {
+            "cli": "config log eventfilter\n    set event enable\n    set system enable\nend",
+            "gui": "Log & Report > Log Settings > Event Logging > System activity event.",
+            "explanation": "event enable is the master switch for all type=event logging; system enable turns on this specific subtype. Both live in the single global config log eventfilter block."
+          },
+          "example": "date=2024-11-04 time=08:02:11 logid=\"0100032002\" type=\"event\" subtype=\"system\" level=\"information\" vd=\"vdom1\" eventtime=1730707331 logdesc=\"Admin login successful\" sn=\"FGT60F...\" user=\"admin\" ui=\"https(172.16.200.10)\" method=\"https\" srcip=172.16.200.10 dstip=172.16.200.1 action=\"login\" status=\"success\" reason=\"none\" msg=\"Administrator admin logged in successfully from https(172.16.200.10)\"",
+          "fields": [
+            { "field": "logdesc", "description": "Human-readable description of the event (e.g. \"Admin login successful\", \"Configuration change\")." },
+            { "field": "sn", "description": "Serial number of the device that generated the event." },
+            { "field": "user", "description": "Administrator or daemon account associated with the event." },
+            { "field": "ui", "description": "Access method and originating address, e.g. https(172.16.200.10), ssh(...), console." },
+            { "field": "method", "description": "Access method: https, ssh, telnet, console." },
+            { "field": "srcip / dstip", "description": "Source of the administrative connection and the FortiGate interface addressed." },
+            { "field": "action", "description": "What happened: login, logout, config-change, backup, restore, etc." },
+            { "field": "status", "description": "success or failed." },
+            { "field": "reason", "description": "Failure reason when status=failed (e.g. invalid_credential)." },
+            { "field": "msg", "description": "Full human-readable message text." }
+          ]
+        },
+        "user": {
+          "confidence": "verified",
+          "note": "Firewall authentication (FSSO, captive portal, 802.1X, VPN auth).",
+          "enable": {
+            "cli": "config log eventfilter\n    set event enable\n    set user enable\nend",
+            "gui": "Log & Report > Log Settings > Event Logging > User event.",
+            "explanation": "user enable under config log eventfilter (with the master event switch also on)."
+          },
+          "example": "date=2024-11-04 time=09:05:02 logid=\"0102043008\" type=\"event\" subtype=\"user\" level=\"notice\" vd=\"vdom1\" eventtime=1730710702 logdesc=\"Firewall authentication successful\" srcip=10.1.100.11 dstip=172.16.200.55 policyid=1 interface=\"port12\" user=\"jdoe\" group=\"sales\" authproto=\"FSSO\" action=\"authentication\" status=\"success\" reason=\"none\" msg=\"User jdoe authenticated successfully\"",
+          "fields": [
+            { "field": "logdesc", "description": "Description of the authentication event." },
+            { "field": "srcip / dstip", "description": "Client IP and the resource/portal address involved." },
+            { "field": "policyid", "description": "Firewall policy that triggered the authentication requirement." },
+            { "field": "interface", "description": "Ingress interface of the authenticating client." },
+            { "field": "user / group", "description": "Authenticated username and matched user group." },
+            { "field": "authproto", "description": "Authentication method: FSSO, RADIUS, LDAP, local, captive-portal, 802.1X." },
+            { "field": "action", "description": "authentication, logout, timeout." },
+            { "field": "status / reason", "description": "Outcome and, on failure, the reason (bad password, account disabled, server timeout)." },
+            { "field": "msg", "description": "Full human-readable message text." }
+          ]
+        },
+        "vpn": {
+          "confidence": "typical",
+          "note": "IPsec & SSL-VPN tunnel lifecycle.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set vpn enable\nend", "gui": "Log & Report > Log Settings > Event Logging > VPN activity event.", "explanation": "vpn enable under config log eventfilter." },
+          "fields": []
+        },
+        "router": {
+          "confidence": "typical",
+          "note": "Routing daemon & SD-WAN path state.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set router enable\nend", "gui": "Log & Report > Log Settings > Event Logging > Router event.", "explanation": "router enable under config log eventfilter." },
+          "fields": []
+        },
+        "wireless": {
+          "confidence": "typical",
+          "note": "FortiAP / WiFi client & rogue-AP events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set wireless-activity enable\nend", "gui": "Log & Report > Log Settings > Event Logging > WiFi event.", "explanation": "wireless-activity enable under config log eventfilter." },
+          "fields": []
+        },
+        "ha": {
+          "confidence": "typical",
+          "note": "HA cluster state changes.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set ha enable\nend", "gui": "Log & Report > Log Settings > Event Logging > HA activity event.", "explanation": "ha enable under config log eventfilter." },
+          "fields": []
+        },
+        "security-rating": {
+          "confidence": "typical",
+          "note": "Security Fabric rating scorecard runs.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set security-rating enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "security-rating enable under config log eventfilter." },
+          "fields": []
+        },
+        "sdwan": {
+          "confidence": "typical",
+          "note": "SD-WAN SLA/health-check and rule changes.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set sdwan enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "sdwan enable under config log eventfilter." },
+          "fields": []
+        },
+        "switch-controller": {
+          "confidence": "typical",
+          "note": "Managed FortiSwitch join/port/PoE events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set switch-controller enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "switch-controller enable under config log eventfilter." },
+          "fields": []
+        },
+        "rest-api": {
+          "confidence": "typical",
+          "note": "REST API calls to the FortiGate.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set rest-api enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "rest-api enable under config log eventfilter." },
+          "fields": []
+        },
+        "fortiextender": {
+          "confidence": "typical",
+          "note": "Managed FortiExtender (LTE) modem events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set fortiextender enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "fortiextender enable under config log eventfilter." },
+          "fields": []
+        },
+        "endpoint": {
+          "confidence": "typical",
+          "note": "FortiClient EMS compliance/registration events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set endpoint enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "endpoint enable under config log eventfilter." },
+          "fields": []
+        },
+        "connector": {
+          "confidence": "typical",
+          "note": "Fabric Connector (SDN, cloud) sync events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set connector enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "connector enable under config log eventfilter." },
+          "fields": []
+        },
+        "wanopt": {
+          "confidence": "typical",
+          "note": "WAN optimization tunnel/peer events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set wan-opt enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "wan-opt enable under config log eventfilter." },
+          "fields": []
+        },
+        "webproxy": {
+          "confidence": "typical",
+          "note": "Explicit web proxy authentication/session events.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set webproxy enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "webproxy enable under config log eventfilter." },
+          "fields": []
+        },
+        "cifs-auth-fail": {
+          "confidence": "typical",
+          "note": "CIFS/SMB authentication failures inspected by UTM.",
+          "enable": { "cli": "config log eventfilter\n    set event enable\n    set cifs enable\nend", "gui": "Log & Report > Log Settings > Event Logging.", "explanation": "cifs enable under config log eventfilter." },
+          "fields": []
+        }
+      }
+    },
+    "utm": {
+      "description": "Records UTM (security profile) events.",
+      "subtypes": {
+        "virus": {
+          "confidence": "verified",
+          "note": "Antivirus / antimalware verdicts.",
+          "enable": {
+            "cli": "config antivirus profile\n    edit \"g-default\"\n        set av-virus-log enable\n        set av-block-log enable\n        set extended-log enable\n    next\nend\n! then on the firewall policy:\nconfig firewall policy\n    edit <id>\n        set av-profile \"g-default\"\n        set logtraffic utm\n    next\nend",
+            "gui": "Security Profiles > AntiVirus > edit the profile (logging is on by default) — attach it to a policy under Security Profiles > AntiVirus in that policy.",
+            "explanation": "av-virus-log / av-block-log enable logging on the AntiVirus profile itself (both default to enabled); the profile then has to be applied to a policy with logtraffic set to utm or all."
+          },
+          "example": "logid=\"0211008192\" type=\"utm\" subtype=\"virus\" eventtype=\"infected\" level=\"warning\" vd=\"vdom1\" policyid=1 profile=\"g-default\" srcip=10.1.100.11 dstip=172.16.200.55 url=\"http://172.16.200.55/virus/eicar.com\" virus=\"EICAR_TEST_FILE\" virusid=2172 dtype=\"Virus\" filename=\"eicar.com\" quarskip=\"File-was-not-quarantined.\" analyticscksum=\"275a02...1fd0f\" analyticssubmit=\"false\" ref=\"http://www.fortinet.com/ve?vn=EICAR_TEST_FILE\" action=\"blocked\" crscore=50 crlevel=\"critical\"",
+          "fields": [
+            { "field": "eventtype", "description": "Detection category: infected, malware-list, oversize, analytics." },
+            { "field": "profile", "description": "Antivirus profile that matched." },
+            { "field": "url / filename", "description": "Resource location and file name carrying the threat." },
+            { "field": "virus / virusid", "description": "Detected malware name and its FortiGuard signature ID." },
+            { "field": "dtype", "description": "Detection type classification, e.g. Virus, Riskware, Ransomware." },
+            { "field": "quarskip", "description": "Reason quarantine was skipped, if applicable." },
+            { "field": "analyticscksum / analyticssubmit", "description": "File checksum and whether it was submitted to FortiSandbox/Analytics." },
+            { "field": "ref", "description": "FortiGuard reference URL for the signature." },
+            { "field": "action", "description": "blocked, monitored, quarantined." },
+            { "field": "crscore / crlevel", "description": "FortiGuard risk score (0–100) and risk band (low…critical)." }
+          ]
+        },
+        "webfilter": {
+          "confidence": "verified",
+          "note": "FortiGuard web/URL category filtering.",
+          "enable": {
+            "cli": "config webfilter profile\n    edit \"g-default\"\n        set log-all-url enable\n        config ftgd-wf\n            config filters\n                edit 1\n                    set log enable\n                next\n            end\n        end\n    next\nend\n! then on the firewall policy:\nconfig firewall policy\n    edit <id>\n        set webfilter-profile \"g-default\"\n        set logtraffic utm\n    next\nend",
+            "gui": "Security Profiles > Web Filter > edit the profile > enable Log all URLs (or leave category log toggles at default-on) — attach it to a policy.",
+            "explanation": "The FortiGuard category filters log by default (log enable under ftgd-wf > filters); log-all-url enable additionally logs every URL request, not just the ones a category verdict blocked/warned on."
+          },
+          "example": "logid=\"0317013312\" type=\"utm\" subtype=\"webfilter\" eventtype=\"ftgd_blk\" level=\"warning\" vd=\"vdom1\" policyid=1 srcip=10.1.100.11 hostname=\"ambrishsriv.wixsite.com\" url=\"/bizsquads\" method=\"domain\" cat=26 catdesc=\"Malicious Websites\" reqtype=\"direct\" action=\"blocked\" msg=\"URL belongs to a denied category in policy\" crscore=60 crlevel=\"high\"",
+          "fields": [
+            { "field": "eventtype", "description": "Filter mechanism that fired: ftgd_blk/ftgd_allow (FortiGuard category), urlfilter (local URL list), videofilter." },
+            { "field": "hostname / url", "description": "Requested domain and path." },
+            { "field": "method", "description": "How the category was resolved: domain, ip." },
+            { "field": "cat / catdesc", "description": "FortiGuard category ID and name." },
+            { "field": "reqtype", "description": "direct request vs. referral." },
+            { "field": "action", "description": "blocked, passthrough, monitored, warning, authenticate." },
+            { "field": "msg", "description": "Human-readable reason." },
+            { "field": "crscore / crlevel", "description": "FortiGuard risk score and band for the category." }
+          ]
+        },
+        "ips": {
+          "confidence": "verified",
+          "note": "Intrusion Prevention signature/anomaly matches.",
+          "enable": {
+            "cli": "config ips sensor\n    edit \"default\"\n        config entries\n            edit 1\n                set log enable\n                set log-packet enable\n                set log-attack-context enable\n            next\n        end\n    next\nend\n! then on the firewall policy:\nconfig firewall policy\n    edit <id>\n        set ips-sensor \"default\"\n        set logtraffic utm\n    next\nend",
+            "gui": "Security Profiles > Intrusion Prevention > edit the sensor > filter entries (Log is on by default; enable Packet Logging if you want pcaps) — attach the sensor to a policy.",
+            "explanation": "log enable per filter/signature entry is on by default in the IPS sensor; log-packet enable additionally captures the triggering packet for pcap download."
+          },
+          "example": "logid=\"0416016384\" type=\"utm\" subtype=\"ips\" eventtype=\"signature\" level=\"warning\" vd=\"vdom1\" srcip=10.1.100.11 dstip=172.16.200.55 hostname=\"example.com\" attack=\"SQL.Injection\" attackid=12345 severity=\"high\" ref=\"http://www.fortinet.com/ve?vn=...\" incidentserialno=695 msg=\"SQL Injection Attack\" action=\"blocked\" crscore=60 crlevel=\"critical\"",
+          "fields": [
+            { "field": "eventtype", "description": "signature match, anomaly (rate-based), or botnet/malicious-url." },
+            { "field": "attack / attackid", "description": "Signature name and its numeric ID." },
+            { "field": "severity", "description": "Signature severity: info, low, medium, high, critical." },
+            { "field": "ref", "description": "FortiGuard reference URL for the signature." },
+            { "field": "incidentserialno", "description": "Sequential incident counter for correlation." },
+            { "field": "action / craction", "description": "Action taken: blocked, dropped, reset, pass." },
+            { "field": "crscore / crlevel", "description": "FortiGuard risk score and band." }
+          ]
+        },
+        "app-ctrl": {
+          "confidence": "verified",
+          "note": "Application-control identification & policy verdicts.",
+          "enable": {
+            "cli": "config application list\n    edit \"g-default\"\n        set unknown-application-log enable\n        set other-application-log enable\n        config entries\n            edit 1\n                set log enable\n                set log-packet enable\n            next\n        end\n    next\nend\n! then on the firewall policy:\nconfig firewall policy\n    edit <id>\n        set application-list \"g-default\"\n        set logtraffic utm\n    next\nend",
+            "gui": "Security Profiles > Application Control > edit the profile (Log Violation Traffic is on by default) — attach it to a policy.",
+            "explanation": "log enable per application-category entry (on by default); unknown-application-log / other-application-log separately control logging for traffic that couldn't be identified."
+          },
+          "example": "logid=\"0228672\" type=\"utm\" subtype=\"app-ctrl\" eventtype=\"signature\" level=\"notice\" vd=\"vdom1\" srcip=10.1.100.11 srcmac=\"a2:e9:00:ec:40:01\" srcname=\"pc1\" hostname=\"fortiguard.com\" app=\"HTTPS.BROWSER\" appcat=\"Web.Client\" appid=40568 apprisk=\"medium\" incidentserialno=402 action=\"pass\"",
+          "fields": [
+            { "field": "eventtype", "description": "signature (protocol/app match), im-* (IM specific), or detect-l2." },
+            { "field": "app / appid", "description": "Application signature name and its FortiGuard ID." },
+            { "field": "appcat", "description": "Application category, e.g. Web.Client, Social.Media, P2P." },
+            { "field": "apprisk", "description": "Application risk rating: elevated, medium, high, critical." },
+            { "field": "srcmac / srcname", "description": "Client MAC address and hostname (from device identification)." },
+            { "field": "hostname", "description": "Domain the application traffic addressed." },
+            { "field": "incidentserialno", "description": "Correlation counter shared with IPS logs." },
+            { "field": "action", "description": "pass, block, reset." }
+          ]
+        },
+        "emailfilter": {
+          "confidence": "typical",
+          "note": "Log IDs 20480–20510.",
+          "enable": {
+            "cli": "config spamfilter profile\n    edit \"default\"\n        set spam-log enable\n        set spam-log-fortiguard-response enable\n        config smtp\n            set log enable\n        end\n    next\nend\n! then: set spamfilter-profile \"default\" and logtraffic utm on the firewall policy.",
+            "gui": "Security Profiles > Email Filter > edit the profile — attach it to a policy.",
+            "explanation": "spam-log enable is the main toggle; per-protocol log enable (smtp/imap/pop3/mapi and gmail/yahoo/msn webmail) controls which mail paths generate entries."
+          },
+          "fields": []
+        },
+        "dlp": {
+          "confidence": "typical",
+          "note": "Log IDs 24576–24581.",
+          "enable": {
+            "cli": "config dlp profile\n    edit \"default\"\n        set dlp-log enable\n        set extended-log enable\n    next\nend\n! then: set dlp-profile \"default\" and logtraffic utm on the firewall policy.",
+            "gui": "Security Profiles > Data Loss Prevention > edit the profile — attach it to a policy.",
+            "explanation": "dlp-log enable turns on logging for the profile's matched rules; extended-log enable adds fuller detail per match."
+          },
+          "fields": []
+        },
+        "anomaly": {
+          "confidence": "typical",
+          "note": "DoS policy sensor, log IDs 18432–18434.",
+          "enable": {
+            "cli": "config firewall DoS-policy\n    edit <id>\n        config anomaly\n            edit \"tcp_syn_flood\"\n                set status enable\n                set log enable\n                set action block\n            next\n        end\n    next\nend",
+            "gui": "Policy & Objects > DoS Policy > edit the policy > enable Logging on each anomaly type.",
+            "explanation": "Each anomaly entry inside a DoS policy has its own log enable and quarantine-log enable toggle — logging is configured per detected anomaly type, not globally."
+          },
+          "fields": []
+        },
+        "voip": {
+          "confidence": "typical",
+          "note": "SIP/SCCP ALG inspection, log IDs 44032–44038.",
+          "enable": {
+            "cli": "config voip profile\n    edit \"default\"\n        config sip\n            set log-call-summary enable\n            set log-violations enable\n        end\n    next\nend\n! then: set voip-profile \"default\" and logtraffic utm on the firewall policy.",
+            "gui": "Security Profiles > VoIP > edit the profile — attach it to a policy.",
+            "explanation": "log-call-summary and log-violations are set separately under each of sip / sccp / msrp."
+          },
+          "fields": []
+        },
+        "waf": {
+          "confidence": "typical",
+          "note": "Web Application Firewall, log IDs 30248–30261.",
+          "enable": {
+            "cli": "config waf profile\n    edit \"default\"\n        set extended-log enable\n        config signature\n            config main-class\n                edit 100000\n                    set log enable\n                    set action block\n                next\n            end\n        end\n    next\nend\n! then: set webfilter-profile / waf-profile \"default\" and logtraffic utm on the firewall policy.",
+            "gui": "Security Profiles > Web Application Firewall > edit the profile — enable Log on each signature class / constraint rule — attach it to a policy.",
+            "explanation": "Logging is set per rule (signature main-class/custom-signature, each constraint type, method, url-access, address-list) rather than with one profile-wide switch."
+          },
+          "fields": []
+        },
+        "dns": {
+          "confidence": "typical",
+          "note": "DNS filter, log IDs 54000–54807.",
+          "enable": {
+            "cli": "config dnsfilter profile\n    edit \"default\"\n        set log-all-domain enable\n        set sdns-domain-log enable\n        set sdns-ftgd-err-log enable\n    next\nend\n! then: set dnsfilter-profile \"default\" on the firewall policy.",
+            "gui": "Security Profiles > DNS Filter > edit the profile > enable Log all domains — attach it to a policy.",
+            "explanation": "FortiGuard category log enable (under ftgd-dns > filters) is on by default for matched categories; log-all-domain enable additionally logs every DNS query, not just filtered ones."
+          },
+          "fields": []
+        },
+        "ssh": {
+          "confidence": "typical",
+          "note": "SSH deep inspection, log IDs 61000–61012.",
+          "enable": {
+            "cli": "config ssh-filter profile\n    edit \"default\"\n        set default-command-log enable\n        set log shell exec sftp scp\n    next\nend\n! then: set ssh-filter-profile \"default\" on the firewall policy.",
+            "gui": "Security Profiles > SSH Filter > edit the profile — attach it to a policy.",
+            "explanation": "log takes a list of SSH channel types to log (x11, shell, exec, port-forward, tun-forward, sftp, scp, unknown); default-command-log enable logs commands that don't match a defined shell-command rule."
+          },
+          "fields": []
+        },
+        "ssl": {
+          "confidence": "typical",
+          "note": "SSL/TLS inspection, log IDs 62004–62309.",
+          "enable": {
+            "cli": "config firewall ssl-ssh-profile\n    edit \"default\"\n        set ssl-anomaly-log enable\n        set ssl-exemption-log enable\n        set ssl-handshake-log enable\n        set ssl-negotiation-log enable\n    next\nend\n! then: set ssl-ssh-profile \"default\" on the firewall policy.",
+            "gui": "Security Profiles > SSL/SSH Inspection > edit the profile — attach it to a policy.",
+            "explanation": "Four separate toggles cover the SSL event families: anomalies, exemptions, TLS handshakes, and negotiation events."
+          },
+          "fields": []
+        },
+        "gtp": {
+          "confidence": "typical",
+          "note": "GTPv1/v2/GTP-U/PFCP inspection, log IDs 41216–41233.",
+          "enable": {
+            "cli": "config firewall gtp\n    edit \"default\"\n        set forwarded-log enable\n        set denied-log enable\n        set gtpu-forwarded-log enable\n        set gtpu-denied-log enable\n        set log-freq 1\n    next\nend",
+            "gui": "Security Profiles > GTP Profile (carrier-license builds) — attach it to a policy.",
+            "explanation": "forwarded-log / denied-log cover GTP-C, gtpu-forwarded-log / gtpu-denied-log cover GTP-U; log-freq throttles how often repeat messages are logged."
+          },
+          "fields": []
+        },
+        "file-filter": {
+          "confidence": "typical",
+          "note": "Log IDs 64000–64001.",
+          "enable": {
+            "cli": "config file-filter profile\n    edit \"default\"\n        set log enable\n        set extended-log enable\n    next\nend\n! then: set file-filter-profile \"default\" on the firewall policy.",
+            "gui": "Security Profiles > File Filter > edit the profile — attach it to a policy.",
+            "explanation": "log enable on the file-filter profile; extended-log enable adds more detail per match."
+          },
+          "fields": []
+        },
+        "icap": {
+          "confidence": "typical",
+          "note": "ICAP offload to an external server, log IDs 60000–60002.",
+          "enable": {
+            "cli": "config icap profile\n    edit \"default\"\n        set icap-block-log enable\n    next\nend\n! then: set icap-profile \"default\" on the firewall policy.",
+            "gui": "Security Profiles > ICAP Profile — attach it to a policy.",
+            "explanation": "icap-block-log enable logs when the ICAP server reports an infection/block; the connection to the ICAP server itself is otherwise silent."
+          },
+          "fields": []
+        },
+        "forti-switch": {
+          "confidence": "typical",
+          "note": "FortiSwitch security flow logging, log ID 56001.",
+          "enable": {
+            "cli": "config switch-controller traffic-policy\n    edit \"default\"\n        ...\n    next\nend\n! plus enabling flow/session logging on the managed FortiSwitch's security policy via FortiLink.",
+            "gui": "WiFi & Switch Controller > FortiSwitch security/traffic policy.",
+            "explanation": "Lower confidence than the rest of this reference — this flow log is emitted by managed FortiSwitches over FortiLink rather than a single documented FortiGate CLI toggle; verify against your specific FortiSwitch/FortiLink version."
+          },
+          "fields": []
+        },
+        "virtual-patch": {
+          "confidence": "typical",
+          "note": "OT/IoT virtual patching, log IDs 64600–64611.",
+          "enable": {
+            "cli": "config virtual-patch profile\n    edit \"default\"\n        set log enable\n    next\nend\n! then: set virtual-patch-profile \"default\" on the firewall policy (or local-in-policy for OT).",
+            "gui": "Security Profiles > Virtual Patching > edit the profile — attach it to a policy.",
+            "explanation": "log enable on the virtual-patch profile logs each detection; the profile is generally applied to local-in or OT-facing policies."
+          },
+          "fields": []
+        },
+        "casb": {
+          "confidence": "typical",
+          "note": "Cloud Access Security Broker, log IDs 10000–10002.",
+          "enable": {
+            "cli": "config casb profile\n    edit \"default\"\n        config saas-application\n            edit \"Microsoft_365\"\n                set log enable\n            next\n        end\n    next\nend\n! then: set casb-profile \"default\" on the firewall policy.",
+            "gui": "Security Profiles > CASB > edit the profile > per SaaS application, enable Log — attach it to a policy.",
+            "explanation": "log enable is set per SaaS application entry inside the CASB profile, not once for the whole profile."
+          },
+          "fields": []
+        }
+      }
+    }
+  },
+  "other_categories": [
+    { "type": "anomaly", "note": "Legacy top-level type (log IDs 18432–18434, DoS-sensor detections) — folded into utm subtype=anomaly on current FortiOS." },
+    { "type": "debug", "note": "Log ID 65290 (LOG_ID_DEBUG_PRINT), internal diagnostic prints, not seen in normal operation." }
+  ],
+  "sources": [
+    { "title": "Log types and subtypes — FortiOS 8.0.0 Log Message Reference", "url": "https://docs.fortinet.com/document/fortigate/8.0.0/fortios-log-message-reference/670197/log-types-and-subtypes" },
+    { "title": "Log message fields — FortiOS 8.0.0 Log Message Reference", "url": "https://docs.fortinet.com/document/fortigate/8.0.0/fortios-log-message-reference/357866/log-message-fields" },
+    { "title": "List of log types and subtypes (full log-ID index) — FortiOS 8.0.0", "url": "https://docs.fortinet.com/document/fortigate/8.0.0/fortios-log-message-reference/160372/list-of-log-types-and-subtypes" },
+    { "title": "FortiOS 7.6.0 Log Reference (PDF)", "url": "https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/fd3fca7b-1d0f-11ef-8c42-fa163e15d75b/FortiOS_7.6.0_Log_Reference.pdf" },
+    { "title": "FortiOS 8.0.0 Log Reference (PDF)", "url": "https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/be09e711-381d-11f1-b31d-02356ffb40d9/FortiOS_8.0.0_Log_Reference.pdf" },
+    { "title": "config log eventfilter — FortiOS CLI Reference", "url": "https://docs.fortinet.com/document/fortigate/7.4.1/cli-reference/432620/config-log-eventfilter" },
+    { "title": "fortios_log_eventfilter schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_log_eventfilter.rst" },
+    { "title": "fortios_firewall_policy schema (logtraffic, log-http-transaction) — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/galaxy-2.1.3/gen/fortios_firewall_policy.rst" },
+    { "title": "config antivirus profile — FortiOS CLI Reference", "url": "https://docs.fortinet.com/document/fortigate/7.2.4/cli-reference/546620/config-antivirus-profile" },
+    { "title": "fortios_webfilter_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_webfilter_profile.rst" },
+    { "title": "fortios_ips_sensor schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_ips_sensor.rst" },
+    { "title": "fortios_application_list schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_application_list.rst" },
+    { "title": "fortios_spamfilter_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_spamfilter_profile.rst" },
+    { "title": "fortios_dlp_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_dlp_profile.rst" },
+    { "title": "fortios_dnsfilter_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_dnsfilter_profile.rst" },
+    { "title": "fortios_ssh_filter_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_ssh_filter_profile.rst" },
+    { "title": "fortios_firewall_ssl_ssh_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_firewall_ssl_ssh_profile.rst" },
+    { "title": "fortios_voip_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_voip_profile.rst" },
+    { "title": "fortios_firewall_dos_policy schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_firewall_dos_policy.rst" },
+    { "title": "fortios_waf_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_waf_profile.rst" },
+    { "title": "fortios_icap_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_icap_profile.rst" },
+    { "title": "fortios_file_filter_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_file_filter_profile.rst" },
+    { "title": "fortios_firewall_gtp schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_firewall_gtp.rst" },
+    { "title": "fortios_casb_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_casb_profile.rst" },
+    { "title": "fortios_virtual_patch_profile schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_virtual_patch_profile.rst" },
+    { "title": "fortios_firewall_multicast_policy schema — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/galaxy-1.0.11/gen/fortios_firewall_multicast_policy.rst" },
+    { "title": "fortios_log_setting schema (local-in logging) — Ansible FortiOS Galaxy docs", "url": "https://github.com/fortinet-ansible-dev/ansible-galaxy-fortios-sphinxdoc/blob/main/gen/fortios_log_setting.rst" }
+  ]
+}
