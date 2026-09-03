@@ -235,8 +235,21 @@ or interferes with the others.
 - `index.html` — the merged lookup page described above.
 - `windows/` — `Winevent-catalogue`'s data and docs, unchanged:
   `data/events.csv`/`.json`, `data/cloud_logs.csv`/`.json`,
-  `data/reference/*`, `docs/*`, and its own `README.md` (the full field
-  reference for every column).
+  `data/cloud_actions.csv`/`.json`, `data/reference/*`, `docs/*`, and its
+  own `README.md` (the full field reference for every column). Also
+  holds three files kept only here, not mirrored from Winevent-catalogue:
+  `data/MicrosoftCloud_Schema.xlsx`/`.json` (a spreadsheet- and
+  JSON-native export of the same Cloud Actions Explorer schema, enriched
+  with Azure Resource Manager resource-type metadata — API versions,
+  supported capabilities like private endpoints/managed identity/tags/
+  locking — joined from `data/azureresourcetypes.csv`, an ARM
+  resource-type catalog snapshot; the JSON nests that enrichment under an
+  `arm` key, present only on matched rows, with `api_versions` as a real
+  array and the `supports_*` fields as real booleans rather than the
+  xlsx's plain strings) and `data/azureresourcetypes.csv` itself, kept
+  for provenance. `tools/enrich_microsoft_schema.py` reapplies the join
+  to the xlsx and `tools/export_schema_json.py` regenerates the JSON from
+  it — both idempotent, safe to re-run after either input changes.
 - `linux/` — `linuxevent-catalogue`'s data and docs, unchanged:
   `data/events.csv`/`.json`, `data/reference/*`, `docs/*`, and its own
   `README.md`.
