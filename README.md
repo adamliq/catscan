@@ -237,17 +237,21 @@ or interferes with the others.
   `data/events.csv`/`.json`, `data/cloud_logs.csv`/`.json`,
   `data/cloud_actions.csv`/`.json`, `data/reference/*`, `docs/*`, and its
   own `README.md` (the full field reference for every column). Also
-  holds three files kept only here, not mirrored from Winevent-catalogue:
+  holds four files kept only here, not mirrored from Winevent-catalogue:
   `data/MicrosoftCloud_Schema.xlsx`/`.json` (a spreadsheet- and
   JSON-native export of the same Cloud Actions Explorer schema, enriched
   with Azure Resource Manager resource-type metadata — API versions,
   supported capabilities like private endpoints/managed identity/tags/
-  locking — joined from `data/azureresourcetypes.csv`, an ARM
+  locking — joined from `data/azureresourcetypes.json`, an ARM
   resource-type catalog snapshot; the JSON nests that enrichment under an
   `arm` key, present only on matched rows, with `api_versions` as a real
   array and the `supports_*` fields as real booleans rather than the
-  xlsx's plain strings) and `data/azureresourcetypes.csv` itself, kept
-  for provenance. `tools/enrich_microsoft_schema.py` reapplies the join
+  xlsx's plain strings) and `data/azureresourcetypes.json`/`.csv`
+  themselves, kept for provenance (the join reads the JSON — its
+  `providerDisplayName`/`locationsCount` fields are properly typed,
+  `null`/number, rather than the CSV's empty-string/numeric-string
+  encoding of the same data; the CSV stays for anyone who wants a
+  spreadsheet-native copy). `tools/enrich_microsoft_schema.py` reapplies the join
   to the xlsx and `tools/export_schema_json.py` regenerates the JSON from
   it — both idempotent, safe to re-run after either input changes.
 - `linux/` — `linuxevent-catalogue`'s data and docs, unchanged:

@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Re-applies the Azure Resource Manager resource-type enrichment to
 windows/data/MicrosoftCloud_Schema.xlsx's "schema (gap-filled)" sheet,
-joined from windows/data/azureresourcetypes.csv on (resource provider +
-"/" + resource type), case-insensitive exact match against the CSV's own
-resourceType column.
+joined from windows/data/azureresourcetypes.json on (resource provider +
+"/" + resource type), case-insensitive exact match against the JSON's
+own resourceType field. (azureresourcetypes.csv sits alongside it with
+the same data - kept for anyone who wants a spreadsheet-native copy of
+the source catalog - but the JSON is the one this script reads, since
+its providerDisplayName/locationsCount fields are properly typed
+(null/int) rather than the CSV's empty-string/numeric-string encoding.)
 
 Run this again after either input changes:
     python3 windows/tools/enrich_microsoft_schema.py
@@ -18,7 +22,7 @@ dedicated "Azure resource type enrichment" sheet. Rows with no real
 (non-"N/A") resource provider/type, or with no catalog match, are left
 untouched - nothing is invented for a near-miss.
 """
-import csv
+import json
 import os
 from collections import Counter
 
@@ -29,7 +33,7 @@ from openpyxl.utils import get_column_letter
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(HERE, '..', 'data')
 XLSX_PATH = os.path.join(DATA_DIR, 'MicrosoftCloud_Schema.xlsx')
-CSV_PATH = os.path.join(DATA_DIR, 'azureresourcetypes.csv')
+JSON_PATH = os.path.join(DATA_DIR, 'azureresourcetypes.json')
 
 ENRICH_HEADERS = [
     'provider_display_name', 'resource_type_display_name', 'api_versions',
@@ -39,10 +43,9 @@ ENRICH_HEADERS = [
 
 
 def main():
-    art_by_key = {}
-    with open(CSV_PATH, newline='', encoding='utf-8') as f:
-        for row in csv.DictReader(f):
-            art_by_key[row['resourceType'].strip().lower()] = row
+    with open(JSON_PATH, encoding='utf-8') as f:
+        art_rows = json.load(f)
+    art_by_key = {row['resourceType'].strip().lower(): row for row in art_rows}
 
     wb = openpyxl.load_workbook(XLSX_PATH)
     ws = wb['schema (gap-filled)']

@@ -6,17 +6,16 @@ category/operation/provider/resource_type/source) and typing the new
 enrichment fields properly (api_versions as an array, locations_count as
 an integer, the supports_* flags as real booleans).
 
-Re-derives the ARM match directly from azureresourcetypes.csv rather
+Re-derives the ARM match directly from azureresourcetypes.json rather
 than reading the xlsx's already-written enrichment columns back and
 guessing from whether they're non-empty - some matched rows have a
-genuinely empty CSV field (e.g. providerDisplayName is blank for 293
-catalog rows), which would otherwise look identical to "not matched".
+genuinely null providerDisplayName in the source (293 catalog rows),
+which would otherwise look identical to "not matched".
 
 Run this again after re-running enrich_microsoft_schema.py:
     python3 windows/tools/export_schema_json.py
 (run from the repo root, or any directory - paths below are relative to
 this file's location)"""
-import csv
 import json
 import os
 import openpyxl
@@ -24,7 +23,7 @@ import openpyxl
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(HERE, '..', 'data')
 XLSX_PATH = os.path.join(DATA_DIR, 'MicrosoftCloud_Schema.xlsx')
-CSV_PATH = os.path.join(DATA_DIR, 'azureresourcetypes.csv')
+JSON_SOURCE_PATH = os.path.join(DATA_DIR, 'azureresourcetypes.json')
 OUT_PATH = os.path.join(DATA_DIR, 'MicrosoftCloud_Schema.json')
 
 
@@ -38,6 +37,8 @@ def to_bool(v):
 
 
 def to_int(v):
+    if isinstance(v, int):
+        return v
     v = (v or '').strip()
     try:
         return int(v)
@@ -46,10 +47,9 @@ def to_int(v):
 
 
 def main():
-    art_by_key = {}
-    with open(CSV_PATH, newline='', encoding='utf-8') as f:
-        for row in csv.DictReader(f):
-            art_by_key[row['resourceType'].strip().lower()] = row
+    with open(JSON_SOURCE_PATH, encoding='utf-8') as f:
+        art_rows = json.load(f)
+    art_by_key = {row['resourceType'].strip().lower(): row for row in art_rows}
 
     wb = openpyxl.load_workbook(XLSX_PATH, data_only=True)
     ws = wb['schema (gap-filled)']
