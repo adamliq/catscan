@@ -1,0 +1,93 @@
+{
+  "product": "FortiManager",
+  "source_documentation": {
+    "primary_version": "7.6.2",
+    "guide": "Log Message Reference",
+    "note": "FortiManager and FortiAnalyzer share the same Log Message Reference guide. FortiManager itself only emits the 'event' log type; 'appevent' subtypes below apply to FortiAnalyzer only and are included because they live in the same shared reference.",
+    "urls": [
+      "https://docs.fortinet.com/document/fortimanager/7.6.1/log-message-reference/425476/log-types-and-subtypes",
+      "https://docs.fortinet.com/document/fortimanager/7.6.2/log-message-reference/238528/fortimanager-log-types-and-subtypes",
+      "https://docs.fortinet.com/document/fortimanager/7.6.2/log-message-reference/207089/fortianalyzer-log-types-and-subtypes",
+      "https://docs.fortinet.com/document/fortimanager/7.6.0/log-message-reference/39757/fortimanager-event-log-message-example",
+      "https://docs.fortinet.com/document/fortimanager/6.0.1/log-message-reference/613273/introduction",
+      "https://fortinetweb.s3.amazonaws.com/docs.fortinet.com/v2/attachments/3c837a94-ac20-11ef-8462-56b434c748ff/FortiManager_&_FortiAnalyzer_7.6.2_Log_Reference.pdf"
+    ]
+  },
+  "log_id_format": {
+    "description": "log_id is a 10-digit number combining type, subtype (category), and message ID.",
+    "structure": "digits 1-2 = log type, digits 3-4 = subtype/category number, digits 5-10 = message ID (leading zero of message ID is dropped when displayed)",
+    "example": "0001010018 -> type=01 (event), category=01 (system), message_id=010018 (displayed as 10018)"
+  },
+  "log_types": [
+    {
+      "type": "event",
+      "applies_to": ["FortiManager", "FortiAnalyzer"],
+      "description": "Records system and administrative events, such as downloading a backup copy of the configuration, or daemon activities.",
+      "subtypes": [
+        { "code": "system",   "name": "System manager",                    "category": 1,  "product": "FortiManager", "description": "Core system/admin actions, login/logout, backups" },
+        { "code": "fgfm",     "name": "FortiGate-FortiManager protocol",   "category": 2,  "product": "FortiManager", "description": "FGFM tunnel/device registration events" },
+        { "code": "devcfg",   "name": "Device configuration",              "category": 3,  "product": "FortiManager", "description": "Managed device configuration changes" },
+        { "code": "glbcfg",   "name": "Global database",                  "category": 4,  "product": "FortiManager", "description": "Global ADOM/policy package database changes" },
+        { "code": "scrmgr",   "name": "Script manager",                   "category": 5,  "product": "FortiManager", "description": "CLI/TCL script execution" },
+        { "code": "webport",  "name": "Web portal",                       "category": 6,  "product": "FortiManager", "description": "Web portal activity" },
+        { "code": "scply",    "name": "Security console",                 "category": 8,  "product": "FortiManager", "description": "Security console (policy) actions" },
+        { "code": "dm",       "name": "Deployment manager",                "category": 12, "product": "FortiManager", "description": "Install/deployment tasks" },
+        { "code": "rtmon",    "name": "Real-time monitor",                "category": 13, "product": "FortiManager", "description": "Real-time monitoring events" },
+        { "code": "ha",       "name": "High Availability",                "category": 15, "product": "FortiManager", "description": "HA cluster events" },
+        { "code": "fmwmgr",   "name": "Firmware manager",                 "category": 16, "product": "FortiManager", "description": "Firmware upgrade/push" },
+        { "code": "fgd",      "name": "FortiGuard service",               "category": 17, "product": "FortiManager", "description": "FortiGuard updates/connectivity" },
+        { "code": "iolog",    "name": "Debug IO log",                     "category": 20, "product": "FortiManager", "description": "Internal debug I/O" },
+        { "code": "objcfg",   "name": "Object changes",                   "category": 21, "product": "FortiManager", "description": "Object (address, service, etc.) changes" },
+        { "code": "dvm",      "name": "DVM",                              "category": 22, "product": "FortiManager", "description": "Device manager (add/delete/import device)" },
+        { "code": "fmgws",    "name": "FortiManager web service",        "category": 23, "product": "FortiManager", "description": "REST/JSON API activity" },
+        { "code": "logd",     "name": "Log daemon",                       "category": 25, "product": "FortiManager", "description": "Logging daemon events" },
+        { "code": "fips",     "name": "FIPS-CC",                          "category": 26, "product": "FortiManager", "description": "FIPS/Common Criteria mode events" },
+        { "code": "devops",   "name": "Managed device operations",        "category": 27, "product": "FortiManager", "description": "Device-level operational tasks" },
+        { "code": "docker",   "name": "Management extension applications","category": 41, "product": "FortiManager", "description": "Docker-based extension apps (e.g. FortiSOAR connectors)" },
+        { "code": "fazsys",   "name": "FortiAnalyzer system",             "category": 28, "product": "FortiAnalyzer", "description": "FortiAnalyzer system-level events" },
+        { "code": "logdev",   "name": "Logging device",                   "category": 29, "product": "FortiAnalyzer", "description": "Logging device events" },
+        { "code": "logging",  "name": "Logging status/monitoring",        "category": 30, "product": "FortiAnalyzer", "description": "Logging status/monitoring" },
+        { "code": "logfile",  "name": "Log files",                       "category": 31, "product": "FortiAnalyzer", "description": "Log file management" },
+        { "code": "report",   "name": "Report",                          "category": 32, "product": "FortiAnalyzer", "description": "Reporting engine events" },
+        { "code": "eventmgmt","name": "Event management",                "category": 33, "product": "FortiAnalyzer", "description": "Event management" },
+        { "code": "logdb",    "name": "Logging database",                 "category": 34, "product": "FortiAnalyzer", "description": "Logging database events" },
+        { "code": "hcache",   "name": "Cache for data query",             "category": 35, "product": "FortiAnalyzer", "description": "Data query cache (hcache)" },
+        { "code": "diskquota","name": "Disk/quota space",                 "category": 36, "product": "FortiAnalyzer", "description": "Disk/quota space events" },
+        { "code": "ediscovery","name": "Email Discovery",                 "category": 38, "product": "FortiAnalyzer", "description": "Email discovery events" },
+        { "code": "fazha",    "name": "FortiAnalyzer High Availability", "category": 39, "product": "FortiAnalyzer", "description": "FortiAnalyzer HA cluster events" },
+        { "code": "incident", "name": "Incident",                        "category": 40, "product": "FortiAnalyzer", "description": "Incident events (event type)" }
+      ]
+    },
+    {
+      "type": "appevent",
+      "applies_to": ["FortiAnalyzer"],
+      "description": "Records event logs for each ADOM for applications, such as Playbooks. Applies to FortiAnalyzer only.",
+      "subtypes": [
+        { "code": "incident",  "name": "Incident",          "category": 1,  "product": "FortiAnalyzer", "description": "Incident events (appevent type)" },
+        { "code": "playbook",  "name": "Playbook",          "category": 14, "product": "FortiAnalyzer", "description": "SOAR playbook execution events" },
+        { "code": "report",    "name": "Report",            "category": 17, "product": "FortiAnalyzer", "description": "Report app events" },
+        { "code": "logdev",    "name": "Logging device",    "category": 18, "product": "FortiAnalyzer", "description": "Logging device app events" },
+        { "code": "diskquota", "name": "Disk/quota space",  "category": 20, "product": "FortiAnalyzer", "description": "Disk/quota space app events" }
+      ]
+    }
+  ],
+  "common_field_schema": {
+    "description": "Common envelope fields present on FortiManager event log messages, in addition to message-specific fields defined per individual log_id.",
+    "example_raw_message": "2020-05-12 17:01:16 log_id=0001010018 type=event subtype=system pri=information desc=\"User login/logout successful\" user=\"admin\" userfrom=\"JSON(10.100.55.254)\" msg=\"user 'admin' with profile 'Super_User' logout from JSON(10.100.55.254)\" session_id=5108 adminprof=\"Super_User\"",
+    "fields": [
+      { "name": "date",       "example": "2020-05-12", "type": "string (YY-MM-DD)", "description": "Date the event occurred" },
+      { "name": "time",       "example": "17:01:16", "type": "string (HH:MM:SS)", "description": "Time the event occurred" },
+      { "name": "log_id",     "example": "0001010018", "type": "string (10-digit)", "description": "Composite ID: type (digits 1-2) + subtype/category (digits 3-4) + message ID (digits 5-10)" },
+      { "name": "type",       "example": "event", "type": "string", "description": "Log type" },
+      { "name": "subtype",    "example": "system", "type": "string", "description": "Log subtype code (see log_types.subtypes)" },
+      { "name": "pri",        "example": "information", "type": "string", "description": "Priority/severity level" },
+      { "name": "desc",       "example": "User login/logout successful", "type": "string", "description": "Static description of the event class" },
+      { "name": "user",       "example": "admin", "type": "string", "description": "User who triggered the event" },
+      { "name": "userfrom",   "example": "JSON(10.100.55.254)", "type": "string", "description": "Source of the action (interface/method + IP)" },
+      { "name": "msg",        "example": "user 'admin' with profile 'Super_User' logout from JSON(10.100.55.254)", "type": "string", "description": "Full human-readable message" },
+      { "name": "session_id", "example": "5108", "type": "integer", "description": "Session identification number" },
+      { "name": "adminprof",  "example": "Super_User", "type": "string", "description": "Administrator profile associated with the account" }
+    ],
+    "note": "Each individual message ID (e.g. 0001010018) can carry additional message-specific fields beyond this common set, documented per message under each subtype in the official Log Message Reference. Not enumerated here due to volume (hundreds of message IDs across all subtypes)."
+  }
+}
