@@ -254,6 +254,23 @@ or interferes with the others.
   spreadsheet-native copy). `tools/enrich_microsoft_schema.py` reapplies the join
   to the xlsx and `tools/export_schema_json.py` regenerates the JSON from
   it — both idempotent, safe to re-run after either input changes.
+
+  The link runs the other way too: `tools/roll_schema_into_arm_types.py`
+  rolls `MicrosoftCloud_Schema.json` back into `azureresourcetypes.json`,
+  adding a `schemaOperations` array to every ARM resource type that has
+  one or more matching schema rows (192 of the 12,233 resource types do
+  — the same 205 provider/type combinations the forward join matches,
+  minus 13 whose resource type isn't itself a row in the ARM catalog).
+  Each entry is trimmed to `{service, category, operation, source}`
+  (provider/resource type are dropped — they're already that row's own
+  `resourceType`). So `MicrosoftCloud_Schema.json` answers "what ARM
+  metadata does this schema operation's resource type have," and this
+  script makes `azureresourcetypes.json` able to answer the reverse,
+  "what schema operations exist for this resource type" — both derived
+  from the same two source files, kept in sync by re-running the
+  relevant script rather than hand-edited. Only the JSON carries this;
+  `azureresourcetypes.csv` stays the plain, unenriched flat catalog,
+  since CSV has no natural way to nest a list per row.
 - `linux/` — `linuxevent-catalogue`'s data and docs, unchanged:
   `data/events.csv`/`.json`, `data/reference/*`, `docs/*`, and its own
   `README.md`.
