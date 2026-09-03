@@ -235,8 +235,17 @@ or interferes with the others.
 - `index.html` — the merged lookup page described above.
 - `windows/` — `Winevent-catalogue`'s data and docs, unchanged:
   `data/events.csv`/`.json`, `data/cloud_logs.csv`/`.json`,
-  `data/reference/*`, `docs/*`, and its own `README.md` (the full field
-  reference for every column).
+  `data/cloud_actions.csv`/`.json`, `data/reference/*`, `docs/*`, and its
+  own `README.md` (the full field reference for every column). Also
+  holds two files kept only here, not mirrored from Winevent-catalogue:
+  `data/MicrosoftCloud_Schema.xlsx` (a spreadsheet-native export of the
+  same Cloud Actions Explorer schema, enriched with Azure Resource
+  Manager resource-type metadata — API versions, supported capabilities
+  like private endpoints/managed identity/tags/locking — joined from
+  `data/azureresourcetypes.csv`, an ARM resource-type catalog snapshot;
+  `tools/enrich_microsoft_schema.py` reapplies that join, safe to
+  re-run) and `data/azureresourcetypes.csv` itself, kept for provenance
+  and so the join is reproducible.
 - `linux/` — `linuxevent-catalogue`'s data and docs, unchanged:
   `data/events.csv`/`.json`, `data/reference/*`, `docs/*`, and its own
   `README.md`.
