@@ -21,9 +21,10 @@ services, each mapped to its CloudTrail event and ACSC logging guidance
 where one exists) built directly in this repo from a [`Events_Other`](Events_Other/README.md)
 data export rather than merged from an external source repo, and an
 **Other Events** menu for vendor log/event references that don't belong to
-any of the above — starting with FortiGate's 40 log types (see
-[`other/`](other/README.md)) and built to hold more vendors over time,
-each keeping its own schema shape rather than a forced common one.
+any of the above — FortiGate's 40 log types and FortiManager/
+FortiAnalyzer's 37 (see [`other/`](other/README.md)) so far, with a real
+vendor picker and room for more over time, each keeping its own schema
+shape rather than a forced common one.
 
 ## Web lookup
 
@@ -104,11 +105,12 @@ this page isn't fully "no external requests": the Threat Detection tab's
 fetches its one `aws_iam_actions.json` file (from `aws/data/`, see below;
 21,164 actions makes for a 6.5&nbsp;MB file, too large to comfortably
 embed inline the way the other three catalogues' data is), and the
-**Other Events** tab fetches `fortigate_log_reference.json` (from
-`other/data/`, see below — a modest ~46&nbsp;KB on its own, but fetched
-rather than embedded for consistency with the other two runtime-loaded
-tabs and because Other Events is meant to grow more vendor files over
-time). All three degrade gracefully under `file://` (browsers block
+**Other Events** tab fetches `fortigate_log_reference.json` and
+`fortimanager_log_schema.json` (from `other/data/`, see below — a modest
+~46&nbsp;KB and ~4&nbsp;KB respectively, but both fetched rather than
+embedded for consistency with the other two runtime-loaded tabs and
+because Other Events is meant to grow more vendor files over time). All
+three degrade gracefully under `file://` (browsers block
 `fetch()` of local files) with an explanatory message — Heat Coverage the
 same way the source repo already did, AWS Events and Other Events the
 same way Heat Coverage does; serve the repo over http(s) (GitHub Pages,
@@ -198,36 +200,61 @@ its own container and that container's `[data-theme="dark"]`, every
 query scoped to its own container) rather than needing to be transformed
 into them. Neither app's data is embedded like Windows/Linux/Threat
 Detection's core catalogues are, either: on load AWS Events `fetch()`es
-`aws/data/aws_iam_actions.json` and Other Events
-`other/data/fortigate_log_reference.json` (see Structure), and only
-builds its stats tiles, rail list, and search table — and registers
-itself on `window.__compHub` for the shell Search pill — once that
-resolves; each tab shows a loading message (and, under `file://`, an
-explanatory error) until then, the same pattern Threat Detection's own
-Heat Coverage tab already used for its runtime fetches.
+`aws/data/aws_iam_actions.json` and Other Events fetches each vendor's
+own file independently — `other/data/fortigate_log_reference.json` and
+`other/data/fortimanager_log_schema.json` (see Structure) — and only
+builds that vendor's stats tiles, rail list, and search table — and
+registers its rows on the shared `window.__compHub['other']` entry for
+the shell Search pill — once its own fetch resolves; each vendor panel
+shows its own loading message (and, under `file://`, an explanatory
+error) until then, the same pattern Threat Detection's own Heat Coverage
+tab already used for its runtime fetches. The two vendors load and
+register independently, so a search fired before both resolve just
+won't have the still-loading one's results yet.
 
-**Other Events** is built to hold more than one vendor over time, so its
-header carries a vendor picker — right now a single always-active
-"FortiGate" pill, since a real selector isn't worth building for one
-option; it becomes a real picker when a second vendor arrives, not ahead
-of that need. FortiGate's own data has a shape no other tab's does — 40
-log types (grouped `traffic`/`event`/`utm`) each with CLI/GUI instructions
-for turning it on, an example raw log line, and its own field list, plus
-material that doesn't belong repeated per row (8 severity levels, 26
-fields common to every log line) — so on top of the familiar rail +
-toolbar + table + detail-modal shell every other tab here uses, it adds a
-second **Log Types / Reference** mode toggle (visually modeled on Schema
-explorer's own Search/Explore toggle) to hold that shared material
-separately instead of repeating it in every row's modal. This is the
-shape the tab's own generic parts (container, theme wiring,
-`window.__compHub` registration, rail/toolbar/table CSS) are meant to
-carry forward for a second vendor without a rewrite; the parts specific
-to *reading* a vendor's data — flattening FortiGate's `types` →
-`subtypes` nesting into rows, rendering its enable/example/fields modal
-sections — are written for FortiGate's own shape and are exactly what a
-second vendor's own (likely differently-shaped) data would need its own
-version of, rather than trying to force a one-size-fits-all row schema
-ahead of seeing what a second vendor's data actually looks like.
+**Other Events** is built to hold more than one vendor over time. It
+shipped with a single always-active "FortiGate" pill in its header on
+the stated basis that a real selector isn't worth building for one
+option; the second vendor, FortiManager/FortiAnalyzer, arrived days
+later with a genuinely different shape — no confidence rating, no
+per-subtype enable instructions or example line, no enumerated field
+list, but a `product` split (FortiManager vs FortiAnalyzer) and a
+composite log-ID format FortiGate's data doesn't have — which is exactly
+the trigger that was waiting for: the header now carries a real,
+clickable two-pill vendor picker (`FortiGate` / `FortiManager`), each
+vendor's whole panel (stats, rail, table, mode toggle, both modals) a
+sibling `<div>` shown or hidden by the picker, each with its own
+independent search/filter/mode state so switching vendors and switching
+back preserves what you were doing on each.
+
+FortiGate's own data — 40 log types (grouped `traffic`/`event`/`utm`)
+each with CLI/GUI instructions for turning it on, an example raw log
+line, and its own field list, plus material that doesn't belong repeated
+per row (8 severity levels, 26 fields common to every log line) — keeps
+its own **Log Types / Reference** mode toggle (visually modeled on Schema
+explorer's own Search/Explore toggle). FortiManager/FortiAnalyzer's 37
+log types get the identical toggle pattern but different Reference
+content that matches *its* shape: a log-ID-format explainer (how the
+10-digit composite ID is built) and 12 common fields with one example
+raw message, no severity table (this source doesn't have one). Its
+detail modal shows an Identification block (type, category number,
+which product the subtype applies to) instead of enable/example
+sections, and says plainly that per-subtype fields aren't enumerated in
+the source ("hundreds of message IDs across all subtypes") rather than
+showing an empty section or inventing one.
+
+This is exactly the shape the tab's generic parts (container, theme
+wiring, the vendor-tab switcher, `window.__compHub['other']`
+registration — merged across vendors, each row tagged with its own
+`vendor` so a cross-catalogue search result reopens on the right
+vendor's panel — rail/toolbar/table/modal CSS) were meant to carry
+forward for a second vendor without a rewrite; the parts specific to
+*reading* each vendor's data (flattening its own nesting into rows,
+rendering its own modal sections) got their own version instead of
+being forced through FortiGate's, which is exactly why FortiManager's
+rows don't have a confidence badge that isn't there or a fields list
+that was never enumerated: nothing here is invented to fill a shape the
+source data doesn't have.
 
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
@@ -290,14 +317,18 @@ Cloud Actions Explorer's own search/service-filter/sort/detail-modal and
 Search/Explore toggle (independent of Schema explorer's), cross-link jump
 buttons, dark-mode theming, the Threat Detection Heat Coverage matrix and
 Validations tab, the AWS Events Action Explorer's own
-search/service-filter/sort/detail-modal, the Other Events Log Types table
-(all 40 FortiGate rows, its type-rail filter, and its own Log Types/
-Reference toggle — severity levels, common fields, and sources all
-rendering correctly), cross-catalogue search finding and opening both an
-AWS action and a FortiGate log type, and repeated tab-switching in every
-direction) to confirm none of the five apps — or, here, none of two
-sub-tabs *within* the same app — leaks into or interferes with the
-others.
+search/service-filter/sort/detail-modal, the Other Events vendor picker
+switching cleanly between FortiGate's 40 rows and FortiManager's 37 (each
+with its own type-rail filter, Log Types/Reference toggle, and detail
+modal rendering correctly — severity levels/common fields/sources for
+FortiGate, the log-ID-format explainer/common fields/sources for
+FortiManager), cross-catalogue search finding and opening an AWS action,
+a FortiGate log type (jumping to the FortiGate vendor panel), and a
+FortiAnalyzer-only log type (jumping to the FortiManager vendor panel),
+and repeated tab-switching in every direction) to confirm none of the
+five apps — or, here, none of two sub-tabs *within* the same app, nor
+the two vendor panels within Other Events — leaks into or interferes
+with the others.
 
 ## Structure
 
@@ -366,10 +397,13 @@ others.
   (fetched by `index.html` at runtime, generated from `Events_Other`'s
   CSV) and `tools/build_aws_json.py` (regenerates it). See its own
   `README.md`.
-- `other/` — data for the Other Events tab: `data/fortigate_log_reference.json`
-  (fetched by `index.html` at runtime; compiled from FortiOS's own
-  documentation, kept exactly as compiled rather than reshaped — see its
-  own `README.md`). No build tooling here, unlike `aws/`: the JSON is used
+- `other/` — data for the Other Events tab, one file per vendor, each
+  fetched by `index.html` at runtime and kept exactly as compiled rather
+  than reshaped (see its own `README.md`): `data/fortigate_log_reference.json`
+  (from FortiOS's own documentation) and
+  `data/fortimanager_log_schema.json` (from the FortiManager/FortiAnalyzer
+  7.6.2 documentation — the two products share one Log Message Reference
+  guide). No build tooling here, unlike `aws/`: both JSON files are used
   as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
@@ -395,10 +429,16 @@ source repo the normal way, then regenerate this repo's `index.html` from
 its updated `index.html` export. To extend AWS Events, update
 `Events_Other/aws_iam_actions_expanded.csv`, run
 `python3 aws/tools/build_aws_json.py`, then regenerate `index.html` the
-same way. To extend Other Events, either update
-`other/data/fortigate_log_reference.json` in place (for FortiGate) or add
-a new vendor's own data file, both followed by regenerating `index.html`;
-a genuinely new vendor also needs its own small `build_app_*`-style
-addition to the merge script's `main()` (own container id, own rail/
-toolbar/table CSS, own data-shape-specific rendering) — see `other/`'s own
+same way. To extend Other Events for an existing vendor, update that
+vendor's own file in place (`other/data/fortigate_log_reference.json` or
+`other/data/fortimanager_log_schema.json`), then regenerate `index.html`.
+Adding a genuinely new vendor follows the pattern FortiManager set
+alongside FortiGate inside `build_app_other()` (not a separate top-level
+function — all of Other Events' vendors share one `#app-other`
+container): a new data file, a new pill in the vendor-tab row, a new
+sibling `<div>` panel (own stats/rail/mode-toggle/table/modal markup,
+reusing the shared `other-*` CSS classes), and that vendor's own
+flatten/render/modal JS — written for its own data's shape rather than
+forced through an existing vendor's — registered in the `vendorPanels`
+map and merged into `window.__compHub['other']` the same way. See `other/`'s own
 README for why that part isn't generic across vendors.

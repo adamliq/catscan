@@ -4,21 +4,23 @@ Data for the **Other Events** tab in the top-level `index.html` — event
 and log-type references for vendors outside the Microsoft/AWS/Linux/
 Threat-Detection catalogues. Unlike those four, this isn't one schema:
 each vendor keeps whatever shape its own documentation actually has
-(FortiGate's log reference looks nothing like AWS's flat IAM-action
-catalog, and the next vendor added here won't necessarily look like
-either) rather than being forced into a common row shape. What *is*
-shared across vendors is the visual language — rail + toolbar + table +
-detail modal, a Log Types/Reference mode toggle where a vendor has
-material that doesn't belong in a table (enable instructions, severity
-levels, a common-fields glossary) — each vendor's own CSS/JS in
-`index.html`, not literally shared classes across the `#app-win`/
-`#app-aws`/etc. boundary the way `windows/`'s own Cloud Actions Explorer
-reuses Schema explorer's classes (each top-level app here is its own
-scoped CSS/JS island, same as AWS Events already is).
+rather than being forced into a common row shape. FortiGate's log
+reference and FortiManager/FortiAnalyzer's log schema (below) look
+nothing alike — one has per-subtype CLI/GUI enable instructions, an
+example log line, and a confidence rating; the other has a numeric
+category code, a `product` split (FortiManager vs FortiAnalyzer), and a
+composite log-ID format instead — and the tab doesn't paper over that:
+each vendor gets its own flatten/render/modal logic in `index.html`,
+sharing only the visual language (rail + toolbar + table + detail modal,
+a Log Types/Reference mode toggle for material that doesn't belong
+repeated per row) via the same `#app-other`-scoped CSS classes, not a
+common data model.
 
-Only one vendor tab exists so far, so the vendor picker in the header is
-a single always-active pill rather than a real selector — that's added
-when a second vendor actually arrives, not built ahead of the need.
+The header carries a real vendor picker now that a second vendor exists
+— it was a single always-active pill through FortiGate alone, on the
+stated basis that a picker isn't worth building for one option; it
+became one the moment a second vendor's data arrived, not ahead of that
+need.
 
 - `data/fortigate_log_reference.json` — FortiGate log types, subtypes,
   field schema, and the CLI/GUI setting that turns each one on, compiled
@@ -31,9 +33,7 @@ when a second vendor actually arrives, not built ahead of the need.
   directly from Fortinet's published reference — the remaining 33
   `"typical"`, following FortiOS's standard field conventions for that
   feature with log IDs confirmed but not confirmed field-by-field
-  against a specific build). Same runtime-fetch trade-off as AWS Events
-  and Threat Detection's Heat Coverage tab: needs the page served over
-  http(s), not opened as a local `file://`.
+  against a specific build).
 
   Beyond the 40 per-subtype rows, the file also carries reference
   material that doesn't belong repeated on every row — 8 severity
@@ -41,6 +41,37 @@ when a second vendor actually arrives, not built ahead of the need.
   prerequisites paragraph — rendered in the tab's own Reference view
   rather than the per-subtype detail modal.
 
+- `data/fortimanager_log_schema.json` — FortiManager and FortiAnalyzer's
+  shared log-type schema (they document both products in one Log
+  Message Reference guide), compiled from the FortiManager/FortiAnalyzer
+  7.6.2 documentation. 37 subtypes across 2 top-level types (32
+  `event` + 5 `appevent`; 20 rows apply to FortiManager, 17 to
+  FortiAnalyzer — `appevent` is FortiAnalyzer-only, and a handful of
+  `event` subtypes, like `fazsys`/`logdev`/`report`, are also
+  FortiAnalyzer-only despite sharing the `event` type with FortiManager's
+  own rows). Each subtype carries a `category` number rather than a
+  confidence rating, since this file has one source doc rather than
+  FortiGate's verified/typical split.
+
+  This file's shape doesn't have per-subtype enable instructions, an
+  example log line, or an enumerated field list the way FortiGate's
+  does — the source material explicitly doesn't enumerate per-subtype
+  fields ("hundreds of message IDs across all subtypes"), so the detail
+  modal says exactly that rather than showing an empty section, and
+  points at the Reference view's 12 common fields instead. What this
+  file *does* carry that FortiGate's doesn't: a `log_id_format`
+  explainer (how the 10-digit composite ID is built from type + category
+  + message ID) and one `example_raw_message`, both rendered in the
+  Reference view alongside the common fields and the six source URLs.
+
+Both files `fetch()` at runtime rather than embed inline (same trade-off
+as AWS Events and Threat Detection's Heat Coverage tab: needs the page
+served over http(s), not opened as a local `file://`), and both
+register their rows on the tab's shared `window.__compHub['other']`
+entry (merged across vendors, each row tagged with its own `vendor` so
+a cross-catalogue search result opens on the right vendor's own panel
+and tab).
+
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-the JSON is used as delivered, not derived from another file in this
+both files are used as delivered, not derived from another file in this
 repo.
