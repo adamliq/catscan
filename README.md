@@ -299,7 +299,7 @@ color choices. Adding the doctype puts the page in Standards Mode, which
 fixes ordinary inheritance for every table at once.)
 
 Windows's own **Cloud Actions Explorer** sub-tab (next to its Cloud logs
-tab — 3,670 operations across six Microsoft cloud audit/log schemas
+tab — 3,665 operations across six Microsoft cloud audit/log schemas
 (Microsoft Entra ID, Azure resource logs, the Azure Activity Log,
 Microsoft Intune, Microsoft Purview's unified audit log, and Azure
 DevOps), mapped to their category, resource provider, and resource type)
