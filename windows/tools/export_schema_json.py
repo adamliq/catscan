@@ -6,13 +6,15 @@ category/operation/provider/resource_type/source) and typing the new
 enrichment fields properly (api_versions as an array, locations_count as
 an integer, the supports_* flags as real booleans).
 
-Also carries the sheet's own "api" column when a row has one (currently
-only the 847 purview rows sourced from Microsoft's raw Office 365
-Management Activity API schema reference are tagged, with the value
-"Office 365 Management Activity" - distinguishing them from purview
-rows sourced from workload-research documentation instead) - added as
-an optional `api` key, present only when the sheet cell isn't blank,
-same convention as `arm`.
+Also carries a handful of optional extra columns through when a row
+has one, present only when the sheet cell isn't blank, same convention
+as `arm`: "api" (currently only purview rows sourced from Microsoft's
+raw Office 365 Management Activity API schema reference are tagged,
+with the value "Office 365 Management Activity" - distinguishing them
+from purview rows sourced from workload-research documentation
+instead), "friendly_name" (a human-readable name for the operation
+code, where the source publishes one), and "description" (a plain-
+English sentence describing what the operation does).
 
 Re-derives the ARM match directly from azureresourcetypes.json rather
 than reading the xlsx's already-written enrichment columns back and
@@ -33,6 +35,12 @@ DATA_DIR = os.path.join(HERE, '..', 'data')
 XLSX_PATH = os.path.join(DATA_DIR, 'MicrosoftCloud_Schema.xlsx')
 JSON_SOURCE_PATH = os.path.join(DATA_DIR, 'azureresourcetypes.json')
 OUT_PATH = os.path.join(DATA_DIR, 'MicrosoftCloud_Schema.json')
+
+# Optional extra columns, carried through as a same-named JSON key only
+# when the sheet cell for that row isn't blank - looked up by header
+# name (not a fixed position) so a future sheet can add/drop/reorder
+# these without a code change here.
+OPTIONAL_COLUMNS = ['api', 'friendly_name', 'description']
 
 
 def to_bool(v):
@@ -62,12 +70,12 @@ def main():
     wb = openpyxl.load_workbook(XLSX_PATH, data_only=True)
     ws = wb['schema (gap-filled)']
     header = [c.value for c in ws[1]]
-    api_col = header.index('api') + 1 if 'api' in header else None
+    optional_cols = {name: header.index(name) + 1 for name in OPTIONAL_COLUMNS if name in header}
     rows = list(ws.iter_rows(min_row=2, max_col=6, values_only=True))
 
     out = []
     matched = 0
-    api_tagged = 0
+    optional_tagged = {name: 0 for name in optional_cols}
     for i, (service, category, operation, provider, rtype, source) in enumerate(rows):
         provider = (provider or '').strip()
         rtype = (rtype or '').strip()
@@ -79,11 +87,11 @@ def main():
             'resource_type': rtype,
             'source': (source or '').strip(),
         }
-        if api_col:
-            api_val = ws.cell(row=i + 2, column=api_col).value
-            if api_val:
-                entry['api'] = api_val.strip()
-                api_tagged += 1
+        for name, col in optional_cols.items():
+            val = ws.cell(row=i + 2, column=col).value
+            if val:
+                entry[name] = val.strip() if isinstance(val, str) else val
+                optional_tagged[name] += 1
         art = None
         if provider and provider != 'N/A' and rtype and not rtype.startswith('N/A'):
             art = art_by_key.get((provider + '/' + rtype).lower())
@@ -106,7 +114,8 @@ def main():
         json.dump(out, f, ensure_ascii=False, indent=2)
         f.write('\n')
 
-    print(f'wrote {OUT_PATH}: {len(out)} rows, {matched} with ARM enrichment, {api_tagged} with an api tag')
+    tagged_summary = ', '.join(f'{n} with {name}' for name, n in optional_tagged.items())
+    print(f'wrote {OUT_PATH}: {len(out)} rows, {matched} with ARM enrichment' + (f', {tagged_summary}' if tagged_summary else ''))
 
 
 if __name__ == '__main__':
