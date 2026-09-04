@@ -346,6 +346,88 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   exports), Microsoft 365's own record-type list is larger than the 28
   covered here, and none of these seven platforms stand still — all of
   them ship new log sources on an ongoing basis.
+- `data/cloud_actions.csv` / `.json` — a companion to `cloud_logs.csv`
+  above, one level more granular: where that file lists log *categories*
+  (`AuditLogs`, `SignInLogs`, …), this lists the individual *operations*
+  reported within six of those categories' schemas — 3,665 rows across
+  Microsoft Entra ID audit activities, Azure resource-log operations, the
+  Azure Activity Log, Microsoft Intune audit events, Microsoft Purview's
+  unified audit log, and Azure DevOps's own audit log. Powers the web
+  lookup page's Cloud Actions Explorer tab, next to Cloud logs. One row
+  per `(service, category, operation)`:
+  - `service` — which of the six source schemas the row came from:
+    `identity` (Microsoft Entra ID / AADIAM audit activities, 918 rows),
+    `logshipping` (per-resource-type diagnostic-setting operations, 1,170
+    rows), `activitylog` (the subscription-level Azure Activity Log, 18
+    rows — distinct from `logshipping`'s per-resource diagnostic
+    settings), `intunelogshipping` (Microsoft Intune audit events, 53
+    rows), `purview` (Microsoft Purview's unified audit log — every
+    workload Microsoft documents under the Office 365 Management
+    Activity API / M365 unified audit log that a five-pass research
+    effort was able to investigate, from Entra/Exchange/SharePoint
+    activities through Copilot, Power Platform, and Agent 365 — 1,285
+    rows across 67 workloads; a workload with no reachable operation
+    catalog still gets one `N/A`-operation row explaining why in its
+    `source` text, rather than being omitted), or `azuredevops` (Azure
+    DevOps's own separate audit log — not part of Azure Monitor/Entra
+    ID, 221 rows)
+  - `category` — the diagnostic-setting/log category the operation is
+    reported under (e.g. `AuditLogs`, `SignInLogs`, `StorageWrite`) — 749
+    distinct values across the six services
+  - `operation` — the individual action/operation name, or `N/A` for 868
+    rows (mostly `logshipping`, plus a few `purview`/`activitylog`
+    categories) whose real schema is a fixed structure rather than an
+    enumerable operation name
+  - `provider` — the Azure resource provider namespace the operation
+    belongs to (e.g. `Microsoft.AADIAM`, `Microsoft.Storage`) — 116
+    distinct values — or `N/A` for the 1,525 rows from services that
+    aren't scoped to a specific Azure resource provider (`identity`,
+    `activitylog`, `purview`, `azuredevops`)
+  - `resource_type` — the resource type within that provider (e.g.
+    `diagnosticSettings`, `storageAccounts/blobServices`), or an
+    explanatory `N/A (…)` string for rows with no per-resource-type
+    scope (the web lookup page truncates these with an ellipsis in the
+    table and shows the full text on hover/in the detail view)
+  - `source` — free-text provenance for the row: `Original data (your
+    export)` for the 661 rows from the original supplied export, and one
+    of several `Gap-fill — …`/`Azure catalog — …`/Microsoft Learn
+    citation strings for everything added during later enrichment passes
+    (each graded Confirmed vs. Inferred by analogy; nothing fabricated).
+    Shown only in the web lookup page's detail view, not the table — most
+    values are short, some (particularly Azure DevOps's) are full
+    citations of the Microsoft Learn page a row was confirmed against.
+
+  The embedded copy the web lookup page actually runs on carries one
+  more field this repo's own `data/cloud_actions.csv`/`.json` doesn't:
+  an optional `arm` object, present on the 1,868 rows whose (provider,
+  resource_type) matches a real Azure Resource Manager resource type —
+  provider/resource-type display names, supported API versions, the
+  default API version, how many Azure regions the type is available in,
+  and which governance capabilities it supports (private endpoints,
+  managed identity, tags, resource locks). Sourced from an Azure
+  Resource Manager resource-type catalog snapshot maintained in the
+  `catscan` repo (`windows/data/azureresourcetypes.json` there,
+  `windows/tools/enrich_microsoft_schema.py` does the join) rather than
+  in this one, since that catalog is 12,233 rows/~13&nbsp;MB on its own —
+  far more than this schema needs, and out of place next to this
+  repo's own Windows-specific data. The Cloud Actions Explorer detail
+  view shows this `arm` block when present, plus a same-resource-type
+  "other operations here" cross-reference computed client-side from the
+  page's own already-embedded data (no separate fetch for that part —
+  the relationship is fully reconstructable from what's already on the
+  page). Rows with no ARM match show neither section, not an empty one.
+
+  Cloud Actions Explorer also has a Search/Explore view toggle, the same
+  pattern as Schema explorer: Search is the sortable/filterable table
+  above; Explore groups rows into collapsible cards by `(service,
+  category)` — the one grouping every row can join (`resource_type`/
+  `provider` are `N/A` for four of the six services, so grouping by
+  those would leave most of the catalogue in one undifferentiated
+  bucket) — each card showing its operations as clickable chips (falling
+  back to `resource_type`, then `provider`, then the category name
+  itself for the rows whose own `operation` is `N/A`) that open the same
+  detail modal a table row does. The search box and Service filter both
+  apply to whichever view is active.
 - `data/reference/audit_configuration.csv` / `.json` — how to configure
   auditing to collect events, one row per audit subcategory (or
   product-specific setting): the Group Policy / registry path, the steps to
