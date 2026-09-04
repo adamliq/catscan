@@ -309,7 +309,7 @@ color choices. Adding the doctype puts the page in Standards Mode, which
 fixes ordinary inheritance for every table at once.)
 
 Windows's own **Cloud Actions Explorer** sub-tab (next to its Cloud logs
-tab — 4,512 operations across six Microsoft cloud audit/log schemas
+tab — 5,148 operations across six Microsoft cloud audit/log schemas
 (Microsoft Entra ID, Azure resource logs, the Azure Activity Log,
 Microsoft Intune, Microsoft Purview's unified audit log, and Azure
 DevOps), mapped to their category, resource provider, and resource type)
@@ -389,28 +389,34 @@ Events — leaks into or interferes with the others.
   spreadsheet-native copy). `tools/enrich_microsoft_schema.py` reapplies the join
   to the xlsx and `tools/export_schema_json.py` regenerates the JSON from
   it — both idempotent, safe to re-run after either input changes. The
-  JSON also carries an optional `api` key straight from the xlsx's own
-  "api" column, present only on the 847 purview rows sourced from
-  Microsoft's raw Office 365 Management Activity API schema reference
-  (value `"Office 365 Management Activity"`) rather than the rest of
-  purview's workload-research documentation — same "absent unless
-  present in the source, nothing invented" convention as `arm`.
+  JSON also carries a handful of optional keys straight from the xlsx's
+  own columns, generically list-driven (`OPTIONAL_COLUMNS` in
+  `export_schema_json.py`) so a future column needs no code change: `api`,
+  present only on the 795 purview rows sourced from Microsoft's raw
+  Office 365 Management Activity API schema reference (value `"Office
+  365 Management Activity"`) rather than the rest of purview's
+  workload-research documentation; and `friendly_name`/`description`
+  (always present together), a human-readable name and plain-English
+  sentence for the operation, on the 1,340 purview rows whose source
+  publishes them — same "absent unless present in the source, nothing
+  invented" convention as `arm`.
 
   This enrichment isn't just a standalone data file anymore — Cloud
   Actions Explorer's own detail view shows it directly (provider/
   resource-type display names, API versions, region count, the four
   `supports_*` capability flags, a "Source API" row when `api` is
-  present, and a same-resource-type "other operations here"
-  cross-reference computed from the tab's own already-embedded data) on
-  whichever row you open, one more reason to keep this file and the
-  page's embedded copy in sync. That embedded copy used to be
-  Winevent-catalogue's own `index.html`'s `DATA.cloud_actions` (copied
-  over each time Winevent-catalogue regenerated it the normal way) —
-  Winevent-catalogue is no longer updated from this repo's work, so as
-  of this data's most recent expansion the two repos' Cloud Actions
-  Explorer data have diverged: this repo's own merged `index.html`
-  embeds `MicrosoftCloud_Schema.json` directly, and Winevent-catalogue's
-  own copy stays wherever it was last left.
+  present, "Friendly name"/"Description" rows when those are present,
+  and a same-resource-type "other operations here" cross-reference
+  computed from the tab's own already-embedded data) on whichever row
+  you open, one more reason to keep this file and the page's embedded
+  copy in sync. That embedded copy used to be Winevent-catalogue's own
+  `index.html`'s `DATA.cloud_actions` (copied over each time
+  Winevent-catalogue regenerated it the normal way) — Winevent-catalogue
+  is no longer updated from this repo's work, so as of this data's most
+  recent expansion the two repos' Cloud Actions Explorer data have
+  diverged: this repo's own merged `index.html` embeds
+  `MicrosoftCloud_Schema.json` directly, and Winevent-catalogue's own
+  copy stays wherever it was last left.
 
   The link runs the other way too: `tools/roll_schema_into_arm_types.py`
   rolls `MicrosoftCloud_Schema.json` back into `azureresourcetypes.json`,
