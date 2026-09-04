@@ -6,6 +6,14 @@ category/operation/provider/resource_type/source) and typing the new
 enrichment fields properly (api_versions as an array, locations_count as
 an integer, the supports_* flags as real booleans).
 
+Also carries the sheet's own "api" column when a row has one (currently
+only the 847 purview rows sourced from Microsoft's raw Office 365
+Management Activity API schema reference are tagged, with the value
+"Office 365 Management Activity" - distinguishing them from purview
+rows sourced from workload-research documentation instead) - added as
+an optional `api` key, present only when the sheet cell isn't blank,
+same convention as `arm`.
+
 Re-derives the ARM match directly from azureresourcetypes.json rather
 than reading the xlsx's already-written enrichment columns back and
 guessing from whether they're non-empty - some matched rows have a
@@ -53,11 +61,14 @@ def main():
 
     wb = openpyxl.load_workbook(XLSX_PATH, data_only=True)
     ws = wb['schema (gap-filled)']
+    header = [c.value for c in ws[1]]
+    api_col = header.index('api') + 1 if 'api' in header else None
     rows = list(ws.iter_rows(min_row=2, max_col=6, values_only=True))
 
     out = []
     matched = 0
-    for service, category, operation, provider, rtype, source in rows:
+    api_tagged = 0
+    for i, (service, category, operation, provider, rtype, source) in enumerate(rows):
         provider = (provider or '').strip()
         rtype = (rtype or '').strip()
         entry = {
@@ -68,6 +79,11 @@ def main():
             'resource_type': rtype,
             'source': (source or '').strip(),
         }
+        if api_col:
+            api_val = ws.cell(row=i + 2, column=api_col).value
+            if api_val:
+                entry['api'] = api_val.strip()
+                api_tagged += 1
         art = None
         if provider and provider != 'N/A' and rtype and not rtype.startswith('N/A'):
             art = art_by_key.get((provider + '/' + rtype).lower())
@@ -90,7 +106,7 @@ def main():
         json.dump(out, f, ensure_ascii=False, indent=2)
         f.write('\n')
 
-    print(f'wrote {OUT_PATH}: {len(out)} rows, {matched} with ARM enrichment')
+    print(f'wrote {OUT_PATH}: {len(out)} rows, {matched} with ARM enrichment, {api_tagged} with an api tag')
 
 
 if __name__ == '__main__':
