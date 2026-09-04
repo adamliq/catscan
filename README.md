@@ -256,6 +256,21 @@ rows don't have a confidence badge that isn't there or a fields list
 that was never enumerated: nothing here is invented to fill a shape the
 source data doesn't have.
 
+Both vendors' common fields (FortiGate's 26, FortiManager's 12)
+started out reachable only from the Reference view — a second click
+away from the same search box that finds every other row, and outside
+`window.__compHub` entirely. Both are now folded into the Log Types
+table itself as their own lightweight rows (a `Common fields` rail
+filter alongside the real types, a dash where a confidence/product
+badge would be rather than a fabricated one, clicking one opens a
+small modal instead of the full subtype detail) — reachable through
+the same search box, the same rail, and the same cross-catalogue
+search as every subtype row, without duplicating or removing the
+Reference view's own table (severity levels and the FortiManager
+log-ID-format explainer stay Reference-only, since they're not
+individually-named things worth searching for the way a field name
+is).
+
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
 viewports — the row silently overflowed and, worse, clicking a tab
@@ -322,13 +337,19 @@ switching cleanly between FortiGate's 40 rows and FortiManager's 37 (each
 with its own type-rail filter, Log Types/Reference toggle, and detail
 modal rendering correctly — severity levels/common fields/sources for
 FortiGate, the log-ID-format explainer/common fields/sources for
-FortiManager), cross-catalogue search finding and opening an AWS action,
-a FortiGate log type (jumping to the FortiGate vendor panel), and a
+FortiManager), each vendor's `Common fields` rail filter surfacing its
+own field rows in the same Log Types table (26 for FortiGate, 12 for
+FortiManager) with dashes in place of a fabricated confidence/product
+badge and a working lightweight modal, the stats tiles staying accurate
+to real subtype counts (not inflated by the field rows now mixed into
+`All types`), cross-catalogue search finding and opening an AWS action,
+a FortiGate log type (jumping to the FortiGate vendor panel), a
 FortiAnalyzer-only log type (jumping to the FortiManager vendor panel),
-and repeated tab-switching in every direction) to confirm none of the
-five apps — or, here, none of two sub-tabs *within* the same app, nor
-the two vendor panels within Other Events — leaks into or interferes
-with the others.
+and a FortiGate common field by name (jumping to the FortiGate vendor
+panel and its field modal), and repeated tab-switching in every
+direction) to confirm none of the five apps — or, here, none of two
+sub-tabs *within* the same app, nor the two vendor panels within Other
+Events — leaks into or interferes with the others.
 
 ## Structure
 
