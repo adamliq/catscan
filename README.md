@@ -212,6 +212,16 @@ tab already used for its runtime fetches. The two vendors load and
 register independently, so a search fired before both resolve just
 won't have the still-loading one's results yet.
 
+**AWS Events**' rail originally held only a Service filter; it now also
+has **CloudTrail** and **ACSC** filter groups (`All actions` /
+`Mapped` / `Not mapped`, and `All actions` / `Recommended` /
+`Not recommended`), reusing the exact same `aws-service-chip` markup
+and click-handling pattern as the Service rail — no new CSS, no new
+interaction model, just two more instances of a pattern already proven
+three times over. All three filters (service, CloudTrail, ACSC) and
+the search box combine as an intersection, exactly like Cloud Actions
+Explorer's own type-rail-plus-search filtering.
+
 **Other Events** is built to hold more than one vendor over time. It
 shipped with a single always-active "FortiGate" pill in its header on
 the stated basis that a real selector isn't worth building for one
@@ -332,7 +342,11 @@ Cloud Actions Explorer's own search/service-filter/sort/detail-modal and
 Search/Explore toggle (independent of Schema explorer's), cross-link jump
 buttons, dark-mode theming, the Threat Detection Heat Coverage matrix and
 Validations tab, the AWS Events Action Explorer's own
-search/service-filter/sort/detail-modal, the Other Events vendor picker
+search/service-filter/sort/detail-modal plus its CloudTrail and ACSC
+filter groups (Mapped/Not mapped and Recommended/Not recommended each
+narrowing to their exact stat-tile counts — 5,254 and 38 respectively —
+and combining correctly with the Service filter and search box), the
+Other Events vendor picker
 switching cleanly between FortiGate's 40 rows and FortiManager's 37 (each
 with its own type-rail filter, Log Types/Reference toggle, and detail
 modal rendering correctly — severity levels/common fields/sources for
