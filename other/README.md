@@ -38,8 +38,16 @@ need.
   Beyond the 40 per-subtype rows, the file also carries reference
   material that doesn't belong repeated on every row — 8 severity
   levels, 26 fields common to every log line, and the logging
-  prerequisites paragraph — rendered in the tab's own Reference view
-  rather than the per-subtype detail modal.
+  prerequisites paragraph. The 26 common fields aren't only a static
+  Reference-view table: each also becomes its own lightweight row
+  (`type: "Common Field"`, a dash instead of a confidence badge, since
+  a plain field definition doesn't carry one) in the *same* Log Types
+  table — reachable through the ordinary search box and a dedicated
+  "Common fields" rail filter, alongside the 40 subtype rows, rather
+  than being reachable only via a second click into Reference. Severity
+  levels and the logging-prerequisites paragraph stay Reference-only
+  (they're not discrete named things a search would look for the way a
+  field name is).
 
 - `data/fortimanager_log_schema.json` — FortiManager and FortiAnalyzer's
   shared log-type schema (they document both products in one Log
@@ -62,7 +70,12 @@ need.
   file *does* carry that FortiGate's doesn't: a `log_id_format`
   explainer (how the 10-digit composite ID is built from type + category
   + message ID) and one `example_raw_message`, both rendered in the
-  Reference view alongside the common fields and the six source URLs.
+  Reference view alongside the six source URLs. Like FortiGate's, the
+  12 common fields are also folded into the Log Types explorer as their
+  own rows (their own "Common fields" rail filter, a dash instead of a
+  Product badge) — clicking one opens a small modal showing its data
+  type and the one example value, rather than the fuller Identification
+  block a real log-type subtype gets.
 
 Both files `fetch()` at runtime rather than embed inline (same trade-off
 as AWS Events and Threat Detection's Heat Coverage tab: needs the page
