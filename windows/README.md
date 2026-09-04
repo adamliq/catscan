@@ -349,7 +349,7 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
 - `data/cloud_actions.csv` / `.json` — a companion to `cloud_logs.csv`
   above, one level more granular: where that file lists log *categories*
   (`AuditLogs`, `SignInLogs`, …), this lists the individual *operations*
-  reported within six of those categories' schemas — 3,665 rows across
+  reported within six of those categories' schemas — 4,512 rows across
   Microsoft Entra ID audit activities, Azure resource-log operations, the
   Azure Activity Log, Microsoft Intune audit events, Microsoft Purview's
   unified audit log, and Azure DevOps's own audit log. Powers the web
@@ -363,16 +363,19 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
     settings), `intunelogshipping` (Microsoft Intune audit events, 53
     rows), `purview` (Microsoft Purview's unified audit log — every
     workload Microsoft documents under the Office 365 Management
-    Activity API / M365 unified audit log that a five-pass research
+    Activity API / M365 unified audit log that a multi-pass research
     effort was able to investigate, from Entra/Exchange/SharePoint
-    activities through Copilot, Power Platform, and Agent 365 — 1,285
-    rows across 67 workloads; a workload with no reachable operation
-    catalog still gets one `N/A`-operation row explaining why in its
-    `source` text, rather than being omitted), or `azuredevops` (Azure
-    DevOps's own separate audit log — not part of Azure Monitor/Entra
-    ID, 221 rows)
+    activities through Copilot, Power Platform, and Agent 365, plus the
+    raw RecordType/Operation catalog straight from Microsoft's own
+    Office 365 Management Activity API schema reference (Exchange,
+    SharePoint, OneDrive, Microsoft Teams, Power BI, Security &
+    Compliance Center, and 30 more) — 2,132 rows; a workload with no
+    reachable operation catalog still gets one `N/A`-operation row
+    explaining why in its `source` text, rather than being omitted), or
+    `azuredevops` (Azure DevOps's own separate audit log — not part of
+    Azure Monitor/Entra ID, 221 rows)
   - `category` — the diagnostic-setting/log category the operation is
-    reported under (e.g. `AuditLogs`, `SignInLogs`, `StorageWrite`) — 749
+    reported under (e.g. `AuditLogs`, `SignInLogs`, `StorageWrite`) — 787
     distinct values across the six services
   - `operation` — the individual action/operation name, or `N/A` for 868
     rows (mostly `logshipping`, plus a few `purview`/`activitylog`
@@ -380,7 +383,7 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
     enumerable operation name
   - `provider` — the Azure resource provider namespace the operation
     belongs to (e.g. `Microsoft.AADIAM`, `Microsoft.Storage`) — 116
-    distinct values — or `N/A` for the 1,525 rows from services that
+    distinct values — or `N/A` for the 2,372 rows from services that
     aren't scoped to a specific Azure resource provider (`identity`,
     `activitylog`, `purview`, `azuredevops`)
   - `resource_type` — the resource type within that provider (e.g.
