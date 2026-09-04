@@ -388,18 +388,29 @@ Events — leaks into or interferes with the others.
   encoding of the same data; the CSV stays for anyone who wants a
   spreadsheet-native copy). `tools/enrich_microsoft_schema.py` reapplies the join
   to the xlsx and `tools/export_schema_json.py` regenerates the JSON from
-  it — both idempotent, safe to re-run after either input changes.
+  it — both idempotent, safe to re-run after either input changes. The
+  JSON also carries an optional `api` key straight from the xlsx's own
+  "api" column, present only on the 847 purview rows sourced from
+  Microsoft's raw Office 365 Management Activity API schema reference
+  (value `"Office 365 Management Activity"`) rather than the rest of
+  purview's workload-research documentation — same "absent unless
+  present in the source, nothing invented" convention as `arm`.
 
   This enrichment isn't just a standalone data file anymore — Cloud
   Actions Explorer's own detail view shows it directly (provider/
   resource-type display names, API versions, region count, the four
-  `supports_*` capability flags, and a same-resource-type "other
-  operations here" cross-reference computed from the tab's own already-
-  embedded data) on whichever of its 1,868 matched rows you open, one
-  more reason to keep it and `MicrosoftCloud_Schema.json` in sync:
-  Winevent-catalogue's own `index.html` embeds this exact enriched
-  array, copied over each time it's regenerated the normal way (see
-  Winevent-catalogue's own README for how that embedding works).
+  `supports_*` capability flags, a "Source API" row when `api` is
+  present, and a same-resource-type "other operations here"
+  cross-reference computed from the tab's own already-embedded data) on
+  whichever row you open, one more reason to keep this file and the
+  page's embedded copy in sync. That embedded copy used to be
+  Winevent-catalogue's own `index.html`'s `DATA.cloud_actions` (copied
+  over each time Winevent-catalogue regenerated it the normal way) —
+  Winevent-catalogue is no longer updated from this repo's work, so as
+  of this data's most recent expansion the two repos' Cloud Actions
+  Explorer data have diverged: this repo's own merged `index.html`
+  embeds `MicrosoftCloud_Schema.json` directly, and Winevent-catalogue's
+  own copy stays wherever it was last left.
 
   The link runs the other way too: `tools/roll_schema_into_arm_types.py`
   rolls `MicrosoftCloud_Schema.json` back into `azureresourcetypes.json`,
