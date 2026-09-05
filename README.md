@@ -21,10 +21,11 @@ services, each mapped to its CloudTrail event and ACSC logging guidance
 where one exists) built directly in this repo from a [`Events_Other`](Events_Other/README.md)
 data export rather than merged from an external source repo, and an
 **Other Events** menu for vendor log/event references that don't belong to
-any of the above — FortiGate's 40 log types and FortiManager/
-FortiAnalyzer's 37 (see [`other/`](other/README.md)) so far, with a real
-vendor picker and room for more over time, each keeping its own schema
-shape rather than a forced common one.
+any of the above — FortiGate's 40 log types, FortiManager/
+FortiAnalyzer's 37, and Juniper EX-series's 18 message-tag categories (see
+[`other/`](other/README.md)) so far, with a real vendor picker and room
+for more over time, each keeping its own schema shape rather than a
+forced common one.
 
 ## Web lookup
 
@@ -66,8 +67,8 @@ retrofitted.
 
 **Search** is a sixth, shell-only pill: a single box that searches
 Windows events, AWS IAM actions, Linux events, every Threat Detection
-entry (detections and validations), and FortiGate log types at once,
-grouped by source with up to 40 results per source. A **Sources** filter
+entry (detections and validations), and every Other Events vendor's log
+types at once, grouped by source with up to 40 results per source. A **Sources** filter
 row toggles Microsoft Events/AWS Events/Linux Events/Threat Detection/
 Other Events in or out of the results, and a **Threat Detection type** row
 (only meaningful when that source is on) separately toggles Detections
@@ -79,8 +80,8 @@ fields) on `window.__compHub` for this to search over; clicking a result
 switches to that catalogue's own tab and calls back into its own existing
 selection/detail-opening code (`jumpToEvent`-style for Windows/Linux,
 `openDetail`/`openValidationDetail` for Threat Detection, opening the
-Action Explorer's own detail modal for AWS Events, the FortiGate log-type
-detail modal for Other Events) to actually show it there — so results
+Action Explorer's own detail modal for AWS Events, the right vendor's own
+log-type detail modal for Other Events) to actually show it there — so results
 render exactly like they do from that app's own search, because they
 *are* that app's own render path. AWS Events and Other Events each
 register themselves on `window.__compHub` only once their own data has
@@ -92,8 +93,8 @@ own ID schemes, column schemas, and reference tables exactly as authored
 (Microsoft Events, Linux Events, and Threat Detection in their source
 repos — see each repo's README for the full field reference; AWS Events in
 [`Events_Other/aws_iam_actions_expanded.csv`](Events_Other/README.md), via
-[`aws/`](aws/README.md); Other Events in [`other/data/fortigate_log_reference.json`](other/README.md),
-compiled from FortiOS's own documentation). This page only merges the
+[`aws/`](aws/README.md); Other Events in [`other/`](other/README.md)'s own
+per-vendor files, compiled from each vendor's own documentation). This page only merges the
 *presentation* — one URL, one menu — not the underlying schemas, and each
 Other Events vendor keeps whatever shape its own source material actually
 has rather than being forced into a common row shape.
@@ -105,12 +106,13 @@ this page isn't fully "no external requests": the Threat Detection tab's
 fetches its one `aws_iam_actions.json` file (from `aws/data/`, see below;
 21,164 actions makes for a 6.5&nbsp;MB file, too large to comfortably
 embed inline the way the other three catalogues' data is), and the
-**Other Events** tab fetches `fortigate_log_reference.json` and
-`fortimanager_log_schema.json` (from `other/data/`, see below — a modest
-~46&nbsp;KB and ~4&nbsp;KB respectively, but both fetched rather than
-embedded for consistency with the other two runtime-loaded tabs and
-because Other Events is meant to grow more vendor files over time). All
-three degrade gracefully under `file://` (browsers block
+**Other Events** tab fetches `fortigate_log_reference.json`,
+`fortimanager_log_schema.json`, and `juniper_switch_log_schema.json`
+(from `other/data/`, see below — a modest ~46&nbsp;KB, ~10&nbsp;KB, and
+~9&nbsp;KB respectively, but all three fetched rather than embedded for
+consistency with the other two runtime-loaded tabs and because Other
+Events is meant to grow more vendor files over time). All three tabs
+degrade gracefully under `file://` (browsers block
 `fetch()` of local files) with an explanatory message — Heat Coverage the
 same way the source repo already did, AWS Events and Other Events the
 same way Heat Coverage does; serve the repo over http(s) (GitHub Pages,
@@ -201,16 +203,17 @@ query scoped to its own container) rather than needing to be transformed
 into them. Neither app's data is embedded like Windows/Linux/Threat
 Detection's core catalogues are, either: on load AWS Events `fetch()`es
 `aws/data/aws_iam_actions.json` and Other Events fetches each vendor's
-own file independently — `other/data/fortigate_log_reference.json` and
-`other/data/fortimanager_log_schema.json` (see Structure) — and only
+own file independently — `other/data/fortigate_log_reference.json`,
+`other/data/fortimanager_log_schema.json`, and
+`other/data/juniper_switch_log_schema.json` (see Structure) — and only
 builds that vendor's stats tiles, rail list, and search table — and
 registers its rows on the shared `window.__compHub['other']` entry for
 the shell Search pill — once its own fetch resolves; each vendor panel
 shows its own loading message (and, under `file://`, an explanatory
 error) until then, the same pattern Threat Detection's own Heat Coverage
-tab already used for its runtime fetches. The two vendors load and
-register independently, so a search fired before both resolve just
-won't have the still-loading one's results yet.
+tab already used for its runtime fetches. The three vendors load and
+register independently, so a search fired before all three resolve just
+won't have the still-loading ones' results yet.
 
 **AWS Events**' rail originally held only a Service filter; it now also
 has **CloudTrail** and **ACSC** filter groups (`All actions` /
@@ -231,7 +234,8 @@ per-subtype enable instructions or example line, no enumerated field
 list, but a `product` split (FortiManager vs FortiAnalyzer) and a
 composite log-ID format FortiGate's data doesn't have — which is exactly
 the trigger that was waiting for: the header now carries a real,
-clickable two-pill vendor picker (`FortiGate` / `FortiManager`), each
+clickable vendor picker (`FortiGate` / `FortiManager`, later joined by
+`Juniper EX-series` — see below), each
 vendor's whole panel (stats, rail, table, mode toggle, both modals) a
 sibling `<div>` shown or hidden by the picker, each with its own
 independent search/filter/mode state so switching vendors and switching
@@ -280,6 +284,35 @@ Reference view's own table (severity levels and the FortiManager
 log-ID-format explainer stay Reference-only, since they're not
 individually-named things worth searching for the way a field name
 is).
+
+A third vendor, Juniper EX-series (Junos OS), arrived later and put the
+generic/vendor-specific split to a harder test than FortiManager did:
+Junos doesn't have a Fortinet-style type/subtype model at all — no
+`traffic`/`event`/`utm` or `event`/`appevent` grouping, just a flat
+18-row `message_tag_categories` catalog (one process/daemon per row,
+e.g. `chassisd`, `lacpd`, `l2ald`) with a `covers` description in place
+of a confidence rating or product split — so its Log Types table has
+only one real row "type" (`category`) rather than several. What Junos
+*does* have that neither Fortinet source does is two genuinely different
+message envelopes rather one common field set: a `standard_format`
+(BSD-syslog-style, 7 fields) and a `structured_data_format` (RFC
+5424-compliant, 9 fields), each with its own example raw message. Rather
+than force those two formats into a single undifferentiated "common
+fields" bucket, each of the 16 fields folded into the Log Types table
+carries a `format` badge (`Standard` / `Structured-data`, two new badge
+colors added alongside FortiManager's `product` badges) so the two
+envelopes stay visually distinguishable in the same table FortiGate's
+confidence badges and FortiManager's product badges already share. The
+Reference view gained a fourth collapsible section over FortiGate's
+three (facilities, severity levels, message formats, sources — Junos
+distinguishes facility from severity where FortiGate/FortiManager only
+have one such table) rather than cramming a fourth concept into an
+existing section. Once again, nothing in FortiGate's or FortiManager's
+shape leaked into Juniper's rows: no confidence badge, no product split,
+no per-tag field list that isn't in the source — just the same generic
+container/picker/search/cross-catalogue-search machinery reused a third
+time, and a third from-scratch flatten/render/modal implementation
+underneath it.
 
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
@@ -452,10 +485,12 @@ Events — leaks into or interferes with the others.
 - `other/` — data for the Other Events tab, one file per vendor, each
   fetched by `index.html` at runtime and kept exactly as compiled rather
   than reshaped (see its own `README.md`): `data/fortigate_log_reference.json`
-  (from FortiOS's own documentation) and
+  (from FortiOS's own documentation),
   `data/fortimanager_log_schema.json` (from the FortiManager/FortiAnalyzer
   7.6.2 documentation — the two products share one Log Message Reference
-  guide). No build tooling here, unlike `aws/`: both JSON files are used
+  guide), and `data/juniper_switch_log_schema.json` (from Junos OS's
+  System Logging documentation and System Log Messages Reference). No
+  build tooling here, unlike `aws/`: all three JSON files are used
   as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
@@ -482,10 +517,11 @@ its updated `index.html` export. To extend AWS Events, update
 `Events_Other/aws_iam_actions_expanded.csv`, run
 `python3 aws/tools/build_aws_json.py`, then regenerate `index.html` the
 same way. To extend Other Events for an existing vendor, update that
-vendor's own file in place (`other/data/fortigate_log_reference.json` or
-`other/data/fortimanager_log_schema.json`), then regenerate `index.html`.
-Adding a genuinely new vendor follows the pattern FortiManager set
-alongside FortiGate inside `build_app_other()` (not a separate top-level
+vendor's own file in place (`other/data/fortigate_log_reference.json`,
+`other/data/fortimanager_log_schema.json`, or
+`other/data/juniper_switch_log_schema.json`), then regenerate `index.html`.
+Adding a genuinely new vendor follows the pattern FortiManager and
+Juniper EX-series each set inside `build_app_other()` (not a separate top-level
 function — all of Other Events' vendors share one `#app-other`
 container): a new data file, a new pill in the vendor-tab row, a new
 sibling `<div>` panel (own stats/rail/mode-toggle/table/modal markup,
