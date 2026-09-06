@@ -518,14 +518,28 @@ home. Schema Explorer here still gets those same 22 fields, though: a
 real flat, searchable table exactly like FortiGate's/Zscaler's own, just
 without a per-row modal to jump back to, since neither category has one
 — clicking a field instead jumps to and expands the Reference section
-it's already fully documented in (Alarms & events or Audit logs). That
-makes Cisco Catalyst SD-WAN a third pattern alongside the other two:
-FortiGate/Zscaler jump to a Log Type row's modal, Cisco Catalyst SD-WAN
-jumps to a Reference section, and FortiManager/Juniper/Infoblox/Cisco
-IOS XE — genuinely nothing to flatten, since Cisco IOS XE's own
-message-format fields are already Log Types rows and the syslog
-messages' own `format` strings here are positional templates, not named
-fields — get a single explanatory note instead.
+it's already fully documented in (Alarms & events or Audit logs).
+
+Infoblox's own Schema Explorer got the same treatment in the same pass,
+for the same reason: its 106 field-schema fields (21 DNS query/response
++ 18 DHCP lease + 67 across the three Universal DDI Parquet
+sub-schemas) were already real, named field data sitting in the
+Field Schemas view, just never flattened into Schema Explorer's own
+searchable table the way FortiGate's/Zscaler's per-row fields are —
+the empty note it carried undersold what the source actually has.
+Populated the same way: a real table, clicking a field jumps to and
+expands the DNS query/response fields, DHCP lease fields, or Universal
+DDI exported log files section it's already fully documented in.
+
+That leaves three genuinely different Schema Explorer patterns rather
+than two: FortiGate/Zscaler jump to a Log Type row's modal; Cisco
+Catalyst SD-WAN and Infoblox jump to a Reference section instead, since
+their field data is real but category-common rather than per-row; and
+FortiManager/Juniper/Cisco IOS XE get a single explanatory note,
+because their sources genuinely have nothing further to flatten —
+Cisco IOS XE's own message-format fields are already Log Types rows,
+FortiManager's/Juniper's common fields are too, and none of the three
+enumerates anything below that.
 
 (Found while checking the AWS Events table's text color against the other
 tables on the page, and fixed with a one-line change: `index.html` never
