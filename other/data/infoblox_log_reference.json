@@ -1,0 +1,407 @@
+{
+  "product": "Infoblox DDI (NIOS / Universal DDI)",
+  "source_documentation": {
+    "note": "Compiled from data supplied directly by the repository maintainer, covering three distinct places Infoblox NIOS/Universal DDI categorizes its own log output: the Grid-wide Syslog Forwarding category list, the separately-configured DNS Properties logging category list, and Universal DDI's own service logs and exported log files. No source URL was supplied for this pass, unlike the other three vendors below - add one if/when available."
+  },
+  "category_groups": [
+    {
+      "group": "Syslog Forwarding",
+      "note": "The Prefix column is the literal token NIOS prepends to each forwarded syslog line for that category (a BIND log category name, a DHCP/service process name, or an internal all-caps event-class code) - the string to filter or grep on when parsing forwarded syslog.",
+      "entries": [
+        {
+          "name": "DNS Client",
+          "prefix": "client",
+          "description": "Query processing messages (not the queries themselves)"
+        },
+        {
+          "name": "DNS Config",
+          "prefix": "config",
+          "description": "Configuration file parsing"
+        },
+        {
+          "name": "DNS Database",
+          "prefix": "database",
+          "description": "Internal BIND database processes"
+        },
+        {
+          "name": "DNSSEC",
+          "prefix": "dnssec",
+          "description": "DNSSEC-signed responses / key operations"
+        },
+        {
+          "name": "DNS General",
+          "prefix": "general",
+          "description": "Unclassified BIND messages"
+        },
+        {
+          "name": "DNS Lame Servers",
+          "prefix": "lame_servers",
+          "description": "Bad/unresponsive delegations"
+        },
+        {
+          "name": "DNS Network",
+          "prefix": "network",
+          "description": "Network operation messages"
+        },
+        {
+          "name": "DNS Notify",
+          "prefix": "notify",
+          "description": "Zone change notifications"
+        },
+        {
+          "name": "DNS Queries",
+          "prefix": "queries",
+          "description": "DNS queries (high performance impact)"
+        },
+        {
+          "name": "DNS Query Rewrite",
+          "prefix": "query_rewrite",
+          "description": "Query rewrite events"
+        },
+        {
+          "name": "DNS Resolver",
+          "prefix": "resolver",
+          "description": "Outgoing recursive queries"
+        },
+        {
+          "name": "DNS Responses",
+          "prefix": "responses",
+          "description": "DNS responses (high performance impact)"
+        },
+        {
+          "name": "DNS RPZ",
+          "prefix": "rpz",
+          "description": "Response Policy Zone hits"
+        },
+        {
+          "name": "DNS Security",
+          "prefix": "security",
+          "description": "Security-related (rate-limiting; NXDOMAIN tracking)"
+        },
+        {
+          "name": "DNS Update",
+          "prefix": "update",
+          "description": "Dynamic updates (DDNS)"
+        },
+        {
+          "name": "DNS Update Security",
+          "prefix": "update_security",
+          "description": "Update security / ruleset events"
+        },
+        {
+          "name": "DNS Zone Transfer In",
+          "prefix": "xfer_in",
+          "description": "Incoming zone transfers"
+        },
+        {
+          "name": "DNS Zone Transfer Out",
+          "prefix": "xfer_out",
+          "description": "Outgoing zone transfers"
+        },
+        {
+          "name": "DNS Unbound",
+          "prefix": "DNS_UNBOUND",
+          "description": "Unbound engine logs (when active)"
+        },
+        {
+          "name": "DHCP",
+          "prefix": "dhcpd",
+          "description": "Main DHCP daemon messages"
+        },
+        {
+          "name": "DHCP Related",
+          "prefix": "omshell",
+          "description": "OMSHELL process"
+        },
+        {
+          "name": "DHCP Related",
+          "prefix": "dhcrelay",
+          "description": "DHCP relay process"
+        },
+        {
+          "name": "DHCP Related",
+          "prefix": "dhclient",
+          "description": "DHCP client process"
+        },
+        {
+          "name": "DTC Health",
+          "prefix": "idns_healthd",
+          "description": "DTC health monitor events"
+        },
+        {
+          "name": "DTC",
+          "prefix": "idnsd",
+          "description": "DTC load-balancing / service events"
+        },
+        {
+          "name": "Threat Protection / ADP",
+          "prefix": "adp / ATP",
+          "description": "Advanced DNS Protection / threat events (often CEF)"
+        },
+        {
+          "name": "NTP",
+          "prefix": "ntpd",
+          "description": "NTP service messages"
+        },
+        {
+          "name": "File Distribution",
+          "prefix": "ftpd",
+          "description": "FTP process"
+        },
+        {
+          "name": "File Distribution",
+          "prefix": "tftp",
+          "description": "TFTP process"
+        },
+        {
+          "name": "Cloud API",
+          "prefix": "CLOUD_API",
+          "description": "Cloud discovery; sync; automation"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_COMMON",
+          "description": "Common authentication events"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_ACTIVE_DIRECTORY",
+          "description": "Active Directory authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_RADIUS",
+          "description": "RADIUS authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_TACACS",
+          "description": "TACACS authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_LDAP",
+          "description": "LDAP authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_UI_API",
+          "description": "UI / API authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_NON_SYSTEM",
+          "description": "Non-system authentication"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DNS_SERVER",
+          "description": "Microsoft DNS server events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DHCP_SERVER",
+          "description": "Microsoft DHCP server events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DHCP_LEASE",
+          "description": "Microsoft DHCP lease events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DHCP_CLEAR_LEASE",
+          "description": "Microsoft DHCP clear lease events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_CONNECT_STATUS",
+          "description": "Microsoft connection status"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DNS_ZONE",
+          "description": "Microsoft DNS zone events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_SITES",
+          "description": "Microsoft sites"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_AD_USERS",
+          "description": "Microsoft AD users"
+        },
+        {
+          "name": "Outbound API",
+          "prefix": "OUTBOUND_API",
+          "description": "Outbound API events"
+        },
+        {
+          "name": "Non-categorized",
+          "prefix": "NON_CATEGORIZED",
+          "description": "Everything else"
+        }
+      ]
+    },
+    {
+      "group": "DNS Logging Categories (DNS Properties)",
+      "note": "NIOS's own on-box BIND logging categories, configured separately from Syslog Forwarding and controlling what's written to the local named log rather than what gets forwarded off-box. Mostly the same DNS-related category set as the Syslog Forwarding rows above, but a few names/prefixes genuinely differ between the two configuration surfaces (rate-limit here vs. security there; combined transfer-in/transfer-out prefixes here vs. separate xfer_in/xfer_out there) - kept as its own group rather than merged.",
+      "entries": [
+        {
+          "name": "general",
+          "prefix": "general",
+          "description": "Unclassified BIND messages"
+        },
+        {
+          "name": "client",
+          "prefix": "client",
+          "description": "Query processing errors / quotas (not full queries)"
+        },
+        {
+          "name": "config",
+          "prefix": "config",
+          "description": "Configuration parsing"
+        },
+        {
+          "name": "database",
+          "prefix": "database",
+          "description": "Internal database processes"
+        },
+        {
+          "name": "dnssec",
+          "prefix": "dnssec",
+          "description": "DNSSEC operations"
+        },
+        {
+          "name": "lame servers",
+          "prefix": "lame_servers",
+          "description": "Bad delegations"
+        },
+        {
+          "name": "network",
+          "prefix": "network",
+          "description": "Network operations"
+        },
+        {
+          "name": "notify",
+          "prefix": "notify",
+          "description": "Zone notifications"
+        },
+        {
+          "name": "queries",
+          "prefix": "queries",
+          "description": "Full DNS queries (performance impact)"
+        },
+        {
+          "name": "rate-limit",
+          "prefix": "rate-limit",
+          "description": "Response Rate Limiting events"
+        },
+        {
+          "name": "resolver",
+          "prefix": "resolver",
+          "description": "Outgoing recursive queries"
+        },
+        {
+          "name": "responses",
+          "prefix": "responses",
+          "description": "Full DNS responses (performance impact)"
+        },
+        {
+          "name": "transfer-in",
+          "prefix": "xfer_in / transfer-in",
+          "description": "Incoming zone transfers"
+        },
+        {
+          "name": "transfer-out",
+          "prefix": "xfer_out / transfer-out",
+          "description": "Outgoing zone transfers"
+        },
+        {
+          "name": "update",
+          "prefix": "update",
+          "description": "Dynamic updates"
+        },
+        {
+          "name": "update-security",
+          "prefix": "update_security",
+          "description": "Update security events"
+        }
+      ]
+    },
+    {
+      "group": "Universal DDI Service Logs",
+      "note": "Log sources exposed by Infoblox Universal DDI (the cloud-managed NIOS-as-a-service product) for its own on-host services, distinct from traditional NIOS syslog categories.",
+      "entries": [
+        {
+          "name": "Anycast",
+          "prefix": "Anycast",
+          "description": "Anycast service events"
+        },
+        {
+          "name": "AWS Discovery",
+          "prefix": "AWS Discovery",
+          "description": "AWS Discovery service events"
+        },
+        {
+          "name": "Azure Discovery",
+          "prefix": "Azure Discovery",
+          "description": "Azure Discovery service events"
+        },
+        {
+          "name": "DHCP",
+          "prefix": "DHCP",
+          "description": "DHCP service events"
+        },
+        {
+          "name": "DNS",
+          "prefix": "DNS",
+          "description": "DNS service events"
+        },
+        {
+          "name": "DNS Forwarding Proxy",
+          "prefix": "DNS Forwarding Proxy",
+          "description": "DNS Forwarding Proxy logs"
+        },
+        {
+          "name": "GCP Discovery",
+          "prefix": "GCP Discovery",
+          "description": "GCP Discovery service events"
+        },
+        {
+          "name": "NIOS Grid Connector",
+          "prefix": "NIOS Grid Connector",
+          "description": "NIOS Grid Connector service logs"
+        },
+        {
+          "name": "NTP",
+          "prefix": "NTP",
+          "description": "NTP service events"
+        }
+      ]
+    },
+    {
+      "group": "Universal DDI Exported Log Files",
+      "note": "Bulk log file exports Universal DDI's own portal can produce, rather than a live syslog/category stream.",
+      "entries": [
+        {
+          "name": "DNS queries & responses",
+          "prefix": "DNS queries & responses",
+          "description": "Query/response logs"
+        },
+        {
+          "name": "RPZ hits",
+          "prefix": "RPZ hits",
+          "description": "Response Policy Zone hits"
+        },
+        {
+          "name": "IPAM metadata",
+          "prefix": "IPAM metadata",
+          "description": "IPAM-related metadata"
+        }
+      ]
+    }
+  ]
+}

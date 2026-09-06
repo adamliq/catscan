@@ -5,21 +5,24 @@ and log-type references for vendors outside the Microsoft/AWS/Linux/
 Threat-Detection catalogues. Unlike those four, this isn't one schema:
 each vendor keeps whatever shape its own documentation actually has
 rather than being forced into a common row shape. FortiGate's log
-reference, FortiManager/FortiAnalyzer's log schema, and Juniper
-EX-series's log schema (all below) look nothing alike — FortiGate has
-per-subtype CLI/GUI enable instructions, an example log line, and a
-confidence rating; FortiManager/FortiAnalyzer has a numeric category
-code, a `product` split (FortiManager vs FortiAnalyzer), and a composite
-log-ID format instead; Junos doesn't use a Fortinet-style type/subtype
-model at all — it organizes logs by facility, severity, and a
-per-process/daemon message-tag catalog, plus two entirely different
-message envelopes (BSD-style vs. RFC 5424 structured-data) rather than
-one common field set — and the tab doesn't paper over any of that: each
-vendor gets its own flatten/render/modal logic in `index.html`, sharing
-only the visual language (rail + toolbar + table + detail modal, a Log
-Types/Reference mode toggle for material that doesn't belong repeated
-per row) via the same `#app-other`-scoped CSS classes, not a common data
-model.
+reference, FortiManager/FortiAnalyzer's log schema, Juniper EX-series's
+log schema, and Infoblox DDI's log reference (all below) look nothing
+alike — FortiGate has per-subtype CLI/GUI enable instructions, an
+example log line, and a confidence rating; FortiManager/FortiAnalyzer
+has a numeric category code, a `product` split (FortiManager vs
+FortiAnalyzer), and a composite log-ID format instead; Junos doesn't use
+a Fortinet-style type/subtype model at all — it organizes logs by
+facility, severity, and a per-process/daemon message-tag catalog, plus
+two entirely different message envelopes (BSD-style vs. RFC 5424
+structured-data) rather than one common field set; Infoblox's is a plain
+category/prefix reference with no enable instructions, confidence
+rating, product split, or field envelope of its own at all — and the tab
+doesn't paper over any of that: each vendor gets its own flatten/render/
+modal logic in `index.html`, sharing only the visual language (rail +
+toolbar + table + detail modal, and — for the three vendors whose source
+material has some — a Log Types/Reference mode toggle for material that
+doesn't belong repeated per row) via the same `#app-other`-scoped CSS
+classes, not a common data model.
 
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
@@ -114,14 +117,41 @@ need.
   section, alongside the facilities and severity-level tables and the
   four source URLs.
 
-All three files `fetch()` at runtime rather than embed inline (same
+- `data/infoblox_log_reference.json` — Infoblox DDI (NIOS / Universal
+  DDI) log category reference, compiled from data supplied directly by
+  the repository maintainer rather than fetched from a published guide
+  (see the file's own `source_documentation.note` — unlike the other
+  three vendors, no source URL was supplied for this pass). Unlike any
+  of the other three, this source has no enable instructions, example
+  line, confidence rating, product split, or field-envelope schema of
+  its own — it's a plain 75-row category/prefix/description reference
+  across 4 `category_groups`: **Syslog Forwarding** (47 rows — the
+  literal prefix NIOS puts on each forwarded syslog line, e.g. `client`,
+  `dhcpd`, `AUTH_RADIUS`), **DNS Logging Categories (DNS Properties)**
+  (16 rows — NIOS's own on-box BIND logging categories, configured
+  separately from Syslog Forwarding and overlapping it in 13 of its 16
+  rows, with a handful of genuine differences noted on the group itself:
+  `rate-limit` here vs. `security` there, a combined `transfer-in`/
+  `transfer-out` naming here vs. separate `xfer_in`/`xfer_out` there),
+  **Universal DDI Service Logs** (9 rows — the cloud-managed product's
+  own service log sources), and **Universal DDI Exported Log Files** (3
+  rows — bulk export types rather than a live category). Because there's
+  nothing left over once those 75 rows are shown — no separate severity
+  table, no common-field envelope, no source citations — this vendor has
+  no Log Types/Reference toggle at all: everything the source has fits
+  in the one table, tagged by `category_group` in the rail exactly like
+  the other three vendors' real top-level types, with each group's own
+  explanatory note surfaced in its rows' detail modal instead of a
+  separate Reference section that would otherwise hold only that.
+
+All four files `fetch()` at runtime rather than embed inline (same
 trade-off as AWS Events and Threat Detection's Heat Coverage tab: needs
 the page served over http(s), not opened as a local `file://`), and all
-three register their rows on the tab's shared `window.__compHub['other']`
+four register their rows on the tab's shared `window.__compHub['other']`
 entry (merged across vendors, each row tagged with its own `vendor` so
 a cross-catalogue search result opens on the right vendor's own panel
 and tab).
 
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-all three files are used as delivered, not derived from another file in
+all four files are used as delivered, not derived from another file in
 this repo.

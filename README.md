@@ -22,10 +22,10 @@ where one exists) built directly in this repo from a [`Events_Other`](Events_Oth
 data export rather than merged from an external source repo, and an
 **Other Events** menu for vendor log/event references that don't belong to
 any of the above — FortiGate's 40 log types, FortiManager/
-FortiAnalyzer's 37, and Juniper EX-series's 18 message-tag categories (see
-[`other/`](other/README.md)) so far, with a real vendor picker and room
-for more over time, each keeping its own schema shape rather than a
-forced common one.
+FortiAnalyzer's 37, Juniper EX-series's 18 message-tag categories, and
+DDI Infoblox's 75 log categories (see [`other/`](other/README.md)) so
+far, with a real vendor picker and room for more over time, each keeping
+its own schema shape rather than a forced common one.
 
 ## Web lookup
 
@@ -107,11 +107,12 @@ fetches its one `aws_iam_actions.json` file (from `aws/data/`, see below;
 21,164 actions makes for a 6.5&nbsp;MB file, too large to comfortably
 embed inline the way the other three catalogues' data is), and the
 **Other Events** tab fetches `fortigate_log_reference.json`,
-`fortimanager_log_schema.json`, and `juniper_switch_log_schema.json`
-(from `other/data/`, see below — a modest ~46&nbsp;KB, ~10&nbsp;KB, and
-~9&nbsp;KB respectively, but all three fetched rather than embedded for
-consistency with the other two runtime-loaded tabs and because Other
-Events is meant to grow more vendor files over time). All three tabs
+`fortimanager_log_schema.json`, `juniper_switch_log_schema.json`, and
+`infoblox_log_reference.json` (from `other/data/`, see below — a modest
+~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, and ~12&nbsp;KB respectively, but
+all four fetched rather than embedded for consistency with the other two
+runtime-loaded tabs and because Other Events is meant to grow more
+vendor files over time). All three tabs
 degrade gracefully under `file://` (browsers block
 `fetch()` of local files) with an explanatory message — Heat Coverage the
 same way the source repo already did, AWS Events and Other Events the
@@ -204,15 +205,16 @@ into them. Neither app's data is embedded like Windows/Linux/Threat
 Detection's core catalogues are, either: on load AWS Events `fetch()`es
 `aws/data/aws_iam_actions.json` and Other Events fetches each vendor's
 own file independently — `other/data/fortigate_log_reference.json`,
-`other/data/fortimanager_log_schema.json`, and
-`other/data/juniper_switch_log_schema.json` (see Structure) — and only
+`other/data/fortimanager_log_schema.json`,
+`other/data/juniper_switch_log_schema.json`, and
+`other/data/infoblox_log_reference.json` (see Structure) — and only
 builds that vendor's stats tiles, rail list, and search table — and
 registers its rows on the shared `window.__compHub['other']` entry for
 the shell Search pill — once its own fetch resolves; each vendor panel
 shows its own loading message (and, under `file://`, an explanatory
 error) until then, the same pattern Threat Detection's own Heat Coverage
-tab already used for its runtime fetches. The three vendors load and
-register independently, so a search fired before all three resolve just
+tab already used for its runtime fetches. The four vendors load and
+register independently, so a search fired before all four resolve just
 won't have the still-loading ones' results yet.
 
 **AWS Events**' rail originally held only a Service filter; it now also
@@ -235,7 +237,7 @@ list, but a `product` split (FortiManager vs FortiAnalyzer) and a
 composite log-ID format FortiGate's data doesn't have — which is exactly
 the trigger that was waiting for: the header now carries a real,
 clickable vendor picker (`FortiGate` / `FortiManager`, later joined by
-`Juniper EX-series` — see below), each
+`Juniper EX-series` and `DDI Infoblox` — see below), each
 vendor's whole panel (stats, rail, table, mode toggle, both modals) a
 sibling `<div>` shown or hidden by the picker, each with its own
 independent search/filter/mode state so switching vendors and switching
@@ -313,6 +315,34 @@ no per-tag field list that isn't in the source — just the same generic
 container/picker/search/cross-catalogue-search machinery reused a third
 time, and a third from-scratch flatten/render/modal implementation
 underneath it.
+
+A fourth vendor, DDI Infoblox (NIOS / Universal DDI), tested the split
+from the opposite direction: rather than a genuinely different shape to
+render, its source has *less* shape than any vendor before it. It's a
+plain category/prefix/description reference — 75 rows across 4
+`category_groups` (Syslog Forwarding, DNS Logging Categories, Universal
+DDI Service Logs, Universal DDI Exported Log Files) — with no enable
+instructions, no example line, no confidence rating, no product split,
+and no field-envelope schema of its own to fold in as common fields.
+Rather than build a Log Types/Reference toggle with an empty or
+near-empty Reference view just to match the other three vendors'
+silhouette, this vendor has no mode toggle at all: everything the source
+has fits in one table (`category_group` in the rail exactly like the
+other three vendors' real top-level types), and each group's own
+explanatory note — the two DNS category lists' partial overlap and where
+their names/prefixes genuinely diverge, for instance — surfaces in that
+group's rows' own detail modal instead of a separate section that would
+otherwise hold only that one paragraph. Its data file also carries a
+provenance difference worth being honest about: it was compiled from
+data supplied directly by the repository maintainer rather than a
+published vendor guide, and says so in its own
+`source_documentation.note` rather than citing a URL it doesn't have.
+Once again, the generic container/picker/search/cross-catalogue-search
+machinery carried a fourth vendor without a rewrite, and once again
+nothing was invented to fill a shape this source doesn't have — this
+time in the other direction, by *not* building UI for reference material
+that doesn't exist rather than by not fabricating a badge that doesn't
+apply.
 
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
@@ -488,9 +518,12 @@ Events — leaks into or interferes with the others.
   (from FortiOS's own documentation),
   `data/fortimanager_log_schema.json` (from the FortiManager/FortiAnalyzer
   7.6.2 documentation — the two products share one Log Message Reference
-  guide), and `data/juniper_switch_log_schema.json` (from Junos OS's
-  System Logging documentation and System Log Messages Reference). No
-  build tooling here, unlike `aws/`: all three JSON files are used
+  guide), `data/juniper_switch_log_schema.json` (from Junos OS's
+  System Logging documentation and System Log Messages Reference), and
+  `data/infoblox_log_reference.json` (compiled from data supplied
+  directly by the repository maintainer rather than a published guide —
+  see the file's own `source_documentation.note`). No
+  build tooling here, unlike `aws/`: all four JSON files are used
   as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
@@ -518,15 +551,19 @@ its updated `index.html` export. To extend AWS Events, update
 `python3 aws/tools/build_aws_json.py`, then regenerate `index.html` the
 same way. To extend Other Events for an existing vendor, update that
 vendor's own file in place (`other/data/fortigate_log_reference.json`,
-`other/data/fortimanager_log_schema.json`, or
-`other/data/juniper_switch_log_schema.json`), then regenerate `index.html`.
-Adding a genuinely new vendor follows the pattern FortiManager and
-Juniper EX-series each set inside `build_app_other()` (not a separate top-level
-function — all of Other Events' vendors share one `#app-other`
-container): a new data file, a new pill in the vendor-tab row, a new
-sibling `<div>` panel (own stats/rail/mode-toggle/table/modal markup,
-reusing the shared `other-*` CSS classes), and that vendor's own
-flatten/render/modal JS — written for its own data's shape rather than
-forced through an existing vendor's — registered in the `vendorPanels`
-map and merged into `window.__compHub['other']` the same way. See `other/`'s own
-README for why that part isn't generic across vendors.
+`other/data/fortimanager_log_schema.json`,
+`other/data/juniper_switch_log_schema.json`, or
+`other/data/infoblox_log_reference.json`), then regenerate `index.html`.
+Adding a genuinely new vendor follows the pattern FortiManager, Juniper
+EX-series, and DDI Infoblox each set inside `build_app_other()` (not a
+separate top-level function — all of Other Events' vendors share one
+`#app-other` container): a new data file, a new pill in the vendor-tab
+row, a new sibling `<div>` panel (own stats/rail/table/modal markup,
+plus a mode-toggle and Reference view only if the vendor's own source
+material actually has material to put there — DDI Infoblox's doesn't,
+so it skips both — reusing the shared `other-*` CSS classes either way),
+and that vendor's own flatten/render/modal JS — written for its own
+data's shape rather than forced through an existing vendor's —
+registered in the `vendorPanels` map and merged into
+`window.__compHub['other']` the same way. See `other/`'s own README for
+why that part isn't generic across vendors.
