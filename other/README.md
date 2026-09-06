@@ -7,7 +7,8 @@ each vendor keeps whatever shape its own documentation actually has
 rather than being forced into a common row shape. FortiGate's log
 reference, FortiManager/FortiAnalyzer's log schema, Juniper EX-series's
 log schema, Infoblox DDI's log reference, Zscaler's Splunk onboarding
-reference, and Cisco Catalyst SD-WAN's comprehensive logging reference
+reference, Cisco IOS XE's system message logging (syslog) reference,
+and Cisco Catalyst SD-WAN's comprehensive logging reference
 (all below) look nothing alike — FortiGate has per-subtype
 CLI/GUI enable instructions, an example log line, and a confidence
 rating; FortiManager/FortiAnalyzer has a numeric category code, a
@@ -26,18 +27,27 @@ closest to FortiGate's own shape (per-input configuration instructions
 and a per-input field list) but adds two more per-input datasets
 (Splunk CIM eventtype/tag coverage and low-level CIM field-alias
 mappings) that don't belong in the per-row modal alone, plus a
-145-row field-mapping table too large to repeat per row; and Cisco
-Catalyst SD-WAN's is the richest of the six in raw material but the
-least catalog-shaped — local log files, syslog message-format
-templates, two independent severity scales (syslog's own 8 levels and
-a separate 4-level alarm/event scale), software modules each with their
-own enumerated sample syslog messages, alarms/events, audit logs, and
-operational reference (binary trace, remote logging) — with no single
-per-row confidence rating, product, or format axis running through
-all of it the way the other five vendors each have one running through
-theirs, so its Log Types table is three genuinely different row shapes
-(local log file / software module / syslog message) rather than one. The
-tab doesn't paper over any of that: each vendor gets its own flatten/render/
+145-row field-mapping table too large to repeat per row; Cisco IOS
+XE's is the odd one out entirely — it isn't a log-type catalog at
+all, since the source says plainly that "there are thousands of
+individual messages" and points to the per-release System Message Guide
+as the authoritative list rather than enumerating them, so there's no
+per-row confidence rating, product/format split, or example log line the
+way FortiGate/FortiManager/Juniper/Zscaler have — its "Log Types" table
+is four different named-thing lists (facilities, logging destinations,
+configuration commands, advanced features) standing in for that shape
+instead; and Cisco Catalyst SD-WAN's is the richest of the seven in raw
+material but the least catalog-shaped — local log files, syslog
+message-format templates, two independent severity scales (syslog's own
+8 levels and a separate 4-level alarm/event scale), software modules
+each with their own enumerated sample syslog messages, alarms/events,
+audit logs, and operational reference (binary trace, remote logging) —
+with no single per-row confidence rating, product, or format axis
+running through all of it the way the other six vendors each have one
+running through theirs, so its Log Types table is three genuinely
+different row shapes (local log file / software module / syslog
+message) rather than one. The tab doesn't paper over any of that: each
+vendor gets its own flatten/render/
 modal logic in `index.html`, sharing only the visual language (rail +
 toolbar + table + detail modal, a Log Types/Reference mode toggle for
 material that doesn't belong repeated per row) via the same
@@ -49,23 +59,27 @@ every field parsed out of *individual* log-type rows (not the vendor's
 common fields, which are already flat and searchable as their own Log
 Types rows) — clicking a field jumps back to Log Types and opens the
 exact row it came from, the same "View this event" pattern Windows'
-version uses. Only two of the six vendors' sources actually have this
+version uses. Only two of the seven vendors' sources actually have this
 kind of per-row field data: FortiGate (63 fields across 7 of its 40
 subtypes — the ones with `confidence: "verified"`) and Zscaler (224
-fields across 13 of its 15 overview inputs). The other four —
+fields across 13 of its 15 overview inputs). The other five —
 FortiManager (per-subtype fields explicitly not enumerated in the
 source), Juniper (individual message tags within a category aren't
 enumerated, only the category itself), Infoblox (its field schemas
 are separate top-level structures, not tied one-to-one to a category
-row), and Cisco Catalyst SD-WAN (its only field-shaped data,
-`common_alarm_event_fields` and `audit_logs.common_fields`, is each
-common to its own narrow category — alarms, audit logs — rather than
-tied to individual Log Type rows, and the syslog messages themselves
-carry a positional `format` template, not a named field list) —
-genuinely have nothing to flatten here without inventing a per-row
-schema the source doesn't draw, so their Schema Explorer mode is a
-single explanatory note instead of an empty table pretending there's
-data behind it.
+row), Cisco IOS XE (its only field-shaped data is the 6 common
+message-format fields, already flat and searchable as their own Log
+Types rows and detailed in full under Reference › Message format —
+nothing left to build a per-facility or per-mnemonic schema list from
+without inventing one), and Cisco Catalyst SD-WAN (its only
+field-shaped data, `common_alarm_event_fields` and
+`audit_logs.common_fields`, is each common to its own narrow category —
+alarms, audit logs — rather than tied to individual Log Type rows, and
+the syslog messages themselves carry a positional `format` template,
+not a named field list) — genuinely have nothing to flatten here
+without inventing a per-row schema the source doesn't draw, so their
+Schema Explorer mode is a single explanatory note instead of an empty
+table pretending there's data behind it.
 
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
@@ -264,14 +278,54 @@ need.
   rest, rather than being tucked into a Reference-only appendix where
   they wouldn't be searchable alongside everything else.
 
+- `data/cisco_ios_xe_logging_reference.json` — a Cisco IOS XE system
+  message logging (syslog) reference (wrapper key `cisco_ios_xe_logging`
+  kept intact, not reshaped), covering Catalyst switches, ASR/ISR
+  routers, and IOS XE Catalyst SD-WAN devices. Unlike the other five
+  vendors above, this isn't a log-type catalog at all — the source says
+  plainly that "there are thousands of individual messages" and points
+  to the per-release System Message Guide as the authoritative list
+  rather than enumerating them, so there's no per-row confidence rating,
+  product/format split, or example log line the way FortiGate's/
+  FortiManager's/Juniper's/Zscaler's have. What it has instead is a
+  logging-configuration reference: **18 common facilities**
+  (protocol/module codes like `OSPF`, `LINEPROTO`, `SYS`), **6 logging
+  destinations** (console, buffer, monitor, file, remote syslog host,
+  SNMP history table) each with its own enable command, **10 key
+  configuration commands**, and **5 advanced features** (rate-limiting,
+  discriminators, and so on) — four named-thing lists standing in for
+  the Log Types table's usual per-subtype rows, rather than actual log
+  types. **6 message-format fields** common to every syslog line
+  (`FACILITY`, `SEVERITY`, `MNEMONIC`, `description`/`Message-text`,
+  `seq no`, `timestamp`) fold into the same Log Types table as their own
+  rows (a "Common fields" rail filter, exactly like FortiGate's/
+  FortiManager's/Juniper's common fields), leaving 39 "real" rows
+  (facilities + destinations + commands + features) counted separately
+  from the 45-row table total the rail's "All types" shows.
+
+  The Reference view carries what doesn't belong repeated per row:
+  three message-format templates (standard, with-hostname,
+  extended/sub-facility) with 4 example log lines between them, an
+  8-level severity table (`emergencies` through `debugging`) with 3
+  additional caveats, a 6-key default-behavior summary (is console
+  logging on by default, what's the default buffer size story, and so
+  on), 5 free-text notes (4 general notes plus the IOS XE Catalyst
+  SD-WAN caveat that both standard and SD-WAN-specific facilities like
+  `FTMD`/`OMP`/`VDAEMON` appear on those devices, merged in from a
+  separate `relation_to_sdwan` key), and 5 source citations (kept as
+  plain text, not turned into fake links, matching Infoblox's own
+  convention). Since none of the four named-thing lists carry a field
+  list of their own, Schema Explorer here is a single explanatory note
+  like FortiManager's/Juniper's/Infoblox's, not an empty table.
+
 - `data/cisco_sdwan_logging_reference.json` — a comprehensive Cisco
   Catalyst SD-WAN (formerly Viptela / Cisco SD-WAN) logging reference,
   kept exactly as delivered (wrapper key
   `cisco_catalyst_sdwan_logging_comprehensive` intact, not reshaped).
-  Of the six vendors, this one carries the most raw material but the
+  Of the seven vendors, this one carries the most raw material but the
   least single catalog shape — no per-row confidence rating, product
   split, or format axis runs through all of it the way one axis runs
-  through each of the other five vendors' rows. Its Log Types table is
+  through each of the other six vendors' rows. Its Log Types table is
   three genuinely different row shapes instead of one: **7 local log
   files** (`auth.log`, `vsyslog.log`, and so on, each with its own path
   and description), **8 software modules** (`CFGMGR`, `OMP`, `FTMD`,
@@ -319,14 +373,14 @@ need.
   single short line above the Reference sections rather than being
   dropped or forced into a table of its own.
 
-All six files `fetch()` at runtime rather than embed inline (same
+All seven files `fetch()` at runtime rather than embed inline (same
 trade-off as AWS Events and Threat Detection's Heat Coverage tab: needs
 the page served over http(s), not opened as a local `file://`), and all
-six register their rows on the tab's shared `window.__compHub['other']`
+seven register their rows on the tab's shared `window.__compHub['other']`
 entry (merged across vendors, each row tagged with its own `vendor` so
 a cross-catalogue search result opens on the right vendor's own panel
 and tab).
 
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-all six files are used as delivered, not derived from another file in
+all seven files are used as delivered, not derived from another file in
 this repo.

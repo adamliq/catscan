@@ -1,0 +1,111 @@
+{
+  "cisco_ios_xe_logging": {
+    "product": "Cisco IOS XE",
+    "description": "Comprehensive reference for Cisco IOS XE system message logging (syslog), including format, severity levels, facilities, destinations, commands, and advanced features. Applies to Catalyst switches, ASR/ISR routers, and IOS XE Catalyst SD-WAN devices.",
+    "message_format": {
+      "standard": "[seq no:][timestamp:] %FACILITY-SEVERITY-MNEMONIC: description",
+      "with_hostname": "[seq no:][timestamp:] %FACILITY-SEVERITY-MNEMONIC: description (hostname-n)",
+      "extended": "%FACILITY-SUBFACILITY-SEVERITY-MNEMONIC: Message-text",
+      "examples": [
+        "*Mar  1 18:46:11.483 UTC: %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/1, changed state to up",
+        "00:00:46: %LINK-3-UPDOWN: Interface Port-channel1, changed state to up",
+        "%SYS-5-CONFIG_I: Configured from console by vty2 (10.34.195.36)",
+        "%LINK-2-BADVCALL: Interface [chars], undefined entry point"
+      ],
+      "components": [
+        {"name": "seq no", "description": "Optional sequence number (enabled with 'service sequence-numbers')"},
+        {"name": "timestamp", "description": "Optional date/time or uptime (controlled by 'service timestamps log ...')"},
+        {"name": "FACILITY", "description": "2+ uppercase letters identifying the source (hardware device, protocol, or software module)"},
+        {"name": "SEVERITY", "description": "Single digit 0-7 (lower number = higher severity)"},
+        {"name": "MNEMONIC", "description": "Unique short code that identifies the specific message"},
+        {"name": "description / Message-text", "description": "Human-readable details; may contain variable fields such as interface names, IP addresses, etc."}
+      ]
+    },
+    "severity_levels": [
+      {"level": 0, "keyword": "emergencies", "description": "System is unusable"},
+      {"level": 1, "keyword": "alerts", "description": "Immediate action required"},
+      {"level": 2, "keyword": "critical", "description": "Critical condition"},
+      {"level": 3, "keyword": "errors", "description": "Error condition"},
+      {"level": 4, "keyword": "warnings", "description": "Warning condition"},
+      {"level": 5, "keyword": "notifications", "description": "Normal but significant condition"},
+      {"level": 6, "keyword": "informational", "description": "Informational messages only"},
+      {"level": 7, "keyword": "debugging", "description": "Debugging messages (default on console)"}
+    ],
+    "severity_notes": [
+      "Specifying a severity level logs that level and all numerically lower (more severe) levels.",
+      "Default console severity is usually debugging (7).",
+      "Default remote trap severity is often informational (6)."
+    ],
+    "common_facilities": [
+      {"facility": "SYS", "description": "System / general messages"},
+      {"facility": "LINK", "description": "Interface link state changes"},
+      {"facility": "LINEPROTO", "description": "Line protocol state changes"},
+      {"facility": "OSPF", "description": "OSPF routing protocol"},
+      {"facility": "BGP", "description": "BGP routing protocol"},
+      {"facility": "EIGRP", "description": "EIGRP routing protocol"},
+      {"facility": "ISIS", "description": "IS-IS routing protocol"},
+      {"facility": "SNMP", "description": "SNMP"},
+      {"facility": "AAA", "description": "Authentication, Authorization, Accounting"},
+      {"facility": "DHCP", "description": "DHCP"},
+      {"facility": "DHCPSNOOPING", "description": "DHCP snooping"},
+      {"facility": "DOT1X", "description": "802.1X port-based authentication"},
+      {"facility": "ACL / ACLMGR", "description": "Access Control Lists"},
+      {"facility": "PLATFORM / SPA / SPA_OIR", "description": "Platform and SPA hardware events"},
+      {"facility": "IP / IPV6", "description": "IP stack"},
+      {"facility": "CRYPTO / PKI", "description": "Cryptography and certificates"},
+      {"facility": "MPLS / LDP", "description": "MPLS and LDP"},
+      {"facility": "CEDGE / SDWAN-related", "description": "IOS XE Catalyst SD-WAN specific facilities (FTMD, OMP, VDAEMON, CFGMGR, etc.)"}
+    ],
+    "logging_destinations": [
+      {"destination": "Console", "command": "logging console [severity]", "notes": "Enabled by default"},
+      {"destination": "Monitor (VTY/SSH/Telnet)", "command": "logging monitor [severity] + terminal monitor", "notes": "Requires terminal monitor on the session"},
+      {"destination": "Local buffer", "command": "logging buffered [size] [severity]", "notes": "Default size often 4096–102400 bytes (platform-dependent)"},
+      {"destination": "Remote syslog host", "command": "logging host {ip|hostname} [vrf ...] [transport {udp|tcp|tls}] [port ...] [discriminator ...]", "notes": "UDP default; TCP/TLS for reliable/secure delivery"},
+      {"destination": "File (flash, etc.)", "command": "logging file flash:filename [max-size] [min-size] [severity]", "notes": "Persistent storage"},
+      {"destination": "History table (for SNMP)", "command": "logging history [severity] + logging history size <number>", "notes": "Used with snmp-server enable traps syslog"}
+    ],
+    "key_configuration_commands": [
+      {"command": "service timestamps log datetime [msec] [localtime] [show-timezone] [year]", "description": "Add date/time timestamps to log messages"},
+      {"command": "service timestamps log uptime", "description": "Add uptime timestamps to log messages"},
+      {"command": "service sequence-numbers", "description": "Add sequence numbers to log messages"},
+      {"command": "logging facility local7", "description": "Set the syslog facility code sent to remote servers (default local7; range local0–local7)"},
+      {"command": "logging source-interface <interface>", "description": "Set the source IP interface for remote syslog packets"},
+      {"command": "logging trap <severity>", "description": "Limit severity of messages sent to remote syslog hosts"},
+      {"command": "logging trap informational syslog-format rfc5424", "description": "Use RFC 5424 format for remote syslog (supported on newer releases)"},
+      {"command": "logging discriminator <name> [facility|mnemonics|msg-body] {drops|includes} <string> [severity {drops|includes} <sev>] [rate-limit <limit>]", "description": "Create a message discriminator for filtering"},
+      {"command": "logging synchronous", "description": "Synchronize logging with command output on a line"},
+      {"command": "logging on", "description": "Globally enable/disable system message logging"}
+    ],
+    "advanced_features": [
+      {"feature": "Embedded Syslog Manager (ESM)", "description": "Tcl-based framework for filtering, correlating, escalating, routing, and customizing system logging messages before delivery"},
+      {"feature": "Message Discriminators", "description": "Filter messages by facility, mnemonic, message body (regex), severity, and rate-limit. Checked in order: severity → facility → mnemonic → body → rate-limit"},
+      {"feature": "XML-formatted logging", "description": "Optional structured XML output for messages"},
+      {"feature": "Reliable / Secure transport", "description": "TCP, BEEP, and TLS (RFC 5425) transports in addition to default UDP"},
+      {"feature": "Binary Trace", "description": "Deeper daemon-level tracing available on some platforms and IOS XE SD-WAN devices"}
+    ],
+    "default_behavior": {
+      "console_logging": "Enabled, severity debugging (7)",
+      "buffer_logging": "Enabled (size platform-dependent)",
+      "remote_logging": "Disabled until 'logging host' is configured",
+      "timestamps": "Often disabled by default (recommended to enable)",
+      "remote_facility": "local7",
+      "syslog_format_compatibility": "4.3 BSD UNIX compatible"
+    },
+    "relation_to_sdwan": {
+      "note": "On IOS XE Catalyst SD-WAN devices, both standard IOS XE messages (%LINK-..., %LINEPROTO-..., %SYS-..., etc.) and SD-WAN-specific messages (facilities such as FTMD, OMP, VDAEMON, CFGMGR, or prefixes like %Cisco-SDWAN-... / %SDWAN-...) are generated."
+    },
+    "notes": [
+      "There are thousands of individual messages; the authoritative list is the System Message Guide for the specific IOS XE release.",
+      "Variable fields in message text are often shown in documentation as [chars], [dec], [hex], [inet], etc.",
+      "Some messages include traceback information for debugging.",
+      "Exact available facilities, commands, and defaults vary by platform and IOS XE release (16.x, 17.x, 26.x, etc.)."
+    ],
+    "primary_sources": [
+      "Cisco IOS XE System Message Guide (per-release, e.g. 17.14.x, 17.16.x, 17.18.x, 26.x)",
+      "System Management Configuration Guide – Configuring System Message Logs",
+      "Embedded Syslog Manager Configuration Guide",
+      "Cisco IOS XE Command Reference – Logging Commands",
+      "Cisco IOS XE Catalyst SD-WAN Qualified Command Reference (for SD-WAN specific logging options)"
+    ]
+  }
+}
