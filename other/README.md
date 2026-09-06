@@ -8,7 +8,8 @@ rather than being forced into a common row shape. FortiGate's log
 reference, FortiManager/FortiAnalyzer's log schema, Juniper EX-series's
 log schema, Infoblox DDI's log reference, Zscaler's Splunk onboarding
 reference, Cisco IOS XE's system message logging (syslog) reference,
-and Cisco Catalyst SD-WAN's comprehensive logging reference
+Cisco Catalyst SD-WAN's comprehensive logging reference, and Dell
+iDRAC's remote syslog schema
 (all below) look nothing alike — FortiGate has per-subtype
 CLI/GUI enable instructions, an example log line, and a confidence
 rating; FortiManager/FortiAnalyzer has a numeric category code, a
@@ -36,17 +37,26 @@ per-row confidence rating, product/format split, or example log line the
 way FortiGate/FortiManager/Juniper/Zscaler have — its "Log Types" table
 is four different named-thing lists (facilities, logging destinations,
 configuration commands, advanced features) standing in for that shape
-instead; and Cisco Catalyst SD-WAN's is the richest of the seven in raw
+instead; Cisco Catalyst SD-WAN's is the richest of the eight in raw
 material but the least catalog-shaped — local log files, syslog
 message-format templates, two independent severity scales (syslog's own
 8 levels and a separate 4-level alarm/event scale), software modules
 each with their own enumerated sample syslog messages, alarms/events,
 audit logs, and operational reference (binary trace, remote logging) —
 with no single per-row confidence rating, product, or format axis
-running through all of it the way the other six vendors each have one
+running through all of it the way the other seven vendors each have one
 running through theirs, so its Log Types table is three genuinely
 different row shapes (local log file / software module / syslog
-message) rather than one. The tab doesn't paper over any of that: each
+message) rather than one; and Dell iDRAC's has no enumerated
+per-message catalog at all — only 6 alert categories and 38 message ID
+prefixes, standing in for the Log Types table's usual per-subtype rows
+the same way Cisco IOS XE's four named-thing lists do — but its alert
+categories do carry a genuine `verified` flag straight from the source
+(reusing FortiGate's own confidence-badge colors under the
+verified/unverified vocabulary the data itself uses, rather than
+inventing a new one), and its real field data lives one level up, at
+the envelope and message-registry level, not per category or prefix.
+The tab doesn't paper over any of that: each
 vendor gets its own flatten/render/
 modal logic in `index.html`, sharing only the visual language (rail +
 toolbar + table + detail modal, a Log Types/Reference mode toggle for
@@ -61,23 +71,28 @@ field data — FortiGate (63 fields across 7 of its 40 subtypes — the
 ones with `confidence: "verified"`) and Zscaler (224 fields across 13
 of its 15 overview inputs) — so clicking a field there jumps back to
 Log Types and opens the exact row it came from, the "View this event"
-pattern Windows' own version uses. Two more vendors' sources have field
-data too, but shaped differently — common to a whole category rather
-than tied to one Log Type row, so there's no individual row to jump
-back to on click: Cisco Catalyst SD-WAN's `common_alarm_event_fields`
-(13 fields, common to every alarm/event) and `audit_logs.common_fields`
-(9 fields, common to every audit entry), and Infoblox's DNS
-query/response (21), DHCP lease (18), and Universal DDI Parquet export
-(67) field schemas. Both still get the same flat, searchable table —
-22 fields for Cisco Catalyst SD-WAN, 106 for Infoblox — but clicking a
+pattern Windows' own version uses. Three more vendors' sources have
+field data too, but shaped differently — common to a whole category or
+envelope rather than tied to one Log Type row, so there's no individual
+row to jump back to on click: Cisco Catalyst SD-WAN's
+`common_alarm_event_fields` (13 fields, common to every alarm/event)
+and `audit_logs.common_fields` (9 fields, common to every audit entry);
+Infoblox's DNS query/response (21), DHCP lease (18), and Universal DDI
+Parquet export (67) field schemas; and Dell iDRAC's RACLOG full record
+(9), iSM OS log (10), and Redfish message registry (8) fields — none
+of which belong to one of its 44 alert-category/prefix rows any more
+than Infoblox's field schemas belong to one of its category rows. All
+three still get the same flat, searchable table — 22 fields for Cisco
+Catalyst SD-WAN, 106 for Infoblox, 27 for Dell iDRAC — but clicking a
 field jumps to and expands the Reference section it's already fully
 documented in (Alarms & events / Audit logs for Cisco Catalyst SD-WAN;
 DNS query/response fields / DHCP lease fields / Universal DDI exported
-log files for Infoblox) instead of opening a row's modal. The
-remaining three — FortiManager (per-subtype fields explicitly not
-enumerated in the source), Juniper (individual message tags within a
-category aren't enumerated, only the category itself), and Cisco IOS
-XE (its only field-shaped data is the 6 common message-format fields,
+log files for Infoblox; Envelopes / Message registry for Dell iDRAC)
+instead of opening a row's modal. The remaining three — FortiManager
+(per-subtype fields explicitly not enumerated in the source), Juniper
+(individual message tags within a category aren't enumerated, only the
+category itself), and Cisco IOS XE (its only field-shaped data is the
+6 common message-format fields,
 already flat and searchable as their own Log Types rows and detailed
 in full under Reference › Message format — nothing left to build a
 per-facility or per-mnemonic schema list from without inventing one) —
@@ -338,10 +353,10 @@ need.
   Catalyst SD-WAN (formerly Viptela / Cisco SD-WAN) logging reference,
   kept exactly as delivered (wrapper key
   `cisco_catalyst_sdwan_logging_comprehensive` intact, not reshaped).
-  Of the seven vendors, this one carries the most raw material but the
+  Of the eight vendors, this one carries the most raw material but the
   least single catalog shape — no per-row confidence rating, product
   split, or format axis runs through all of it the way one axis runs
-  through each of the other six vendors' rows. Its Log Types table is
+  through each of the other seven vendors' rows. Its Log Types table is
   three genuinely different row shapes instead of one: **7 local log
   files** (`auth.log`, `vsyslog.log`, and so on, each with its own path
   and description), **8 software modules** (`CFGMGR`, `OMP`, `FTMD`,
@@ -401,14 +416,72 @@ need.
   single short line above the Reference sections rather than being
   dropped or forced into a table of its own.
 
-All seven files `fetch()` at runtime rather than embed inline (same
+- `data/idrac_syslog_schema.json` — a Dell iDRAC (iDRAC8/9/10) remote
+  syslog schema, kept exactly as delivered, not reshaped. Compiled
+  rather than fetched from one published guide — the file's own `note`
+  flags that items marked `verified: false` are reasonable inferences
+  from documented naming patterns rather than confirmed line-for-line,
+  and says so plainly rather than presenting every entry as equally
+  certain. Like Cisco IOS XE's, this source has no enumerated
+  per-message catalog — Dell's own EEMI reference guide documents
+  100+ message ID prefixes, of which this file "deliberately" keeps
+  only 38 (its own `message_id_prefixes_note` says so) — so Log Types
+  holds two named-thing lists instead of per-message rows: **6 alert
+  categories** (System Health, Storage, Configuration, Audit, Updates,
+  Work Notes) and **38 message ID prefixes** (44 rows total). Unlike
+  Cisco IOS XE's named-thing lists, though, the alert categories carry
+  a genuine `verified` flag straight from the source (only System
+  Health's mapping to `idrac.alert.system.*` racadm keys is confirmed;
+  the other five are inferred by the same naming pattern) — reused
+  as the exact verified/typical badge colors FortiGate's own confidence
+  rating already established, rather than inventing a new visual
+  language for a true/false flag the data already draws. The 38
+  message ID prefixes carry no such flag, so their own Status column
+  shows a dash.
+
+  Three envelopes carry this source's actual log traffic, each
+  documented in its own Reference subsection rather than folded into
+  Log Types rows: **RACLOG full record** (9 fields — the hardware/
+  Lifecycle-Controller event shape reconstructed from `racadm getraclog`
+  or SIEM-side parsing), **RACLOG live syslog line** (the compact form
+  actually streamed in real time, given as a format string, one
+  example, and a ready-to-use parse regex rather than a field list,
+  since the source doesn't itemize one), and **iSM OS log** (10 fields
+  — the in-OS agent's own audit/health messages, gated behind an
+  explicit `prerequisite_setting` the Reference section quotes in
+  full). The Redfish **message registry** that the message IDs
+  themselves resolve against gets its own small section too: 8
+  meta-fields describing the registry's own structure (`MessageId`,
+  `Severity`, `Resolution`, and so on) rather than log-line fields —
+  real field-shaped data all the same, and — following the same
+  reasoning Cisco Catalyst SD-WAN's and Infoblox's own field schemas
+  already established — none of these 27 fields ties one-to-one to an
+  alert-category or prefix row, so they're what Schema Explorer
+  flattens into its own searchable table here, with a click jumping to
+  and expanding the Envelopes or Message registry Reference section
+  instead of opening a row's modal.
+
+  Everything else lives in a 6-section Reference view: Transport
+  (engine, wire frame, unencrypted/encrypted delivery settings, syslog
+  facility, the caveat that most firmware emits every event at PRI
+  severity Informational regardless of its real severity, license
+  requirement), Envelopes, Message registry, Severity levels (4 values
+  plus which are actually filterable in Alert Configuration), Settings
+  required (a 5-step ordered walkthrough — license, master alert
+  switch, syslog destination, category/severity routing, iSM
+  prerequisite — each with its own racadm/web-UI/Redfish path, plus the
+  one `racadm testalert` command that exercises all of it), and Sources
+  (11 citations kept as plain text, matching Infoblox's own
+  convention).
+
+All eight files `fetch()` at runtime rather than embed inline (same
 trade-off as AWS Events and Threat Detection's Heat Coverage tab: needs
 the page served over http(s), not opened as a local `file://`), and all
-seven register their rows on the tab's shared `window.__compHub['other']`
+eight register their rows on the tab's shared `window.__compHub['other']`
 entry (merged across vendors, each row tagged with its own `vendor` so
 a cross-catalogue search result opens on the right vendor's own panel
 and tab).
 
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-all seven files are used as delivered, not derived from another file in
+all eight files are used as delivered, not derived from another file in
 this repo.
