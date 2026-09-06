@@ -24,8 +24,9 @@ data export rather than merged from an external source repo, and an
 any of the above — FortiGate's 40 log types, FortiManager/
 FortiAnalyzer's 37, Juniper EX-series's 18 message-tag categories, DDI
 Infoblox's 75 log categories, Zscaler's 28 log inputs, Cisco IOS XE's
-39-row logging-configuration reference, and Cisco Catalyst SD-WAN's
-47-row logging reference (see
+39-row logging-configuration reference, Cisco Catalyst SD-WAN's
+47-row logging reference, and Dell iDRAC's 44-row alert-category/
+message-ID-prefix reference (see
 [`other/`](other/README.md)) so far, with a real vendor picker and room
 for more over time, each keeping
 its own schema shape rather than a forced common one.
@@ -112,10 +113,11 @@ embed inline the way the other three catalogues' data is), and the
 **Other Events** tab fetches `fortigate_log_reference.json`,
 `fortimanager_log_schema.json`, `juniper_switch_log_schema.json`,
 `infoblox_log_reference.json`, `zscaler_splunk_onboarding_reference.json`,
-`cisco_ios_xe_logging_reference.json`, and `cisco_sdwan_logging_reference.json`
+`cisco_ios_xe_logging_reference.json`, `cisco_sdwan_logging_reference.json`,
+and `idrac_syslog_schema.json`
 (from `other/data/`, see below — a modest ~46&nbsp;KB, ~10&nbsp;KB,
-~9&nbsp;KB, ~32&nbsp;KB, ~97&nbsp;KB, ~9&nbsp;KB, and ~21&nbsp;KB
-respectively, but all seven fetched rather
+~9&nbsp;KB, ~32&nbsp;KB, ~97&nbsp;KB, ~9&nbsp;KB, ~21&nbsp;KB, and
+~16&nbsp;KB respectively, but all eight fetched rather
 than embedded for consistency with the other two runtime-loaded tabs
 and because Other Events is meant to grow more vendor files over time).
 All three tabs
@@ -215,16 +217,17 @@ own file independently — `other/data/fortigate_log_reference.json`,
 `other/data/juniper_switch_log_schema.json`,
 `other/data/infoblox_log_reference.json`,
 `other/data/zscaler_splunk_onboarding_reference.json`,
-`other/data/cisco_ios_xe_logging_reference.json`, and
-`other/data/cisco_sdwan_logging_reference.json` (see Structure) —
+`other/data/cisco_ios_xe_logging_reference.json`,
+`other/data/cisco_sdwan_logging_reference.json`, and
+`other/data/idrac_syslog_schema.json` (see Structure) —
 and only builds that vendor's stats tiles, rail list, and search table —
 and registers its rows on the shared `window.__compHub['other']` entry
 for the shell Search pill — once its own fetch resolves; each vendor
 panel shows its own loading message (and, under `file://`, an
 explanatory error) until then, the same pattern Threat Detection's own
-Heat Coverage tab already used for its runtime fetches. The seven
+Heat Coverage tab already used for its runtime fetches. The eight
 vendors load and register independently, so a search fired before all
-seven resolve just won't have the still-loading ones' results yet.
+eight resolve just won't have the still-loading ones' results yet.
 
 **AWS Events**' rail originally held only a Service filter; it now also
 has **CloudTrail** and **ACSC** filter groups (`All actions` /
@@ -246,8 +249,8 @@ list, but a `product` split (FortiManager vs FortiAnalyzer) and a
 composite log-ID format FortiGate's data doesn't have — which is exactly
 the trigger that was waiting for: the header now carries a real,
 clickable vendor picker (`FortiGate` / `FortiManager`, later joined by
-`Juniper EX-series`, `DDI Infoblox`, `Zscaler`, `Cisco IOS XE`, and
-`Cisco SD-WAN` — see below), each
+`Juniper EX-series`, `DDI Infoblox`, `Zscaler`, `Cisco IOS XE`,
+`Cisco SD-WAN`, and `Dell iDRAC` — see below), each
 vendor's whole panel (stats, rail, table, mode toggle, both modals) a
 sibling `<div>` shown or hidden by the picker, each with its own
 independent search/filter/mode state so switching vendors and switching
@@ -541,6 +544,23 @@ Cisco IOS XE's own message-format fields are already Log Types rows,
 FortiManager's/Juniper's common fields are too, and none of the three
 enumerates anything below that.
 
+An eighth vendor, Dell iDRAC (compiled from a syslog schema covering
+iDRAC8/9/10 rather than fetched from one published guide, with the
+source's own caveat that unverified items are reasonable inferences,
+not confirmed line-for-line), has no enumerated per-message catalog
+either — only category and prefix names — so its Log Types table holds
+two named-thing lists instead of one row shape: 6 alert categories
+(each carrying the source's own `verified` flag, reusing the exact
+verified/typical badge colors FortiGate's confidence rating already
+established) and 38 message ID prefixes (44 rows total). Its real
+field data lives one level up, at the envelope and registry level: the
+RACLOG full record envelope's own 9 fields, the iSM OS log envelope's
+own 10, and the Redfish message registry's own 8 meta-fields — 27
+fields that don't belong to any of the 44 rows individually, so Dell
+iDRAC joins Cisco Catalyst SD-WAN and Infoblox in the "jump to a
+Reference section" Schema Explorer pattern rather than starting a
+fourth: three vendors now, not two.
+
 (Found while checking the AWS Events table's text color against the other
 tables on the page, and fixed with a one-line change: `index.html` never
 had a `<!DOCTYPE html>` — none of the three source apps carried one into
@@ -718,12 +738,17 @@ Events — leaks into or interferes with the others.
   (a logging-configuration reference — facilities, destinations,
   commands, features, message format — rather than a log-type catalog,
   covering Catalyst switches, ASR/ISR routers, and IOS XE Catalyst
-  SD-WAN devices), and `data/cisco_sdwan_logging_reference.json` (a
+  SD-WAN devices), `data/cisco_sdwan_logging_reference.json` (a
   comprehensive Cisco Catalyst SD-WAN logging reference — local log
   files, syslog formats, two severity scales, per-module syslog
   messages, alarms/events, audit logs — rather than a single log-type
-  catalog). No
-  build tooling here, unlike `aws/`: all seven JSON files are used
+  catalog), and `data/idrac_syslog_schema.json` (a Dell iDRAC remote
+  syslog schema covering iDRAC8/9/10 — alert categories, message ID
+  prefixes, transport/envelope details, and the Redfish message
+  registry's own field schema, with the source's own `verified` flag
+  on each alert category rather than one compiled confidence rating).
+  No
+  build tooling here, unlike `aws/`: all eight JSON files are used
   as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
@@ -755,11 +780,12 @@ vendor's own file in place (`other/data/fortigate_log_reference.json`,
 `other/data/juniper_switch_log_schema.json`,
 `other/data/infoblox_log_reference.json`,
 `other/data/zscaler_splunk_onboarding_reference.json`,
-`other/data/cisco_ios_xe_logging_reference.json`, or
-`other/data/cisco_sdwan_logging_reference.json`), then regenerate
+`other/data/cisco_ios_xe_logging_reference.json`,
+`other/data/cisco_sdwan_logging_reference.json`, or
+`other/data/idrac_syslog_schema.json`), then regenerate
 `index.html`. Adding a genuinely new vendor follows the pattern
 FortiManager, Juniper EX-series, DDI Infoblox, Zscaler, Cisco IOS XE,
-and Cisco SD-WAN each set inside `build_app_other()` (not a
+Cisco SD-WAN, and Dell iDRAC each set inside `build_app_other()` (not a
 separate top-level function — all of Other Events' vendors share one
 `#app-other` container): a new data file, a new pill in the vendor-tab
 row, a new sibling `<div>` panel (own stats/rail/table/modal markup,

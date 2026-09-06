@@ -1,0 +1,204 @@
+{
+  "title": "iDRAC Remote Syslog Schema",
+  "scope": "Dell PowerEdge iDRAC8 / iDRAC9 / iDRAC10",
+  "compiled": "2026-09-06",
+  "note": "Field names and the message-ID catalog vary somewhat across iDRAC firmware generations. Items marked \"verified\": false are reasonable inferences (from documented naming patterns or vendor examples) rather than confirmed line-for-line in Dell's own docs -- confirm against your firmware before scripting against them.",
+
+  "transport": {
+    "engine": "RACLOG (Lifecycle Controller Log / System Event Log)",
+    "wire_frame": "<PRI>Mmm dd hh:mm:ss hostname-or-ip RAC: <payload>",
+    "unencrypted": {
+      "protocol": "UDP",
+      "default_port": 514,
+      "max_targets": 3
+    },
+    "encrypted": {
+      "protocol": "TCP+TLS",
+      "default_port": 6514,
+      "attribute": "SecurePort",
+      "min_firmware": "6.00.02.00",
+      "max_targets": 1,
+      "notes": [
+        "iDRAC and the syslog server must trust the same CA",
+        "iDRAC can present an anonymous TLS identity or a signed identity certificate",
+        "Encrypted and unencrypted targets cannot run simultaneously"
+      ]
+    },
+    "syslog_facility": { "name": "local5", "number": 21 },
+    "syslog_pri_severity_note": "Most iDRAC generations emit every event at syslog severity Informational (6) regardless of the event's real severity. The true severity travels in the payload's own Severity field, not the PRI byte.",
+    "license_required": ["Enterprise", "Datacenter"]
+  },
+
+  "envelopes": {
+    "raclog_full_record": {
+      "used_for": "Hardware and Lifecycle Controller events (thermal, power, storage, security, BIOS, licensing, user/audit, firmware jobs, etc.)",
+      "seen_via": "e.g. racadm getraclog, or SIEM-side reconstruction from arg fields",
+      "fields": [
+        { "field": "SeqNumber", "example": "1523", "description": "Monotonic sequence number of the log entry, unique per iDRAC." },
+        { "field": "MessageID", "example": "USR0030", "description": "The EEMI message identifier -- a category prefix plus a numeric code." },
+        { "field": "Category", "example": "Audit", "description": "Alert category the message rolls up to: System Health, Storage, Configuration, Audit, Updates, or Work Notes." },
+        { "field": "AgentID", "example": "RACLOG", "description": "Logging subsystem that generated the record." },
+        { "field": "Severity", "example": "Information", "description": "The event's real severity: Critical, Warning, Informational, or OK. Authoritative -- not the syslog PRI." },
+        { "field": "Timestamp", "example": "2017-03-26 13:53:36", "description": "iDRAC local time (or UTC depending on time-zone config) the event was logged." },
+        { "field": "Message", "example": "Successfully logged in using john, from 192.168.0.106 and GUI.", "description": "Fully rendered, human-readable message text with arguments substituted in." },
+        { "field": "Message Arg 1..N", "example": "john / 192.168.0.106 / GUI", "description": "Raw substitution arguments behind the rendered message; matches the registry's ParamTypes/NumberOfArgs." },
+        { "field": "FQDD", "example": "iDRAC.Embedded.1", "description": "Fully Qualified Device Descriptor -- the specific component instance the event is about." }
+      ]
+    },
+    "raclog_live_syslog_line": {
+      "used_for": "The compact form iDRAC actually streams in real time to a configured remote syslog server",
+      "format": "<Severity>, Category: <Category>, MessageID: <MessageID>, Message: <Message text>",
+      "example": "Informational, Category: Audit, MessageID: USR0030, Message: Successfully logged in using john, from 192.168.0.106 and GUI.",
+      "parse_regex": "^([a-zA-Z]*),\\ Category:\\ ([a-zA-Z]*),\\ MessageID:\\ ([a-zA-Z0-9]*),\\ Message:\\ (.*)$"
+    },
+    "ism_os_log": {
+      "used_for": "iDRAC Service Module (iSM) events -- the in-OS agent's own audit/health messages, written through the host OS's syslog",
+      "process_tag": "dsm_ism_srvmgrd",
+      "format": "<DateTime> <hostname> dsm_ism_srvmgrd[<PID>]: <MessageID> EventID=\"<id>\" EventCategory=\"Audit\" EventSeverity=\"<severity>\" IsPastEvent=\"<True|False>\" language=\"<locale>\" <message text>",
+      "fields": [
+        { "field": "DateTime", "description": "BSD-style timestamp, host clock." },
+        { "field": "hostname", "description": "The managed server's OS hostname (not the iDRAC's)." },
+        { "field": "dsm_ism_srvmgrd[PID]", "description": "Fixed process tag for iSM -- filter on this to isolate iSM traffic." },
+        { "field": "MessageID", "description": "iSM's own EEMI-style message ID." },
+        { "field": "EventID", "description": "Numeric event identifier." },
+        { "field": "EventCategory", "description": "Fixed value \"Audit\" for iSM-sourced messages." },
+        { "field": "EventSeverity", "description": "Same severity vocabulary as the main severity list." },
+        { "field": "IsPastEvent", "description": "True/False -- flags a backfilled event replayed after an iSM restart, vs. one seen live." },
+        { "field": "language", "description": "Locale of the message text, e.g. en-US." },
+        { "field": "Message description", "description": "Free-text tail -- everything after language=\"...\"." }
+      ],
+      "prerequisite_setting": "iDRAC Service Module installed on the host OS AND OS-to-iDRAC pass-through monitoring enabled (iDRAC Settings -> Services -> iDRAC Service Module -> Enable OS to iDRAC Pass-through). Without this, no iSM events are generated at all."
+    }
+  },
+
+  "message_registry": {
+    "standard": "DMTF Redfish Message Registry, served at /redfish/v1/Registries on the iDRAC; the printed EEMI guide is generated from the same catalog",
+    "message_id_format": "RegistryPrefix.Major.Minor.MessageKey (e.g. IDRAC.2.9.USR0030) -- the trailing MessageKey (USR0030) is what appears in the syslog payload",
+    "fields": [
+      { "field": "Id / RegistryPrefix", "purpose": "Family the message belongs to (IDRAC, Base, Manager, Storage, ...) combined with version." },
+      { "field": "MessageId", "purpose": "Full identifier: RegistryPrefix.Major.Minor.MessageKey." },
+      { "field": "Message", "purpose": "Templated text with %1, %2... placeholders, rendered against arguments." },
+      { "field": "Severity / MessageSeverity", "purpose": "Registry-defined default severity." },
+      { "field": "NumberOfArgs", "purpose": "How many substitution arguments the message expects." },
+      { "field": "ParamTypes", "purpose": "Declared type of each argument (string, number)." },
+      { "field": "Resolution", "purpose": "The \"Recommended Response Action\" -- remediation steps, sometimes with the exact RACADM/Redfish/GUI path." },
+      { "field": "Description", "purpose": "Longer explanation of what triggers the message and likely causes." }
+    ]
+  },
+
+  "severity_levels": [
+    { "value": "Critical", "meaning": "Failure or condition requiring immediate action.", "typical_trigger": "PSU failure, drive failure, thermal shutdown, security lockout." },
+    { "value": "Warning", "meaning": "Degraded or approaching-threshold condition.", "typical_trigger": "Predictive drive failure, redundancy lost, fan above normal, cert expiring." },
+    { "value": "Informational", "meaning": "Normal operational event, no action needed.", "typical_trigger": "Login/logout, config change, job started/completed, firmware update result." },
+    { "value": "OK / Normal", "meaning": "A previously abnormal condition has cleared.", "typical_trigger": "Redundancy restored, temperature back in range, link back up.", "note": "Not a selectable filter level in Alert Configuration -- a status transition, not an alert severity you opt into. Enable the category at Informational to receive these." }
+  ],
+  "filterable_severities": ["Critical", "Warning", "Informational"],
+
+  "alert_categories": [
+    { "name": "System Health", "description": "CPU, memory, voltage, temperature, fans, chassis intrusion, GPU/accelerator faults.", "example_prefixes": ["CPU", "TMP", "FAN", "MEM", "VLT"], "eventfilters_key": "idrac.alert.system", "verified": true },
+    { "name": "Storage", "description": "Controllers, physical/virtual disks, backplanes, predictive failures, rebuilds.", "example_prefixes": ["STOR", "PDR", "VDR"], "eventfilters_key": "idrac.alert.storage", "verified": false },
+    { "name": "Configuration", "description": "Hardware, firmware, and software configuration changes on the managed system or iDRAC.", "example_prefixes": ["CTL", "BIOS", "SWC"], "eventfilters_key": "idrac.alert.configuration", "verified": false },
+    { "name": "Audit", "description": "User authentication, session, and account-management activity.", "example_prefixes": ["USR", "SEC", "RAC"], "eventfilters_key": "idrac.alert.audit", "verified": false },
+    { "name": "Updates", "description": "Firmware and driver update job lifecycle -- started, progressing, completed, failed.", "example_prefixes": ["SUP", "LOG"], "eventfilters_key": "idrac.alert.updates", "verified": false },
+    { "name": "Work Notes", "description": "Free-form notes an admin attaches to the log -- not sensor-driven, created deliberately.", "example_prefixes": [], "eventfilters_key": "idrac.alert.worknotes", "verified": false }
+  ],
+
+  "message_id_prefixes": [
+    { "prefix": "RAC", "subsystem": "iDRAC / remote access controller itself" },
+    { "prefix": "USR", "subsystem": "User accounts, sessions, authentication" },
+    { "prefix": "SEC", "subsystem": "Security -- certificates, secure boot, chassis intrusion" },
+    { "prefix": "SYS", "subsystem": "Overall system / power-on-self-test status" },
+    { "prefix": "BIOS", "subsystem": "System BIOS events and configuration" },
+    { "prefix": "CPU", "subsystem": "Processor faults and status" },
+    { "prefix": "MEM", "subsystem": "Memory (DIMM) events" },
+    { "prefix": "TMP", "subsystem": "Temperature sensors / thermal" },
+    { "prefix": "FAN", "subsystem": "Cooling fan status" },
+    { "prefix": "PSU", "subsystem": "Power supply units" },
+    { "prefix": "POW", "subsystem": "Power budget / redundancy" },
+    { "prefix": "VLT", "subsystem": "Voltage sensors" },
+    { "prefix": "BAT", "subsystem": "CMOS / RAID controller battery" },
+    { "prefix": "STOR", "subsystem": "Storage controllers" },
+    { "prefix": "PDR", "subsystem": "Physical disk drives" },
+    { "prefix": "VDR", "subsystem": "Virtual disks / arrays" },
+    { "prefix": "CBL", "subsystem": "Cabling (backplane, power, data)" },
+    { "prefix": "NIC", "subsystem": "Network interface controllers" },
+    { "prefix": "FC", "subsystem": "Fibre Channel HBAs" },
+    { "prefix": "PCI", "subsystem": "PCIe slots and add-in cards" },
+    { "prefix": "GPU", "subsystem": "GPU / accelerator cards" },
+    { "prefix": "AMP", "subsystem": "Current/amperage sensors" },
+    { "prefix": "HWC", "subsystem": "General hardware configuration" },
+    { "prefix": "CTL", "subsystem": "Controller / configuration change events" },
+    { "prefix": "SWC", "subsystem": "Software/firmware configuration change" },
+    { "prefix": "LIC", "subsystem": "iDRAC and feature licensing" },
+    { "prefix": "LOG", "subsystem": "Logging subsystem itself (log cleared, log full)" },
+    { "prefix": "SUP", "subsystem": "Firmware/driver update job status" },
+    { "prefix": "BOOT", "subsystem": "Boot source / boot order events" },
+    { "prefix": "ASR", "subsystem": "Automatic system recovery / watchdog" },
+    { "prefix": "DIAG", "subsystem": "Online/offline diagnostics" },
+    { "prefix": "DISC", "subsystem": "Auto-discovery / provisioning" },
+    { "prefix": "CERT", "subsystem": "TLS/SSL certificate lifecycle" },
+    { "prefix": "ACC", "subsystem": "Accelerator / expansion device events" },
+    { "prefix": "OSD", "subsystem": "OS deployment" },
+    { "prefix": "VME", "subsystem": "Virtual/remote media (virtual CD/USB)" },
+    { "prefix": "ISM", "subsystem": "iDRAC Service Module status (host-agent side)" },
+    { "prefix": "TST", "subsystem": "Test alerts, e.g. racadm testalert" }
+  ],
+  "message_id_prefixes_note": "Deliberately partial -- Dell's per-generation EEMI reference guide documents 100+ prefixes. Control (routing to syslog) is only possible at the alert-category level, not per prefix.",
+
+  "settings_required": {
+    "order": ["license", "master_alert_switch", "syslog_destination", "category_severity_routing", "ism_prerequisite"],
+    "license": {
+      "requirement": "iDRAC Enterprise or Datacenter",
+      "note": "On Express, the Syslog UI fields exist but delivery silently never happens."
+    },
+    "master_alert_switch": {
+      "purpose": "Gates every alert of any kind, regardless of category, severity, or destination",
+      "racadm": "racadm set iDRAC.IPMILan.AlertEnable Enabled",
+      "web_ui": "iDRAC Settings -> Alerts -> Enable Alerts toggle",
+      "idrac_settings_utility_f2": "Alerts -> Platform Events -> Enabled",
+      "verified": true
+    },
+    "syslog_destination": {
+      "purpose": "Turns on and points the remote syslog target itself",
+      "racadm": [
+        "racadm set iDRAC.SysLog.Enable 1",
+        "racadm set iDRAC.SysLog.Server1 <ip-or-fqdn>",
+        "racadm set iDRAC.SysLog.Server2 <ip-or-fqdn>",
+        "racadm set iDRAC.SysLog.Server3 <ip-or-fqdn>",
+        "racadm set iDRAC.SysLog.Port 514"
+      ],
+      "web_ui": "iDRAC Settings -> Network -> Services -> Syslog",
+      "redfish": "OEM attribute group commonly named SysLog.1 under /redfish/v1/Managers/iDRAC.Embedded.1/Oem/Dell/DellAttributes -- GET the group first, names shift across generations",
+      "verified": true
+    },
+    "category_severity_routing": {
+      "purpose": "Decides which category, at which severity, is mirrored specifically to syslog (vs. email/SNMP/IPMI/WS-Eventing/Redfish)",
+      "web_ui": "Configuration -> System Settings -> Alert Configuration (iDRAC9/10) or iDRAC Settings -> Alerts -> Alert Configuration (iDRAC7/8) -- check the Remote Syslog action for each category/severity row",
+      "racadm_pattern": "racadm eventfilters set -c idrac.alert.<category>.<severity> -n <action-list>",
+      "racadm_example": "racadm eventfilters set -c idrac.alert.system.warning -a none -n snmp,email",
+      "racadm_readback": "racadm eventfilters view",
+      "verified": "partial -- idrac.alert.system.* pattern confirmed by Dell; other category keys inferred by the same naming pattern, and the exact 'syslog' action token was not independently confirmed"
+    },
+    "ism_prerequisite": {
+      "applies_to": "iSM OS-log envelope only",
+      "requirement": "iDRAC Service Module installed on the host OS, with OS-to-iDRAC pass-through monitoring enabled",
+      "web_ui": "iDRAC Settings -> Services -> iDRAC Service Module -> Enable OS to iDRAC Pass-through",
+      "verified": true
+    },
+    "test_command": "racadm testalert -l 1"
+  },
+
+  "sources": [
+    "https://www.dell.com/support/manuals/en-us/idrac-service-module/ism_security_configuration_guide/logging-format",
+    "https://www.dell.com/support/manuals/en-us/idrac9-lifecycle-controller-v5.x-series/idrac9_security_configuration_guide/remote-syslog-with-tls",
+    "https://www.dell.com/support/manuals/en-ae/idrac9-lifecycle-controller-v7.x-series/eemi_automated_2024/idrac-error-and-event-messages-eems",
+    "https://www.dell.com/support/manuals/en-us/idrac7-8-lifecycle-controller-v2.40.40.40/redfish%202.40.40.40/messageregistry",
+    "https://docs.nxlog.co/integrate/idrac.html",
+    "https://doc.logmanager.com/latest/log-source-devices/dell-idrac-9/",
+    "https://discuss.elastic.co/t/dell-idrac-syslog-grok-logstash/320198",
+    "https://thebackroomtech.com/dell-idrac-9-quick-reference-racadm-cheat-sheet/",
+    "https://www.manualslib.com/manual/1244291/Dell-Idrac-8.html?page=154",
+    "https://www.dell.com/community/en/conversations/systems-management-general/anyone-know-the-racadm-command-to-toggle-on-the-alerts-global-setting-idrac-9/647f846bf4ccf8a8de34d7a1",
+    "https://www.dell.com/community/Systems-Management-General/Event-filters-in-iDRAC7/td-p/4529514"
+  ]
+}
