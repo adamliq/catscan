@@ -514,12 +514,18 @@ FortiManager's/Juniper's common fields are common to every one of
 their own rows, so — following the same reasoning Infoblox's own field
 schemas already established — they stay Reference-only tables instead
 of becoming an invented "Common fields" rail chip with no real per-row
-home. That same reasoning means Schema Explorer here is a single
-explanatory note, joining FortiManager's/Juniper's/Infoblox's/Cisco IOS
-XE's as the fifth vendor for whom that's the honest answer: the
-source's only field-shaped data already lives in Reference, tied to a
-category, not to individual Log Type rows, and the syslog messages' own
-`format` strings are positional templates, not named fields.
+home. Schema Explorer here still gets those same 22 fields, though: a
+real flat, searchable table exactly like FortiGate's/Zscaler's own, just
+without a per-row modal to jump back to, since neither category has one
+— clicking a field instead jumps to and expands the Reference section
+it's already fully documented in (Alarms & events or Audit logs). That
+makes Cisco Catalyst SD-WAN a third pattern alongside the other two:
+FortiGate/Zscaler jump to a Log Type row's modal, Cisco Catalyst SD-WAN
+jumps to a Reference section, and FortiManager/Juniper/Infoblox/Cisco
+IOS XE — genuinely nothing to flatten, since Cisco IOS XE's own
+message-format fields are already Log Types rows and the syslog
+messages' own `format` strings here are positional templates, not named
+fields — get a single explanatory note instead.
 
 (Found while checking the AWS Events table's text color against the other
 tables on the page, and fixed with a one-line change: `index.html` never

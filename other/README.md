@@ -55,31 +55,32 @@ material that doesn't belong repeated per row) via the same
 
 Every vendor also carries a third mode, **Schema Explorer**, mirroring
 Windows Events' own Schema Explorer tab: a flat, searchable table of
-every field parsed out of *individual* log-type rows (not the vendor's
-common fields, which are already flat and searchable as their own Log
-Types rows) — clicking a field jumps back to Log Types and opens the
-exact row it came from, the same "View this event" pattern Windows'
-version uses. Only two of the seven vendors' sources actually have this
-kind of per-row field data: FortiGate (63 fields across 7 of its 40
-subtypes — the ones with `confidence: "verified"`) and Zscaler (224
-fields across 13 of its 15 overview inputs). The other five —
-FortiManager (per-subtype fields explicitly not enumerated in the
-source), Juniper (individual message tags within a category aren't
-enumerated, only the category itself), Infoblox (its field schemas
-are separate top-level structures, not tied one-to-one to a category
-row), Cisco IOS XE (its only field-shaped data is the 6 common
-message-format fields, already flat and searchable as their own Log
-Types rows and detailed in full under Reference › Message format —
-nothing left to build a per-facility or per-mnemonic schema list from
-without inventing one), and Cisco Catalyst SD-WAN (its only
-field-shaped data, `common_alarm_event_fields` and
-`audit_logs.common_fields`, is each common to its own narrow category —
-alarms, audit logs — rather than tied to individual Log Type rows, and
-the syslog messages themselves carry a positional `format` template,
-not a named field list) — genuinely have nothing to flatten here
-without inventing a per-row schema the source doesn't draw, so their
-Schema Explorer mode is a single explanatory note instead of an empty
-table pretending there's data behind it.
+every field a vendor's source actually enumerates, distinct from that
+vendor's own Log Types table. Two vendors' sources have real *per-row*
+field data — FortiGate (63 fields across 7 of its 40 subtypes — the
+ones with `confidence: "verified"`) and Zscaler (224 fields across 13
+of its 15 overview inputs) — so clicking a field there jumps back to
+Log Types and opens the exact row it came from, the "View this event"
+pattern Windows' own version uses. Cisco Catalyst SD-WAN's source has
+field data too, but shaped differently: `common_alarm_event_fields`
+(13 fields) and `audit_logs.common_fields` (9 fields) are each common
+to a whole category — every alarm/event, every audit entry — not to
+one Log Type row the way FortiGate's/Zscaler's are, so there's no
+individual row to jump back to; its 22 fields still get the same flat,
+searchable table, but clicking one jumps to and expands the Reference
+section that field is already fully documented in (Alarms & events or
+Audit logs) instead. The remaining four — FortiManager (per-subtype
+fields explicitly not enumerated in the source), Juniper (individual
+message tags within a category aren't enumerated, only the category
+itself), Infoblox (its field schemas are separate top-level structures,
+not tied one-to-one to a category row), and Cisco IOS XE (its only
+field-shaped data is the 6 common message-format fields, already flat
+and searchable as their own Log Types rows and detailed in full under
+Reference › Message format — nothing left to build a per-facility or
+per-mnemonic schema list from without inventing one) — genuinely have
+nothing to flatten here without inventing a schema the source doesn't
+draw, so their Schema Explorer mode is a single explanatory note
+instead of an empty table pretending there's data behind it.
 
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
@@ -357,6 +358,18 @@ need.
   than exhaustive, so it's rendered as a plain list inside the Alarms &
   events section rather than promoted to its own searchable rows the
   way the 32 actually-enumerated syslog messages are.
+
+  Those same 22 category-common fields (13 alarm/event + 9 audit log)
+  are what Schema Explorer flattens into its own searchable table here
+  — not per-row fields the way FortiGate's/Zscaler's Schema Explorer
+  content is, since neither category has individual Log Type rows of
+  its own to tie a field to, but real field data all the same rather
+  than the empty-note treatment FortiManager's/Juniper's/Infoblox's/
+  Cisco IOS XE's genuinely-empty sources get. Clicking a field jumps to
+  and expands the Reference section it's already fully documented in
+  (Alarms & events or Audit logs) in place of the "open the owning
+  row's modal" behavior the two per-row vendors use, since there's no
+  row to open instead.
 
   Everything else that doesn't belong repeated per row lives in the
   Reference view: three message-format templates (classic pre-20.15,
