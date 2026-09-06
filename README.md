@@ -109,7 +109,7 @@ embed inline the way the other three catalogues' data is), and the
 **Other Events** tab fetches `fortigate_log_reference.json`,
 `fortimanager_log_schema.json`, `juniper_switch_log_schema.json`, and
 `infoblox_log_reference.json` (from `other/data/`, see below — a modest
-~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, and ~12&nbsp;KB respectively, but
+~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, and ~32&nbsp;KB respectively, but
 all four fetched rather than embedded for consistency with the other two
 runtime-loaded tabs and because Other Events is meant to grow more
 vendor files over time). All three tabs
@@ -318,31 +318,53 @@ underneath it.
 
 A fourth vendor, DDI Infoblox (NIOS / Universal DDI), tested the split
 from the opposite direction: rather than a genuinely different shape to
-render, its source has *less* shape than any vendor before it. It's a
-plain category/prefix/description reference — 75 rows across 4
-`category_groups` (Syslog Forwarding, DNS Logging Categories, Universal
-DDI Service Logs, Universal DDI Exported Log Files) — with no enable
-instructions, no example line, no confidence rating, no product split,
-and no field-envelope schema of its own to fold in as common fields.
-Rather than build a Log Types/Reference toggle with an empty or
-near-empty Reference view just to match the other three vendors'
-silhouette, this vendor has no mode toggle at all: everything the source
-has fits in one table (`category_group` in the rail exactly like the
-other three vendors' real top-level types), and each group's own
-explanatory note — the two DNS category lists' partial overlap and where
-their names/prefixes genuinely diverge, for instance — surfaces in that
-group's rows' own detail modal instead of a separate section that would
-otherwise hold only that one paragraph. Its data file also carries a
-provenance difference worth being honest about: it was compiled from
+render, its source *started out* with less shape than any vendor before
+it. Its initial data was a plain category/prefix/description reference —
+75 rows across 4 `category_groups` (Syslog Forwarding, DNS Logging
+Categories, Universal DDI Service Logs, Universal DDI Exported Log
+Files) — with no enable instructions, no example line, no confidence
+rating, no product split, and no field-envelope schema at all. Rather
+than build a Log Types/Reference toggle with an empty or near-empty
+Reference view just to match the other three vendors' silhouette, this
+vendor shipped with no mode toggle at all: everything that first pass of
+the source had fit in one table (`category_group` in the rail exactly
+like the other three vendors' real top-level types), and each group's
+own explanatory note — the two DNS category lists' partial overlap and
+where their names/prefixes genuinely diverge, for instance — surfaced in
+that group's rows' own detail modal instead of a separate section that
+would otherwise hold only that one paragraph. Its data file also carries
+a provenance difference worth being honest about: it was compiled from
 data supplied directly by the repository maintainer rather than a
 published vendor guide, and says so in its own
 `source_documentation.note` rather than citing a URL it doesn't have.
-Once again, the generic container/picker/search/cross-catalogue-search
-machinery carried a fourth vendor without a rewrite, and once again
-nothing was invented to fill a shape this source doesn't have — this
-time in the other direction, by *not* building UI for reference material
-that doesn't exist rather than by not fabricating a badge that doesn't
-apply.
+
+A follow-up pass added exactly the shape that first version was missing:
+a `field_schemas` key with the per-log-type field mappings a category
+reference alone can't show — a DNS query/response schema and a DHCP
+lease schema (each field mapped across its internal name and CEF/LEEF/
+Splunk CIM equivalents, the same three SIEM-normalization schemes
+Threat Detection's own detections already cite), and three Universal
+DDI Parquet export schemas (DNS response/query, RPZ, IPAM metadata).
+These aren't common fields the way FortiGate's/FortiManager's/Juniper's
+are — each schema applies to one specific log type, not to every row in
+the category table — so folding them in as common-field rows would
+misrepresent them as universal when they're mutually exclusive instead.
+That's exactly the trigger the mode toggle had been waiting for: DDI
+Infoblox gained the same Log Types/Reference split the other three
+vendors have (labeled "Field Schemas" here, since that's literally what
+it holds), with four collapsible sections — DNS query/response fields,
+DHCP lease fields, the three Parquet schemas, and a Notes section for
+the source's own free-text caveats, including the one naming which
+official guides the field mappings came from (kept as plain text, not
+turned into fake clickable links the way the other three vendors' real
+URLs are). Once again, the generic container/picker/search/
+cross-catalogue-search machinery, and now the mode-toggle/Reference-view
+machinery too, carried a fourth vendor's second pass without a rewrite,
+and once again nothing was invented to fill a shape the source doesn't
+have — first by *not* building UI for reference material that didn't
+exist yet, then by building exactly the UI the material that arrived
+actually called for, rather than forcing it through FortiGate's common-
+fields shape because that shape was already there.
 
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
@@ -559,11 +581,12 @@ EX-series, and DDI Infoblox each set inside `build_app_other()` (not a
 separate top-level function — all of Other Events' vendors share one
 `#app-other` container): a new data file, a new pill in the vendor-tab
 row, a new sibling `<div>` panel (own stats/rail/table/modal markup,
-plus a mode-toggle and Reference view only if the vendor's own source
-material actually has material to put there — DDI Infoblox's doesn't,
-so it skips both — reusing the shared `other-*` CSS classes either way),
-and that vendor's own flatten/render/modal JS — written for its own
-data's shape rather than forced through an existing vendor's —
+plus a mode-toggle and Reference view only once the vendor's own source
+material actually has material to put there — DDI Infoblox's first pass
+didn't and skipped both, then gained them in a follow-up once its
+`field_schemas` key arrived — reusing the shared `other-*` CSS classes
+either way), and that vendor's own flatten/render/modal JS — written for
+its own data's shape rather than forced through an existing vendor's —
 registered in the `vendorPanels` map and merged into
 `window.__compHub['other']` the same way. See `other/`'s own README for
 why that part isn't generic across vendors.
