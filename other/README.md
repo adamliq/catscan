@@ -5,21 +5,27 @@ and log-type references for vendors outside the Microsoft/AWS/Linux/
 Threat-Detection catalogues. Unlike those four, this isn't one schema:
 each vendor keeps whatever shape its own documentation actually has
 rather than being forced into a common row shape. FortiGate's log
-reference, FortiManager/FortiAnalyzer's log schema, and Juniper
-EX-series's log schema (all below) look nothing alike — FortiGate has
-per-subtype CLI/GUI enable instructions, an example log line, and a
-confidence rating; FortiManager/FortiAnalyzer has a numeric category
-code, a `product` split (FortiManager vs FortiAnalyzer), and a composite
-log-ID format instead; Junos doesn't use a Fortinet-style type/subtype
-model at all — it organizes logs by facility, severity, and a
-per-process/daemon message-tag catalog, plus two entirely different
-message envelopes (BSD-style vs. RFC 5424 structured-data) rather than
-one common field set — and the tab doesn't paper over any of that: each
-vendor gets its own flatten/render/modal logic in `index.html`, sharing
-only the visual language (rail + toolbar + table + detail modal, a Log
-Types/Reference mode toggle for material that doesn't belong repeated
-per row) via the same `#app-other`-scoped CSS classes, not a common data
-model.
+reference, FortiManager/FortiAnalyzer's log schema, Juniper EX-series's
+log schema, and Infoblox DDI's log reference (all below) look nothing
+alike — FortiGate has per-subtype CLI/GUI enable instructions, an
+example log line, and a confidence rating; FortiManager/FortiAnalyzer
+has a numeric category code, a `product` split (FortiManager vs
+FortiAnalyzer), and a composite log-ID format instead; Junos doesn't use
+a Fortinet-style type/subtype model at all — it organizes logs by
+facility, severity, and a per-process/daemon message-tag catalog, plus
+two entirely different message envelopes (BSD-style vs. RFC 5424
+structured-data) rather than one common field set; Infoblox's category/
+prefix reference has no enable instructions, confidence rating, or
+product split at all, and its field schemas — several distinct ones,
+one per exported log type, rather than one set of fields common to
+every row — don't fold into its Log Types table as common-field rows
+the way the other three vendors' do, since they aren't actually common
+across Infoblox's own rows — and the tab doesn't paper over any of that:
+each vendor gets its own flatten/render/modal logic in `index.html`,
+sharing only the visual language (rail + toolbar + table + detail modal,
+a Log Types/Reference mode toggle for material that doesn't belong
+repeated per row) via the same `#app-other`-scoped CSS classes, not a
+common data model.
 
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
@@ -114,14 +120,65 @@ need.
   section, alongside the facilities and severity-level tables and the
   four source URLs.
 
-All three files `fetch()` at runtime rather than embed inline (same
+- `data/infoblox_log_reference.json` — Infoblox DDI (NIOS / Universal
+  DDI) log category reference, compiled from data supplied directly by
+  the repository maintainer rather than fetched from a published guide
+  (see the file's own `source_documentation.note` — unlike the other
+  three vendors, no source URL was supplied for this pass, though the
+  `field_schemas.notes` array below does cite which official guides the
+  field mappings themselves came from). Its `category_groups` (what the
+  Log Types table itself renders) is a plain 75-row category/prefix/
+  description reference with no enable instructions, example line,
+  confidence rating, or product split of its own, across 4 groups:
+  **Syslog Forwarding** (47 rows — the literal prefix NIOS puts on each
+  forwarded syslog line, e.g. `client`, `dhcpd`, `AUTH_RADIUS`), **DNS
+  Logging Categories (DNS Properties)** (16 rows — NIOS's own on-box
+  BIND logging categories, configured separately from Syslog Forwarding
+  and overlapping it in 13 of its 16 rows, with a handful of genuine
+  differences noted on the group itself: `rate-limit` here vs.
+  `security` there, a combined `transfer-in`/`transfer-out` naming here
+  vs. separate `xfer_in`/`xfer_out` there), **Universal DDI Service
+  Logs** (9 rows — the cloud-managed product's own service log sources),
+  and **Universal DDI Exported Log Files** (3 rows — bulk export types
+  rather than a live category). Because there's no severity table or
+  source-citation list sitting alongside those 75 rows, `category_group`
+  is the rail's only real top-level type (exactly like the other three
+  vendors' real types), with each group's own explanatory note surfaced
+  in its rows' detail modal instead of a Reference section that would
+  otherwise hold only that.
+
+  What *does* justify a Log Types/Reference toggle here is a second,
+  separate top-level key, `field_schemas` — added in a follow-up pass
+  once it became clear the category list alone was leaving out how each
+  exported log type is actually structured. Unlike FortiGate's/
+  FortiManager's/Juniper's common fields (one shared envelope every row
+  in their Log Types table gets tagged with), Infoblox's field schemas
+  are per-log-type and mutually exclusive — a DNS query/response schema,
+  a DHCP lease schema, and three Universal DDI Parquet export schemas
+  (DNS response/query, RPZ, IPAM metadata) — so folding them into the
+  category table as common-field rows the way the other vendors do would
+  misrepresent them as universal when they aren't. They get their own
+  four-section Reference view instead: **DNS query/response fields** (21
+  rows, each mapped across the internal field name and its CEF/LEEF/
+  Splunk CIM equivalents — the same three SIEM-normalization schemes
+  Threat Detection's own detections cite — plus 7 additional fields
+  BloxOne Threat Defense adds), **DHCP lease fields** (18 rows, same
+  four-way mapping), **Universal DDI exported log files (Parquet)** (the
+  three Parquet schemas' field tables — RPZ's explicitly described as
+  extending the DNS schema rather than replacing it, matching how
+  Infoblox's own docs describe it), and **Notes** (4 free-text
+  caveats, including the one citing which official guides the fields
+  came from — the closest thing this file has to a sources list, kept
+  as plain text rather than turned into fake clickable links).
+
+All four files `fetch()` at runtime rather than embed inline (same
 trade-off as AWS Events and Threat Detection's Heat Coverage tab: needs
 the page served over http(s), not opened as a local `file://`), and all
-three register their rows on the tab's shared `window.__compHub['other']`
+four register their rows on the tab's shared `window.__compHub['other']`
 entry (merged across vendors, each row tagged with its own `vendor` so
 a cross-catalogue search result opens on the right vendor's own panel
 and tab).
 
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-all three files are used as delivered, not derived from another file in
+all four files are used as delivered, not derived from another file in
 this repo.

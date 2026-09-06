@@ -1,0 +1,1101 @@
+{
+  "product": "Infoblox DDI (NIOS / Universal DDI)",
+  "source_documentation": {
+    "note": "Compiled from data supplied directly by the repository maintainer, covering three distinct places Infoblox NIOS/Universal DDI categorizes its own log output: the Grid-wide Syslog Forwarding category list, the separately-configured DNS Properties logging category list, and Universal DDI's own service logs and exported log files. No source URL was supplied for this pass, unlike the other three vendors below - add one if/when available."
+  },
+  "category_groups": [
+    {
+      "group": "Syslog Forwarding",
+      "note": "The Prefix column is the literal token NIOS prepends to each forwarded syslog line for that category (a BIND log category name, a DHCP/service process name, or an internal all-caps event-class code) - the string to filter or grep on when parsing forwarded syslog.",
+      "entries": [
+        {
+          "name": "DNS Client",
+          "prefix": "client",
+          "description": "Query processing messages (not the queries themselves)"
+        },
+        {
+          "name": "DNS Config",
+          "prefix": "config",
+          "description": "Configuration file parsing"
+        },
+        {
+          "name": "DNS Database",
+          "prefix": "database",
+          "description": "Internal BIND database processes"
+        },
+        {
+          "name": "DNSSEC",
+          "prefix": "dnssec",
+          "description": "DNSSEC-signed responses / key operations"
+        },
+        {
+          "name": "DNS General",
+          "prefix": "general",
+          "description": "Unclassified BIND messages"
+        },
+        {
+          "name": "DNS Lame Servers",
+          "prefix": "lame_servers",
+          "description": "Bad/unresponsive delegations"
+        },
+        {
+          "name": "DNS Network",
+          "prefix": "network",
+          "description": "Network operation messages"
+        },
+        {
+          "name": "DNS Notify",
+          "prefix": "notify",
+          "description": "Zone change notifications"
+        },
+        {
+          "name": "DNS Queries",
+          "prefix": "queries",
+          "description": "DNS queries (high performance impact)"
+        },
+        {
+          "name": "DNS Query Rewrite",
+          "prefix": "query_rewrite",
+          "description": "Query rewrite events"
+        },
+        {
+          "name": "DNS Resolver",
+          "prefix": "resolver",
+          "description": "Outgoing recursive queries"
+        },
+        {
+          "name": "DNS Responses",
+          "prefix": "responses",
+          "description": "DNS responses (high performance impact)"
+        },
+        {
+          "name": "DNS RPZ",
+          "prefix": "rpz",
+          "description": "Response Policy Zone hits"
+        },
+        {
+          "name": "DNS Security",
+          "prefix": "security",
+          "description": "Security-related (rate-limiting; NXDOMAIN tracking)"
+        },
+        {
+          "name": "DNS Update",
+          "prefix": "update",
+          "description": "Dynamic updates (DDNS)"
+        },
+        {
+          "name": "DNS Update Security",
+          "prefix": "update_security",
+          "description": "Update security / ruleset events"
+        },
+        {
+          "name": "DNS Zone Transfer In",
+          "prefix": "xfer_in",
+          "description": "Incoming zone transfers"
+        },
+        {
+          "name": "DNS Zone Transfer Out",
+          "prefix": "xfer_out",
+          "description": "Outgoing zone transfers"
+        },
+        {
+          "name": "DNS Unbound",
+          "prefix": "DNS_UNBOUND",
+          "description": "Unbound engine logs (when active)"
+        },
+        {
+          "name": "DHCP",
+          "prefix": "dhcpd",
+          "description": "Main DHCP daemon messages"
+        },
+        {
+          "name": "DHCP Related",
+          "prefix": "omshell",
+          "description": "OMSHELL process"
+        },
+        {
+          "name": "DHCP Related",
+          "prefix": "dhcrelay",
+          "description": "DHCP relay process"
+        },
+        {
+          "name": "DHCP Related",
+          "prefix": "dhclient",
+          "description": "DHCP client process"
+        },
+        {
+          "name": "DTC Health",
+          "prefix": "idns_healthd",
+          "description": "DTC health monitor events"
+        },
+        {
+          "name": "DTC",
+          "prefix": "idnsd",
+          "description": "DTC load-balancing / service events"
+        },
+        {
+          "name": "Threat Protection / ADP",
+          "prefix": "adp / ATP",
+          "description": "Advanced DNS Protection / threat events (often CEF)"
+        },
+        {
+          "name": "NTP",
+          "prefix": "ntpd",
+          "description": "NTP service messages"
+        },
+        {
+          "name": "File Distribution",
+          "prefix": "ftpd",
+          "description": "FTP process"
+        },
+        {
+          "name": "File Distribution",
+          "prefix": "tftp",
+          "description": "TFTP process"
+        },
+        {
+          "name": "Cloud API",
+          "prefix": "CLOUD_API",
+          "description": "Cloud discovery; sync; automation"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_COMMON",
+          "description": "Common authentication events"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_ACTIVE_DIRECTORY",
+          "description": "Active Directory authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_RADIUS",
+          "description": "RADIUS authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_TACACS",
+          "description": "TACACS authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_LDAP",
+          "description": "LDAP authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_UI_API",
+          "description": "UI / API authentication"
+        },
+        {
+          "name": "Authentication",
+          "prefix": "AUTH_NON_SYSTEM",
+          "description": "Non-system authentication"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DNS_SERVER",
+          "description": "Microsoft DNS server events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DHCP_SERVER",
+          "description": "Microsoft DHCP server events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DHCP_LEASE",
+          "description": "Microsoft DHCP lease events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DHCP_CLEAR_LEASE",
+          "description": "Microsoft DHCP clear lease events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_CONNECT_STATUS",
+          "description": "Microsoft connection status"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_DNS_ZONE",
+          "description": "Microsoft DNS zone events"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_SITES",
+          "description": "Microsoft sites"
+        },
+        {
+          "name": "Microsoft Integration",
+          "prefix": "MS_AD_USERS",
+          "description": "Microsoft AD users"
+        },
+        {
+          "name": "Outbound API",
+          "prefix": "OUTBOUND_API",
+          "description": "Outbound API events"
+        },
+        {
+          "name": "Non-categorized",
+          "prefix": "NON_CATEGORIZED",
+          "description": "Everything else"
+        }
+      ]
+    },
+    {
+      "group": "DNS Logging Categories (DNS Properties)",
+      "note": "NIOS's own on-box BIND logging categories, configured separately from Syslog Forwarding and controlling what's written to the local named log rather than what gets forwarded off-box. Mostly the same DNS-related category set as the Syslog Forwarding rows above, but a few names/prefixes genuinely differ between the two configuration surfaces (rate-limit here vs. security there; combined transfer-in/transfer-out prefixes here vs. separate xfer_in/xfer_out there) - kept as its own group rather than merged.",
+      "entries": [
+        {
+          "name": "general",
+          "prefix": "general",
+          "description": "Unclassified BIND messages"
+        },
+        {
+          "name": "client",
+          "prefix": "client",
+          "description": "Query processing errors / quotas (not full queries)"
+        },
+        {
+          "name": "config",
+          "prefix": "config",
+          "description": "Configuration parsing"
+        },
+        {
+          "name": "database",
+          "prefix": "database",
+          "description": "Internal database processes"
+        },
+        {
+          "name": "dnssec",
+          "prefix": "dnssec",
+          "description": "DNSSEC operations"
+        },
+        {
+          "name": "lame servers",
+          "prefix": "lame_servers",
+          "description": "Bad delegations"
+        },
+        {
+          "name": "network",
+          "prefix": "network",
+          "description": "Network operations"
+        },
+        {
+          "name": "notify",
+          "prefix": "notify",
+          "description": "Zone notifications"
+        },
+        {
+          "name": "queries",
+          "prefix": "queries",
+          "description": "Full DNS queries (performance impact)"
+        },
+        {
+          "name": "rate-limit",
+          "prefix": "rate-limit",
+          "description": "Response Rate Limiting events"
+        },
+        {
+          "name": "resolver",
+          "prefix": "resolver",
+          "description": "Outgoing recursive queries"
+        },
+        {
+          "name": "responses",
+          "prefix": "responses",
+          "description": "Full DNS responses (performance impact)"
+        },
+        {
+          "name": "transfer-in",
+          "prefix": "xfer_in / transfer-in",
+          "description": "Incoming zone transfers"
+        },
+        {
+          "name": "transfer-out",
+          "prefix": "xfer_out / transfer-out",
+          "description": "Outgoing zone transfers"
+        },
+        {
+          "name": "update",
+          "prefix": "update",
+          "description": "Dynamic updates"
+        },
+        {
+          "name": "update-security",
+          "prefix": "update_security",
+          "description": "Update security events"
+        }
+      ]
+    },
+    {
+      "group": "Universal DDI Service Logs",
+      "note": "Log sources exposed by Infoblox Universal DDI (the cloud-managed NIOS-as-a-service product) for its own on-host services, distinct from traditional NIOS syslog categories.",
+      "entries": [
+        {
+          "name": "Anycast",
+          "prefix": "Anycast",
+          "description": "Anycast service events"
+        },
+        {
+          "name": "AWS Discovery",
+          "prefix": "AWS Discovery",
+          "description": "AWS Discovery service events"
+        },
+        {
+          "name": "Azure Discovery",
+          "prefix": "Azure Discovery",
+          "description": "Azure Discovery service events"
+        },
+        {
+          "name": "DHCP",
+          "prefix": "DHCP",
+          "description": "DHCP service events"
+        },
+        {
+          "name": "DNS",
+          "prefix": "DNS",
+          "description": "DNS service events"
+        },
+        {
+          "name": "DNS Forwarding Proxy",
+          "prefix": "DNS Forwarding Proxy",
+          "description": "DNS Forwarding Proxy logs"
+        },
+        {
+          "name": "GCP Discovery",
+          "prefix": "GCP Discovery",
+          "description": "GCP Discovery service events"
+        },
+        {
+          "name": "NIOS Grid Connector",
+          "prefix": "NIOS Grid Connector",
+          "description": "NIOS Grid Connector service logs"
+        },
+        {
+          "name": "NTP",
+          "prefix": "NTP",
+          "description": "NTP service events"
+        }
+      ]
+    },
+    {
+      "group": "Universal DDI Exported Log Files",
+      "note": "Bulk log file exports Universal DDI's own portal can produce, rather than a live syslog/category stream.",
+      "entries": [
+        {
+          "name": "DNS queries & responses",
+          "prefix": "DNS queries & responses",
+          "description": "Query/response logs"
+        },
+        {
+          "name": "RPZ hits",
+          "prefix": "RPZ hits",
+          "description": "Response Policy Zone hits"
+        },
+        {
+          "name": "IPAM metadata",
+          "prefix": "IPAM metadata",
+          "description": "IPAM-related metadata"
+        }
+      ]
+    }
+  ],
+  "field_schemas": {
+    "dns_query_response": {
+      "description": "DNS Query/Response Logs (Universal DDI / NIOS / BloxOne TD)",
+      "fields": [
+        {
+          "internal_field": "Timestamp",
+          "type": "UTC timestamp",
+          "cef": "Timestamp*",
+          "leef": "Timestamp*",
+          "splunk_cim": "Timestamp*",
+          "description": "Event time (UTC)"
+        },
+        {
+          "internal_field": "rip",
+          "type": "IP",
+          "cef": "dst",
+          "leef": "dst",
+          "splunk_cim": "dest",
+          "description": "DNS server IP"
+        },
+        {
+          "internal_field": "qip",
+          "type": "IP",
+          "cef": "src",
+          "leef": "src",
+          "splunk_cim": "src",
+          "description": "Client IP"
+        },
+        {
+          "internal_field": "qport",
+          "type": "Port",
+          "cef": "spt",
+          "leef": "srcPort",
+          "splunk_cim": "src_port",
+          "description": "Client port"
+        },
+        {
+          "internal_field": "view",
+          "type": "String",
+          "cef": "InfobloxDNSView",
+          "leef": "InfobloxDNSView",
+          "splunk_cim": "dns_view",
+          "description": "DNS View"
+        },
+        {
+          "internal_field": "qname",
+          "type": "FQDN",
+          "cef": "destinationDnsDomain",
+          "leef": "url",
+          "splunk_cim": "query",
+          "description": "Queried domain name"
+        },
+        {
+          "internal_field": "qclass",
+          "type": "String/Int",
+          "cef": "InfobloxDNSQClass",
+          "leef": "InfobloxDNSQClass",
+          "splunk_cim": "record_type",
+          "description": "Query class"
+        },
+        {
+          "internal_field": "qtype",
+          "type": "String/Int",
+          "cef": "InfobloxDNSQType",
+          "leef": "InfobloxDNSQType",
+          "splunk_cim": "query_type",
+          "description": "Query type (A, AAAA, etc.)"
+        },
+        {
+          "internal_field": "qqr,qaa,qtc,qrd,qra,qad,qcd,qdo",
+          "type": "Flags (bool)",
+          "cef": "InfobloxDNSQFlags",
+          "leef": "InfobloxDNSQFlags",
+          "splunk_cim": "dns_request_flags",
+          "description": "Request flags"
+        },
+        {
+          "internal_field": "rqr,raa,rtc,rrd,rra,rad,rcd,rdo",
+          "type": "Flags (bool)",
+          "cef": "InfobloxDNSQFlags",
+          "leef": "InfobloxDNSQFlags",
+          "splunk_cim": "dns_response_flags",
+          "description": "Response flags"
+        },
+        {
+          "internal_field": "protocol",
+          "type": "TCP/UDP",
+          "cef": "proto",
+          "leef": "proto",
+          "splunk_cim": "transport",
+          "description": "Protocol"
+        },
+        {
+          "internal_field": "rcode",
+          "type": "Int/String",
+          "cef": "InfobloxDNSRCode",
+          "leef": "InfobloxDNSRCode",
+          "splunk_cim": "reply_code",
+          "description": "Response code"
+        },
+        {
+          "internal_field": "rrr1,rrr2,rrr3",
+          "type": "Resource Records",
+          "cef": "msg",
+          "leef": "msg",
+          "splunk_cim": "answer / dns_record",
+          "description": "Answer resource records"
+        },
+        {
+          "internal_field": "ancount,nscount,arcount",
+          "type": "Counts",
+          "cef": "InfobloxAnCount / InfobloxNsCount / InfobloxArCount",
+          "leef": "InfobloxAnCount / InfobloxNsCount / InfobloxArCount",
+          "splunk_cim": "answer_count / authority_answer_count / additional_answer_count",
+          "description": "Section counts"
+        },
+        {
+          "internal_field": "rport",
+          "type": "Port",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "dest_port",
+          "description": "DNS server port"
+        },
+        {
+          "internal_field": "tid",
+          "type": "ID",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "transaction_id",
+          "description": "Transaction ID"
+        },
+        {
+          "internal_field": "opcode",
+          "type": "Int",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "opcode",
+          "description": "DNS opcode"
+        },
+        {
+          "internal_field": "source",
+          "type": "String",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "source_id",
+          "description": "Source ID"
+        },
+        {
+          "internal_field": "type",
+          "type": "Packet type",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "dns_packet_type / message_type",
+          "description": "Query or Response"
+        },
+        {
+          "internal_field": "pid",
+          "type": "String",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "policy_id",
+          "description": "Policy ID"
+        },
+        {
+          "internal_field": "cid",
+          "type": "String",
+          "cef": null,
+          "leef": null,
+          "splunk_cim": "client_id",
+          "description": "Client ID"
+        }
+      ],
+      "additional_bloxone_td_fields": [
+        "user_name",
+        "device_name",
+        "mac_address",
+        "device_ip",
+        "os_version",
+        "dhcp_fingerprint",
+        "network_name"
+      ]
+    },
+    "dhcp_lease": {
+      "description": "DHCP Lease Logs (Universal DDI)",
+      "fields": [
+        {
+          "internal_field": "Cltt",
+          "type": "Timestamp",
+          "cef": "timestamp*",
+          "leef": "timestamp*",
+          "splunk_cim": "timestamp*",
+          "description": "Date/Time"
+        },
+        {
+          "internal_field": "LeaseOp",
+          "type": "String",
+          "cef": "InfobloxLeaseOp",
+          "leef": "InfobloxLeaseOp",
+          "splunk_cim": "action",
+          "description": "Create / Update / Delete / Abandon"
+        },
+        {
+          "internal_field": "Host",
+          "type": "Hostname",
+          "cef": "InfobloxHost",
+          "leef": "InfobloxHost",
+          "splunk_cim": "infoblox_host",
+          "description": "DHCP server hostname"
+        },
+        {
+          "internal_field": "HostIP",
+          "type": "IP",
+          "cef": "dst",
+          "leef": "dst",
+          "splunk_cim": "infoblox_ip",
+          "description": "DHCP server IP"
+        },
+        {
+          "internal_field": "IPSpace",
+          "type": "String",
+          "cef": "InfobloxIPSpace",
+          "leef": "InfobloxIPSpace",
+          "splunk_cim": "dhcp_ip_space",
+          "description": "IP Space name"
+        },
+        {
+          "internal_field": "Subnet",
+          "type": "CIDR",
+          "cef": "InfobloxSubnet",
+          "leef": "InfobloxSubnet",
+          "splunk_cim": "dhcp_subnet",
+          "description": "Subnet in CIDR format"
+        },
+        {
+          "internal_field": "RangeStart",
+          "type": "IP",
+          "cef": "InfobloxRangeStart",
+          "leef": "InfobloxRangeStart",
+          "splunk_cim": "dhcp_range_start",
+          "description": "DHCP range start"
+        },
+        {
+          "internal_field": "RangeEnd",
+          "type": "IP",
+          "cef": "InfobloxRangeEnd",
+          "leef": "InfobloxRangeEnd",
+          "splunk_cim": "dhcp_range_end",
+          "description": "DHCP range end"
+        },
+        {
+          "internal_field": "Address",
+          "type": "IP",
+          "cef": "src",
+          "leef": "src / identSrc",
+          "splunk_cim": "dest / dest_ip",
+          "description": "Leased IP address"
+        },
+        {
+          "internal_field": "HWAddr",
+          "type": "MAC",
+          "cef": "smac",
+          "leef": "srcMAC",
+          "splunk_cim": "dest_mac",
+          "description": "Client MAC address (colon-separated hex)"
+        },
+        {
+          "internal_field": "ClientID",
+          "type": "Hex string",
+          "cef": "InfobloxClientID",
+          "leef": "InfobloxClientID",
+          "splunk_cim": "client_id",
+          "description": "Client ID (colon-separated hex)"
+        },
+        {
+          "internal_field": "DUID",
+          "type": "Hex (IPv6)",
+          "cef": "InfobloxDUID",
+          "leef": "InfobloxDUID",
+          "splunk_cim": "dest_duid",
+          "description": "IPv6 DUID"
+        },
+        {
+          "internal_field": "Hostname",
+          "type": "String",
+          "cef": "shost",
+          "leef": "identHostName",
+          "splunk_cim": "dest_nt_host",
+          "description": "Client hostname"
+        },
+        {
+          "internal_field": "Lifetime",
+          "type": "Seconds",
+          "cef": "InfobloxLifetime",
+          "leef": "InfobloxLifetime",
+          "splunk_cim": "lease_duration",
+          "description": "Lease lifetime allocated by server"
+        },
+        {
+          "internal_field": "LeaseUUID",
+          "type": "UUID",
+          "cef": "InfobloxLeaseUUID",
+          "leef": "InfobloxLeaseUUID",
+          "splunk_cim": "dhcp_lease_uuid",
+          "description": "Lease UUID"
+        },
+        {
+          "internal_field": "FingerprintProcessed",
+          "type": "Boolean",
+          "cef": "InfobloxFingerprintPr",
+          "leef": "InfobloxFingerprintPr",
+          "splunk_cim": "dhcp_fingerprinted",
+          "description": "true/false"
+        },
+        {
+          "internal_field": "Fingerprint",
+          "type": "String",
+          "cef": "InfobloxFingerprint",
+          "leef": "InfobloxFingerprint",
+          "splunk_cim": "dhcp_fingerprint",
+          "description": "DHCP Fingerprint"
+        },
+        {
+          "internal_field": "Options",
+          "type": "String/JSON",
+          "cef": "InfobloxDHCPOptions",
+          "leef": "InfobloxDHCPOptions",
+          "splunk_cim": "dhcp_options",
+          "description": "DHCP options"
+        }
+      ]
+    },
+    "universal_ddi_parquet": {
+      "description": "Universal DDI Exported Log File Schemas (Parquet format)",
+      "dns_response_query": {
+        "resource_record": [
+          {
+            "field": "name",
+            "type": "STRING",
+            "description": "FQDN"
+          },
+          {
+            "field": "ttl",
+            "type": "INT64",
+            "description": "Time-to-live"
+          },
+          {
+            "field": "type",
+            "type": "INT32",
+            "description": "RR type"
+          },
+          {
+            "field": "clas",
+            "type": "INT32",
+            "description": "RR class"
+          },
+          {
+            "field": "data",
+            "type": "STRING",
+            "description": "RR data"
+          }
+        ],
+        "main_fields": [
+          {
+            "field": "opcode",
+            "type": "INT32",
+            "description": "DNS opcode (0=QUERY, 1=IQUERY, 2=STATUS, 4=NOTIFY, 5=UPDATE; -1 if missing)"
+          },
+          {
+            "field": "timestamp",
+            "type": "INT64",
+            "description": "Seconds since epoch"
+          },
+          {
+            "field": "nanosec",
+            "type": "INT32",
+            "description": "Nanoseconds"
+          },
+          {
+            "field": "qname",
+            "type": "STRING",
+            "description": "Query name (FQDN)"
+          },
+          {
+            "field": "qtype",
+            "type": "INT32",
+            "description": "Query type"
+          },
+          {
+            "field": "qclass",
+            "type": "INT32",
+            "description": "Query class"
+          },
+          {
+            "field": "source",
+            "type": "STRING",
+            "description": "Server / source ID"
+          },
+          {
+            "field": "qip",
+            "type": "STRING",
+            "description": "Client IP"
+          },
+          {
+            "field": "qport",
+            "type": "INT32",
+            "description": "Client port"
+          },
+          {
+            "field": "rip",
+            "type": "STRING",
+            "description": "Responder IP"
+          },
+          {
+            "field": "rport",
+            "type": "INT32",
+            "description": "Responder port"
+          },
+          {
+            "field": "protocol",
+            "type": "INT32",
+            "description": "6=TCP, 17=UDP"
+          },
+          {
+            "field": "delay",
+            "type": "FLOAT64",
+            "description": "Response delay"
+          },
+          {
+            "field": "rcode",
+            "type": "INT32",
+            "description": "Return code"
+          },
+          {
+            "field": "type",
+            "type": "INT32",
+            "description": "Message type (ISC codes)"
+          },
+          {
+            "field": "qqr",
+            "type": "BOOL",
+            "description": "Request flag QR"
+          },
+          {
+            "field": "qaa",
+            "type": "BOOL",
+            "description": "Request flag AA"
+          },
+          {
+            "field": "qtc",
+            "type": "BOOL",
+            "description": "Request flag TC"
+          },
+          {
+            "field": "qrd",
+            "type": "BOOL",
+            "description": "Request flag RD"
+          },
+          {
+            "field": "qra",
+            "type": "BOOL",
+            "description": "Request flag RA"
+          },
+          {
+            "field": "qad",
+            "type": "BOOL",
+            "description": "Request flag AD"
+          },
+          {
+            "field": "qcd",
+            "type": "BOOL",
+            "description": "Request flag CD"
+          },
+          {
+            "field": "qdo",
+            "type": "BOOL",
+            "description": "Request flag DO"
+          },
+          {
+            "field": "rqr",
+            "type": "BOOL",
+            "description": "Response flag QR"
+          },
+          {
+            "field": "raa",
+            "type": "BOOL",
+            "description": "Response flag AA"
+          },
+          {
+            "field": "rtc",
+            "type": "BOOL",
+            "description": "Response flag TC"
+          },
+          {
+            "field": "rrd",
+            "type": "BOOL",
+            "description": "Response flag RD"
+          },
+          {
+            "field": "rra",
+            "type": "BOOL",
+            "description": "Response flag RA"
+          },
+          {
+            "field": "rad",
+            "type": "BOOL",
+            "description": "Response flag AD"
+          },
+          {
+            "field": "rcd",
+            "type": "BOOL",
+            "description": "Response flag CD"
+          },
+          {
+            "field": "rdo",
+            "type": "BOOL",
+            "description": "Response flag DO"
+          },
+          {
+            "field": "rrr1",
+            "type": "ARRAY[ResourceRecord]",
+            "description": "Response resource records list 1"
+          },
+          {
+            "field": "rrr2",
+            "type": "ARRAY[ResourceRecord]",
+            "description": "Response resource records list 2"
+          },
+          {
+            "field": "rrr3",
+            "type": "ARRAY[ResourceRecord]",
+            "description": "Response resource records list 3"
+          },
+          {
+            "field": "view",
+            "type": "STRING",
+            "description": "DNS view"
+          },
+          {
+            "field": "anonymized",
+            "type": "BOOL",
+            "description": "Anonymized flag"
+          },
+          {
+            "field": "pid",
+            "type": "STRING",
+            "description": "Policy ID"
+          },
+          {
+            "field": "cid",
+            "type": "STRING",
+            "description": "Client ID"
+          },
+          {
+            "field": "tid",
+            "type": "STRING",
+            "description": "Transaction ID"
+          }
+        ]
+      },
+      "rpz": {
+        "description": "RPZ Logs - extends DNS schema with additional fields",
+        "additional_fields": [
+          {
+            "field": "tcode",
+            "type": "INT32",
+            "description": "Trigger code"
+          },
+          {
+            "field": "tname",
+            "type": "STRING",
+            "description": "Trigger name"
+          },
+          {
+            "field": "acode",
+            "type": "INT32",
+            "description": "Action code"
+          },
+          {
+            "field": "arrtype",
+            "type": "INT32",
+            "description": "Action RR type"
+          },
+          {
+            "field": "arrdata",
+            "type": "STRING",
+            "description": "Action RR data"
+          }
+        ]
+      },
+      "ipam_metadata": {
+        "session_record": [
+          {
+            "field": "name",
+            "type": "STRING",
+            "description": "Session name"
+          },
+          {
+            "field": "actfrom",
+            "type": "INT64",
+            "description": "Active from timestamp"
+          },
+          {
+            "field": "actto",
+            "type": "INT64",
+            "description": "Active to timestamp"
+          }
+        ],
+        "main_fields": [
+          {
+            "field": "opcode",
+            "type": "INT32",
+            "description": "0=INSERT, 1=DELETE, 2=UPDATE"
+          },
+          {
+            "field": "source",
+            "type": "STRING",
+            "description": "Source"
+          },
+          {
+            "field": "timestamp",
+            "type": "INT64",
+            "description": "Timestamp (seconds)"
+          },
+          {
+            "field": "nanosec",
+            "type": "INT32",
+            "description": "Nanoseconds"
+          },
+          {
+            "field": "cip",
+            "type": "STRING",
+            "description": "Client IP"
+          },
+          {
+            "field": "hostnames",
+            "type": "MAP/STRUCT",
+            "description": "Hostnames"
+          },
+          {
+            "field": "usernames",
+            "type": "ARRAY[Session]",
+            "description": "User sessions"
+          },
+          {
+            "field": "mac",
+            "type": "STRING",
+            "description": "MAC address"
+          },
+          {
+            "field": "view",
+            "type": "STRING",
+            "description": "View"
+          },
+          {
+            "field": "fingerprint",
+            "type": "STRING",
+            "description": "Fingerprint"
+          },
+          {
+            "field": "os",
+            "type": "STRING",
+            "description": "Operating system"
+          },
+          {
+            "field": "firstts",
+            "type": "INT64",
+            "description": "First seen timestamp"
+          },
+          {
+            "field": "lastts",
+            "type": "INT64",
+            "description": "Last seen timestamp"
+          },
+          {
+            "field": "extattrs",
+            "type": "MAP",
+            "description": "Extensible attributes"
+          },
+          {
+            "field": "anonymized",
+            "type": "BOOL",
+            "description": "Anonymized flag"
+          }
+        ]
+      }
+    },
+    "notes": [
+      "Traditional NIOS syslog is mostly free-form text with category prefixes (e.g. queries:, dhcpd:). No fixed schema — parsing is typically regex-based.",
+      "Audit logs contain: timestamp, admin user, action, object type/name, details, source IP, auth method, etc.",
+      "Exact fields can vary slightly by NIOS / Universal DDI version and enabled features (Threat Defense, Microsoft integration, etc.).",
+      "Sources: Infoblox official documentation for DNS Query/Response Log Message Mapping, DHCP Message Mapping, and Log File Format (Universal DDI)."
+    ]
+  }
+}
