@@ -6,26 +6,31 @@ Threat-Detection catalogues. Unlike those four, this isn't one schema:
 each vendor keeps whatever shape its own documentation actually has
 rather than being forced into a common row shape. FortiGate's log
 reference, FortiManager/FortiAnalyzer's log schema, Juniper EX-series's
-log schema, and Infoblox DDI's log reference (all below) look nothing
-alike — FortiGate has per-subtype CLI/GUI enable instructions, an
-example log line, and a confidence rating; FortiManager/FortiAnalyzer
-has a numeric category code, a `product` split (FortiManager vs
-FortiAnalyzer), and a composite log-ID format instead; Junos doesn't use
-a Fortinet-style type/subtype model at all — it organizes logs by
-facility, severity, and a per-process/daemon message-tag catalog, plus
-two entirely different message envelopes (BSD-style vs. RFC 5424
-structured-data) rather than one common field set; Infoblox's category/
-prefix reference has no enable instructions, confidence rating, or
-product split at all, and its field schemas — several distinct ones,
-one per exported log type, rather than one set of fields common to
-every row — don't fold into its Log Types table as common-field rows
-the way the other three vendors' do, since they aren't actually common
-across Infoblox's own rows — and the tab doesn't paper over any of that:
-each vendor gets its own flatten/render/modal logic in `index.html`,
-sharing only the visual language (rail + toolbar + table + detail modal,
-a Log Types/Reference mode toggle for material that doesn't belong
-repeated per row) via the same `#app-other`-scoped CSS classes, not a
-common data model.
+log schema, Infoblox DDI's log reference, and Zscaler's Splunk onboarding
+reference (all below) look nothing alike — FortiGate has per-subtype
+CLI/GUI enable instructions, an example log line, and a confidence
+rating; FortiManager/FortiAnalyzer has a numeric category code, a
+`product` split (FortiManager vs FortiAnalyzer), and a composite log-ID
+format instead; Junos doesn't use a Fortinet-style type/subtype model at
+all — it organizes logs by facility, severity, and a per-process/daemon
+message-tag catalog, plus two entirely different message envelopes
+(BSD-style vs. RFC 5424 structured-data) rather than one common field
+set; Infoblox's category/prefix reference has no enable instructions,
+confidence rating, or product split at all, and its field schemas —
+several distinct ones, one per exported log type, rather than one set of
+fields common to every row — don't fold into its Log Types table as
+common-field rows the way the other vendors' do, since they aren't
+actually common across Infoblox's own rows; Zscaler's is the vendor
+closest to FortiGate's own shape (per-input configuration instructions
+and a per-input field list) but adds two more per-input datasets
+(Splunk CIM eventtype/tag coverage and low-level CIM field-alias
+mappings) that don't belong in the per-row modal alone, plus a
+145-row field-mapping table too large to repeat per row — and the tab
+doesn't paper over any of that: each vendor gets its own flatten/render/
+modal logic in `index.html`, sharing only the visual language (rail +
+toolbar + table + detail modal, a Log Types/Reference mode toggle for
+material that doesn't belong repeated per row) via the same
+`#app-other`-scoped CSS classes, not a common data model.
 
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
@@ -171,14 +176,67 @@ need.
   came from — the closest thing this file has to a sources list, kept
   as plain text rather than turned into fake clickable links).
 
-All four files `fetch()` at runtime rather than embed inline (same
+- `data/zscaler_splunk_onboarding_reference.json` — a Zscaler-to-Splunk
+  onboarding reference (title: "Zscaler to Splunk Onboarding Reference"),
+  compiled by reading the real Zscaler Technical Add-on for Splunk
+  package (Splunkbase app 3865, `TA-Zscaler_CIM`, v4.1.5) directly —
+  `default/eventtypes.conf`, `default/tags.conf`, `default/props.conf` —
+  rather than from public documentation alone, per the file's own
+  provenance notes. Of the five vendors, this one's shape is the closest
+  to FortiGate's: a 15-row `overview` of log inputs (ZIA's Web/Firewall/
+  DNS/Tunnel/Alerts/Admin-Audit/Sandbox logs, ZPA's App-Access/Auth/
+  Connector/Browser-Access/Web-Inspection/Admin-Audit logs, and two
+  config-object lookups), each with its own configuration instructions
+  (`configuration_settings`, the direct analog of FortiGate's CLI/GUI
+  enable block) and — for 13 of the 15 — a per-input field list
+  (`field_schemas`, joined by the `overview` row's own `input` name).
+  What replaces FortiGate's confidence rating is an official-vs-unofficial
+  distinction on the file's own `app` field (`Zscaler Technical Add-on
+  for Splunk` for 13 rows vs. `TA-zscaler-api (unofficial community
+  add-on)` for the two config-object lookups), reusing the exact
+  verified/typical badge colors under new labels ("Official TA" /
+  "Community add-on").
+
+  Two more datasets don't fit per-row the way FortiGate's common fields
+  do, because they're not universal either: `cim_coverage` (18 rows —
+  which Splunk CIM eventtype/tags/data-models apply to a sourcetype, down
+  to specific filtered subsets like the Web log's malware- and
+  DLP-flagged rows) and `cim_field_mapping` (145 rows — the TA's actual
+  per-sourcetype FIELDALIAS/EVAL directives, confirmed from its shipped
+  `props.conf`, not inferred). Both get matched into each Log Type row's
+  own modal by sourcetype (prefix-matched for `cim_coverage`'s filtered
+  variants), the same "material specific to this row lives in its modal"
+  principle the other four vendors already follow — but
+  `cim_field_mapping` is also large enough (145 rows) that it gets its
+  own full Reference-view table alongside a **Methodology notes** section
+  (the file's three other top-level `*_notes` caveats: `cim_coverage_notes`,
+  `cim_field_mapping_notes`, `ta_extra_sourcetypes_notes` — the fourth,
+  `overview_notes`, is the Reference view's own intro line, the same
+  role FortiGate's logging-prerequisites line plays).
+
+  Two sourcetypes the file's own `cim_coverage`/`cim_field_mapping`
+  entries flag as "not previously covered" by the 15-row overview
+  (`zscalernss-audit`, a syslog-delivered variant of ZIA's admin-audit
+  data; `zscalerlss-zpa-pse`, ZPA Private Service Edge logs) become their
+  own Log Type rows too, rather than being silently dropped for not
+  fitting the original 15-row scope. A separate `ta_extra_sourcetypes`
+  array (11 rows: SaaS Security/CASB, Workload Segmentation, Deception,
+  DLP Incident Reports, Posture Control, and five Cloud & Branch
+  Connector "NSS for Workloads" feeds) covers sourcetypes the real TA
+  package ships but that fall outside this reference's original ZIA/ZPA
+  scope entirely — these get their own **Other Zscaler products**
+  top-level type in the rail, alongside **ZIA** and **ZPA** for the
+  rest, rather than being tucked into a Reference-only appendix where
+  they wouldn't be searchable alongside everything else.
+
+All five files `fetch()` at runtime rather than embed inline (same
 trade-off as AWS Events and Threat Detection's Heat Coverage tab: needs
 the page served over http(s), not opened as a local `file://`), and all
-four register their rows on the tab's shared `window.__compHub['other']`
+five register their rows on the tab's shared `window.__compHub['other']`
 entry (merged across vendors, each row tagged with its own `vendor` so
 a cross-catalogue search result opens on the right vendor's own panel
 and tab).
 
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-all four files are used as delivered, not derived from another file in
+all five files are used as delivered, not derived from another file in
 this repo.

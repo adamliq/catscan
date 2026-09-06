@@ -22,9 +22,10 @@ where one exists) built directly in this repo from a [`Events_Other`](Events_Oth
 data export rather than merged from an external source repo, and an
 **Other Events** menu for vendor log/event references that don't belong to
 any of the above — FortiGate's 40 log types, FortiManager/
-FortiAnalyzer's 37, Juniper EX-series's 18 message-tag categories, and
-DDI Infoblox's 75 log categories (see [`other/`](other/README.md)) so
-far, with a real vendor picker and room for more over time, each keeping
+FortiAnalyzer's 37, Juniper EX-series's 18 message-tag categories, DDI
+Infoblox's 75 log categories, and Zscaler's 28 log inputs (see
+[`other/`](other/README.md)) so far, with a real vendor picker and room
+for more over time, each keeping
 its own schema shape rather than a forced common one.
 
 ## Web lookup
@@ -107,12 +108,13 @@ fetches its one `aws_iam_actions.json` file (from `aws/data/`, see below;
 21,164 actions makes for a 6.5&nbsp;MB file, too large to comfortably
 embed inline the way the other three catalogues' data is), and the
 **Other Events** tab fetches `fortigate_log_reference.json`,
-`fortimanager_log_schema.json`, `juniper_switch_log_schema.json`, and
-`infoblox_log_reference.json` (from `other/data/`, see below — a modest
-~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, and ~32&nbsp;KB respectively, but
-all four fetched rather than embedded for consistency with the other two
-runtime-loaded tabs and because Other Events is meant to grow more
-vendor files over time). All three tabs
+`fortimanager_log_schema.json`, `juniper_switch_log_schema.json`,
+`infoblox_log_reference.json`, and
+`zscaler_splunk_onboarding_reference.json` (from `other/data/`, see
+below — a modest ~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, ~32&nbsp;KB, and
+~97&nbsp;KB respectively, but all five fetched rather than embedded for
+consistency with the other two runtime-loaded tabs and because Other
+Events is meant to grow more vendor files over time). All three tabs
 degrade gracefully under `file://` (browsers block
 `fetch()` of local files) with an explanatory message — Heat Coverage the
 same way the source repo already did, AWS Events and Other Events the
@@ -206,16 +208,17 @@ Detection's core catalogues are, either: on load AWS Events `fetch()`es
 `aws/data/aws_iam_actions.json` and Other Events fetches each vendor's
 own file independently — `other/data/fortigate_log_reference.json`,
 `other/data/fortimanager_log_schema.json`,
-`other/data/juniper_switch_log_schema.json`, and
-`other/data/infoblox_log_reference.json` (see Structure) — and only
-builds that vendor's stats tiles, rail list, and search table — and
-registers its rows on the shared `window.__compHub['other']` entry for
-the shell Search pill — once its own fetch resolves; each vendor panel
-shows its own loading message (and, under `file://`, an explanatory
-error) until then, the same pattern Threat Detection's own Heat Coverage
-tab already used for its runtime fetches. The four vendors load and
-register independently, so a search fired before all four resolve just
-won't have the still-loading ones' results yet.
+`other/data/juniper_switch_log_schema.json`,
+`other/data/infoblox_log_reference.json`, and
+`other/data/zscaler_splunk_onboarding_reference.json` (see Structure) —
+and only builds that vendor's stats tiles, rail list, and search table —
+and registers its rows on the shared `window.__compHub['other']` entry
+for the shell Search pill — once its own fetch resolves; each vendor
+panel shows its own loading message (and, under `file://`, an
+explanatory error) until then, the same pattern Threat Detection's own
+Heat Coverage tab already used for its runtime fetches. The five vendors
+load and register independently, so a search fired before all five
+resolve just won't have the still-loading ones' results yet.
 
 **AWS Events**' rail originally held only a Service filter; it now also
 has **CloudTrail** and **ACSC** filter groups (`All actions` /
@@ -237,7 +240,7 @@ list, but a `product` split (FortiManager vs FortiAnalyzer) and a
 composite log-ID format FortiGate's data doesn't have — which is exactly
 the trigger that was waiting for: the header now carries a real,
 clickable vendor picker (`FortiGate` / `FortiManager`, later joined by
-`Juniper EX-series` and `DDI Infoblox` — see below), each
+`Juniper EX-series`, `DDI Infoblox`, and `Zscaler` — see below), each
 vendor's whole panel (stats, rail, table, mode toggle, both modals) a
 sibling `<div>` shown or hidden by the picker, each with its own
 independent search/filter/mode state so switching vendors and switching
@@ -365,6 +368,61 @@ have — first by *not* building UI for reference material that didn't
 exist yet, then by building exactly the UI the material that arrived
 actually called for, rather than forcing it through FortiGate's common-
 fields shape because that shape was already there.
+
+A fifth vendor, Zscaler, is the one whose source data comes closest to
+FortiGate's own shape — a per-input list (`overview`, 15 rows across
+ZIA and ZPA) where each row carries its own configuration instructions
+and a per-input field list, the direct analog of FortiGate's per-subtype
+CLI/GUI instructions and field list — compiled by reading the actual
+Zscaler Technical Add-on for Splunk package (Splunkbase app 3865,
+`TA-Zscaler_CIM` v4.1.5) directly rather than from public docs alone.
+What replaces FortiGate's confidence rating is an official-vs-unofficial
+axis already present in the source itself: 13 of the 15 inputs use the
+real Zscaler Technical Add-on, the other two (config-object lookups) use
+an unofficial community add-on — reusing the exact verified/typical
+badge colors under new labels ("Official TA" / "Community add-on")
+rather than inventing a new visual language for a distinction the data
+already draws.
+
+Two more Zscaler datasets don't fit per-row the way FortiGate's common
+fields do, because — like Infoblox's field schemas — they aren't
+universal either: `cim_coverage` (which Splunk CIM eventtype/tags/data
+models apply to a sourcetype, including specific filtered subsets like
+the Web log's malware- and DLP-flagged rows) and `cim_field_mapping`
+(145 rows of the TA's actual per-sourcetype FIELDALIAS/EVAL directives,
+confirmed from its shipped `props.conf`, not inferred). Both get matched
+into each row's own modal by sourcetype, the same principle Infoblox's
+CIM-adjacent data already followed — but `cim_field_mapping` is also
+large enough on its own (145 rows) that it earns its own full table in
+the Reference view, alongside a Methodology notes section for the
+source's other three caveats. Two sourcetypes the data itself flags as
+"not previously covered" by the 15-row overview become their own Log
+Type rows rather than being silently dropped, and a separate 11-row
+`ta_extra_sourcetypes` array — sourcetypes the real TA package ships but
+that fall outside this reference's original ZIA/ZPA scope entirely
+(CASB, Workload Segmentation, Deception, DLP Incident Reports, Posture
+Control, and a distinct Cloud & Branch Connector product line) — gets
+its own **Other Zscaler products** top-level type in the rail rather
+than a Reference-only appendix, so it stays searchable alongside
+everything else the same way Juniper's common fields and Infoblox's
+field schemas already are.
+
+One rendering bug surfaced and got fixed while building this vendor's
+modal: several Zscaler field-name groups run far longer than one line
+(e.g. one field entry alone is "srvocspresult / srvcertchainvalpass /
+srvwildcardcert / srvcertvalidationtype / srvcertvalidityperiod"), and
+the `<dl>`-based field list every other vendor's modal already uses
+sizes its label column to `max-content` with `white-space: nowrap` —
+correct for FortiGate's and Juniper's own short field names, but a
+single field-name group that long forced that column to consume nearly
+the entire modal width, squeezing every row's description into an
+unreadable sliver. Zscaler's own Fields section renders as a table
+instead (a field name column that wraps normally, not a label column
+sized to its single longest entry) — a genuine layout fix that the
+vendor-specific rendering split this whole tab is built around made
+easy to isolate to just this one vendor, without touching the `<dl>`
+rendering FortiGate's, FortiManager's, and Juniper's own modals still
+use correctly.
 
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
@@ -541,11 +599,15 @@ Events — leaks into or interferes with the others.
   `data/fortimanager_log_schema.json` (from the FortiManager/FortiAnalyzer
   7.6.2 documentation — the two products share one Log Message Reference
   guide), `data/juniper_switch_log_schema.json` (from Junos OS's
-  System Logging documentation and System Log Messages Reference), and
+  System Logging documentation and System Log Messages Reference),
   `data/infoblox_log_reference.json` (compiled from data supplied
   directly by the repository maintainer rather than a published guide —
-  see the file's own `source_documentation.note`). No
-  build tooling here, unlike `aws/`: all four JSON files are used
+  see the file's own `source_documentation.note`), and
+  `data/zscaler_splunk_onboarding_reference.json` (compiled by reading
+  the real Zscaler Technical Add-on for Splunk package — Splunkbase app
+  3865, `TA-Zscaler_CIM` v4.1.5 — directly, per the file's own
+  provenance notes). No
+  build tooling here, unlike `aws/`: all five JSON files are used
   as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
@@ -574,10 +636,12 @@ its updated `index.html` export. To extend AWS Events, update
 same way. To extend Other Events for an existing vendor, update that
 vendor's own file in place (`other/data/fortigate_log_reference.json`,
 `other/data/fortimanager_log_schema.json`,
-`other/data/juniper_switch_log_schema.json`, or
-`other/data/infoblox_log_reference.json`), then regenerate `index.html`.
-Adding a genuinely new vendor follows the pattern FortiManager, Juniper
-EX-series, and DDI Infoblox each set inside `build_app_other()` (not a
+`other/data/juniper_switch_log_schema.json`,
+`other/data/infoblox_log_reference.json`, or
+`other/data/zscaler_splunk_onboarding_reference.json`), then regenerate
+`index.html`. Adding a genuinely new vendor follows the pattern
+FortiManager, Juniper EX-series, DDI Infoblox, and Zscaler each set
+inside `build_app_other()` (not a
 separate top-level function — all of Other Events' vendors share one
 `#app-other` container): a new data file, a new pill in the vendor-tab
 row, a new sibling `<div>` panel (own stats/rail/table/modal markup,
