@@ -32,6 +32,25 @@ toolbar + table + detail modal, a Log Types/Reference mode toggle for
 material that doesn't belong repeated per row) via the same
 `#app-other`-scoped CSS classes, not a common data model.
 
+Every vendor also carries a third mode, **Schema Explorer**, mirroring
+Windows Events' own Schema Explorer tab: a flat, searchable table of
+every field parsed out of *individual* log-type rows (not the vendor's
+common fields, which are already flat and searchable as their own Log
+Types rows) — clicking a field jumps back to Log Types and opens the
+exact row it came from, the same "View this event" pattern Windows'
+version uses. Only two of the five vendors' sources actually have this
+kind of per-row field data: FortiGate (63 fields across 7 of its 40
+subtypes — the ones with `confidence: "verified"`) and Zscaler (224
+fields across 13 of its 15 overview inputs). The other three —
+FortiManager (per-subtype fields explicitly not enumerated in the
+source), Juniper (individual message tags within a category aren't
+enumerated, only the category itself), and Infoblox (its field schemas
+are separate top-level structures, not tied one-to-one to a category
+row) — genuinely have nothing to flatten here without inventing a
+per-row schema the source doesn't draw, so their Schema Explorer mode
+is a single explanatory note instead of an empty table pretending
+there's data behind it.
+
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
 the stated basis that a picker isn't worth building for one option; it
