@@ -1,0 +1,590 @@
+{
+  "cisco_catalyst_sdwan_logging_comprehensive": {
+    "product": "Cisco Catalyst SD-WAN (formerly Viptela / Cisco SD-WAN)",
+    "description": "Comprehensive reference for log types, local files, syslog formats, severity levels, software modules/daemons, individual syslog messages, alarms, events, audit logs, and field schemas.",
+    "local_log_files": [
+      {
+        "file": "auth.log",
+        "path": "/var/log/auth.log",
+        "description": "Login, logout, and superuser access events, and usage of authorization systems"
+      },
+      {
+        "file": "kern.log",
+        "path": "/var/log/kern.log",
+        "description": "Kernel messages"
+      },
+      {
+        "file": "messages.log",
+        "path": "/var/log/messages.log",
+        "description": "Consolidated log file that contains syslog messages from all sources"
+      },
+      {
+        "file": "vconfd.log",
+        "path": "/var/log/vconfd.log",
+        "description": "All configuration-related syslog messages"
+      },
+      {
+        "file": "vdebug.log",
+        "path": "/var/log/vdebug.log",
+        "description": "All debug messages for modules whose debugging is turned on, plus syslog messages above the configured priority value. Supports module-specific logging levels (e.g. sysmgr: on/off; chmgr: off/low/normal/high). Debug messages cannot be sent to remote hosts."
+      },
+      {
+        "file": "vsyslog.log",
+        "path": "/var/log/vsyslog.log",
+        "description": "All syslog messages from Cisco Catalyst SD-WAN processes (daemons) above the configured priority value. Default priority is informational (severity 6)."
+      },
+      {
+        "file": "vmanage-syslog.log",
+        "path": "/var/log/vmanage-syslog.log",
+        "description": "Cisco SD-WAN Manager (vManage) audit log messages"
+      }
+    ],
+    "unused_standard_linux_files": [
+      "cron.log",
+      "debug.log",
+      "lpr.log",
+      "mail.log",
+      "syslog"
+    ],
+    "syslog_formats": {
+      "classic_pre_20_15": {
+        "format": "%<FACILITY>-<host>-<MNEMONIC>-<SEVERITY>-<SEVERITY-name>-<SEVERITY>-<MessageId>: <MESSAGE TEXT>",
+        "example": "*Dec 11 09:36:27.358: %Cisco-SDWAN-NR-C8200-1N-4T-FTMD-5-NTCE-1000026: **HSL-LOGGING IMPLICIT-ACL** : VPN-0 Src: 192.168.104.16/0 Dst: 192.168.104.20/0 Proto: 1 TOS: 0 LogReason: SDWAN_SERV_ICMP_EXCEPT_TS Count: 1Bytes: 114"
+      },
+      "newer_from_20_15": {
+        "format": "%<FACILITY>-<SEVERITY>-<MNEMONIC>: <MESSAGE TEXT>",
+        "example": "Dec 20 18:47:33.237: %SDWAN-5-FTMD : **HSL-LOGGING IMPLICIT-ACL** : VPN-0 Src: 10.1.17.14/12346 Dst: 192.168.60.100/12346 Proto: 17 TOS: 192 LogReason: SDWAN_SERV_UDP Count: 1Bytes: 171 Ingress-Interface: GigabitEthernet2 Egress-Interface: GigabitEthernet2"
+      },
+      "alternative_formats": [
+        "facility.source date - source - module - level - MessageID: text-of-syslog-message",
+        "sequence-number:timestamp: %facility-severity-MENEMONIC:description (hostname-n)"
+      ],
+      "rfc5424": {
+        "format": "<pri>ver timestamp hostname appname procid msgid structured-data description",
+        "note": "Optional fields (hostname, appname, procid, msgid, structured-data) can be specified with a hyphen (-)"
+      }
+    },
+    "severity_levels": [
+      {
+        "name": "Emergency",
+        "numeric": 0,
+        "description": "System is unusable"
+      },
+      {
+        "name": "Alert",
+        "numeric": 1,
+        "description": "Action must be taken immediately"
+      },
+      {
+        "name": "Critical",
+        "numeric": 2,
+        "description": "Critical condition"
+      },
+      {
+        "name": "Error",
+        "numeric": 3,
+        "description": "Error condition that does not fully impair system usability"
+      },
+      {
+        "name": "Warning",
+        "numeric": 4,
+        "description": "Warning condition"
+      },
+      {
+        "name": "Notice",
+        "numeric": 5,
+        "description": "Normal but significant condition"
+      },
+      {
+        "name": "Informational",
+        "numeric": 6,
+        "description": "Informational messages (default priority for vsyslog)"
+      },
+      {
+        "name": "Debug",
+        "numeric": 7,
+        "description": "Debug-level messages"
+      }
+    ],
+    "syslog_message_acronyms": {
+      "confd": "CLI configuration process",
+      "FTM / FTMD": "Forwarding table manager",
+      "FP": "Forwarding process",
+      "RTM": "Route table manager",
+      "TTM": "Tunnel table manager"
+    },
+    "major_modules_and_sample_messages": {
+      "CFGMGR": {
+        "description": "Configuration Manager Process",
+        "priority": "Informational",
+        "sample_messages": [
+          {
+            "message": "CFGMGR_SYSLOG_START",
+            "number": 300001,
+            "format": "Starting cfgmgr",
+            "description": "Configuration manager is starting",
+            "action": "E"
+          },
+          {
+            "message": "CFGMGR_SYSLOG_END",
+            "number": 399999,
+            "format": "Terminating cfgmgr",
+            "description": "Configuration manager is stopping",
+            "action": "E"
+          },
+          {
+            "message": "CFGMGR_SYSLOG_IF_STATE",
+            "number": 300004,
+            "description": "Interface state reported by configuration manager",
+            "action": "E"
+          },
+          {
+            "message": "CFGMGR_SYSLOG_SPEED_DUPLEX_NOT_SUPPORTED",
+            "number": 300003,
+            "description": "Interface does not support duplex mode",
+            "action": "E"
+          },
+          {
+            "message": "CFGMGR_SYSLOG_SPURIOUS_TIMER",
+            "number": 300002,
+            "description": "Internal error",
+            "action": "A"
+          }
+        ]
+      },
+      "OMP": {
+        "description": "Overlay Management Protocol",
+        "priority": "Informational or Other / Notice",
+        "sample_messages": [
+          {
+            "message": "OMP_SYSLOG_START",
+            "number": 400001,
+            "format": "Starting",
+            "description": "OMP process is starting",
+            "action": "E"
+          },
+          {
+            "message": "OMP_SYSLOG_END",
+            "number": 400006,
+            "format": "Terminating",
+            "description": "OMP process is stopping",
+            "action": "E"
+          },
+          {
+            "message": "OMP_PEER_STATE_CHANGE",
+            "number": 400002,
+            "format": "%s peer %s state changed to %s",
+            "description": "OMP peer state changed to up or down",
+            "action": "E"
+          },
+          {
+            "message": "OMP_STATE_CHANGE",
+            "number": 400003,
+            "format": "Operational state changed to %s",
+            "description": "OMP internal operational state changed",
+            "action": "E"
+          },
+          {
+            "message": "OMP_TLOC_STATE_CHANGE",
+            "number": 400004,
+            "format": "TLOC %s state changed to %s for address-family: %s",
+            "description": "TLOC state changed",
+            "action": "E"
+          },
+          {
+            "message": "OMP_NUMBER_OF_CISCO_VSMARTS",
+            "number": 400005,
+            "format": "Number of Cisco vSmarts connected: %u",
+            "description": "Number of Controllers the device is connected to (vEdge only)",
+            "action": "E"
+          },
+          {
+            "message": "OMP_POLICY_CHANGE",
+            "number": 400007,
+            "format": "Using policy from peer %s",
+            "description": "Forwarding policy received from Controller (vEdge only)",
+            "action": "E"
+          }
+        ]
+      },
+      "FTMD": {
+        "description": "Forwarding Table Management Process (primarily vEdge)",
+        "priority": "Informational",
+        "sample_messages": [
+          {
+            "message": "FTMD_SYSLOG_BFD_STATE",
+            "number": 1000009,
+            "format": "BFD Session ... or record with discriminator %u invalid",
+            "description": "BFD state changed or invalid",
+            "action": "E"
+          },
+          {
+            "message": "FTMD_SLA_CLASS_ADD",
+            "number": 1000020,
+            "format": "SLA Class %s added at index %d: loss = %d%%, latency = %d ms",
+            "description": "SLA class added",
+            "action": "E"
+          },
+          {
+            "message": "FTMD_SYSLOG_DPI_FLOW_OOM",
+            "number": 1000024,
+            "format": "Out-of-memory status for DPI flows: %s",
+            "description": "Memory status for SAIE/DPI flows",
+            "action": "E"
+          }
+        ]
+      },
+      "VDAEMON": {
+        "description": "Cisco Catalyst SD-WAN Software Process",
+        "priority": "Informational / Error",
+        "sample_messages": [
+          {
+            "message": "VDAEMON_SYSLOG_START",
+            "number": 500001,
+            "description": "Process starting",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_END",
+            "number": 599999,
+            "description": "Process ending",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_PEER_STATE",
+            "number": 500003,
+            "format": "Peer %s Public-TLOC %s Color %u %s",
+            "description": "Peer state changed to up or down",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_SITE_ID_CHANGE",
+            "number": 500005,
+            "format": "System Site-ID changed from '%d' to '%d'",
+            "description": "System site ID changed",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_DOMAIN_ID_CHANGE",
+            "number": 500006,
+            "format": "System Domain-ID changed from '%d' to '%d'",
+            "description": "System domain ID changed",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_SYSTEM_IP_CHANGE",
+            "number": 500007,
+            "format": "System-IP changed from '%s' to '%s'",
+            "description": "System IP address changed",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_ORG_NAME_CHANGE",
+            "number": 500008,
+            "format": "System Organization-Name changed from '%s' to '%s'",
+            "description": "System organization name changed",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_PEER_AUTH_FAIL",
+            "number": 500004,
+            "format": "Peer %s Public-TLOC %s Color %u %s",
+            "description": "Authentication with a vdaemon peer failed",
+            "action": "E"
+          },
+          {
+            "message": "VDAEMON_SYSLOG_CERT_STORE_FAIL",
+            "number": 500009,
+            "format": "Certificate store init failed",
+            "description": "Certificate not stored",
+            "action": "AE"
+          }
+        ]
+      },
+      "VCONFD": {
+        "description": "Cisco Catalyst SD-WAN Configuration Process",
+        "priority": "Informational",
+        "sample_messages": [
+          {
+            "message": "VCONFD_SYSLOG_END",
+            "number": 1400001,
+            "format": "Terminating",
+            "description": "Configuration process is ending",
+            "action": "E"
+          },
+          {
+            "message": "TRACKER_SYSLOG_NOTIFICATION",
+            "number": 1400002,
+            "description": "Configuration notifications with severity, hostname, system-ip, process, reason, status, etc.",
+            "action": "E"
+          }
+        ]
+      },
+      "CFLOWD": {
+        "description": "Cflowd Traffic Flow Monitoring Process",
+        "priority": "Informational",
+        "sample_messages": [
+          {
+            "message": "CFLOWD_SYSLOG_MSG",
+            "number": 2200002,
+            "format": "Received information about vpn_id %ld",
+            "description": "Cflowd detected a VPN change",
+            "action": "E"
+          }
+        ]
+      },
+      "CHMGR": {
+        "description": "Chassis Manager (physical routers only)",
+        "priority": "Informational",
+        "sample_messages": [
+          {
+            "message": "CHMGR_CHASSIS_INFO",
+            "number": 100009,
+            "format": "Chassis-Type %s max-modules %d",
+            "description": "Chassis type and maximum modules supported",
+            "action": "E"
+          },
+          {
+            "message": "CHMGR_FAN_SPEED_HIGH / NORMAL",
+            "numbers": [100003, 100004],
+            "description": "Fan speed high or normal",
+            "action": "E"
+          },
+          {
+            "message": "CHMGR_FANTRAY_INSERTED / REMOVED",
+            "numbers": [100052, 100053],
+            "description": "Fan tray inserted or removed (vEdge 2000)",
+            "action": "E"
+          }
+        ]
+      },
+      "MSGQ": {
+        "description": "Message Queue Process",
+        "sample_messages": [
+          {
+            "message": "MSGQ_SYSLOG_START",
+            "number": 800001,
+            "format": "Starting msgq",
+            "description": "Message queue process is starting",
+            "action": "E"
+          },
+          {
+            "message": "MSGQ_SYSLOG_END",
+            "number": 899999,
+            "format": "Terminating msgq",
+            "description": "Message queue process is ending",
+            "action": "E"
+          }
+        ]
+      }
+    },
+    "action_codes": {
+      "A": "Automatically open a ticket in your organization's support team",
+      "AE": "Automatically open a support ticket and escalate the ticket",
+      "E": "Send email to the appropriate team within your organization"
+    },
+    "alarms_and_events": {
+      "severity_levels": [
+        {
+          "severity": "Critical",
+          "color": "red",
+          "description": "Serious events that impair or shut down the operation of a network function"
+        },
+        {
+          "severity": "Major",
+          "color": "yellow",
+          "description": "Serious events that affect, but do not shut down, the operation of a network function"
+        },
+        {
+          "severity": "Medium",
+          "color": "orange / blue (version dependent)",
+          "description": "Events that might impair the performance of a network function"
+        },
+        {
+          "severity": "Minor",
+          "color": "blue / green (version dependent)",
+          "description": "Events that might diminish the performance of a network function"
+        }
+      ],
+      "common_alarm_event_fields": [
+        {
+          "field": "entry_time",
+          "type": "integer (epoch ms) or timestamp",
+          "description": "Time the event/alarm was logged (UTC)"
+        },
+        {
+          "field": "eventname / Name / rulename",
+          "type": "string",
+          "description": "Name of the event or alarm rule"
+        },
+        {
+          "field": "severity / severity_level",
+          "type": "enum",
+          "values": ["Critical", "Major", "Medium", "Minor"],
+          "description": "Severity"
+        },
+        {
+          "field": "host_name / vdevice-host-name",
+          "type": "string",
+          "description": "Device hostname"
+        },
+        {
+          "field": "system_ip",
+          "type": "IP address",
+          "description": "Device system IP"
+        },
+        {
+          "field": "component",
+          "type": "string",
+          "description": "Component that generated the event"
+        },
+        {
+          "field": "message / details",
+          "type": "string",
+          "description": "Human-readable description"
+        },
+        {
+          "field": "site_id / object",
+          "type": "integer / string",
+          "description": "Site or device grouping"
+        },
+        {
+          "field": "active / acknowledged / suppressed",
+          "type": "boolean",
+          "description": "Alarm state flags"
+        },
+        {
+          "field": "uuid / id",
+          "type": "string (UUID)",
+          "description": "Unique identifier"
+        },
+        {
+          "field": "possible_causes",
+          "type": "array of strings",
+          "description": "Possible causes"
+        },
+        {
+          "field": "devices",
+          "type": "array of objects",
+          "description": "Affected devices (system-ip, etc.)"
+        },
+        {
+          "field": "cleared_time / cleared_by / cleared_events",
+          "type": "timestamp / UUID / array",
+          "description": "Clearing information"
+        }
+      ],
+      "common_alarm_types_examples": [
+        "BFD_Node_Up / BFD_Node_Down",
+        "BFD_TLOC_Up / BFD_TLOC_Down",
+        "BFD_Site_Up / BFD_Site_Down",
+        "Control_Vsmart_Up / Control_Vsmart_Down",
+        "Control_Vmanage_Up / Control_Vmanage_Down",
+        "Control_TLOC_Up / Control_TLOC_Down",
+        "Control_Site_Up / Control_Site_Down",
+        "Control_Node_Up / Control_Node_Down",
+        "Control_All_Vsmarts_Down",
+        "OMP_Site_Up / OMP_Site_Down",
+        "OMP_Node_Up / OMP_Node_Down",
+        "OMP_Vsmart_Up / OMP_Vsmart_Down",
+        "OMP_All_Vsmarts_Down",
+        "BGP_Router_Up / BGP_Router_Down",
+        "OSPF_Router_Up / OSPF_Router_Down",
+        "Tracker_State_Change",
+        "Nat_Update",
+        "Device Activation Failed",
+        "AAA Admin Password Change",
+        "AAA Password Expired",
+        "vManage Critical Space Usage",
+        "vManage Node Reachability State",
+        "vManage Service State",
+        "Disaster Recovery related (Primary/Secondary/Arbitrator Down, Switchover, etc.)"
+      ],
+      "note": "When a site goes down, Manager typically raises Site down, Node down, and TLOC down alarms (with suppression of redundant lower-level alarms in newer releases)."
+    },
+    "audit_logs": {
+      "description": "Cisco SD-WAN Manager audit logs (stored in vmanage-syslog.log and accessible via API/UI)",
+      "common_fields": [
+        {
+          "field": "logid",
+          "type": "string (UUID)",
+          "description": "Unique log identifier"
+        },
+        {
+          "field": "entry_time",
+          "type": "timestamp",
+          "description": "Time of the audit entry"
+        },
+        {
+          "field": "logmodule",
+          "type": "string",
+          "description": "Module (e.g. maintenance, upgrade)"
+        },
+        {
+          "field": "logfeature",
+          "type": "string",
+          "description": "Feature related to the log"
+        },
+        {
+          "field": "loguser",
+          "type": "string",
+          "description": "User who performed the action"
+        },
+        {
+          "field": "logusersrcip",
+          "type": "IP address",
+          "description": "Source IP of the user"
+        },
+        {
+          "field": "logmessage",
+          "type": "string",
+          "description": "Main log message"
+        },
+        {
+          "field": "logdeviceid",
+          "type": "string",
+          "description": "Device identifier related to the action"
+        },
+        {
+          "field": "auditdetails",
+          "type": "array of strings",
+          "description": "Detailed step-by-step audit information"
+        }
+      ]
+    },
+    "vmanage_application_log_format": {
+      "format": "Date - Log Level - Restful API Tracing ID - Host Name - Class - Thread - Tenant ID [Optional] - message",
+      "example": "04-Apr-2023 10:22:27,969 CST INFO [af7c0465-1fca-4e6d-8d39-6c03b1357b4b] [vmanage_scale1] [VmanageSyslogLogger] (default task-3459) |default| deviceAction: Request for action"
+    },
+    "binary_trace": {
+      "description": "Binary trace support for selected daemons (from IOS XE 17.4.1a / Control Components 20.x+)",
+      "supported_daemons": ["fpmd", "ftm", "ompd", "vdaemon", "cfgmgr"],
+      "trace_levels": ["debug", "emergency", "error", "info", "noise", "notice", "verbose", "warning"],
+      "note": "Used for deeper troubleshooting of SD-WAN daemons; can impact performance if set too high."
+    },
+    "remote_logging": {
+      "protocols": ["UDP", "TCP", "TLS (RFC 5425)"],
+      "notes": [
+        "TLS provides mutual authentication and encryption",
+        "Debug messages generally cannot be forwarded to remote hosts",
+        "Configurable via system logging templates / configuration groups / CLI",
+        "Source interface and facility can be specified"
+      ]
+    },
+    "notes": [
+      "Devices generate events/notifications → SD-WAN Manager correlates them into Alarms.",
+      "Devices can also emit SNMP traps (each trap has a corresponding notification).",
+      "All task, activity, administration, and device logs in Manager are displayed in UTC.",
+      "Manager suppresses or does not clear alerts that resolve within ~30 seconds to reduce noise.",
+      "Exact message sets, alarm names, and available fields vary by software release (20.x vs 26.x) and platform (vEdge, IOS XE Catalyst SD-WAN, Controllers).",
+      "Full exhaustive per-message tables are published in the official Cisco Catalyst SD-WAN Network Monitoring Guide – Syslog Messages chapter and the Cisco IOS XE Catalyst SD-WAN Alarms Guide / Alarm Reference Guide."
+    ],
+    "primary_sources": [
+      "Cisco Catalyst SD-WAN Control Components and Device Management Guide – System Logging",
+      "Cisco Catalyst SD-WAN Network Monitoring Guide – Alarms, Events, and Logs",
+      "Cisco Catalyst SD-WAN Network Monitoring Guide – Syslog Messages",
+      "Cisco IOS XE Catalyst SD-WAN Alarms Guide / Alarm Reference Guide",
+      "Cisco SD-WAN Manager API (Alarm, EventsBySeverity, Audit Log fields)"
+    ]
+  }
+}
