@@ -6,8 +6,9 @@ Threat-Detection catalogues. Unlike those four, this isn't one schema:
 each vendor keeps whatever shape its own documentation actually has
 rather than being forced into a common row shape. FortiGate's log
 reference, FortiManager/FortiAnalyzer's log schema, Juniper EX-series's
-log schema, Infoblox DDI's log reference, and Zscaler's Splunk onboarding
-reference (all below) look nothing alike — FortiGate has per-subtype
+log schema, Infoblox DDI's log reference, Zscaler's Splunk onboarding
+reference, and Cisco IOS XE's system message logging (syslog) reference
+(all below) look nothing alike — FortiGate has per-subtype
 CLI/GUI enable instructions, an example log line, and a confidence
 rating; FortiManager/FortiAnalyzer has a numeric category code, a
 `product` split (FortiManager vs FortiAnalyzer), and a composite log-ID
@@ -25,8 +26,16 @@ closest to FortiGate's own shape (per-input configuration instructions
 and a per-input field list) but adds two more per-input datasets
 (Splunk CIM eventtype/tag coverage and low-level CIM field-alias
 mappings) that don't belong in the per-row modal alone, plus a
-145-row field-mapping table too large to repeat per row — and the tab
-doesn't paper over any of that: each vendor gets its own flatten/render/
+145-row field-mapping table too large to repeat per row; and Cisco
+IOS XE's is the odd one out entirely — it isn't a log-type catalog at
+all, since the source says plainly that "there are thousands of
+individual messages" and points to the per-release System Message Guide
+as the authoritative list rather than enumerating them, so there's no
+per-row confidence rating, product/format split, or example log line the
+way FortiGate/FortiManager/Juniper/Zscaler have — its "Log Types" table
+is four different named-thing lists (facilities, logging destinations,
+configuration commands, advanced features) standing in for that shape
+instead. The tab doesn't paper over any of that: each vendor gets its own flatten/render/
 modal logic in `index.html`, sharing only the visual language (rail +
 toolbar + table + detail modal, a Log Types/Reference mode toggle for
 material that doesn't belong repeated per row) via the same
@@ -38,18 +47,22 @@ every field parsed out of *individual* log-type rows (not the vendor's
 common fields, which are already flat and searchable as their own Log
 Types rows) — clicking a field jumps back to Log Types and opens the
 exact row it came from, the same "View this event" pattern Windows'
-version uses. Only two of the five vendors' sources actually have this
+version uses. Only two of the six vendors' sources actually have this
 kind of per-row field data: FortiGate (63 fields across 7 of its 40
 subtypes — the ones with `confidence: "verified"`) and Zscaler (224
-fields across 13 of its 15 overview inputs). The other three —
+fields across 13 of its 15 overview inputs). The other four —
 FortiManager (per-subtype fields explicitly not enumerated in the
 source), Juniper (individual message tags within a category aren't
-enumerated, only the category itself), and Infoblox (its field schemas
+enumerated, only the category itself), Infoblox (its field schemas
 are separate top-level structures, not tied one-to-one to a category
-row) — genuinely have nothing to flatten here without inventing a
-per-row schema the source doesn't draw, so their Schema Explorer mode
-is a single explanatory note instead of an empty table pretending
-there's data behind it.
+row), and Cisco IOS XE (its only field-shaped data is the 6 common
+message-format fields, already flat and searchable as their own Log
+Types rows and detailed in full under Reference › Message format —
+nothing left to build a per-facility or per-mnemonic schema list from
+without inventing one) — genuinely have nothing to flatten here without
+inventing a per-row schema the source doesn't draw, so their Schema
+Explorer mode is a single explanatory note instead of an empty table
+pretending there's data behind it.
 
 The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
@@ -248,14 +261,54 @@ need.
   rest, rather than being tucked into a Reference-only appendix where
   they wouldn't be searchable alongside everything else.
 
-All five files `fetch()` at runtime rather than embed inline (same
+- `data/cisco_ios_xe_logging_reference.json` — a Cisco IOS XE system
+  message logging (syslog) reference (wrapper key `cisco_ios_xe_logging`
+  kept intact, not reshaped), covering Catalyst switches, ASR/ISR
+  routers, and IOS XE Catalyst SD-WAN devices. Unlike the other five
+  vendors, this isn't a log-type catalog at all — the source says
+  plainly that "there are thousands of individual messages" and points
+  to the per-release System Message Guide as the authoritative list
+  rather than enumerating them, so there's no per-row confidence rating,
+  product/format split, or example log line the way FortiGate's/
+  FortiManager's/Juniper's/Zscaler's have. What it has instead is a
+  logging-configuration reference: **18 common facilities**
+  (protocol/module codes like `OSPF`, `LINEPROTO`, `SYS`), **6 logging
+  destinations** (console, buffer, monitor, file, remote syslog host,
+  SNMP history table) each with its own enable command, **10 key
+  configuration commands**, and **5 advanced features** (rate-limiting,
+  discriminators, and so on) — four named-thing lists standing in for
+  the Log Types table's usual per-subtype rows, rather than actual log
+  types. **6 message-format fields** common to every syslog line
+  (`FACILITY`, `SEVERITY`, `MNEMONIC`, `description`/`Message-text`,
+  `seq no`, `timestamp`) fold into the same Log Types table as their own
+  rows (a "Common fields" rail filter, exactly like FortiGate's/
+  FortiManager's/Juniper's common fields), leaving 39 "real" rows
+  (facilities + destinations + commands + features) counted separately
+  from the 45-row table total the rail's "All types" shows.
+
+  The Reference view carries what doesn't belong repeated per row:
+  three message-format templates (standard, with-hostname,
+  extended/sub-facility) with 4 example log lines between them, an
+  8-level severity table (`emergencies` through `debugging`) with 3
+  additional caveats, a 6-key default-behavior summary (is console
+  logging on by default, what's the default buffer size story, and so
+  on), 5 free-text notes (4 general notes plus the IOS XE Catalyst
+  SD-WAN caveat that both standard and SD-WAN-specific facilities like
+  `FTMD`/`OMP`/`VDAEMON` appear on those devices, merged in from a
+  separate `relation_to_sdwan` key), and 5 source citations (kept as
+  plain text, not turned into fake links, matching Infoblox's own
+  convention). Since none of the four named-thing lists carry a field
+  list of their own, Schema Explorer here is a single explanatory note
+  like FortiManager's/Juniper's/Infoblox's, not an empty table.
+
+All six files `fetch()` at runtime rather than embed inline (same
 trade-off as AWS Events and Threat Detection's Heat Coverage tab: needs
 the page served over http(s), not opened as a local `file://`), and all
-five register their rows on the tab's shared `window.__compHub['other']`
+six register their rows on the tab's shared `window.__compHub['other']`
 entry (merged across vendors, each row tagged with its own `vendor` so
 a cross-catalogue search result opens on the right vendor's own panel
 and tab).
 
 There's no build tool here (unlike `aws/tools/build_aws_json.py`) since
-all five files are used as delivered, not derived from another file in
+all six files are used as delivered, not derived from another file in
 this repo.

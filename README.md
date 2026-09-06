@@ -23,7 +23,8 @@ data export rather than merged from an external source repo, and an
 **Other Events** menu for vendor log/event references that don't belong to
 any of the above — FortiGate's 40 log types, FortiManager/
 FortiAnalyzer's 37, Juniper EX-series's 18 message-tag categories, DDI
-Infoblox's 75 log categories, and Zscaler's 28 log inputs (see
+Infoblox's 75 log categories, Zscaler's 28 log inputs, and Cisco IOS
+XE's 39-row logging-configuration reference (see
 [`other/`](other/README.md)) so far, with a real vendor picker and room
 for more over time, each keeping
 its own schema shape rather than a forced common one.
@@ -109,12 +110,13 @@ fetches its one `aws_iam_actions.json` file (from `aws/data/`, see below;
 embed inline the way the other three catalogues' data is), and the
 **Other Events** tab fetches `fortigate_log_reference.json`,
 `fortimanager_log_schema.json`, `juniper_switch_log_schema.json`,
-`infoblox_log_reference.json`, and
-`zscaler_splunk_onboarding_reference.json` (from `other/data/`, see
-below — a modest ~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, ~32&nbsp;KB, and
-~97&nbsp;KB respectively, but all five fetched rather than embedded for
-consistency with the other two runtime-loaded tabs and because Other
-Events is meant to grow more vendor files over time). All three tabs
+`infoblox_log_reference.json`, `zscaler_splunk_onboarding_reference.json`,
+and `cisco_ios_xe_logging_reference.json` (from `other/data/`, see
+below — a modest ~46&nbsp;KB, ~10&nbsp;KB, ~9&nbsp;KB, ~32&nbsp;KB,
+~97&nbsp;KB, and ~9&nbsp;KB respectively, but all six fetched rather
+than embedded for consistency with the other two runtime-loaded tabs
+and because Other Events is meant to grow more vendor files over time).
+All three tabs
 degrade gracefully under `file://` (browsers block
 `fetch()` of local files) with an explanatory message — Heat Coverage the
 same way the source repo already did, AWS Events and Other Events the
@@ -209,15 +211,16 @@ Detection's core catalogues are, either: on load AWS Events `fetch()`es
 own file independently — `other/data/fortigate_log_reference.json`,
 `other/data/fortimanager_log_schema.json`,
 `other/data/juniper_switch_log_schema.json`,
-`other/data/infoblox_log_reference.json`, and
-`other/data/zscaler_splunk_onboarding_reference.json` (see Structure) —
+`other/data/infoblox_log_reference.json`,
+`other/data/zscaler_splunk_onboarding_reference.json`, and
+`other/data/cisco_ios_xe_logging_reference.json` (see Structure) —
 and only builds that vendor's stats tiles, rail list, and search table —
 and registers its rows on the shared `window.__compHub['other']` entry
 for the shell Search pill — once its own fetch resolves; each vendor
 panel shows its own loading message (and, under `file://`, an
 explanatory error) until then, the same pattern Threat Detection's own
-Heat Coverage tab already used for its runtime fetches. The five vendors
-load and register independently, so a search fired before all five
+Heat Coverage tab already used for its runtime fetches. The six vendors
+load and register independently, so a search fired before all six
 resolve just won't have the still-loading ones' results yet.
 
 **AWS Events**' rail originally held only a Service filter; it now also
@@ -240,7 +243,8 @@ list, but a `product` split (FortiManager vs FortiAnalyzer) and a
 composite log-ID format FortiGate's data doesn't have — which is exactly
 the trigger that was waiting for: the header now carries a real,
 clickable vendor picker (`FortiGate` / `FortiManager`, later joined by
-`Juniper EX-series`, `DDI Infoblox`, and `Zscaler` — see below), each
+`Juniper EX-series`, `DDI Infoblox`, `Zscaler`, and `Cisco IOS XE` — see
+below), each
 vendor's whole panel (stats, rail, table, mode toggle, both modals) a
 sibling `<div>` shown or hidden by the picker, each with its own
 independent search/filter/mode state so switching vendors and switching
@@ -454,6 +458,32 @@ line the way `.compendium-menu` itself already does. One-line fix,
 verified by clicking Other Events at a 375px viewport and confirming the
 page no longer scrolls sideways.)
 
+A sixth vendor, Cisco IOS XE, is the one whose source data doesn't
+resemble a log-type catalog at all — its own documentation says plainly
+that "there are thousands of individual messages" and points to the
+per-release System Message Guide as the authoritative list rather than
+enumerating them, so there's no per-subtype confidence rating, product
+split, format axis, or example line the way FortiGate's/FortiManager's/
+Juniper's/Zscaler's each have. What the source has instead is a
+logging-configuration reference: 18 common facilities, 6 logging
+destinations, 10 key configuration commands, and 5 advanced features —
+four named-thing lists that stand in for the Log Types table's usual
+per-subtype rows rather than being log types themselves (39 rows total,
+searchable and filterable across those four types exactly like every
+other vendor's real rows). Its 6 message-format fields common to every
+syslog line (`FACILITY`, `SEVERITY`, `MNEMONIC`, and so on) fold into
+the same table as their own "Common fields" rows, the same pattern
+FortiGate's, FortiManager's, and Juniper's common fields already
+established, bringing the rail's "All types" total to 45. Everything
+that doesn't belong repeated per row — three message-format templates,
+an 8-level severity table, a 6-key default-behavior summary, source
+citations kept as plain text like Infoblox's — lives in the Reference
+view instead, and because none of the four named-thing lists carry a
+field list of their own, its Schema Explorer mode is a single
+explanatory note, joining FortiManager's, Juniper's, and Infoblox's as
+the fourth vendor for whom that's the honest answer rather than an
+invented one.
+
 (Found while checking the AWS Events table's text color against the other
 tables on the page, and fixed with a one-line change: `index.html` never
 had a `<!DOCTYPE html>` — none of the three source apps carried one into
@@ -627,8 +657,12 @@ Events — leaks into or interferes with the others.
   `data/zscaler_splunk_onboarding_reference.json` (compiled by reading
   the real Zscaler Technical Add-on for Splunk package — Splunkbase app
   3865, `TA-Zscaler_CIM` v4.1.5 — directly, per the file's own
-  provenance notes). No
-  build tooling here, unlike `aws/`: all five JSON files are used
+  provenance notes), and `data/cisco_ios_xe_logging_reference.json`
+  (a logging-configuration reference — facilities, destinations,
+  commands, features, message format — rather than a log-type catalog,
+  covering Catalyst switches, ASR/ISR routers, and IOS XE Catalyst
+  SD-WAN devices). No
+  build tooling here, unlike `aws/`: all six JSON files are used
   as delivered, not derived from another file in this repo.
 
 These directories are kept for anyone who wants the raw data (e.g. to load
@@ -658,11 +692,12 @@ same way. To extend Other Events for an existing vendor, update that
 vendor's own file in place (`other/data/fortigate_log_reference.json`,
 `other/data/fortimanager_log_schema.json`,
 `other/data/juniper_switch_log_schema.json`,
-`other/data/infoblox_log_reference.json`, or
-`other/data/zscaler_splunk_onboarding_reference.json`), then regenerate
+`other/data/infoblox_log_reference.json`,
+`other/data/zscaler_splunk_onboarding_reference.json`, or
+`other/data/cisco_ios_xe_logging_reference.json`), then regenerate
 `index.html`. Adding a genuinely new vendor follows the pattern
-FortiManager, Juniper EX-series, DDI Infoblox, and Zscaler each set
-inside `build_app_other()` (not a
+FortiManager, Juniper EX-series, DDI Infoblox, Zscaler, and Cisco IOS XE
+each set inside `build_app_other()` (not a
 separate top-level function — all of Other Events' vendors share one
 `#app-other` container): a new data file, a new pill in the vendor-tab
 row, a new sibling `<div>` panel (own stats/rail/table/modal markup,
