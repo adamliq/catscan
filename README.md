@@ -424,6 +424,27 @@ easy to isolate to just this one vendor, without touching the `<dl>`
 rendering FortiGate's, FortiManager's, and Juniper's own modals still
 use correctly.
 
+Every one of the five vendors then gained a third mode, **Schema
+Explorer**, mirroring Windows Events' own Schema Explorer tab: a flat,
+searchable table of every field parsed out of an individual log-type
+row (not the vendor's common fields, already flat and searchable as
+their own Log Types rows) — clicking a field switches back to Log Types
+and opens the exact row it came from, the same "View this event"
+pattern Windows' original version uses, reusing each vendor's own
+already-existing `xxOpenModal()` rather than building a second modal
+type. Only two of the five vendors' sources actually have this kind of
+per-row field data to flatten: FortiGate (63 fields across the 7 of its
+40 subtypes marked `confidence: "verified"`) and Zscaler (224 fields
+across 13 of its 15 overview inputs) — the other three (FortiManager,
+Juniper, Infoblox) genuinely have nothing here without inventing a
+per-row schema their own sources don't draw, so their Schema Explorer
+mode is a single one-line explanation instead of a table that would
+always read "no results." Adding this uniformly, rather than only to
+the two vendors it applies to, is deliberate: a vendor's set of modes
+is part of its own visual identity in the picker, and a menu that
+silently changed shape per vendor would be harder to predict than one
+that's occasionally honest about having nothing to show.
+
 (Also fixed while adding this tab: `.compendium-tabs` had no
 `flex-wrap`, so six tabs no longer fit one row on narrow/mobile
 viewports — the row silently overflowed and, worse, clicking a tab
