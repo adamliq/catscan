@@ -105,7 +105,18 @@ The header carries a real vendor picker now that more than one vendor
 exists — it was a single always-active pill through FortiGate alone, on
 the stated basis that a picker isn't worth building for one option; it
 became one the moment a second vendor's data arrived, not ahead of that
-need.
+need. At eight vendors the pill row was already wrapping to two lines
+on narrower screens, so a `#other-vendor-search` box now sits above it
+— typing narrows which pills show (a plain substring match against
+each pill's own label), Enter opens the first visible match, Escape
+clears back to all eight — reusing the exact `other-search-box`
+component every vendor's own toolbar already uses rather than
+inventing a new input style. It filters the existing pills rather than
+replacing them: the picker's job is to make finding one vendor among
+many faster, not to hide how many vendors exist. Switching vendors —
+by click, by Enter, or programmatically via `otherOpenRef`'s
+cross-catalogue-search jump — always clears the filter first, so the
+newly active pill is never left hidden behind a stale search.
 
 - `data/fortigate_log_reference.json` — FortiGate log types, subtypes,
   field schema, and the CLI/GUI setting that turns each one on, compiled

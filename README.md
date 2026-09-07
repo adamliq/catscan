@@ -561,6 +561,19 @@ iDRAC joins Cisco Catalyst SD-WAN and Infoblox in the "jump to a
 Reference section" Schema Explorer pattern rather than starting a
 fourth: three vendors now, not two.
 
+At eight vendors the picker itself needed attention: the pill row was
+already wrapping to two lines on narrower screens, the failure mode
+the very first vendor picker was built to avoid back when it was still
+a single always-active FortiGate pill. Rather than replace the pills
+with a dropdown — which would hide how many vendors exist behind a
+click — a search box now sits above the row and filters it: typing
+narrows which pills show, Enter jumps to the first visible match,
+Escape clears back to all eight. It reuses the same `other-search-box`
+component every vendor's own toolbar already uses, and switching
+vendors by any path (click, Enter, or a cross-catalogue search jump
+via `otherOpenRef`) clears the filter first, so the newly active pill
+is never left hidden by a stale search from a moment ago.
+
 (Found while checking the AWS Events table's text color against the other
 tables on the page, and fixed with a one-line change: `index.html` never
 had a `<!DOCTYPE html>` — none of the three source apps carried one into
