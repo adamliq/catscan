@@ -676,6 +676,47 @@ Events matches — plus the `bios` single-vendor case, click-through from a
 grouped row still switching tabs and opening the right detail, and both
 themes at 1500px and 375px with zero console errors.
 
+That vendor grouping immediately surfaced two real bugs in the cap/order
+logic underneath it, both invisible in the old flat design. First: Other
+Events matches were scanned with the same 40-row `PER_SOURCE_CAP` every
+source uses, applied *before* grouping — so a broad query could fill the
+entire cap from whichever vendors happened to sit first in
+`hub.other.items` and silently omit the rest. Searching `log` has 185 real
+matches spread across all 8 vendors (Infoblox 75, Cisco SD-WAN 30,
+FortiGate 25, Cisco IOS XE 19, Zscaler 16, FortiManager 13, Juniper 4, Dell
+iDRAC 3), but the old cap only ever reached FortiGate/FortiManager/Juniper
+— Infoblox's 75 matches, the largest group by far, never appeared at all.
+Second: `hub.other.items` is built by each vendor's own async `fetch()`
+appending its rows on resolve, so their relative order — and therefore
+which vendor sub-header showed first — depended on network timing; the
+same query re-run five times shuffled FortiGate/FortiManager/Zscaler's
+position in the list.
+
+Both are fixed in `runSearch`/`renderMatches`, scoped to the `other`
+source only (the other four sources never carry a `vendor` field, so
+neither bug can occur there, and their scan keeps the original early-exit
+cap for performance — Other Events is ~400 items total, cheap to scan in
+full on every keystroke, but AWS Events alone is 20k+). Other Events is
+now scanned without a cap so every real match is known, `renderMatches`
+sorts vendor sub-groups by descending match count (alphabetical by label
+as a tiebreak) so the same query renders identically on every load, and
+each vendor gets a fair share of the display budget (`Math.max(5,
+Math.ceil(40 / vendor count))` rows) instead of the first vendors
+exhausting it — with an honest `+N more — narrow your search to see them`
+note (reusing the exact "Showing the first N of M matches" idiom already
+used by every vendor's own table) wherever a vendor has more real matches
+than its shown share.
+
+Verified: `node --check` on the modified block; `log` now shows all 8
+vendors with correct real counts and matching "+N more" notes (Infoblox
+75 shown 5 +70 more, down to Dell iDRAC's 3 shown with no note); `user`
+re-run five times produces byte-identical vendor ordering; `config`/
+`audit`/`certificate` re-verified against their real per-vendor counts
+under the new sort; the `bios` single-vendor fallback, non-vendor sources
+(`logon` on Microsoft Events, still capped at 40 with no note, unchanged),
+and click-through from a grouped row to the right tab/detail all still
+work; zero console errors across both themes.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
