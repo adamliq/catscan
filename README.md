@@ -786,6 +786,40 @@ Other Events vendor grouping/fairness and the vendor filter are
 unaffected. Confirmed at 375px and in both themes with zero console
 errors.
 
+Universal search also gained a results **summary**: a small card right
+above the per-source groups, showing the total match count and a
+color-coded chip per source (reusing each source's own `cs-badge` from the
+rows below it) with its real count - "2,830 matches · WIN Microsoft
+Events 524 · AWS AWS Events 627 · ..." - so the overall shape of a broad
+query is visible without scrolling through every group first. Getting
+real (not capped) counts required a change one level down: every source
+except Other Events was scanned with an early-exit `PER_SOURCE_CAP` (40)
+during collection - fine for capping what's *rendered*, but it meant the
+scan itself never learned the true total once a source hit the cap, so a
+summary built from `matches.length` would have quietly underreported
+every source except Other Events (which #31 had already fixed to scan in
+full). Benchmarked full, uncapped scans directly in the browser first
+rather than assuming: even AWS Events' 21,164 items scan in under a
+millisecond, so the early-exit was removed everywhere - the existing
+`PER_SOURCE_CAP` now applies only to what's rendered (via renderMatches'
+already-existing slice-plus-"+N more" logic, previously exercised only by
+Other Events), not to what's counted or known. That's a second, incidental
+fix: Microsoft Events/AWS Events/Threat Detection results past the 40-row
+cap were previously cut off with no indication anything was hidden;
+they now get the same honest `+N more — narrow your search to see them`
+note Other Events already had.
+
+Verified: `node --check` on the modified block. Summary counts for `log`
+cross-checked directly against `window.__compHub` (524/627/22/1409/63/185
+for Microsoft/AWS/Linux/Threat Detection/Threat Validations/Other Events,
+summing to the displayed 2,830) - exact match. Toggling a Sources chip or
+an Other Events vendor chip updates both the summary and its total
+correctly. A query with zero matches shows no summary card, just the
+existing "No matches." message. `+N more` notes now appear for every
+capped source, not just Other Events. Click-through from a row still
+works with the summary card now sitting above it. Confirmed at 375px and
+in both themes with zero console errors.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
