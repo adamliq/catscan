@@ -744,6 +744,48 @@ zero Other Events rows while Microsoft Events results still render
 normally; the chip row wraps cleanly at 375px; zero console errors, both
 themes.
 
+Threat Detection's own validations were still one more layer down in
+universal search than everywhere else: both detections and validations
+lived in a single `td` compHub source, so search results showed one
+`THREAT DETECTION` group with both kinds inside it (a "TV" badge on
+validation rows was the only visual cue), rather than sitting alongside
+Microsoft Events/AWS Events/Linux Events/Other Events as their own thing.
+Split `td` into two independent top-level compHub sources - `td`
+(detections) and a new `tv` (validations, label "Threat Validations") -
+each with its own `open()` (detections switch to the Detections sub-view,
+validations to the Validations sub-view; both still live in the one
+Threat Detection panel, so a `tv` row's click handling now maps to that
+same physical tab via a small `TAB_TARGET` lookup rather than searching
+for a `tv` tab that doesn't exist). `tv` got its own Sources filter chip
+and its own `cs-group-label`/`cs-badge-tv` (sharing the `td` badge's color
+token, since they're still visually one family, just no longer nested).
+This made the old "Threat Detection type" filter chip group (detection/
+validation, via a separate `kindFilter`) entirely redundant - the Sources
+chips now already draw that line - so it, `kindFilter`, and every `kind`
+field/check that only existed to support it were removed outright rather
+than left as dead weight. Picked up two more accuracy fixes already
+sitting in the same code: the "no sources selected" check was hand-listing
+every source key (already once out of sync, missing nothing today but a
+repeat of exactly the bug fair-capping fixed elsewhere) - now reads
+`order` directly, so a future source can't be forgotten there again - and
+the intro/empty-state copy ("three catalogues") had been stale since AWS
+Events and Threat Detection were added; reworded count-agnostically so it
+can't go stale again.
+
+Verified: `node --check` on both the Threat Detection app's script block
+and the search shell's. Six Sources chips render (Threat Detection and
+Threat Validations both present, no leftover kind chips). Searching `log`
+produces six separate group labels, `THREAT DETECTION` and
+`THREAT VALIDATIONS` among them, each with correctly colored/labeled `TD`/
+`TV` badges. Toggling the Threat Validations chip off removes only that
+group (Threat Detection's own group stays); re-enabling restores it.
+Clicking a `tv` row switches to the Threat Detection tab's Validations
+sub-view; clicking a `td` row switches to its Detections sub-view. Turning
+off every Sources chip shows the existing "No sources selected" message.
+Other Events vendor grouping/fairness and the vendor filter are
+unaffected. Confirmed at 375px and in both themes with zero console
+errors.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
