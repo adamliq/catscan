@@ -649,6 +649,33 @@ direction) to confirm none of the five apps — or, here, none of two
 sub-tabs *within* the same app, nor the two vendor panels within Other
 Events — leaks into or interferes with the others.
 
+Cross-catalogue **Search**'s own result list got the same kind of attention
+next: every Other Events vendor shared one purple `OTHER` badge, so a query
+that spanned several of them (searching `user` currently returns 20 Other
+Events rows across 7 of the 8 vendors) rendered as one visually
+undifferentiated stack, and — unlike every per-vendor table's own search,
+which already wraps matched substrings in `<mark>` via a shared
+`highlight()` helper — universal search results were never highlighted at
+all. Now, whenever a source's own current match set spans more than one
+distinct vendor, results sub-group under a vendor sub-header (an
+accent-colored label plus a count, one visual step below the existing
+source `cs-group-label`) with the now-redundant per-row badge dropped, and
+every title/meta cell goes through `highlight()` instead of plain escaping
+— both flat and grouped rows alike. The vendor sub-header's label is read
+live from the vendor's own picker pill (`.other-vendor-tab[data-vendor=...]`)
+rather than a second hardcoded name map, so a ninth vendor picks up correct
+sub-grouping with no changes here. Sources that never split by vendor
+(Microsoft Events, AWS Events, Linux Events, Threat Detection) render
+exactly as before, just now highlighted; an Other Events match set that
+happens to land on a single vendor (e.g. searching `bios`, which matches
+only Dell iDRAC) still renders flat with its `OTHER` badge, unchanged.
+Verified against real data across `user` (7 vendors), `config` (7
+vendors), `audit` (3 vendors), and `certificate` (3 vendors) — each
+sub-header's count matching the vendor's true share of that query's Other
+Events matches — plus the `bios` single-vendor case, click-through from a
+grouped row still switching tabs and opening the right detail, and both
+themes at 1500px and 375px with zero console errors.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
