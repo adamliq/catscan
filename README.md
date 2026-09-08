@@ -717,6 +717,33 @@ under the new sort; the `bios` single-vendor fallback, non-vendor sources
 and click-through from a grouped row to the right tab/detail all still
 work; zero console errors across both themes.
 
+Universal search's filter row also picked up a third chip group: **Other
+Events vendor**, one toggle per vendor (FortiGate, FortiManager, Juniper
+EX-series, DDI Infoblox, Zscaler, Cisco IOS XE, Cisco SD-WAN, Dell iDRAC),
+on by default, next to the existing Sources and Threat Detection type
+groups. It reuses the exact chip/`data-filter-type`/`data-filter-value`
+pattern the other two groups already use — one generic click handler
+dispatches through a `{source, kind, vendor}` store lookup, no new event
+wiring — and combines with them the same way Sources and Threat Detection
+type already do: as an independent intersection, filtering every source
+that carries the field it targets (here, `it.vendor`, which only Other
+Events items ever have) and leaving every other source's own results
+completely untouched. Turning a vendor off removes it entirely from the
+scan, so a now-single-vendor match set correctly falls back to the flat
+badged rendering, and turning every vendor off just leaves Other Events
+with nothing to show (the other four sources, unaffected, still render
+normally) rather than needing a special-cased empty state.
+
+Verified: `node --check` on the modified block; all 8 vendor chips render
+active by default; disabling FortiGate and Cisco IOS XE on a `log` query
+removes exactly those two vendor groups from the results (6 remain) and
+re-enabling them restores all 8; toggling any vendor chip leaves Microsoft
+Events results (`logon`, still 40 rows) completely unchanged; disabling
+every vendor chip and searching `bios` (previously Dell iDRAC only) shows
+zero Other Events rows while Microsoft Events results still render
+normally; the chip row wraps cleanly at 375px; zero console errors, both
+themes.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
