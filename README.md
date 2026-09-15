@@ -906,6 +906,27 @@ unaffected; and every other tab (AWS Events, Linux Events, Threat
 Detection, Other Events) still switches cleanly with zero console errors,
 in both themes.
 
+That citation then got its source URL added
+(cyber.gov.au/business-government/detecting-responding-to-threats/
+detecting-and-mitigating-active-directory-compromises) across the same 54
+rows: a single literal-substring replace of the exact citation phrase
+(`\"Detecting and mitigating Active Directory compromises\" (September
+2026), Appendix B, `, escaped-quote form since it's a JSON string value
+inside the raw file text) into the same phrase with the URL inserted right
+after the edition date - counted at exactly 54 occurrences first (matching
+the 54 tagged rows precisely, confirming no stray match elsewhere in the
+file) before touching anything. This drive-by also fixed a footer line
+("4,737 events indexed") that had gone stale the moment the AD-compromise
+PR's 9 new events landed - a plain static count next to the header stats
+tile's own live `events.length`, not sourced from it, so it silently drifted
+the instant the dataset grew. Verified: `node --check`; `git diff --stat`
+shows exactly 2 lines changed (the DATA line plus the footer); JSON
+round-trip confirms all 54 rows now carry the URL and the event count is
+still 4,746; the Related section renders the URL as plain readable text in
+both an enriched row and a brand-new row, consistent with the one other
+bare-URL `reference` already in the catalogue; footer now reads "4,746
+events indexed"; zero console errors.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
