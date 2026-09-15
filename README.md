@@ -13,16 +13,24 @@ A small `v1.0.0` tag sits next to the wordmark in the menu bar — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
-had never been versioned before; [`VERSION`](VERSION) is the single
-source of truth (mirroring `threat-detection/`'s own convention) and the
-menu bar tag is kept in sync with it by hand on every bump, since this
-repo has no build step to stamp it automatically. Semantic Versioning
+had never been versioned before `1.0.0`; [`VERSION`](VERSION) is the
+single source of truth (mirroring `threat-detection/`'s own convention)
+and the menu bar tag is kept in sync with it by hand on every merge to
+`main`, since this repo has no build step to stamp it automatically.
+**Every PR that merges bumps it** — not just ones that feel significant
+enough to warrant one, and not on every commit within a branch (a PR
+that picks up review-comment fixups before merging isn't three bumps,
+it's one, applied when it lands) — using Semantic Versioning
 (`MAJOR.MINOR.PATCH`), same thresholds as `threat-detection/`'s own
-scheme: MAJOR for a breaking change to an id/schema/URL scheme something
-external could depend on, MINOR for a new catalogue/tab/feature, PATCH
-for data corrections and documentation-only updates. No separate
-top-level changelog file — this README's own chronological narrative
-already serves that role in far more detail than a changelog would.
+scheme: MAJOR for a breaking change to an id/schema/URL scheme
+something external could depend on, MINOR for a new catalogue/tab/
+feature, PATCH for everything else (fixes, data corrections,
+documentation-only updates, and this versioning policy note itself) —
+PATCH by default unless a merge clearly earns MINOR or MAJOR, per
+ordinary semver (a MINOR bump resets PATCH to 0; a MAJOR bump resets
+both to 0). No separate top-level
+changelog file — this README's own chronological narrative already
+serves that role in far more detail than a changelog would.
 
 A single entry point for [`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue)
 (4,737 Windows Event Log events),
@@ -1000,6 +1008,15 @@ touches only static HTML/CSS - the `.compendium-title` markup and one new
 colors). The tag renders next to the wordmark, survives switching between
 every tab, wraps cleanly at 375px, and is legible in both themes with zero
 console errors.
+
+That first bump was also meant to be the last "when a change warrants
+it" one - the policy is now every merge to `main` increments the
+version, not just ones judged significant, and not once per commit
+within a branch, only once when the PR actually lands. This one PR is
+the explicit, one-time exception: the merge that documents the policy
+stays at `1.0.0` rather than becoming its own first data point, at the
+user's request. Every merge after this one follows the policy as
+written above.
 
 ## Structure
 
