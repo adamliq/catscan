@@ -9,20 +9,25 @@ to run with. It appears twice: inline (themed, next to the wordmark in the
 menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
-A small `v1.0.0` tag sits next to the wordmark in the menu bar — this
+A small `v1.0.1` tag sits next to the wordmark in the menu bar — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
-had never been versioned before; [`VERSION`](VERSION) is the single
-source of truth (mirroring `threat-detection/`'s own convention) and the
-menu bar tag is kept in sync with it by hand on every bump, since this
-repo has no build step to stamp it automatically. Semantic Versioning
-(`MAJOR.MINOR.PATCH`), same thresholds as `threat-detection/`'s own
-scheme: MAJOR for a breaking change to an id/schema/URL scheme something
-external could depend on, MINOR for a new catalogue/tab/feature, PATCH
-for data corrections and documentation-only updates. No separate
-top-level changelog file — this README's own chronological narrative
-already serves that role in far more detail than a changelog would.
+had never been versioned before `1.0.0`; [`VERSION`](VERSION) is the
+single source of truth (mirroring `threat-detection/`'s own convention)
+and the menu bar tag is kept in sync with it by hand on every commit,
+since this repo has no build step to stamp it automatically. **Every
+commit bumps it** — not just ones that feel significant enough to
+warrant one — using Semantic Versioning (`MAJOR.MINOR.PATCH`), same
+thresholds as `threat-detection/`'s own scheme: MAJOR for a breaking
+change to an id/schema/URL scheme something external could depend on,
+MINOR for a new catalogue/tab/feature, PATCH for everything else
+(fixes, data corrections, documentation-only updates, and this
+versioning policy note itself) — PATCH by default unless a commit
+clearly earns MINOR or MAJOR, per ordinary semver (a MINOR bump resets
+PATCH to 0; a MAJOR bump resets both to 0). No separate top-level
+changelog file — this README's own chronological narrative already
+serves that role in far more detail than a changelog would.
 
 A single entry point for [`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue)
 (4,737 Windows Event Log events),
@@ -1000,6 +1005,11 @@ touches only static HTML/CSS - the `.compendium-title` markup and one new
 colors). The tag renders next to the wordmark, survives switching between
 every tab, wraps cleanly at 375px, and is legible in both themes with zero
 console errors.
+
+That first bump was also the last "when a change warrants it" one: the
+policy is now every commit increments the version, not just ones judged
+significant - `1.0.0` -> `1.0.1`, PATCH, for this commit itself (a
+versioning-policy documentation update, nothing else changed).
 
 ## Structure
 
