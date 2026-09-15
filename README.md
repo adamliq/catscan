@@ -15,17 +15,20 @@ vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
 had never been versioned before `1.0.0`; [`VERSION`](VERSION) is the
 single source of truth (mirroring `threat-detection/`'s own convention)
-and the menu bar tag is kept in sync with it by hand on every commit,
-since this repo has no build step to stamp it automatically. **Every
-commit bumps it** — not just ones that feel significant enough to
-warrant one — using Semantic Versioning (`MAJOR.MINOR.PATCH`), same
-thresholds as `threat-detection/`'s own scheme: MAJOR for a breaking
-change to an id/schema/URL scheme something external could depend on,
-MINOR for a new catalogue/tab/feature, PATCH for everything else
-(fixes, data corrections, documentation-only updates, and this
-versioning policy note itself) — PATCH by default unless a commit
-clearly earns MINOR or MAJOR, per ordinary semver (a MINOR bump resets
-PATCH to 0; a MAJOR bump resets both to 0). No separate top-level
+and the menu bar tag is kept in sync with it by hand on every merge to
+`main`, since this repo has no build step to stamp it automatically.
+**Every PR that merges bumps it** — not just ones that feel significant
+enough to warrant one, and not on every commit within a branch (a PR
+that picks up review-comment fixups before merging isn't three bumps,
+it's one, applied when it lands) — using Semantic Versioning
+(`MAJOR.MINOR.PATCH`), same thresholds as `threat-detection/`'s own
+scheme: MAJOR for a breaking change to an id/schema/URL scheme
+something external could depend on, MINOR for a new catalogue/tab/
+feature, PATCH for everything else (fixes, data corrections,
+documentation-only updates, and this versioning policy note itself) —
+PATCH by default unless a merge clearly earns MINOR or MAJOR, per
+ordinary semver (a MINOR bump resets PATCH to 0; a MAJOR bump resets
+both to 0). No separate top-level
 changelog file — this README's own chronological narrative already
 serves that role in far more detail than a changelog would.
 
@@ -1007,9 +1010,11 @@ every tab, wraps cleanly at 375px, and is legible in both themes with zero
 console errors.
 
 That first bump was also the last "when a change warrants it" one: the
-policy is now every commit increments the version, not just ones judged
-significant - `1.0.0` -> `1.0.1`, PATCH, for this commit itself (a
-versioning-policy documentation update, nothing else changed).
+policy is now every merge to `main` increments the version - not just
+ones judged significant, and not once per commit within a branch, only
+once when the PR actually lands - `1.0.0` -> `1.0.1`, PATCH, for this
+PR itself (a versioning-policy documentation update, nothing else
+changed).
 
 ## Structure
 
