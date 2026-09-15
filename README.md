@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.2.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1114,6 +1114,45 @@ still loads cleanly.
 
 `1.2.0` (MINOR - a new filter is a feature, not just the incidental
 bug fix riding alongside it).
+
+A fifth toggle group followed immediately: filtering by *which* ACSC
+publication a reference cites, not just whether it cites one at all.
+`reference` is free text, not a structured field, so there's no source
+of truth to enumerate known publications from the way `allLogs`/`cats`
+are derived straight from the data a few lines up - `ACSC_PUBLICATIONS`
+is a small, hand-maintained `{key: title}` map, currently the two ASD's
+ACSC documents cited anywhere in the catalogue as of today ("Detecting
+and mitigating Active Directory compromises" and "Priority logs for
+SIEM ingestion: Practitioner guidance"). Scoped deliberately narrow,
+per the request: a future citation to a third publication needs one
+more map entry and one more toggle button, not a redesign.
+
+Two toggle buttons, `.acsc-toggle` reused again, but with different
+combination semantics than the other four filters on this page: a
+`selectedPublications` `Set` gives OR-within-this-group matching
+(selecting both toggles shows events citing *either* - 114, confirmed
+against the real 54/80/20-overlap/114-union numbers computed straight
+from the data before writing a line of UI) while still AND-ing against
+Log/Category/ACSC-priority/Has-reference-link and the search box, the
+same two-level combination `selectedLogs`/`selectedCats` already use
+for their own multi-select. Active-filter chips, removal, and Clear
+all all extended to match - reusing the exact same pattern each of the
+prior three filters already added to this same function, not a parallel
+implementation.
+
+Verified: `node --check`. Toggling each publication alone gives 54 and
+80 respectively (matching the AD-compromise and Priority-logs PRs'
+own real counts exactly); both together gives 114, not 174 - confirming
+OR-within-group rather than accidentally summing overlapping matches;
+deselecting or removing either leaves the other's filter intact; the
+20-event overlap (entries like 4771, tagged by both prior PRs) show
+both toggles' effects simultaneously when narrowed to either one.
+Active-filter chip removal and Clear all confirmed to un-toggle the
+correct button and reset the Set. Confirmed at 375px (four toggle
+buttons wrap to a second/third row cleanly) and in both themes with
+zero console errors; every other tab still loads cleanly.
+
+`1.3.0` (MINOR - another new filter).
 
 ## Structure
 
