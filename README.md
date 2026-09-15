@@ -9,7 +9,8 @@ to run with. It appears twice: inline (themed, next to the wordmark in the
 menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
-A small `v1.0.0` tag sits next to the wordmark in the menu bar — this
+A small tag sits next to the wordmark in the menu bar, reading the
+current [`VERSION`](VERSION) (`v1.1.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1017,6 +1018,51 @@ the explicit, one-time exception: the merge that documents the policy
 stays at `1.0.0` rather than becoming its own first data point, at the
 user's request. Every merge after this one follows the policy as
 written above.
+
+First real application of that policy: a **breadcrumb** and a **back to
+top** button, both shared shell chrome living outside every `#app-*`
+container so they persist across all six tabs untouched by the
+tab-switching `show(key)` function's `display: none` toggling.
+
+The breadcrumb (`Cat Scan / <current tab>`) sits as a thin strip
+directly below the sticky menu bar - not itself sticky, so it scrolls
+away with the page rather than permanently eating vertical space. Its
+label is read live from the just-activated tab button's own text
+inside `show(key)`, the same "derive from the DOM, don't hardcode a
+second map" pattern the vendor-grouping and vendor-filter work already
+established for Other Events - a renamed tab can't drift the
+breadcrumb out of sync with it.
+
+The back-to-top button is a single global floating circle (bottom
+right, `position: fixed`), toggled by a `window.scroll` listener past
+a 400px threshold and calling `window.scrollTo({top:0})` on click
+(respecting `prefers-reduced-motion`). One button covers every tab
+because the whole page scrolls at the document level - individual
+widgets with their own internal scroll (the Windows Events list panel,
+combo-box panels, reference tables) are untouched and keep their own
+scroll position; only the outer page resets. That distinction matters
+here more than it looks: Windows Events' own default view barely
+scrolls past the viewport at all (its list scrolls internally,
+capped at `68vh`), while Threat Detection's card grid lays out
+directly in page flow with no such cap - selecting a rich Windows
+event detail or browsing Threat Detection's cards are exactly the
+cases this button earns its keep on, and both were used to verify it
+rather than the (barely-scrolling) Windows Events default view alone.
+
+Verified: extracted and `node --check`'d the modified tab-switching
+and new back-to-top script blocks together. Breadcrumb text confirmed
+correct across all six tabs in sequence (Microsoft Events -> AWS
+Events -> Linux Events -> Threat Detection -> Other Events -> Search ->
+back to Microsoft Events). Back-to-top confirmed hidden at rest,
+appearing only past the scroll threshold (tested on Threat Detection,
+whose card grid runs to ~300,000px tall unscrolled - the button was
+invisible testing against Windows Events' own near-viewport-height
+default view before this was caught), returning scroll position to 0
+on click, and hiding again once there. Both confirmed at 375px and in
+both themes with zero console errors.
+
+`1.1.0` (MINOR - a new shell-level feature, not a fix or data
+correction) per the versioning policy two paragraphs up.
 
 ## Structure
 
