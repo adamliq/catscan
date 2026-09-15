@@ -927,6 +927,48 @@ both an enriched row and a brand-new row, consistent with the one other
 bare-URL `reference` already in the catalogue; footer now reads "4,746
 events indexed"; zero console errors.
 
+That same "Priority logs for SIEM ingestion" document (already the source
+behind 212 existing `acsc_priority_log: Yes` entries, referenced without a
+URL) got a real coverage check next: cross-referenced all 199 distinct
+event IDs across its four requested tables - Microsoft Domain Controller
+Log Types, Active Directory (AD) and Domain Service Security Logs,
+Microsoft Windows endpoint logs, and Critical Azure service and app logs
+(the "Entra & Entra Connect Servers" row, its only row with actual numeric
+IDs rather than "All") - against the catalogue. All 199 were present,
+including via spot-check of the highest-collision-risk generic IDs (`1`,
+`21`-`25`, `118`/`119`/`129`/`200`, `400`, `5857`-`5861`, the `8000`-`8040`
+AppLocker range) against their *specific* matching entries, not just bare
+number membership - the same lesson event 39/40/41 taught earlier in this
+same document's companion guidance. That check surfaced a real gap one
+level down, though: of those 199 IDs, 8 had a correct catalogue match but
+were never actually flagged `acsc_priority_log: Yes` - the 5 Entra Connect
+entries added in the AD-compromise PR (left untagged at the time for lack
+of a source confirming SIEM-priority status; this document is exactly
+that source) plus two pre-existing entries, 4765/4766 (SID History account
+add success/fail) and 4771 (Kerberos pre-authentication failure, which
+already carried the AD-compromise citation from earlier and needed this
+one appended alongside it, not in place of it).
+
+Fixed the same way as the URL addition above - each of the 8 located by
+its own event_id/log/source/category/subcategory anchor (all eight have
+exactly one catalogue entry each, no duplicate-row disambiguation needed
+this time), given `acsc_priority_log: "Yes"` and a citation naming the
+specific table it appears in (not the generic multi-table phrase the
+existing 212 entries share) with the new URL included from the start:
+`ASD/ACSC "Priority logs for SIEM ingestion: Practitioner guidance"
+(2025), <url>, <table name>`. Existing citations (four of the eight
+already carried the AD-compromise citation) were extended with `; `, never
+replaced.
+
+Verified: `node --check`; `git diff --stat` shows exactly one line
+changed; JSON round-trip confirms the event count is still 4,746 and all
+eight rows carry both the new tag and the URL. In the running app: all
+eight show the "ACSC priority log" badge and the new URL in their Related
+section; the existing "ACSC priority logs only" filter toggle - unchanged
+code, since it just reads the field - now correctly includes 4765 without
+any code change; 611 and 4771's Related sections show both citations
+chained, not one overwriting the other; zero console errors.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
