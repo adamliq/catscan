@@ -9,6 +9,21 @@ to run with. It appears twice: inline (themed, next to the wordmark in the
 menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
+A small `v1.0.0` tag sits next to the wordmark in the menu bar — this
+merge's own version, distinct from any individual source repo's (the
+vendored `threat-detection/` source already has its own `VERSION`/
+`CHANGELOG.md`, tracking that upstream project independently). Cat Scan
+had never been versioned before; [`VERSION`](VERSION) is the single
+source of truth (mirroring `threat-detection/`'s own convention) and the
+menu bar tag is kept in sync with it by hand on every bump, since this
+repo has no build step to stamp it automatically. Semantic Versioning
+(`MAJOR.MINOR.PATCH`), same thresholds as `threat-detection/`'s own
+scheme: MAJOR for a breaking change to an id/schema/URL scheme something
+external could depend on, MINOR for a new catalogue/tab/feature, PATCH
+for data corrections and documentation-only updates. No separate
+top-level changelog file — this README's own chronological narrative
+already serves that role in far more detail than a changelog would.
+
 A single entry point for [`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue)
 (4,737 Windows Event Log events),
 [`linuxevent-catalogue`](https://github.com/adamliq/linuxevent-catalogue)
@@ -968,6 +983,23 @@ section; the existing "ACSC priority logs only" filter toggle - unchanged
 code, since it just reads the field - now correctly includes 4765 without
 any code change; 611 and 4771's Related sections show both citations
 chained, not one overwriting the other; zero console errors.
+
+Cat Scan then got its own version, visible in the menu bar - see the
+versioning note near the top of this README for the full convention
+(`VERSION` as source of truth, semver thresholds matching
+`threat-detection/`'s own, no separate changelog since this README's
+narrative already is one). Starting point is `1.0.0`: not a
+reconstruction of every change that happened before versioning existed
+(everything from the original three-repo merge through this point stays
+undated/unversioned in the narrative above, same as always), just where
+tracking begins going forward.
+
+Verified: `node --check` on the unaffected script blocks (this change
+touches only static HTML/CSS - the `.compendium-title` markup and one new
+`.version-tag` rule reusing the existing `--shell-tab-text` token, no new
+colors). The tag renders next to the wordmark, survives switching between
+every tab, wraps cleanly at 375px, and is legible in both themes with zero
+console errors.
 
 ## Structure
 
