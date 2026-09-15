@@ -820,6 +820,92 @@ capped source, not just Other Events. Click-through from a row still
 works with the summary card now sitting above it. Confirmed at 375px and
 in both themes with zero console errors.
 
+**Microsoft Events** then gained a new data source: ASD's ACSC, jointly with
+CISA, NSA, CCCS, NCSC-NZ and NCSC-UK, "Detecting and mitigating Active
+Directory compromises" (September 2026), Appendix B (Tables 18-23) - the
+guidance's own event-ID-to-compromise-technique mapping (DCSync,
+Kerberoasting, Golden Ticket, Skeleton Key, AS-REP Roasting, Password
+Spray, MachineAccountQuota, Unconstrained Delegation, Silver Ticket,
+Dumping ntds.dit, SID History, One-way Trust Bypass, AD CS, Golden
+Certificate, Golden SAML, Microsoft Entra Connect - Shadow Credentials and
+the DCSync/event-5712-correlation note are both real per that guidance but
+explicitly *not* listed in the Compromise column of their own row, so
+they're carried as a citation caveat rather than added to the technique
+list itself). 48 distinct event IDs, mapped against the existing 4,737-event
+catalogue one row at a time rather than by number alone, since Windows
+event IDs are only unique per log/provider, not globally - 39/40/41
+collide with an unrelated Application-log Certificate Services event under
+the same numbers, so trusting the ID alone would have silently mislabeled
+the wrong row. 45 rows across 39 distinct events matched a real existing
+catalogue entry (verified event-by-event against Microsoft's own
+documentation of each channel, not assumed from ACSC's table alone,
+including a live check of where events 39/40/41 actually log to -
+Applications and Services Logs > Microsoft > Windows >
+Kerberos-Key-Distribution-Center, not the Application-log false match) and
+got two additions: a new `ad_compromise_techniques` field (semicolon-
+joined technique names, same convention as the existing `mitre_techniques`
+field) and the new citation appended to `reference` (joined onto whatever
+citation, if any, was already there - e.g. the existing ASD/ACSC "Priority
+logs for SIEM ingestion" citation many of these rows already carried -
+never overwritten). The remaining 9 event IDs had no real existing match
+(39/40/41 under Kerberos-Key-Distribution-Center; 307 under AD FS/Admin,
+confirmed against 510's own description, which already references it;
+611/650/651/656/657 for Microsoft Entra Connect password-hash sync,
+confirmed against Microsoft's own troubleshooting docs as Application-log
+"Directory Synchronization" events) and became 9 new catalogue entries,
+following the exact existing schema and the same "illustrative example"
+`sample_type` and generic header-only `field_schema` convention already
+used for entries without a captured real sample.
+
+The new field surfaces the same way `mitre_techniques`/`acsc_priority_log`
+already do: an "AD COMPROMISE" badge (reusing the existing ACSC-accent
+badge style) on both the row list and the detail view, a new "AD
+compromise techniques" row in the detail view's field grid, and inclusion
+in both the app's own internal search (`matches()`) and the compHub `text`
+index universal search reads - so searching "DCSync" or "Kerberoasting"
+from either Microsoft Events' own search box or the cross-catalogue Search
+tab finds these rows.
+
+The merge itself was done as a surgical text splice, not a full
+re-serialization: Microsoft Events' entire dataset lives as a single
+~9.8MB `const DATA = {...};` line (one of the largest single lines in the
+file), inconsistently mixing literal-UTF-8 and `\uXXXX`-escaped characters
+throughout (evidence of having been edited by different tools over time) -
+re-serializing the whole structure with any one JSON encoder would have
+normalized that escaping everywhere and produced a multi-megabyte diff
+touching nearly every event, not just the ones this change actually
+touches. Instead, each of the 45 target rows was located by an anchor
+built from its own `event_id`/`log`/`source`/`category`/`subcategory`
+(verified unique before touching anything), and only its `reference` value
+and a newly-inserted `ad_compromise_techniques` field were rewritten in
+place - every other byte of every other event, including untouched fields
+on the *same* rows, stayed byte-identical. The 9 new entries were appended
+at the true end of the `events` array specifically (found via the exact
+`],"audit_configuration":` boundary marking the next top-level key,
+after an earlier version of this same merge mistakenly appended into
+`cloud_actions` - the JSON's actual final array - since a naive
+last-`]};` search doesn't know the DATA object has eighteen other
+top-level keys after `events`, not just the one being edited).
+
+Verified: `node --check` on the full extracted Microsoft Events script
+block, both before and after the UI wiring changes. `git diff --stat`
+confirms exactly one line changed in the whole file. Full round-trip
+parse of the merged JSON confirms exactly 4,746 events (4,737 + 9), all
+18 other top-level keys (`audit_configuration` through `cloud_actions`)
+untouched in both key set and count, and all 54 tagged rows (45 enriched +
+9 new) carrying the expected `ad_compromise_techniques` value. In the
+running app: the stats tile reads 4,746 events; searching "Kerberoasting"
+returns exactly the 3 expected rows (4738, 4769, 5136) each showing the
+AD COMPROMISE badge and technique list; searching by the new
+Kerberos-Key-Distribution-Center/Directory Synchronization/AD FS log
+names finds the 9 new rows with fully-populated, non-empty detail views;
+an unrelated pre-existing event (4205) correctly shows no AD COMPROMISE
+badge; cross-catalogue Search finds and correctly opens both an enriched
+row (4662) and confirms Threat Detection's own DCSync coverage is
+unaffected; and every other tab (AWS Events, Linux Events, Threat
+Detection, Other Events) still switches cleanly with zero console errors,
+in both themes.
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
