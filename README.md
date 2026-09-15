@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.1.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.2.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1063,6 +1063,57 @@ both themes with zero console errors.
 
 `1.1.0` (MINOR - a new shell-level feature, not a fix or data
 correction) per the versioning policy two paragraphs up.
+
+Microsoft Events' own Events page got a fourth toggle filter next to
+Log/Category/ACSC-priority-logs-only: **Has reference link**, narrowing
+to the 128 events (of 4,746) whose `reference` field actually contains
+an `http(s)` URL - as opposed to the 4,242 with citation-only text
+("ASD/ACSC ... (2025), Table 18") or the 376 with no reference at all.
+Mirrors the ACSC toggle's exact pattern (`.acsc-toggle` class reused
+verbatim, same `let flag = false` / click-listener / active-filter-chip
+/ clear-all shape), scoped to Microsoft Events' own Events page only -
+Linux Events carries an identical, separately-coded copy of this same
+filter machinery untouched.
+
+A filter that surfaces "has a reference link" only earns its keep if
+the link is actually clickable once you get there, so the detail
+view's Related section - previously plain escaped text even for the
+72 entries whose entire `reference` value already was a bare URL - now
+runs through a new `linkifyReference()` helper: escape first, then
+wrap any `https?://[^\s<,;]+` substring in a real `<a target="_blank"
+rel="noopener noreferrer">` link, leaving surrounding citation text
+(including a trailing comma or closing parenthesis immediately after
+the URL, as most of these have) untouched. Verified against both
+shapes: a bare-URL reference and a long citation with an embedded URL
+followed immediately by `, Appendix B, Table 18 (...)` - the link
+stopped exactly at the URL, the rest rendered as plain text either
+side of it.
+
+Checking "Clear all" surfaced a real, pre-existing bug unrelated to
+this filter but directly in its path: the button's generated markup
+used a bare `id="clear-all"`, while the click-handler looked up
+`win-clear-all` - two different ids that never matched, so the
+listener never attached and the button did nothing (silently; it
+still turned the removed chip's own flag off via the same event
+delegation, so the bug was easy to miss with fewer filters active).
+Linux Events carries the exact same bug under its own `id="clear-all"`
+/ `lnx-clear-all` mismatch, untouched here - out of scope for a
+Microsoft-Events-page request, left as a known issue for a future
+pass. Fixed Microsoft Events' own copy by renaming the generated id to
+match what the lookup already expected.
+
+Verified: `node --check` on the full extracted script block. Toggling
+the filter narrows 4,746 -> 128 and back; the active-filter chip
+removes the filter on click; "Clear all" now genuinely resets every
+active filter (Log/Category/ACSC/reference-link) and un-highlights
+every toggle button, confirmed by count returning to 4,746 and the
+button's `on` class actually clearing, neither of which held before
+the id fix. Confirmed at 375px and in both themes with zero console
+errors; Linux Events (a separate, untouched copy of this same code)
+still loads cleanly.
+
+`1.2.0` (MINOR - a new filter is a feature, not just the incidental
+bug fix riding alongside it).
 
 ## Structure
 
