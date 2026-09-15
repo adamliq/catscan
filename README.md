@@ -9,7 +9,7 @@ to run with. It appears twice: inline (themed, next to the wordmark in the
 menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
-A small `v1.0.1` tag sits next to the wordmark in the menu bar — this
+A small `v1.0.0` tag sits next to the wordmark in the menu bar — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1009,12 +1009,14 @@ colors). The tag renders next to the wordmark, survives switching between
 every tab, wraps cleanly at 375px, and is legible in both themes with zero
 console errors.
 
-That first bump was also the last "when a change warrants it" one: the
-policy is now every merge to `main` increments the version - not just
-ones judged significant, and not once per commit within a branch, only
-once when the PR actually lands - `1.0.0` -> `1.0.1`, PATCH, for this
-PR itself (a versioning-policy documentation update, nothing else
-changed).
+That first bump was also meant to be the last "when a change warrants
+it" one - the policy is now every merge to `main` increments the
+version, not just ones judged significant, and not once per commit
+within a branch, only once when the PR actually lands. This one PR is
+the explicit, one-time exception: the merge that documents the policy
+stays at `1.0.0` rather than becoming its own first data point, at the
+user's request. Every merge after this one follows the policy as
+written above.
 
 ## Structure
 
