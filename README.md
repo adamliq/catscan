@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.1` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -23,13 +23,17 @@ enough to warrant one, and not on every commit within a branch (a PR
 that picks up review-comment fixups before merging isn't three bumps,
 it's one, applied when it lands) — using Semantic Versioning
 (`MAJOR.MINOR.PATCH`), same thresholds as `threat-detection/`'s own
-scheme: MAJOR for a breaking change to an id/schema/URL scheme
-something external could depend on, MINOR for a new catalogue/tab/
-feature, PATCH for everything else (fixes, data corrections,
-documentation-only updates, and this versioning policy note itself) —
-PATCH by default unless a merge clearly earns MINOR or MAJOR, per
-ordinary semver (a MINOR bump resets PATCH to 0; a MAJOR bump resets
-both to 0). No separate top-level
+scheme, held to deliberately: MAJOR for a breaking change to an id/
+schema/URL scheme something external could depend on, MINOR for a
+whole new catalogue, tab, or app-level capability, PATCH for
+everything else — which is most merges, including fixes, data
+corrections, documentation-only updates, this versioning policy note
+itself, and incremental additions to a page that already exists
+(a new filter, toggle, search refinement, or sort option on an
+existing Events page, say). PATCH is the default; a merge only earns
+MINOR or MAJOR when it clearly clears that higher bar, per ordinary
+semver (a MINOR bump resets PATCH to 0; a MAJOR bump resets both to
+0). No separate top-level
 changelog file — this README's own chronological narrative already
 serves that role in far more detail than a changelog would.
 
@@ -1191,7 +1195,8 @@ exact-term returns only id 4624; the same query unchecked also returns
 a hypothetical one. Confirmed at 375px and in both themes with zero
 console errors; every other tab unaffected.
 
-`1.4.0` (MINOR - two more Events-page features).
+`1.3.1` (PATCH - a search refinement and a display-order fix on the
+existing Events page, not a new catalogue/tab/capability).
 
 ## Structure
 
