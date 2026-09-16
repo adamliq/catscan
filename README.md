@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.1` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.2` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1197,6 +1197,81 @@ console errors; every other tab unaffected.
 
 `1.3.1` (PATCH - a search refinement and a display-order fix on the
 existing Events page, not a new catalogue/tab/capability).
+
+Asked to check a pasted list of 26 `Microsoft-Windows-Kernel-General`
+rows (18 distinct event ids, some with several manifest "Version"
+variants of the same id - e.g. id 1's five versions all describe a
+system time change, just with progressively more fields). This source
+was already partly catalogued, but unlike the two providers added in
+the prior two PRs, it wasn't absent - four of its ids (1, 12, 13,
+1017) were already there, as hand-curated "illustrative" entries with
+real citations (NSA's Event Forwarding Guidance, ASD/ACSC's priority
+logs guidance) rather than raw manifest text. Cross-checked the
+pasted ids against `DATA.events` filtered to this source: ids 1, 12,
+13 matched existing entries (id 1's five pasted versions all collapse
+to the one existing "System Time Changed" row - this catalogue keeps
+one row per event id for this source, not one per manifest version,
+confirmed by the existing four having zero duplicate ids between
+them); the other 18 ids (2-6, 11, 14-25) had no entry at all.
+
+Added the 18 missing ids, keeping the pre-existing four untouched.
+Followed the manifest-import "template" schema from the previous two
+PRs rather than inventing "illustrative" framing or citations for
+ids the four existing entries' NSA/ASD sources don't happen to cover
+- more honest than fabricating a security narrative I can't verify.
+Where a pasted row had several Version variants of one event id (18,
+19, 23), used the most complete/highest-numbered version's message as
+the single canonical description, same collapsing rule as id 1
+above. A few provider-specific wrinkles this manifest export
+surfaces:
+
+- This source logs to the classic `System` channel (matching the log
+  value all four pre-existing entries already use), not a dedicated
+  `Applications and Services Logs` channel, so `log` is `"System"`
+  for every new entry too - including the handful of rows (ids 14,
+  17, 19, 23) where the manifest itself leaves the Channel column
+  blank, treated here as inheriting this provider's one known
+  destination rather than invented as a separate channel string.
+- `category` uses the same hand-picked, human-readable categories the
+  four pre-existing entries already established for this source
+  (`System Integrity`, `Boot Events`) rather than defaulting to the
+  raw source string the manifest-only providers in the prior two PRs
+  used - registry/hive/licence-cache/time-integrity events under
+  `System Integrity`, restart and boot-performance-telemetry events
+  (ids 18, 19, 23) under `Boot Events`, both categories chosen to sit
+  naturally alongside the sibling entries already filed there
+  (id 1 is already `System Integrity`; ids 12/13 are already `Boot
+  Events`).
+- Ids 14, 17, 19 and 23 have an empty Message column in every version
+  the manifest lists - rendered with the same "no message template
+  provided by the manifest" filler used for the previous two PRs'
+  template-less events, naming the Task where the manifest gives one
+  (`BootPerformanceData` for 19, `VsmPerformanceData` for 23) and
+  falling back to a generic "(Event from ...)" form for the two ids
+  (14, 17) that have neither a Task nor a message - their only
+  distinguishing detail is a Keyword
+  (`KERNEL_GENERAL_SECURITY_ACCESSCHECK`, `KERNEL_GENERAL_TOKEN_SID_MANAGEMENT`)
+  that doesn't have a field to hold it in this catalogue's schema.
+
+Located the splice point the same verified way as both prior PRs -
+matched the unique `],"audit_configuration":` boundary, confirmed
+`cloud_actions` was unchanged (5,148) before and after.
+
+Verified: `node --check`. `DATA.events` grew 4,746 -> 4,764 (18 new,
+unique ids; no duplicate event ids anywhere in this source's now-22
+entries). Header stat's log and category counts held steady at 189
+and 191 respectively - every new entry reuses a `log`/`category`
+value this catalogue already had, unlike the previous two PRs which
+each introduced entirely new values. Searching "Kernel-General"
+returns all 22 entries (4 pre-existing + 18 new) sorted ascending by
+id with no gaps or duplicates: 1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15,
+16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 1017. Confirmed at 375px and
+in both themes with zero console errors; the four pre-existing
+entries and every other tab unaffected.
+
+`1.3.2` (PATCH - new data rows on the existing Events page, filling
+gaps around ids this source already partly had; not a new catalogue,
+tab, or app-level capability).
 
 ## Structure
 
