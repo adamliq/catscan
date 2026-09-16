@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.2` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.3` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1269,6 +1269,69 @@ WebAuthN entries, unaffected.
 
 `1.3.2` (PATCH - new data rows added to the existing Events page/
 catalogue, same provider-addition category as prior data-only PRs;
+not a new catalogue, tab, or app-level capability).
+
+Asked to check two more pasted event lists. `Microsoft-Windows-WebAuthN`
+(100 events, ids 1000-2402, the FIDO2/Windows Hello CTAP/NGC/hybrid
+provider) turned out to already be fully catalogued - every id in the
+pasted list matched an existing entry exactly, no gaps either
+direction, confirmed with a straight set-difference between the pasted
+ids and `DATA.events` filtered to that source. No change needed there.
+
+`Microsoft-Windows-TerminalServices-ServerUSBDevices` (20 events - ids
+2-9 largely lacking a resolved message template in the manifest, plus
+ids 32-44 covering USB-redirection driver load, device install/
+redirect/remove, and virtual-channel connect/disconnect) was genuinely
+missing: zero matches for that source, exact or substring. Added all
+20, using the manifest-import schema again, with two wrinkles this
+provider's manifest export surfaces that the WebAuth batch didn't:
+
+- Task Category is blank for every one of these 20 events (unlike
+  WebAuth, where every row had one), so `subcategory` is left empty
+  and the `sample` text omits the "Task Category:" line entirely -
+  matching how `Microsoft-Windows-TPM-WMI` (another Task-less
+  manifest-derived provider already in the catalogue) is represented,
+  rather than always including the line as WebAuth's entries do.
+- Eight of the twenty rows (ids 2, 3, 4, 5, 6, 7, 8, 9) carry the
+  literal text `{message}` as their Message column value -
+  the manifest's own generic placeholder for "no resolvable template",
+  not a real field reference. Rendered those the same way this
+  catalogue already renders a true template-less event elsewhere
+  (`Microsoft-Windows-WlanConn`, `Microsoft-Windows-OtpCredentialProviderEvt`):
+  `"(Event from Microsoft-Windows-TerminalServices-ServerUSBDevices;
+  no message template provided by the manifest)"`, rather than
+  literally storing the placeholder token `{message}` as if it were
+  real event text.
+- Channel varies per event this time (`Debug`, `Analytic`, `Admin`,
+  `Operational`, instead of a single `Operational` channel for the
+  whole batch), so `log` is built per-row as `source/Channel` rather
+  than one fixed string.
+
+Learned from the previous PR's splice-target bug and located the
+insertion point the same verified way this time: matched the unique
+`],"audit_configuration":` boundary that closes the `events` array
+specifically (not the DATA statement's outer closing bracket, which
+belongs to `cloud_actions`), and confirmed `cloud_actions`'s length
+was unchanged (5,148) both before writing and after.
+
+Verified: `node --check`. `DATA.events` grew from 4,783 to 4,803 (20
+new, unique ids, no duplicates) on top of the 4,783 the WebAuth PR
+above had already landed at merge time. Header stat updated to "4,803
+events - 194 logs - 193 categories" (four new log channels - one per
+Channel value used - plus WebAuth's own log/category from the merge
+above - and one new category). Searching
+"ServerUSBDevices" returns exactly 20 rows, sorted ascending by id
+(2, 3, 4...44) with no gaps or duplicates. Confirmed at 375px and in
+both themes with zero console errors; every other tab, and the
+untouched WebAuthN entries, unaffected.
+
+This PR and the WebAuth one above were built in parallel off the same
+`main` commit, so both independently bumped `1.3.1` -> `1.3.2`; by the
+time this one's turn came to merge, WebAuth's `1.3.2` was already on
+`main`, so resolving the conflict meant bumping this PR one step
+further:
+
+`1.3.2` -> `1.3.3` (PATCH - new data rows on the existing Events page;
 not a new catalogue, tab, or app-level capability).
 
 ## Structure
