@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1153,6 +1153,45 @@ buttons wrap to a second/third row cleanly) and in both themes with
 zero console errors; every other tab still loads cleanly.
 
 `1.3.0` (MINOR - another new filter).
+
+Two more additions to the same Events page: an **exact-term** checkbox
+next to the search box, and a fix to how results were ordered at all.
+
+Neither of the earlier filters touched search matching itself - `q`
+was always a plain substring test against nine fields, so searching
+"log" matched "Logon" and "catalog" right alongside genuine word
+matches, and searching a numeric id like "4624" matched inside an
+unrelated id like "24624" too (both real ids in the catalogue - not a
+hypothetical). The checkbox, off by default so today's behavior is
+unchanged, switches `matches()` to a `\bterm\b` word-boundary regex
+instead of `.includes()` when checked - built from the same
+already-lowercased `q` and already-escaped via a small `escapeRegex()`
+helper (special regex characters in a typed query would otherwise
+throw or match wrong), with a defensive fallback to the old substring
+behavior if regex construction somehow fails.
+
+Separately: the results list had never actually been sorted - `render()`
+displayed `filtered()`'s rows in whatever order the underlying `events`
+array happened to hold them (source-file order, e.g. 4205, 4343, 70, 72,
+73...), not by event id at all. `filtered()` now sorts numerically
+ascending before returning (`parseInt(a.event_id) - parseInt(b.event_id)`,
+verified every event_id in the dataset is a plain numeric string first,
+so a numeric subtraction is safe - a string sort would have put "10"
+before "2"). Sorting inside `filtered()` itself, not `render()`, so the
+one caller gets pre-sorted rows with no separate step to remember.
+
+Verified: `node --check`. Default (unfiltered) list now runs low to
+high starting from id 0. Searching "log" substring-matches 525 events;
+the same query with Exact term checked narrows to 39, all genuine
+whole-word "log" matches (sample-checked - "Event Log was Cleared",
+"...confusing log timelines...", none of the "Logon"/"catalog"-only
+false positives the substring search pulled in). Searching "4624"
+exact-term returns only id 4624; the same query unchecked also returns
+24624, confirming the fix targets a real, present ambiguity rather than
+a hypothetical one. Confirmed at 375px and in both themes with zero
+console errors; every other tab unaffected.
+
+`1.4.0` (MINOR - two more Events-page features).
 
 ## Structure
 
