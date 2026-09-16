@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.2` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.4` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1198,6 +1198,142 @@ console errors; every other tab unaffected.
 `1.3.1` (PATCH - a search refinement and a display-order fix on the
 existing Events page, not a new catalogue/tab/capability).
 
+Asked to confirm whether a pasted list of 37 `Microsoft-Windows-WebAuth`
+events (IDs 1000-1406, the `AuthHost` browser-control provider used by
+ADAL/legacy-auth web popups - navigation start/complete/redirect/
+terminate, security-manager UrlAction decisions, meta-tag handling)
+were already in the catalogue. They weren't: the only close match was
+`Microsoft-Windows-WebAuthN` (note the trailing N) - the unrelated
+FIDO2/Windows Hello passkey provider, which happens to reuse the same
+1000-2400 ID range and has 100 entries already catalogued, but whose
+event text never mentions "AuthHost" and shares zero actual overlap
+with the pasted list. Confirmed with a `source ==
+'Microsoft-Windows-WebAuth'` (exact match, not substring - `WebAuthN`
+would have satisfied a naive `.includes('WebAuth')` check) query
+against the parsed `DATA.events` array: zero hits before this change.
+
+Added all 37 as new entries, following the exact schema this catalogue
+already uses for other low-profile providers sourced from the same
+Windows Server 2019 (1809, build 17763.1457) ETW manifest export
+(`Microsoft-Windows-OtpCredentialProviderEvt`, `Microsoft-Windows-
+WlanConn`, `Microsoft-Windows-TPM-WMI`, etc.): `category` mirrors
+`source` verbatim (`Microsoft-Windows-WebAuth`, matching the default
+this catalogue uses whenever a provider hasn't been given a
+human-readable category), `subcategory` is the manifest's own Task
+Category text (`Navigation Start`, `Navigation Terminate`, `Security
+Manager`, `Meta Tag`, etc.), `log` is `Microsoft-Windows-WebAuth/
+Operational` (the Channel column), `description` is the manifest's
+own message text kept verbatim with its `{Field}` placeholders
+unresolved (matching how this catalogue treats every other
+manifest-derived entry - no invented example values), `sample_type`
+is `template`, and `reference` is the same "ETW manifest export"
+citation the sibling entries already use. `mitre_techniques`,
+`acsc_priority_log`, `nist_800_53_au`, `group_policy_path`,
+`opposite_event_id` and `cim_mapping` are left blank, again matching
+the sibling entries - AuthHost is a legacy, largely undocumented
+component with no public MITRE/NIST/GPO mapping to cite honestly.
+
+First attempt at the splice landed in the wrong place: this file's
+Windows-events script IIFE declares `const DATA = {"events": [...],
+"audit_configuration": [...], ..., "cloud_actions": [...]}` - seventeen
+top-level keys, "events" first and "cloud_actions" last - and the
+insertion script located the new entries' target position by matching
+the literal text immediately preceding the DATA statement's closing
+`]};`, which is the end of `cloud_actions` (a completely different
+array of cloud-provider action mappings), not the end of `events`.
+The insert was syntactically valid JSON either way, so `node --check`
+and a first parse both passed silently; the bug only surfaced when a
+`source === 'Microsoft-Windows-WebAuth'` query against `DATA.events`
+still returned zero results after the edit. Re-targeted the splice to
+the actual `],"audit_configuration":` boundary that closes the
+`events` array specifically, then re-verified byte-for-byte that the
+new final `events` entry (id 1406) sits immediately before that
+boundary and that `cloud_actions` was back to its original length
+(5,148, unchanged).
+
+Verified: `node --check`. Parsed `DATA.events` grew from 4,746 to
+4,783 (all 37 new ids present, no duplicates). The app's own header
+stat line updated accordingly, to "4,783 events - 190 logs - 192
+categories" (one new log, one new category, both `Microsoft-Windows-
+WebAuth`). Searching "WebAuth" (substring) now returns 137 rows - the
+pre-existing 100 WebAuthN plus the new 37 WebAuth, both sources
+visibly distinguishable by badge. Searching "AuthHost" - text unique
+to the new entries - returns 36 rows, not 37: event 1042's message is
+"Navigation cancelled by user.", the one entry in the set that doesn't
+happen to contain the word "AuthHost", confirming the count reflects
+real content rather than a copy-paste artifact. The 36/37 sorted
+ascending by id with no gaps or duplicates; opening the first result's
+detail view (id 1000) rendered cleanly. Confirmed at 375px and in both
+themes with zero console errors; every other tab, and the pre-existing
+WebAuthN entries, unaffected.
+
+`1.3.2` (PATCH - new data rows added to the existing Events page/
+catalogue, same provider-addition category as prior data-only PRs;
+not a new catalogue, tab, or app-level capability).
+
+Asked to check two more pasted event lists. `Microsoft-Windows-WebAuthN`
+(100 events, ids 1000-2402, the FIDO2/Windows Hello CTAP/NGC/hybrid
+provider) turned out to already be fully catalogued - every id in the
+pasted list matched an existing entry exactly, no gaps either
+direction, confirmed with a straight set-difference between the pasted
+ids and `DATA.events` filtered to that source. No change needed there.
+
+`Microsoft-Windows-TerminalServices-ServerUSBDevices` (20 events - ids
+2-9 largely lacking a resolved message template in the manifest, plus
+ids 32-44 covering USB-redirection driver load, device install/
+redirect/remove, and virtual-channel connect/disconnect) was genuinely
+missing: zero matches for that source, exact or substring. Added all
+20, using the manifest-import schema again, with two wrinkles this
+provider's manifest export surfaces that the WebAuth batch didn't:
+
+- Task Category is blank for every one of these 20 events (unlike
+  WebAuth, where every row had one), so `subcategory` is left empty
+  and the `sample` text omits the "Task Category:" line entirely -
+  matching how `Microsoft-Windows-TPM-WMI` (another Task-less
+  manifest-derived provider already in the catalogue) is represented,
+  rather than always including the line as WebAuth's entries do.
+- Eight of the twenty rows (ids 2, 3, 4, 5, 6, 7, 8, 9) carry the
+  literal text `{message}` as their Message column value -
+  the manifest's own generic placeholder for "no resolvable template",
+  not a real field reference. Rendered those the same way this
+  catalogue already renders a true template-less event elsewhere
+  (`Microsoft-Windows-WlanConn`, `Microsoft-Windows-OtpCredentialProviderEvt`):
+  `"(Event from Microsoft-Windows-TerminalServices-ServerUSBDevices;
+  no message template provided by the manifest)"`, rather than
+  literally storing the placeholder token `{message}` as if it were
+  real event text.
+- Channel varies per event this time (`Debug`, `Analytic`, `Admin`,
+  `Operational`, instead of a single `Operational` channel for the
+  whole batch), so `log` is built per-row as `source/Channel` rather
+  than one fixed string.
+
+Learned from the previous PR's splice-target bug and located the
+insertion point the same verified way this time: matched the unique
+`],"audit_configuration":` boundary that closes the `events` array
+specifically (not the DATA statement's outer closing bracket, which
+belongs to `cloud_actions`), and confirmed `cloud_actions`'s length
+was unchanged (5,148) both before writing and after.
+
+Verified: `node --check`. `DATA.events` grew from 4,783 to 4,803 (20
+new, unique ids, no duplicates) on top of the 4,783 the WebAuth PR
+above had already landed at merge time. Header stat updated to "4,803
+events - 194 logs - 193 categories" (four new log channels - one per
+Channel value used - plus WebAuth's own log/category from the merge
+above - and one new category). Searching
+"ServerUSBDevices" returns exactly 20 rows, sorted ascending by id
+(2, 3, 4...44) with no gaps or duplicates. Confirmed at 375px and in
+both themes with zero console errors; every other tab, and the
+untouched WebAuthN entries, unaffected.
+
+This PR and the WebAuth one above were built in parallel off the same
+`main` commit, so both independently bumped `1.3.1` -> `1.3.2`; by the
+time this one's turn came to merge, WebAuth's `1.3.2` was already on
+`main`, so resolving the conflict meant bumping this PR one step
+further:
+
+`1.3.2` -> `1.3.3` (PATCH - new data rows on the existing Events page;
+not a new catalogue, tab, or app-level capability).
+
 Asked to check a pasted list of 26 `Microsoft-Windows-Kernel-General`
 rows (18 distinct event ids, some with several manifest "Version"
 variants of the same id - e.g. id 1's five versions all describe a
@@ -1257,21 +1393,28 @@ Located the splice point the same verified way as both prior PRs -
 matched the unique `],"audit_configuration":` boundary, confirmed
 `cloud_actions` was unchanged (5,148) before and after.
 
-Verified: `node --check`. `DATA.events` grew 4,746 -> 4,764 (18 new,
-unique ids; no duplicate event ids anywhere in this source's now-22
-entries). Header stat's log and category counts held steady at 189
-and 191 respectively - every new entry reuses a `log`/`category`
-value this catalogue already had, unlike the previous two PRs which
-each introduced entirely new values. Searching "Kernel-General"
-returns all 22 entries (4 pre-existing + 18 new) sorted ascending by
+Verified: `node --check`. `DATA.events` grew from 4,803 (already
+reflecting the WebAuth and ServerUSBDevices PRs merged above) to
+4,821 (18 new, unique ids; no duplicate event ids anywhere in this
+source's now-22 entries). Header stat's log and category counts held
+steady at 194 and 193 respectively - every new entry reuses a
+`log`/`category` value this catalogue already had, unlike the two
+PRs above which each introduced entirely new ones. Searching
+"Kernel-General" returns all 22 entries (4 pre-existing + 18 new) sorted ascending by
 id with no gaps or duplicates: 1, 2, 3, 4, 5, 6, 11, 12, 13, 14, 15,
 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 1017. Confirmed at 375px and
 in both themes with zero console errors; the four pre-existing
 entries and every other tab unaffected.
 
-`1.3.2` (PATCH - new data rows on the existing Events page, filling
-gaps around ids this source already partly had; not a new catalogue,
-tab, or app-level capability).
+This PR was built off the same pre-WebAuth `main` commit as the two
+above, so it independently bumped `1.3.1` -> `1.3.2` too; by the time
+its turn came to merge, `main` was already at `1.3.3` (from the two
+prior merges), so resolving the conflict meant bumping one step
+further:
+
+`1.3.3` -> `1.3.4` (PATCH - new data rows filling gaps in a
+partly-catalogued source; not a new catalogue, tab, or app-level
+capability).
 
 ## Structure
 
