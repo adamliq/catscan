@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.4` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.5` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1415,6 +1415,58 @@ further:
 `1.3.3` -> `1.3.4` (PATCH - new data rows filling gaps in a
 partly-catalogued source; not a new catalogue, tab, or app-level
 capability).
+
+Asked to check a pasted list of 429 `Microsoft-Windows-Kernel-Power`
+rows (349 distinct event ids, many with several manifest Version
+variants - id 507 alone has 13). Zero entries for this source existed.
+Given the scale - by far the largest single list pasted this session -
+and that 317 of the 429 rows carry no message text at all (this
+provider is an extremely verbose ETW power/sleep/thermal diagnostic
+source, most of it internal telemetry rather than anything
+security-relevant), flagged the size and asked whether to add
+everything or only the rows with real message text before building
+anything. Told to add only the ones with messages.
+
+Filtered to the 112 rows with a non-empty Message column, then
+collapsed Version variants down to one canonical row per event id -
+same rule used for `Microsoft-Windows-Kernel-General` earlier in this
+session - taking the highest-numbered version's row (message text,
+level, channel and task together, not just the message in isolation,
+since a few ids' later versions also correct the channel or task
+alongside adding fields). That collapsing took 112 rows down to 72
+distinct event ids. Followed the same manifest-import "template"
+schema as the three PRs above: `category` defaults to the raw source
+string (`Microsoft-Windows-Kernel-Power`, no existing human-curated
+category to match here, unlike Kernel-General), `subcategory` is the
+Task column (every one of the 72 canonical rows has one), `log` is
+the raw Channel column value verbatim per row - not always prefixed
+with the source, since the manifest itself sometimes gives a bare
+channel name (`Thermal-Operational`, alongside `System`,
+`Microsoft-Windows-Kernel-Power/Diagnostic` and
+`Microsoft-Windows-Kernel-Power/Thermal-Diagnostic`) - `description`
+keeps the manifest's message text verbatim with `{Field}` placeholders
+unresolved, and `reference` is the same ETW manifest export citation.
+
+Located the splice point the same verified way as every PR above:
+matched the unique `],"audit_configuration":` boundary, confirmed
+`cloud_actions` was unchanged (5,148) before and after.
+
+Verified: `node --check`. `DATA.events` grew from 4,821 to 4,893 (72
+new, unique ids, no duplicates within the new source). Header stat
+updated to "4,893 events - 197 logs - 194 categories" (three new log
+values - `System` was already in use by other providers, so only the
+Diagnostic/Thermal-Diagnostic/Thermal-Operational channels count as
+new - and one new category). Searching "Kernel-Power" returns 76
+rows, not 72: four belong to an unrelated pre-existing source,
+`EventLog / Kernel-Power / USER32` (a legacy classic-Event-Log
+provider whose own event id 41 happens to collide with the new
+provider's DirtyTransition id 41 - both real, distinct entries, not a
+duplicate). Confirmed at 375px and in both themes with zero console
+errors; every other tab, including that pre-existing unrelated
+source, unaffected.
+
+`1.3.4` -> `1.3.5` (PATCH - new data rows on the existing Events page;
+not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
