@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.1` as of this line) — this
+current [`VERSION`](VERSION) (`v1.3.2` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1197,6 +1197,79 @@ console errors; every other tab unaffected.
 
 `1.3.1` (PATCH - a search refinement and a display-order fix on the
 existing Events page, not a new catalogue/tab/capability).
+
+Asked to confirm whether a pasted list of 37 `Microsoft-Windows-WebAuth`
+events (IDs 1000-1406, the `AuthHost` browser-control provider used by
+ADAL/legacy-auth web popups - navigation start/complete/redirect/
+terminate, security-manager UrlAction decisions, meta-tag handling)
+were already in the catalogue. They weren't: the only close match was
+`Microsoft-Windows-WebAuthN` (note the trailing N) - the unrelated
+FIDO2/Windows Hello passkey provider, which happens to reuse the same
+1000-2400 ID range and has 100 entries already catalogued, but whose
+event text never mentions "AuthHost" and shares zero actual overlap
+with the pasted list. Confirmed with a `source ==
+'Microsoft-Windows-WebAuth'` (exact match, not substring - `WebAuthN`
+would have satisfied a naive `.includes('WebAuth')` check) query
+against the parsed `DATA.events` array: zero hits before this change.
+
+Added all 37 as new entries, following the exact schema this catalogue
+already uses for other low-profile providers sourced from the same
+Windows Server 2019 (1809, build 17763.1457) ETW manifest export
+(`Microsoft-Windows-OtpCredentialProviderEvt`, `Microsoft-Windows-
+WlanConn`, `Microsoft-Windows-TPM-WMI`, etc.): `category` mirrors
+`source` verbatim (`Microsoft-Windows-WebAuth`, matching the default
+this catalogue uses whenever a provider hasn't been given a
+human-readable category), `subcategory` is the manifest's own Task
+Category text (`Navigation Start`, `Navigation Terminate`, `Security
+Manager`, `Meta Tag`, etc.), `log` is `Microsoft-Windows-WebAuth/
+Operational` (the Channel column), `description` is the manifest's
+own message text kept verbatim with its `{Field}` placeholders
+unresolved (matching how this catalogue treats every other
+manifest-derived entry - no invented example values), `sample_type`
+is `template`, and `reference` is the same "ETW manifest export"
+citation the sibling entries already use. `mitre_techniques`,
+`acsc_priority_log`, `nist_800_53_au`, `group_policy_path`,
+`opposite_event_id` and `cim_mapping` are left blank, again matching
+the sibling entries - AuthHost is a legacy, largely undocumented
+component with no public MITRE/NIST/GPO mapping to cite honestly.
+
+First attempt at the splice landed in the wrong place: this file's
+Windows-events script IIFE declares `const DATA = {"events": [...],
+"audit_configuration": [...], ..., "cloud_actions": [...]}` - seventeen
+top-level keys, "events" first and "cloud_actions" last - and the
+insertion script located the new entries' target position by matching
+the literal text immediately preceding the DATA statement's closing
+`]};`, which is the end of `cloud_actions` (a completely different
+array of cloud-provider action mappings), not the end of `events`.
+The insert was syntactically valid JSON either way, so `node --check`
+and a first parse both passed silently; the bug only surfaced when a
+`source === 'Microsoft-Windows-WebAuth'` query against `DATA.events`
+still returned zero results after the edit. Re-targeted the splice to
+the actual `],"audit_configuration":` boundary that closes the
+`events` array specifically, then re-verified byte-for-byte that the
+new final `events` entry (id 1406) sits immediately before that
+boundary and that `cloud_actions` was back to its original length
+(5,148, unchanged).
+
+Verified: `node --check`. Parsed `DATA.events` grew from 4,746 to
+4,783 (all 37 new ids present, no duplicates). The app's own header
+stat line updated accordingly, to "4,783 events - 190 logs - 192
+categories" (one new log, one new category, both `Microsoft-Windows-
+WebAuth`). Searching "WebAuth" (substring) now returns 137 rows - the
+pre-existing 100 WebAuthN plus the new 37 WebAuth, both sources
+visibly distinguishable by badge. Searching "AuthHost" - text unique
+to the new entries - returns 36 rows, not 37: event 1042's message is
+"Navigation cancelled by user.", the one entry in the set that doesn't
+happen to contain the word "AuthHost", confirming the count reflects
+real content rather than a copy-paste artifact. The 36/37 sorted
+ascending by id with no gaps or duplicates; opening the first result's
+detail view (id 1000) rendered cleanly. Confirmed at 375px and in both
+themes with zero console errors; every other tab, and the pre-existing
+WebAuthN entries, unaffected.
+
+`1.3.2` (PATCH - new data rows added to the existing Events page/
+catalogue, same provider-addition category as prior data-only PRs;
+not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
