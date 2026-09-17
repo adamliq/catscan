@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.1` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1560,6 +1560,65 @@ backed by an entirely new 204-entry dataset and its own search/filter/
 detail pipeline; squarely the "new tab" case this repo's own
 versioning policy reserves MINOR for, unlike this session's earlier
 PATCH-level additions of rows to an existing page).
+
+Two follow-up requests against the just-merged Native page. First:
+give every entry a `platform` field valued `"AWS GuardDuty"`, with its
+own sidebar filter - explicitly "with filtering for platforms" (plural),
+naming the exact multi-value design Validations already uses for its
+own `platform` facet (RHEL, FortiGate, Cisco SD-WAN, RHEL IdM/IPA,
+Windows Endpoint all sharing one page, one facet). Implemented
+`platform` as an array field (`["AWS GuardDuty"]`) rather than a plain
+string for the same reason Validations does: today Native holds a
+single native-detection source, but the field and facet are shaped so
+a second one (a future non-GuardDuty native-detection catalogue) can
+share this same page later without a schema change - the point of
+asking for "filtering for platforms" at all when there is currently
+only one. Added a Platform section to the sidebar (first, above Threat
+Purpose), a Platform tag on every card and in the detail view's badge
+row, `platform` into the search haystack, and a Platform filter chip -
+mirroring every other facet's wiring exactly (`nativeState.platform`,
+`nativeExpandedGroups.platform`, the `matchesNativeFilters` check, the
+filter-count badge). Updated the intro banner's facet list to match.
+
+Second: make Native's 204 entries reachable from the compendium-wide
+Search tab (the box that already searches Microsoft Events, AWS
+Events, Linux Events, Threat Detection, and Threat Validations at
+once - see `window.__compHub`), under a new source labeled "Native
+Detection". Threat Detection (`td`) and Threat Validations (`tv`)
+already share one physical tab this way - two distinct search sources,
+two distinct group labels and Sources filter chips, both jumping to
+the same `#app-td` tab before their own `open()` switches to the right
+sub-view - so Native Detection (`nd`) is a third instance of a pattern
+this compendium-wide search already had, not a new one: added to the
+`order`/`badgeClass`/`sourceFilter` maps, `TAB_TARGET.nd = 'td'` beside
+the existing `TAB_TARGET.tv`, a `window.__compHub['nd']` entry whose
+`open()` calls `switchView('native')` then `openNativeDetail(id)` (the
+exact same shape as `tv`'s `switchView('validations')` +
+`openValidationDetail`), a new source filter chip, a `.cs-badge-nd`
+CSS class (reusing the same badge color `tv` already reuses from `td`,
+since all three are one app's sub-views), and both places in the
+Search tab's own copy that name the other sources by hand (the intro
+paragraph, the filter chip row).
+
+Verified: `node --check`. On the Native page, the new Platform section
+renders first in the sidebar with one option, "AWS GuardDuty", count
+204; selecting it keeps all 204 results (every entry matches, as
+expected today) and shows a working "Platform: AWS GuardDuty" filter
+chip. On the Search tab, searching "GuardDuty" returns 297 total
+matches across three sources - AWS Events (91), Threat Detection (2),
+and the new Native Detection (204, all of them, since GuardDuty's own
+name appears throughout its finding descriptions) - each under its own
+group label and `nd`-badged rows. Clicking a Native Detection result
+row switches to the Threat Detection tab, switches that tab's own view
+to Native, and opens the correct entry's detail overlay showing the
+new "AWS GuardDuty" platform tag. Confirmed at 1500px in both themes
+with zero console errors; the pre-existing `td`/`tv`/`win`/`aws`/`lnx`/
+`other` search sources and their own filter chips are unaffected.
+
+`1.4.1` (PATCH - a new filter facet on an already-existing page plus
+wiring an already-existing page into an already-existing cross-
+catalogue search feature; not a new catalogue, tab, or app-level
+capability in its own right).
 
 ## Structure
 
