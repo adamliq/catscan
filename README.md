@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.3` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.4` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1677,6 +1677,119 @@ Confirmed in both themes with zero console errors.
 
 `1.4.3` (PATCH - swapping one already-added cosmetic image for
 another; not a new catalogue, tab, or app-level capability).
+
+Given an uploaded Microsoft Sentinel analytics-rule catalogue workbook
+(2,529 rows, sourced from AnalyticsRules.Exchange's own downloadable
+index, enriched from the corresponding Azure-Sentinel YAML files - its
+own `About` sheet's stated totals: 2,529 unique rule IDs, 2,513 with a
+KQL query, 35 deprecated, 813 High / 1,317 Medium / 272 Low / 101
+Informational severity) and asked to add it to the Native page as a
+second platform, "Microsoft Sentinel", alongside the existing AWS
+GuardDuty data.
+
+Sentinel's own 27-column schema (Rule ID, Rule name, Description,
+Severity, Kind, Tactics, Techniques, Required connectors/data types,
+query frequency/period, trigger operator/threshold, Entity types,
+Version, Deprecated, Repository path, Catalogue URL, GitHub source
+URL, and a full KQL query per rule) doesn't line up with GuardDuty's
+narrower one field-for-field, so each entry was mapped onto the
+existing Native shape where the concepts genuinely correspond, and the
+shape was extended with a handful of new optional fields for the rest
+rather than force-fitting Sentinel-only concepts (a MITRE ATT&CK
+tactic/technique list, connector/data-type requirements, query cadence,
+a full KQL query) into fields that meant something narrower for
+GuardDuty:
+- `threat_purpose` (the existing Platform-filterable facet) becomes the
+  rule's primary MITRE ATT&CK tactic (first of its `Tactics` column,
+  split on `;`); rules with no tactic listed fall back to
+  "Uncategorized" (347 of 2,529 rows had no Tactics value).
+- `resource_type` becomes the rule's primary entity type (first of its
+  `Entity types` column); falls back to "Unspecified" (251 rows had none).
+- `foundational_data_source` becomes its required data types (joined),
+  falling back to required connectors, then "Unspecified" (265 and 148
+  rows respectively had none of either, still leaving every row a value).
+- `severity` is normalized to title case (High/Medium/Low/Informational -
+  one source row read "HIGH" in all-caps, a plain data-entry
+  inconsistency, not a distinct tier worth preserving verbatim the way
+  GuardDuty's own "High (variable)" is); blank severities (26 rows)
+  become "Unspecified". "Informational" and "Unspecified" were added to
+  the existing severity ordering and badge-class maps (an `.informational`
+  badge class already existed in the shared CSS, reused as-is).
+- `summary` is the rule's first sentence (regex-extracted, falling back
+  to a truncated lead-in when no clean sentence boundary is found);
+  `detailed_description` is the full description - kept genuinely
+  distinct so the detail view's teaser paragraph and its "Detailed
+  Description" section don't just repeat each other verbatim, the way
+  they would have if both had been set to the same full text. A stray
+  leading `'` character on every `[Deprecated]`-prefixed rule's
+  description (a source-workbook artifact, not intentional formatting)
+  is stripped during cleanup.
+- `detail_url` is the rule's AnalyticsRules.Exchange catalogue page
+  (playing the same role GuardDuty's AWS docs URL already did); the
+  kv-table row that names it was renamed from "AWS Detail Page" to the
+  platform-neutral "Detail Page" now that a second platform uses it.
+- `remediation` and `detail_data_source` (both GuardDuty-specific
+  concepts with no Sentinel equivalent in this data) are left unset;
+  the detail view already renders both conditionally, so Sentinel
+  entries simply omit those sections rather than showing something
+  contrived.
+- New optional fields with no GuardDuty counterpart - `rule_kind`,
+  `tactics`/`techniques` (full lists, not just the primary one used for
+  filtering), `required_connectors`/`required_data_types`, `query_frequency`/
+  `query_period`, `trigger_operator`/`trigger_threshold` (rendered as a
+  plain-language "Alerts when the result count is greater than 0" line,
+  operator codes like `gt`/`lt` spelled out), `rule_version`,
+  `deprecated`, and `github_url` - are rendered as additional detail-view
+  sections and kv-table rows, each gated on the field's presence so
+  GuardDuty's 204 existing entries (which have none of them) render
+  exactly as before. The full KQL query (present on 2,513 of 2,529
+  rows) gets its own code block with a working "Copy" button, reusing
+  the Detections pipeline's own `.code-block`/`.copy-btn` pattern
+  (`data-copy` attribute read against the open entry's own field) rather
+  than inventing a second implementation of the same idea. A MITRE
+  ATT&CK section lists every tactic and technique the rule carries (not
+  just the primary one used for the Threat Purpose filter), as its own
+  tag row.
+
+All 2,529 rows were kept, including the 35 marked deprecated in their
+source YAML - the workbook's own scope note says this by design, and
+demoting or filtering them would silently drop real catalogue history
+a reader might specifically be looking for (the "Deprecated" kv-table
+row surfaces this on each one, pointing at the source repository for a
+possible replacement, rather than hiding it).
+
+The `NATIVE` array (a single flat list backing the whole page, `id`
+namespaced `sentinel-<rule ID>` alongside the existing `gd-<slug>`
+GuardDuty entries so no cross-platform collision is possible) grew from
+204 to 2,733 entries; the intro banner and two code comments describing
+the Native page (previously written as if GuardDuty were its only
+occupant) were reworded to describe both platforms' own conventions
+side by side. No changes were needed to the Platform-facet, search-
+integration, or sidebar/card-grid/filter-chip code added in the
+previous two Native-page PRs - it was already built generic enough
+(a `platform: []` array reused as-is, facet counts computed from
+whatever values are actually present) to take a second platform with
+no code changes of its own.
+
+Verified: `node --check`. On the Native page, the Platform section now
+shows two options - "AWS GuardDuty" (204) and "Microsoft Sentinel"
+(2,529) - and the card grid renders all 2,733 entries with the correct
+per-platform count in each case; selecting "Microsoft Sentinel" narrows
+to exactly 2,529 results with a working filter chip. A Sentinel entry's
+detail view shows its severity badge, platform/tactic/entity tags, a
+MITRE ATT&CK tag row, a copyable KQL code block, and a fully-populated
+kv-table (data source, connectors, rule kind, query cadence, trigger
+condition, version, Detail Page, and GitHub Source links). A GuardDuty
+entry's detail view is unchanged byte-for-byte in every section that
+doesn't depend on the new optional fields, confirming the schema
+extension is additive only. Searching "Sentinel" on the Search tab
+returns Native Detection matches (capped at the existing 40-per-source
+display limit) with no change to any other search source. Confirmed at
+1500px and 375px in both themes with zero console or page errors.
+
+`1.4.4` (PATCH - new data rows and optional schema fields on an
+already-existing page, reusing its already-existing Platform facet;
+not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
