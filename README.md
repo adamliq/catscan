@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.4` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.5` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1790,6 +1790,31 @@ display limit) with no change to any other search source. Confirmed at
 `1.4.4` (PATCH - new data rows and optional schema fields on an
 already-existing page, reusing its already-existing Platform facet;
 not a new catalogue, tab, or app-level capability).
+
+Asked to move the spiral-Q mark image to the far left of the menu bar,
+then replace it with a third image (a rounded, striped liquorice-
+allsorts-style block: pink/black/white/black/green). Two changes to
+the same two `.brand-mark` elements: reordered the markup so the `<img>`
+now comes before the `<svg>` paw-print-behind-a-magnifying-glass icon
+(previously the other way around), then swapped that `<img>`'s `src`
+and `title` for the new image, leaving the SVG icon itself untouched.
+
+Same processing as the previous two image swaps: the source PNG
+(1254x1254, transparent) again had asymmetric padding around the mark
+(`getbbox()` returned a 1121x1139 region offset from center), so
+cropped to that content box, re-padded to a square canvas centered on
+it, then downscaled to 64x64 with Lanczos and re-encoded as base64
+(~9.3KB). `title` updated to "Liquorice Allsorts mark" (it depicts a
+stack of candy-striped blocks, not the Q-mark shape the previous title
+named); `alt=""` and `aria-hidden="true"` carried over unchanged.
+
+Verified: `node --check`. Both `.brand-mark` elements still measure
+20x20px and sit side by side in the new order (image first, then the
+SVG icon, then the "Cat Scan" wordmark). The image decodes and paints
+correctly. Confirmed in both themes with zero console errors.
+
+`1.4.5` (PATCH - reordering and swapping purely cosmetic menu bar
+icons; not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
