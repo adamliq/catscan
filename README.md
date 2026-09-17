@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.3.5` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1467,6 +1467,99 @@ source, unaffected.
 
 `1.3.4` -> `1.3.5` (PATCH - new data rows on the existing Events page;
 not a new catalogue, tab, or app-level capability).
+
+Given an AWS-supplied `.xlsx` (204 rows, one per AWS GuardDuty finding
+type currently in the `Active` status - finding type, affected
+resource, the foundational data source/feature that has to be enabled
+to generate it, AWS's own severity rating, a summary, a detailed
+description, and remediation guidance, all copied verbatim from AWS's
+own "GuardDuty active finding types" documentation page) and asked to
+add it as a new page inside the Threat Detection app, next to
+Validations, called Native.
+
+This is a different kind of addition from every one of this session's
+prior PRs: those all added rows to the Windows Events catalogue's
+existing `events` array and schema. This is a whole new page inside a
+*different* merged app (Threat Detection, `#app-td`), holding a
+*different* content type the existing schema has no field for (AWS's
+own vendor documentation, not a detection rule or a validation
+test-execution reference). So it gets its own array, its own facets,
+and its own render pipeline - the same choice this app already made
+once before for Validations (see `docs/validations.md` and the
+"Validations is not a detection catalogue" intro banner on that page):
+a parallel, self-contained search/filter-sidebar/card-grid/detail-overlay
+pipeline living beside Detections' and Validations' own copies of the
+same pattern, sharing only the generic CSS classes (`.card`,
+`.filter-group`, `.kv-table`, etc.) and the one `#td-overlay`/
+`#td-detail-panel` DOM pair all three pipelines open detail views into.
+
+Threat Detection Library's own header badge (`v1.2.0`, next to the TD
+logo) is left untouched. That badge tracks the vendored
+`Threat-detection-library` project's own upstream version - this
+repo's README explicitly documents `threat-detection/` as vendored in
+"unchanged" (see Structure below) - and Native is a catscan-only
+layer on top of it, present nowhere upstream, exactly like the filter
+toggles and breadcrumb added to other merged apps earlier this session
+never touched *their* source repos' versioning either. Only this
+repo's own top-level `VERSION` moves.
+
+Fields, mapped straight from the workbook's columns: `finding_type`
+(e.g. `Impact:EC2/BitcoinDomainRequest.Reputation`), `threat_purpose`
+(derived - not an original column - by splitting `finding_type` on its
+first `:`, which is GuardDuty's own top-level grouping convention: 20
+distinct values across the 204 rows, from `AttackSequence` (5) to
+`Impact` (24)), `resource_type`, `foundational_data_source` (the
+"Foundational data source / Feature" column), `severity` (kept
+verbatim - AWS's own severity field is inconsistent across rows,
+mixing clean values like `Critical`/`High`/`Medium`/`Low` with
+variable ones like `High (variable)`, `Low (variable)`, `Variable`,
+and `Varies depending on detected threat`; normalizing that away would
+misrepresent what AWS actually publishes), `summary`,
+`detailed_description`, `remediation` (the "Remediation
+recommendations" column), `detail_data_source` (a "Detail page data
+source / Feature" column, blank on 4 rows), and `detail_url` (the "AWS
+detail page URL" column, present on every row). Two columns were
+dropped: an entirely-blank spacer column between "AWS detail page URL"
+and "Catalogue source" in the source workbook, and "Catalogue source"
+itself, which only carries a value on the sheet's first row (the
+overall page's own citation URL, not a per-finding field) - quoted
+instead in the page's own intro banner. `id` is a `gd-` + slugified
+`finding_type`, generated fresh (204 unique, verified against
+collisions), since finding types don't ship with an id of their own.
+
+Sidebar facets: Threat Purpose (20 options, sorted by count - `Impact`
+top at 24), Resource Type (13 options - `Instance, EKS cluster, ECS
+cluster, or container` top at 46), Severity (in AWS's own rough
+severity order, only the 8 values actually present in the data - no
+`High (variable)` or `Medium (variable)` badge colors invented beyond
+reusing the closest clean tier's color, since AWS doesn't define a
+distinct visual tier for the variable ones), and Foundational Data
+Source (17 options - `Runtime Monitoring` top at 46). All four use the
+exact same collapsible-group/clear-button/live-count sidebar component
+Validations already built, not a new one.
+
+Verified: `node --check`. Page loads with all 204 entries, the default
+(unfiltered) view. Searching "cryptocurrency" returns 10 matches
+across finding type, summary and detailed description text. Clicking
+the Threat Purpose sidebar group open and selecting "Impact" narrows
+to exactly 24 results (matching its sidebar count) and shows one
+active filter chip; clearing it or re-clicking the same option
+restores all 204. Opening a card's detail view renders its full
+summary, detailed description, remediation, foundational data source,
+and a working link to AWS's own detail page; Escape and the overlay
+backdrop both close it cleanly, same as every other detail view in
+this app. Confirmed at 375px and in both themes with zero console
+errors; Detections, Heat Coverage, and Validations all unaffected -
+their own view-tab switching, header-widget-hiding CSS, and shared
+detail overlay state (`closeDetail()` now also resets
+`nativeState.activeId`, alongside the pre-existing `state.activeId`
+and `validationState.activeId`) all still work exactly as before.
+
+`1.4.0` (MINOR - a whole new page/tab inside the Threat Detection app,
+backed by an entirely new 204-entry dataset and its own search/filter/
+detail pipeline; squarely the "new tab" case this repo's own
+versioning policy reserves MINOR for, unlike this session's earlier
+PATCH-level additions of rows to an existing page).
 
 ## Structure
 
