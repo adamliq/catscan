@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.1` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.2` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1619,6 +1619,43 @@ with zero console errors; the pre-existing `td`/`tv`/`win`/`aws`/`lnx`/
 wiring an already-existing page into an already-existing cross-
 catalogue search feature; not a new catalogue, tab, or app-level
 capability in its own right).
+
+Given a Liquorice Allsorts-themed Rubik's cube image and asked to add
+it next to the Cat Scan icon in the menu bar, at the same size.
+
+The existing icon (a paw-print-behind-a-magnifying-glass, `.brand-mark`,
+20x20px per its own CSS rule) is an inline SVG built from a handful of
+`<ellipse>`/`<circle>`/`<line>` shapes - it can afford to be vector
+because it's a simple flat-color mark. The cube image is a photoreal
+3D render with soft shadows and gradients that no small set of SVG
+primitives would reproduce faithfully, so it stays a raster image
+rather than being redrawn as vector shapes.
+
+This repo has no image asset files anywhere - every icon already in
+the page (the favicon included) is either inline SVG or a base64 data
+URI, keeping the merged page self-contained with no external asset
+requests. Followed that same convention rather than introducing the
+project's first separate image file: downscaled the source PNG (a
+1254x1254 transparent-background render, 2.0MB) to 64x64 with Pillow's
+Lanczos filter - large enough to stay crisp at up to 3.2x pixel density
+on a 20px display box, small enough that its base64 encoding (~13KB)
+barely registers against this page's overall size - and embedded it as
+an `<img class="brand-mark">` immediately after the existing SVG, so it
+picks up the exact same `width: 20px; height: 20px` rule with no new
+CSS. `alt=""` and `aria-hidden="true"` match the existing icon's own
+decorative treatment (the accessible name is the "Cat Scan" text next
+to it, not either icon); a `title` attribute names the image for anyone
+who hovers it, since neither icon carries a visible caption.
+
+Verified: `node --check`. Both `.brand-mark` elements measure exactly
+20x20px and sit side by side with the same 8px gap `.compendium-title`
+already gives every child. The image decodes and paints correctly
+(`naturalWidth > 0`, `complete: true`). Confirmed at 375px and in both
+themes with zero console errors; every other icon and the version tag
+unaffected.
+
+`1.4.2` (PATCH - a purely cosmetic addition to the existing menu bar;
+not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
