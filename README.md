@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.2` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.3` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1656,6 +1656,27 @@ unaffected.
 
 `1.4.2` (PATCH - a purely cosmetic addition to the existing menu bar;
 not a new catalogue, tab, or app-level capability).
+
+Given a second image (a spiral "Q" mark in the same liquorice-allsorts
+palette) and asked to replace the just-added cube icon with it. Same
+treatment as before, this time cropped first: the source PNG (1254x1254,
+transparent) had asymmetric padding around the mark itself (`getbbox()`
+returned a 1131x1103 region offset from center, not the full canvas),
+so cropped to that content box, re-padded to a square canvas around it
+(centering the mark rather than resizing the off-center crop directly,
+which would have skewed it), then downscaled to 64x64 with the same
+Lanczos filter and re-encoded as base64 (~10KB). Swapped only the
+`<img class="brand-mark">` element's `src` and `title` (now "Cat Scan
+mark", since it no longer depicts a cube) - the surrounding markup,
+CSS, and every other file this session's cube-icon PR touched are
+untouched.
+
+Verified: `node --check`. Both `.brand-mark` elements still measure
+exactly 20x20px side by side. The image decodes and paints correctly.
+Confirmed in both themes with zero console errors.
+
+`1.4.3` (PATCH - swapping one already-added cosmetic image for
+another; not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
