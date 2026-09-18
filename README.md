@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.6` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.7` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1863,6 +1863,82 @@ row counts unaffected (63 and 27 rows respectively). Confirmed at
 `1.4.6` (PATCH - making an already-loaded field dataset browsable in
 a tab that already existed for every vendor including this one; not a
 new catalogue, tab, or app-level capability).
+Asked to do a full UI/design pass across every tab in both themes and
+at both desktop and mobile width, then fix two of the findings: the
+Search tab not following the theme toggle, and a code block/Copy
+button overlap in Threat Detection's detail modal.
+
+**Search tab theme bug.** On a first visit with no saved preference,
+Search (and the shared menu bar/breadcrumb chrome around every tab)
+stayed on the shell's dark default even when the OS/browser preferred
+light - the theme toggle's own label correctly said "Light" in that
+state, but the visual result didn't match it. Root cause: every one of
+the five embedded apps (`#app-win`, `#app-aws`, `#app-lnx`, `#app-td`,
+`#app-other`) already has its own three-state theme CSS - an explicit
+`[data-theme="dark"]`/`[data-theme="light"]` pair plus a
+`@media (prefers-color-scheme: dark)` fallback, guarded with `:not()`,
+for the "no explicit choice yet" case - but the *shared shell* tokens
+(`:root`/`body[data-theme="light"]`, which the menu bar, breadcrumb,
+and Search page all draw from directly rather than through an
+app-scoped token set) only had two of those three states: an
+unconditional dark `:root` default and an explicit-light override.
+There was no equivalent `@media (prefers-color-scheme: light)`
+fallback, so "no explicit choice + OS prefers light" fell through to
+the dark default everywhere the shell tokens are used. Fixed by adding
+that missing state - `@media (prefers-color-scheme: light) { body:not([data-theme="dark"]) { ... } }`
+- duplicating the existing light values, mirroring the exact guard
+idiom already used by `#app-td`'s own theme CSS. No JS changes needed:
+`shell-theme-toggle`'s existing script already does the right thing
+(only setting `data-theme` on an explicit click, leaving it unset for
+"follow system") - the gap was purely a missing CSS state.
+
+**Code block / Copy button overlap.** In Threat Detection's detail
+modal, the floating "Copy" button over an SPL query or CLI reference
+block sat on a background only 8% opaque
+(`rgba(255,255,255,0.08)`) over the code's own dark background, so
+long lines of code visibly bled through underneath the button's own
+label rather than being cleanly covered by it - worst on the SPL
+query block, where the first line routinely runs the full width of
+the panel. This isn't fixable by adding padding: `white-space: pre`
+content doesn't reflow around padding, so a long line still reaches
+the box's visible edge (and the button pinned there) regardless of
+how much padding the block itself has. Fixed by making the button's
+background fully opaque (`var(--code-bg)`, the code block's own
+background, so it's indistinguishable from the surrounding block
+rather than a separate visible seam) with a soft same-color
+`box-shadow` fading in from its left edge, so text now cleanly
+disappears behind an obviously-intentional floating control instead of
+half-showing through a translucent one - the same pattern GitHub's and
+VS Code's own code-block copy buttons use. Hover feedback moved from a
+background change (which would have reintroduced the translucency,
+and the bleed-through with it, on every hover) to a border/text-color
+change instead, keeping the background opaque in every state. This is
+shared CSS (`#app-td .copy-btn`), so it also fixes the same overlap on
+the Native page's KQL query code block added earlier this session,
+with no separate change needed there.
+
+Verified: `node --check`. On a fresh browser profile (no saved theme)
+with the OS set to prefer light, Search's background now resolves to
+the correct light value (`#f6f3ec`) and the shared menu bar to white,
+matching the toggle's "Light" label, with `body` correctly carrying no
+explicit `data-theme` attribute (still following the OS, not pinned) -
+confirmed OS-prefers-dark still correctly stays on the dark default
+(no regression), and that an explicit toggle click still sets and
+persists `data-theme` across a reload exactly as before. On the Copy
+button, confirmed its computed background is now fully opaque,
+`elementFromPoint` at its center resolves to the button itself (not
+the text below it), and clicking it still copies the correct text to
+the clipboard. Regression-checked Microsoft/AWS/Linux/Other
+Events/Threat Detection's own render counts across both themes and
+both 1500px/375px viewports - all unchanged, zero console errors
+throughout.
+
+`1.4.7` (PATCH - skips `1.4.6`, already claimed by a still-open,
+not-yet-merged PR for the FortiManager Schema Explorer work earlier
+this session, to avoid a guaranteed version collision between the two;
+fixing a theming gap and a visual overlap bug on already-existing
+pages, not a new catalogue, tab, or app-level capability).
+
 
 ## Structure
 
