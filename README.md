@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.7` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.8` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1939,6 +1939,79 @@ this session, to avoid a guaranteed version collision between the two;
 fixing a theming gap and a visual overlap bug on already-existing
 pages, not a new catalogue, tab, or app-level capability).
 
+Asked to fix three more findings from the same UI/design pass: the
+Threat Detection library's own stats line ("4,017 detections (31
+ESXi/Splunk SPL + ...)") showing on the Native tab even though Native
+isn't this library's detection content at all; a Native card title
+("AttackSequence:S3/CompromisedData") wrapping mid-syllable
+("CompromisedD" / "ata"); and Microsoft Events' secondary tab row
+(Events / Reference tables / Schema explorer / ...) clipping off-screen
+on mobile with no indication more tabs exist.
+
+**Stats line on Native.** `#td-stats-line` lives in one shared
+`.lib-stats-wrap` above all four view containers, not inside any one
+of them, so `switchView()` never touched its visibility - it always
+showed, regardless of which tab was active. Accurate and useful
+context on Detections, Heat Coverage, and Validations (all of this
+library's own content), but Native is raw third-party vendor catalogue
+data, so a detection count/ATT&CK-coverage line describing this
+library's own writing doesn't describe what's on screen there. Hidden
+it specifically on Native with `#app-td.native-active .lib-stats-wrap{ display: none; }`,
+the same container-class pattern already used to hide the header's
+search/filter widgets on Validations and Native.
+
+**Native card title mid-word break.** `.card-title` had both
+`overflow-wrap: break-word` and the older `word-break: break-word` -
+redundant, so the latter (legacy, more aggressive alias) was removed,
+but that alone didn't change anything: GuardDuty/Sentinel identifiers
+like `AttackSequence:S3/CompromisedData` routinely run 15+ characters
+with no spaces, and once a single unbroken run like `CompromisedData`
+is itself wider than the card, `overflow-wrap`'s last-resort fallback
+still has no better option than an arbitrary mid-character split.
+Fixed properly by giving the renderer real break opportunities before
+it ever needs that fallback: a `nativeSoftBreak()` helper inserts a
+`<wbr>` after every `:`/`/`/`_`/`-` and at every camelCase
+(lowercase-to-uppercase) transition, so `CompromisedData` now has a
+legal break between `Compromised` and `Data` - a readable word
+boundary - well before the fallback would ever need to guess. Applied
+to both the card grid and the detail overlay's title (the same
+underlying string, just at a different width); nowhere else in Native
+or the wider Threat Detection app touches long enough unbroken
+identifiers for this to matter, so scoped to just those two spots.
+
+**Mobile tab-row clipping.** Windows Events' own secondary tab row
+(`nav.tabs`) scrolls horizontally on narrow viewports rather than
+wrapping (unlike Linux Events' equivalent row, which already wraps
+onto multiple lines and was never affected by this) - and nothing
+visually hinted that "Schema e[xplorer]" cut off at the screen edge
+continued off-screen rather than just being the last tab. Added the
+standard no-JS "scroll shadow" technique: two pairs of background
+gradients, one pair that scrolls with the tab buttons themselves
+(`background-attachment: local`, acting as a solid mask that slides
+away from whichever edge has nothing left to reveal) layered over
+another pair pinned to the row's own edges
+(`background-attachment: scroll`, the actual visible shadow) - so a
+faint shadow only ever appears on the edge that genuinely has more
+tabs to scroll to, and disappears on its own once you've scrolled all
+the way to that edge. No markup changes, no JS.
+
+Verified: `node --check`. The stats line is confirmed visible on
+Detections/Heat Coverage/Validations and hidden on Native, in both
+themes. The GuardDuty card title in question now renders as
+"AttackSequence:S3/Compromised" / "Data" across two lines instead of
+splitting `CompromisedData` itself. Windows Events' mobile tab row
+shows a right-edge shadow at rest, and shows shadows on both edges
+once scrolled partway, in both themes; confirmed the row's
+`scrollWidth` still genuinely exceeds its `clientWidth` (a real
+overflow, not a cosmetic-only shadow). Regression-checked
+Microsoft/AWS/Linux/Other Events/Threat Detection's own render counts
+across both themes and both 1500px/375px viewports - all unchanged,
+zero console errors throughout.
+
+`1.4.8` (PATCH - hiding an irrelevant stats line on one existing tab,
+a text-wrapping fix on existing card/detail titles, and a scroll
+affordance on an existing tab row; not a new catalogue, tab, or
+app-level capability).
 
 ## Structure
 
