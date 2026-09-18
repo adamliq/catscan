@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.9` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.10` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2068,6 +2068,62 @@ all unchanged, zero console errors throughout.
 `1.4.9` (PATCH - a scroll affordance on two already-existing wide
 tables and a mobile-only clamp on an already-existing text block; not
 a new catalogue, tab, or app-level capability).
+
+Asked to recheck the app again. A fresh pass across tabs not yet
+covered (Windows Events' Reference tables, Linux Events' Auditd Rules
+and Fapolicyd sub-tabs and its own Reference tables, an AWS Events
+detail modal, a Validations detail overlay, Native's own detail
+overlay on mobile, and Zscaler's Schema Explorer under Other Events)
+turned up one real, more serious bug, fixed here; two things that
+looked like bugs at first turned out to be artifacts of the test
+script itself, not the app, and are noted below for the record rather
+than "fixed."
+
+**Long identifiers in detection-logic prose were silently unreadable
+on mobile, not just ugly.** Opening a Detections/Validations/Native
+entry with a long unbroken technical identifier in its prose (e.g.
+"...or the equivalent VmRemoveSnapshotEvent/VmRemoveAllSnapshotsEvent
+from vCenter...") on a narrow viewport didn't wrap it and didn't
+scroll to reveal it either - it was simply invisible past the edge,
+with nothing on screen suggesting text was missing. Confirmed this
+wasn't page-level horizontal scroll (`document.body.scrollWidth`
+matched `window.innerWidth` exactly) - some ancestor clips overflow
+rather than letting the page scroll, so unwrapped text past the edge
+is just gone, not reachable by scrolling either. None of
+`.detail-title`, `.detail-section p`/`ul`/`li`, or `.kv-table td` - the
+entire text surface of a Threat Detection detail overlay - had
+`overflow-wrap: break-word` anywhere, unlike `.card-title`, which
+already did. Fixed by setting it once on `.detail-panel`, the shared
+ancestor of both the header (title) and body (every section/list/
+table cell) - inherited by all of it, and harmless for `.code-block`'s
+own `white-space: pre` content, which doesn't wrap regardless of this
+property's value.
+
+**Not bugs, just test-script artifacts (recorded so a future recheck
+doesn't re-flag the same false alarms):** an AWS Events detail modal
+that appeared not to open on click was actually a race against the
+async `fetch()` of `aws_iam_actions_expanded.csv` completing before
+the synthetic click fired, not a real click-handler problem - a real
+click on a real row opens it fine. A Validations detail overlay that
+appeared to show Detections content instead was querying `.card`
+without scoping to `#td-validations-card-grid`, and matched a
+different, hidden card elsewhere in the DOM instead.
+
+Verified: `node --check`. The specific paragraph in question now
+measures within the detail panel's bounds instead of extending past it
+(computed `overflow-wrap: break-word` confirmed inherited, not just
+visually eyeballed), and wraps across two lines on a 390px viewport
+instead of running off-screen; unchanged on a 1500px viewport, where
+there was always room for it regardless. Confirmed the AWS Events and
+Validations interactions above both work correctly once queried/timed
+correctly, so no code changes were needed for either. Regression-
+checked Microsoft/AWS/Linux/Other Events/Threat Detection's own render
+counts across both themes and both 1500px/375px viewports - all
+unchanged, zero console errors throughout.
+
+`1.4.10` (PATCH - a text-wrapping fix across an already-existing
+detail overlay's typography; not a new catalogue, tab, or app-level
+capability).
 
 ## Structure
 
