@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.10` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.11` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2123,6 +2123,55 @@ unchanged, zero console errors throughout.
 
 `1.4.10` (PATCH - a text-wrapping fix across an already-existing
 detail overlay's typography; not a new catalogue, tab, or app-level
+capability).
+
+Asked specifically to recheck Linux Events for improvements. A full
+pass across it (Events, both Auditd Rules' and Fapolicyd's five
+sub-tabs each, Reference tables, Companion Tools, both themes, mobile
+width) held up well overall - better than Windows Events did before
+this session's earlier fixes, even: its own mobile secondary tab row
+already wraps onto two lines rather than clipping, and content with
+frequent natural break points (commas, slashes) wraps cleanly without
+tripping the silent-clipping bug fixed in `1.4.10`, confirmed against
+a genuinely unbroken 200+ character fapolicyd MIME-type list.
+
+One real finding, fixed here: **the Auditd Fields table overflows with
+no scroll hint starting around 1280px width and narrower** - laptop
+screens and tablets, not just phones. Confirmed empirically at five
+widths (1500/1280/1100/900/390px): fits exactly at 1500px, genuinely
+overflows (`scrollWidth` > `clientWidth`) at every width below that.
+The table's own intro text already says "scroll the table right to
+see it" - the author knew this needed scrolling, there just wasn't a
+visual cue saying so, the same gap `.se-table-wrap` (Schema Explorer,
+Cloud Actions Explorer) had before an earlier fix this session. This
+table uses a different shared class, `.table-scroll` - also used by
+Windows Events' own Reference-tables accordion for its expanded
+tables, so the same fix benefits both apps from one change (well, two
+copies of the same rule, since each app keeps its own scoped CSS
+tokens rather than sharing a global stylesheet).
+
+Applied the identical no-JS scroll-shadow technique already used
+twice this session: layered `background-attachment: local`/`scroll`
+gradient pairs, one added to `#app-lnx .table-scroll` and the
+identical rule added to `#app-win .table-scroll`, each referencing
+that app's own `--surface` token for the mask color.
+
+Verified: `node --check`. Confirmed the Fields table's own `.table-scroll`
+wrapper computes 4 background-image layers in both themes; screenshotted
+it at rest (right-edge shadow, since the table is wider than the box)
+and scrolled 300px right (shadow now on the left edge too, gone from
+the right edge once the last column comes fully into view) - both
+themes. Confirmed Windows Events' own Reference-tables `.table-scroll`
+picked up the same 4 layers without needing to actually overflow in
+this particular section to prove the CSS is live. Confirmed the
+already-shipped `.se-table-wrap` fix and the mobile `nav.tabs` scroll
+shadow are both unaffected by editing this nearby CSS. Regression-
+checked Microsoft/AWS/Linux/Other Events/Threat Detection's own render
+counts across both themes and both 1500px/375px viewports - all
+unchanged, zero console errors throughout.
+
+`1.4.11` (PATCH - a scroll affordance on an already-existing wide
+table shared by two apps; not a new catalogue, tab, or app-level
 capability).
 
 ## Structure
