@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.8` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.9` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2012,6 +2012,62 @@ zero console errors throughout.
 a text-wrapping fix on existing card/detail titles, and a scroll
 affordance on an existing tab row; not a new catalogue, tab, or
 app-level capability).
+
+Asked to recheck the app for further UI issues after the previous
+round of fixes landed. A fresh pass across tabs not deeply checked
+before (Schema Explorer, Pivot Explorer, Cloud logs, Cloud Actions
+Explorer, an event detail pane, Validations, Other Events' Reference
+tab and a second vendor, Search with an actual query typed, and mobile
+views of AWS/Other Events/Search) turned up two more, both fixed:
+
+**Wide data tables clip their last column, with no scroll hint, even
+on desktop.** Confirmed in Microsoft Events' Schema Explorer (the
+"Type" column cut off at 1500px) and its Cloud Actions Explorer (same,
+"Resource Type") - both share one `.se-table-wrap` component, and both
+already scroll (`overflow: auto`, `scrollWidth` genuinely exceeds
+`clientWidth`), just with nothing showing a reader a column continues
+off-screen. Same underlying problem the mobile tab-row fix in `1.4.8`
+solved, just recurring in an actual data table and at full desktop
+width, not only mobile. Applied the identical no-JS scroll-shadow
+technique to `.se-table-wrap` instead of writing it a second time -
+same layered `local`/`scroll`-attachment gradient pairs, just using
+this component's own `--surface` token for the mask color. Verified it
+keeps working correctly combined with this element's other axis of
+scrolling too (it's vertically scrollable past 560px as well) - the
+horizontal shadow still reads correctly at an arbitrary vertical
+scroll position, confirmed by scrolling both axes and screenshotting.
+
+**Threat Detection's own stats/coverage paragraph pushes real content
+far down the screen on mobile.** Re-confirmed with a fresh screenshot:
+before reaching a single detection card, a phone-width reader scrolls
+past the compendium tabs, the breadcrumb, this app's own header and
+search box, a Filters/Coverage/Export/theme row, a Companion
+Tools/GitHub row, the four view-tabs, and then the full multi-line
+stats paragraph - six-plus stacked blocks. The paragraph itself is
+useful, verbatim, and unique to this library, so it's not going away -
+but reworking the header chrome around it is the larger, still-open
+reskin this session flagged and deliberately hasn't taken on. In the
+meantime, clamped the paragraph itself to 2 lines with a `-webkit-line-clamp`
+ellipsis, scoped to the same 880px breakpoint this app already uses
+for its mobile filter drawer - unchanged (full paragraph, no clamp) on
+anything wider. Cuts a meaningful chunk of the scroll distance to the
+first real card without touching layout, header markup, or branding.
+
+Verified: `node --check`. Schema Explorer and Cloud Actions Explorer
+both show a right-edge shadow at rest and shadows on both edges once
+scrolled partway, confirmed in both themes; the Cloud Actions
+Explorer's own dark-theme rendering checked directly since it's a
+separate instance of the same shared component. The Threat Detection
+stats line measures a fixed 2-line height on a 390px viewport and its
+full, unclamped multi-line height at 1500px (`-webkit-line-clamp:
+none` there), confirmed by computed style, not just a visual read.
+Regression-checked Microsoft/AWS/Linux/Other Events/Threat Detection's
+own render counts across both themes and both 1500px/375px viewports -
+all unchanged, zero console errors throughout.
+
+`1.4.9` (PATCH - a scroll affordance on two already-existing wide
+tables and a mobile-only clamp on an already-existing text block; not
+a new catalogue, tab, or app-level capability).
 
 ## Structure
 
