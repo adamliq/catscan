@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.5` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.6` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -1815,6 +1815,54 @@ correctly. Confirmed in both themes with zero console errors.
 
 `1.4.5` (PATCH - reordering and swapping purely cosmetic menu bar
 icons; not a new catalogue, tab, or app-level capability).
+
+Asked to populate the Schema Explorer tab for FortiManager under Other
+Events - the only one of Other Events' eight vendor tabs whose Schema
+Explorer was still just an explanatory paragraph with nothing to
+click through, unlike the other seven.
+
+That paragraph existed for a real reason, stated in its own text:
+FortiManager/FortiAnalyzer's Log Message Reference doesn't document
+per-message-ID fields at all ("hundreds of message IDs across all
+subtypes"), so there's no genuine per-subtype schema to enumerate the
+way FortiGate's or Zscaler's Schema Explorer does - building one would
+mean inventing data the source doesn't have, which this repo doesn't
+do for any vendor. But the source does document one real, already-
+loaded set of field data: 12 fields common to every FortiManager/
+FortiAnalyzer event log line (`common_field_schema.fields` in
+`other/data/fortimanager_log_schema.json`), already flattened into
+`fmRows` for Log Types search and already rendered as a table under
+Reference > Common fields - just never surfaced in the Schema Explorer
+tab itself, leaving it inconsistent with every other vendor.
+
+Populated it by reusing that same data rather than adding any new
+source material: filtered `fmRows` down to its existing `isField` rows
+into a flat, searchable, sortable table (Field / Example / Type /
+Description - the same four columns Reference > Common fields and
+Dell iDRAC's own Schema Explorer both already use), following the
+precedent Dell iDRAC's Schema Explorer set for source material with no
+per-category field list of its own: flatten what field data genuinely
+exists into one browsable table, and clicking a row opens the exact
+same detail modal its Log Types row already would (`fmOpenModal`,
+unmodified - it already branched on `isField`). No type-rail sidebar,
+unlike FortiGate/Infoblox/Dell iDRAC's Schema Explorers - those group
+multiple distinct field sets, where FortiManager has exactly one. The
+explanatory paragraph stays, trimmed to also describe the table now
+below it, so the "why no per-subtype fields" context isn't lost.
+
+Verified: `node --check`. All 12 common fields render in the new
+table; searching narrows correctly (e.g. "session" matches only
+`session_id`); clicking a row opens the correct field detail modal
+("FortiManager common field" eyebrow, matching title); sorting by
+Field toggles ascending/descending correctly. Confirmed FortiGate's
+and Dell iDRAC's own Schema Explorers (the two other vendors whose
+Schema Explorer this touches shared CSS with) still render their full
+row counts unaffected (63 and 27 rows respectively). Confirmed at
+1500px and 375px in both themes with zero console errors.
+
+`1.4.6` (PATCH - making an already-loaded field dataset browsable in
+a tab that already existed for every vendor including this one; not a
+new catalogue, tab, or app-level capability).
 
 ## Structure
 
