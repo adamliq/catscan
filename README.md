@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.11` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.12` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2173,6 +2173,43 @@ unchanged, zero console errors throughout.
 `1.4.11` (PATCH - a scroll affordance on an already-existing wide
 table shared by two apps; not a new catalogue, tab, or app-level
 capability).
+
+Added a "Log file" field to Linux Events' detail panel, showing the
+actual on-disk file each event's records land in - not previously
+captured anywhere in this catalogue's data. Linux Events' existing
+"Log" field (e.g. `audit/SYSCALL`) is auditd/journald's own
+record-type name, not a filesystem path, so it doesn't answer "where
+do I go find this on disk" the way it might look like it does at a
+glance.
+
+Small, curated lookup rather than derived or guessed, keyed by the
+catalogue's 6 distinct `log` values: all four `audit/*` record types
+(`SYSCALL`, `USER`, `DAEMON`, `MAC`) share one answer -
+`/var/log/audit/audit.log` - since auditd writes every record type to
+the same file regardless of type. `ssh/protocol` and
+`systemd/journal` don't have one universal answer, so both are spelled
+out rather than picking a side: `ssh/protocol` names both
+`/var/log/secure` (RHEL/CentOS/Fedora) and `/var/log/auth.log`
+(Debian/Ubuntu), since sshd logs via syslog's auth/authpriv facility
+and the two distro families route that facility to different files;
+`systemd/journal` explains it's a binary journal, not a flat text
+file - `/var/log/journal/` if persistent or volatile in
+`/run/log/journal/` otherwise, read with `journalctl`, and often also
+forwarded to `/var/log/messages` (RHEL) or `/var/log/syslog` (Debian)
+when rsyslog's `imjournal` module is active. Placed right after the
+existing "Source" field in the detail panel's field grid, the natural
+place for this kind of per-event provenance info to live.
+
+Verified: `node --check`. Confirmed via Playwright by clicking through
+all 77 events that every one shows a "Log file" value with the
+expected text for its `log` category (zero missing), and that the
+longer `ssh/protocol` and `systemd/journal` explanations wrap cleanly
+within the field grid at both 1500px and 375px without overflowing or
+clipping, in both themes. Regression-checked Microsoft Events'
+own render count - unaffected, zero console errors throughout.
+
+`1.4.12` (PATCH - a new field added to an already-existing detail
+view; not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
