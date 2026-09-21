@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.11` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.12` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2172,6 +2172,48 @@ unchanged, zero console errors throughout.
 
 `1.4.11` (PATCH - a scroll affordance on an already-existing wide
 table shared by two apps; not a new catalogue, tab, or app-level
+capability).
+
+Added a first cross-catalogue gap-analysis pass, scoped narrowly on
+purpose: how many of Threat Detection's own `required_log_source`
+references line up with a Microsoft Events log channel. Not fuzzy
+matching - a small hand-curated alias table built by comparing
+Threat Detection's 4,017 detections (spread across 13 separate
+`<script>` JSON blocks plus a 14th, differently-embedded ESXi family)
+against Microsoft Events' own 197 distinct `log` values, matching
+only where the correspondence was clear (Security/System channels,
+PowerShell/Sysmon/DHCP-Server/GroupPolicy/DNS-Server/WinRM/
+TerminalServices). Linux/AWS/Other Events matching, Event-ID-level
+precision, and any automated fuzzy matching are all explicitly out of
+scope for this pass.
+
+Surfaced two ways: Microsoft Events' own Log filter now shows a small
+detection-count badge next to any log channel with a match (e.g.
+"9 det" next to PowerShell/Operational), and Threat Detection's Heat
+Coverage page gained a "Data source coverage (Microsoft Events)"
+section with matched-vs-total stat tiles and a top-10 list of the
+most-referenced sources this pass didn't match, worded explicitly as
+"no Microsoft Events match in this pass" rather than "uncatalogued",
+since several of them (Dell iDRAC, HPE OneView) are in fact catalogued
+elsewhere, under Other Events, just not checked against in this pass.
+
+Both catalogues run in separate script closures with no shared scope
+and no guaranteed run order, so rather than deriving the numbers live
+at runtime, they're computed once offline against the current data and
+embedded as two small static objects (`WIN_LOG_DETECTION_COVERAGE`,
+`TD_DATASRC_COVERAGE`) - the same precomputed-and-embedded pattern
+`aws_iam_actions.json` already uses elsewhere in this app.
+
+Verified: `node --check`. Confirmed via Playwright that the Heat
+Coverage stat tiles render the exact expected values, the gap list
+renders all 10 entries, and the Microsoft Events Log filter shows the
+new badge when searched down to a matched log channel (PowerShell) -
+zero console errors in either check. Screenshots of both confirmed
+clean layout with no overlap against the existing `.opt-count` badge
+or the existing Heat Coverage matrix.
+
+`1.4.12` (PATCH - a read-only coverage insight surfaced on two
+already-existing pages; not a new catalogue, tab, or app-level
 capability).
 
 ## Structure
