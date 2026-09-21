@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.12` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.13` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2215,6 +2215,35 @@ or the existing Heat Coverage matrix.
 `1.4.12` (PATCH - a read-only coverage insight surfaced on two
 already-existing pages; not a new catalogue, tab, or app-level
 capability).
+
+Added an Export button to Microsoft Events, mirroring Threat
+Detection's own existing `#td-export-btn` (same "Export current
+results as JSON" behavior, same Blob-download-and-toast mechanics) -
+this app was the one catalogue tab that didn't already have one.
+Placed at the end of the search-row toolbar, next to the existing
+filter controls it exports the output of. Downloads exactly what
+`filtered()` currently returns - honoring search text, the Log/
+Category selections, and the ACSC/reference-link/publication toggles,
+not the full 4,746-event catalogue - as
+`microsoft-events-export.json`. A small `#win-toast` component was
+added for the confirmation message ("Exported N events"), since this
+app didn't have Threat Detection's toast component to reuse; styled
+with this app's own `--ink`/`--bg` tokens rather than Threat
+Detection's `--text`/`--bg`, consistent with each app keeping its own
+scoped CSS tokens.
+
+Verified: `node --check`. Confirmed via Playwright that searching down
+to a subset (218 PowerShell-related events) and clicking Export
+downloads a JSON file named `microsoft-events-export.json` containing
+exactly those 218 events (not the full catalogue), and that the toast
+reads "Exported 218 events". Regression-checked across both themes and
+both 1500px/375px viewports - all 4,893 events still render, the
+Export button stays visible and correctly placed at every size, zero
+console errors throughout.
+
+`1.4.13` (PATCH - an export affordance on an already-existing page,
+matching a pattern already shipped elsewhere in the app; not a new
+catalogue, tab, or app-level capability).
 
 ## Structure
 
