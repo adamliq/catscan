@@ -2241,9 +2241,40 @@ both 1500px/375px viewports - all 4,893 events still render, the
 Export button stays visible and correctly placed at every size, zero
 console errors throughout.
 
-`1.4.13` (PATCH - an export affordance on an already-existing page,
-matching a pattern already shipped elsewhere in the app; not a new
-catalogue, tab, or app-level capability).
+Before this shipped, extended the same Export control with a field
+picker and a CSV option, since a fixed "every field, JSON only" export
+doesn't suit every downstream use (a quick spreadsheet import of a few
+columns vs. a full re-import of every field). The plain button became
+a combobox - the same `.combo`/`.combo-panel` pattern already used for
+the Log/Category filters right next to it - opening a panel with a
+JSON/CSV format toggle and a checklist of this catalogue's 18 exportable
+fields (Event ID, Log, Source, Category, Subcategory, Description,
+ACSC priority log, Reference, How to collect, MITRE ATT&CK techniques,
+AD compromise techniques, NIST 800-53, Splunk CIM mapping, Group
+Policy path, Opposite event ID, Sample log text, Sample type, Field
+schema), all selected by default so the export is unchanged unless a
+field is deselected. "All"/"None" buttons in the panel footer match
+the existing Log/Category combos' own footer pattern; the footer note
+between them tracks the live "N of 18 fields" count. CSV output is
+hand-rolled (comma/quote/newline-safe cell escaping, `\r\n` line
+endings) rather than pulling in a library, matching the general
+lightweight-dependency posture of this vendored, offline-first app.
+
+Verified: `node --check`. Confirmed via Playwright that deselecting to
+a 3-field subset (Event ID, Log, Description), filtering to the same
+218 PowerShell-related events, and exporting as CSV downloads
+`microsoft-events-export.csv` with exactly that 3-column header, 218
+data rows, and a toast reading "Exported 218 events · 3 fields · CSV";
+that re-selecting all 18 fields and switching to JSON downloads
+`microsoft-events-export.json` with all 18 keys present; and that the
+export panel opens, closes on an outside click, and stays fully
+on-screen (no horizontal overflow) at 375px width. Regression-checked
+across both themes and both 1500px/375px viewports - zero console
+errors throughout.
+
+`1.4.13` (PATCH - a field/format picker added to an export control
+shipped in this same version; not a new catalogue, tab, or app-level
+capability).
 
 ## Structure
 
