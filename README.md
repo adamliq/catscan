@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.12` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.13` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2210,6 +2210,100 @@ own render count - unaffected, zero console errors throughout.
 
 `1.4.12` (PATCH - a new field added to an already-existing detail
 view; not a new catalogue, tab, or app-level capability).
+
+Asked to add Microsoft Events coverage for eight specific `Log
+name: System` sources: NETLOGON, Service Control Manager, LSA
+(LsaSrv), Kerberos-Key-Distribution-Center, DistributedCOM,
+DHCP-Server, Wininit, and Windows Remote Management. Checked existing
+coverage first rather than assuming a blank slate: Service Control
+Manager already had 15 well-chosen rows (the classic 7000/7001/7009/
+7011/7022/7023/7024/7026/7031/7032/7034/7035/7036/7040/7045 range) and
+needed nothing further; NETLOGON had only the two Zerologon-hardening
+events (5827/5828); the other six had zero rows under `log: System`
+specifically - DHCP-Server and Windows Remote Management both already
+had substantial coverage, but under their modern
+`Microsoft-Windows-DHCP-Server` and `Microsoft-Windows-WinRM/
+Operational` channels respectively, a genuinely different `log` value
+from the classic System-log messages these two sources also still
+emit.
+
+Researched each real event ID via web search rather than from memory,
+cross-checking multiple independent sources per event (Microsoft
+Learn/TechNet, Microsoft Q&A, and long-standing community references
+like Uwe Gradenegger's and syfuhs.net's KDC write-ups) the same way
+this catalogue's own README describes its existing NSA/Microsoft
+cross-checking passes - full citations are in each new row's
+`reference` field. One deliberate exclusion caught during research:
+Kerberos Event ID 4 (KRB_AP_ERR_MODIFIED) turned up repeatedly
+alongside the Kerberos-Key-Distribution-Center events, but its real
+source is `Microsoft-Windows-Security-Kerberos`, not
+`Kerberos-Key-Distribution-Center` - left out rather than folded in
+under the wrong source.
+
+Added 20 new events: NETLOGON 5719/5722/5723/5805 (secure-channel
+setup/authentication failures - 5723 and 5805 specifically about
+failed authentication got MITRE T1110, Brute Force; 5719/5722 are
+connectivity/config signals, left unmapped); LSA (LsaSrv) 40960/40961
+(Kerberos negotiation failures); Kerberos-Key-Distribution-Center 11/
+21/27/29 (duplicate SPN, invalid smart-card certificate - T1649,
+Steal or Forge Authentication Certificates - missing key, and no
+suitable KDC certificate); DistributedCOM 10016/10028/10029 (DCOM
+permission denied - explicitly noted as usually benign/by-design per
+Microsoft's own guidance, not per-event-alertable -, communication
+failure, and server registration timeout); DHCP-Server 1035/1036/1046
+(missing DHCP Users/Administrators groups at startup, and the server
+determining it isn't authorized and stopping - flagged as a possible
+rogue-DHCP-server signal, not just AD connectivity trouble);
+Wininit 11 (AppInit_DLLs - MITRE T1546.010, Event Triggered Execution:
+AppInit DLLs, and the one new event marked as an ACSC priority log);
+and Windows Remote Management 10148/10149/10154 (WinRM listener
+started/stopped - 10148 tagged T1021.006, Remote Services: Windows
+Remote Management, and also marked ACSC priority given it's the
+signal that a host has become remotely reachable - and SPN
+registration failure).
+
+Deliberately conservative on the `mitre_techniques`,
+`acsc_priority_log`, and `nist_800_53_au` fields: only assigned where
+there's a genuinely clean, hard-to-dispute fit (5 of the 20 new rows
+got a MITRE technique; 2 got the ACSC flag; none got a NIST 800-53 AU
+control, matching how sparingly that field is already used elsewhere
+in this catalogue, e.g. on Service Control Manager's own 15 rows).
+Everything else - the majority of this batch - is left unmapped
+rather than stretched to fit, consistent with this catalogue's own
+stated practice of leaving purely diagnostic/operational events
+unmapped.
+
+Both catalogue-normalized fields (`source: DHCP-Server`, matching this
+catalogue's own existing label for the other DHCP-Server rows) and the
+literal historical Event Viewer strings (`Source: DhcpServer` inside
+the illustrative sample text) are represented - deliberately not the
+same string in both places, so filtering/searching stays consistent
+with the rest of the catalogue while the sample text stays true to
+what a real admin would actually see logged.
+
+Applied to all three places this catalogue's Windows Events data
+lives: the vendored `windows/data/events.csv`/`events.json` (4,737 ->
+4,757 rows) and the embedded `DATA.events` array in `index.html`
+(4,893 -> 4,913 events; footer count corrected to match, having been
+stale at 4,746 already before this change).
+
+Verified: `node --check`. Confirmed via a direct parse of the served
+page's embedded `DATA.events` (rather than the search UI, which is
+unreliable here since Windows commonly reuses the same numeric event
+ID across unrelated providers - e.g. searching "40961" alone also
+matches an unrelated PowerShell event) that all 20 new rows exist
+exactly once each, with the correct `log`/`source`/event ID
+combination and a populated description. Spot-checked three detail
+panels (5805, 1046, 10154) by screenshot - clean rendering, correct
+field grid, sample text, and field schema, consistent with the rest
+of the app. Confirmed the Log filter picks up the new
+Kerberos-Key-Distribution-Center source. Regression-checked across
+both themes and both 1500px/375px viewports, plus Linux Events'
+unaffected 77-event count - zero console errors throughout.
+
+`1.4.13` (PATCH - 20 additional events added to an already-existing
+catalogue's data set; not a new catalogue, tab, or app-level
+capability).
 
 ## Structure
 

@@ -46476,3 +46476,150 @@ Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
 GroupOperationId = {GroupOperationId}; Executing polling query {Query} in namespace {NamespaceName}",Full Windows 11 24H2 Pro (build 26100.1742) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue),,template,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+5719,System,NETLOGON,Account Logon,Netlogon Secure Channel,"This computer was not able to set up a secure session with a domain controller — Netlogon could not locate or successfully authenticate to a domain controller in the domain. A connectivity/availability issue on its own, not evidence of an attack.","Log Name:      System
+Source:        NETLOGON
+Event ID:      5719
+Level:         Error
+Computer:      WKS-0231.corp.local
+Description:
+This computer was not able to set up a secure session with a domain controller in domain CORP due to the following:
+There are currently no logon servers available to service the logon request.
+This may lead to authentication problems. Make sure that this computer is connected to the network. If the problem persists, please contact your domain administrator.","Microsoft Learn, ""Event ID 5719 — STATUS_INTERNAL_ERROR Occurs When the NetLogon Service Restarts"" (troubleshoot/windows-server/windows-security/event-id-5719-when-netlogon-service-restarts)",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""domain"":""string"",""error_code"":""string""}",,,
+5722,System,NETLOGON,Account Logon,Netlogon Secure Channel,"The session setup from a computer account to this domain controller failed to authenticate, resetting the secure channel between the two — commonly caused by the computer account's password falling out of sync with Active Directory.","Log Name:      System
+Source:        NETLOGON
+Event ID:      5722
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The session setup from computer WKS-0231$ failed to authenticate. The name of the account referenced in the security database is WKS-0231$. The following error occurred:
+Access is denied.","Microsoft Learn Q&A, ""Problem with NETLOGON (Event ID 5805, 5723)""; community documentation on the Netlogon 5719/5722/5723/5805 secure-channel authentication-failure family",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""computer_account"":""string"",""error_code"":""string""}",,,
+5723,System,NETLOGON,Account Logon,Netlogon Secure Channel,"A session setup from a computer failed to authenticate because the security database has no trust account matching the referenced computer name — the machine account may not exist, may have been deleted, or the name presented may not be genuine.","Log Name:      System
+Source:        NETLOGON
+Event ID:      5723
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The session setup from computer WKS-0231 failed to authenticate. The following error occurred:
+Access is denied.","Microsoft Learn Q&A, ""Problem with NETLOGON (Event ID 5805, 5723)""; LogRhythm documentation, ""EVID 5722 & 5723: NETLOGON Authentication Failure""",,illustrative,T1110,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""computer_account"":""string"",""error_code"":""string""}",,,
+5805,System,NETLOGON,Account Logon,Netlogon Secure Channel,The session setup from a computer failed to authenticate. Repeated occurrences from the same source are the classic signal of password-guessing against a computer account rather than a one-off connectivity blip.,"Log Name:      System
+Source:        NETLOGON
+Event ID:      5805
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The session setup from the computer WKS-0231 failed to authenticate. The following error occurred:
+Access is denied.","Microsoft Learn Q&A, ""Problem with NETLOGON (Event ID 5805, 5723)""",,illustrative,T1110,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""computer_account"":""string"",""error_code"":""string""}",,,
+40960,System,LSA (LsaSrv),Authentication,Kerberos Negotiation Failure,"The Local Security Authority detected an authentication protocol error while negotiating with another server — most often a Kerberos ticket/SPN mismatch, occasionally the result of a broken secure channel or clock skew rather than an attack.","Log Name:      System
+Source:        LsaSrv
+Event ID:      40960
+Level:         Error
+Computer:      WKS-0231.corp.local
+Description:
+The Security System detected an authentication error for the server cifs/fileserver01. The failure code from authentication protocol Kerberos was ""The referenced account is currently disabled and may not be logged on to. (0xc0000072)"".",Community/TechNet documentation on LsaSrv Event ID 40960/40961 (secure-channel and authentication-package negotiation failures),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_server"":""string"",""auth_package"":""string"",""error_code"":""string""}",,,
+40961,System,LSA (LsaSrv),Authentication,Kerberos Negotiation Failure,"The Local Security Authority could not establish a secured connection with a server because no authentication protocol was available — the practical effect is the secure channel to that server (and anything depending on it, such as mapped drives) is dropped.","Log Name:      System
+Source:        LsaSrv
+Event ID:      40961
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The Security System could not establish a secured connection with the server cifs/fileserver01. No authentication protocol was available.",Community/TechNet documentation on LsaSrv Event ID 40960/40961 (secure-channel and authentication-package negotiation failures),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_server"":""string""}",,,
+11,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Duplicate SPN,"The Key Distribution Center found multiple accounts registered with the same Service Principal Name (SPN) — a client's ticket may have been encrypted with a different account's key than the one the target service expects, so the ticket fails to decrypt.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      11
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+There are multiple accounts with name cifs/fileserver01.corp.local of type DS_SERVICE_PRINCIPAL_NAME. Please contact your system administrator.","Uwe Gradenegger, details of KDC Event ID 11; Microsoft Learn, Kerberos protocol registry/KDC configuration troubleshooting",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""spn"":""string""}",,,
+21,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Invalid Smart Card Certificate,"A user's smart-card certificate failed validation during a PKINIT logon attempt and the logon was denied. Worth reviewing when it doesn't correspond to a known expired/revoked certificate, since an invalid or forged certificate is the other explanation.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      21
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The certificate for the user jsmith@corp.local could not be used for smartcard logon, or the certificate could not be verified. Please contact the user for more information about the certificate they're attempting to use.","Uwe Gradenegger, details of KDC Event ID 21 (Kerberos-Key-Distribution-Center)",,illustrative,T1649,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""user_principal_name"":""string""}",,,
+27,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Key Not Found,"The KDC could not find the encryption key requested for a ticket operation. An increase in this event's volume is a documented, benign side effect of Kerberos security-hardening updates rather than on its own an indicator of compromise.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      27
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+While processing an AS request for target service krbtgt, the account DC01$ did not have a suitable key for generating a Kerberos ticket. The requested etype was 23.","syfuhs.net, ""Kerberos Event ID 27""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_service"":""string"",""account"":""string"",""etype"":""integer""}",,,
+29,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Certificate Unavailable,"The KDC cannot find a suitable certificate for smart-card (PKINIT) logons, or the certificate it has could not be verified — smart-card logon across the domain will not function correctly until this is resolved.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      29
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Key Distribution Center (KDC) cannot find a suitable certificate to use for smart card logons, or the KDC certificate could not be verified. Smart card logon may not function correctly if this problem is not resolved.","Ather Beg, ""Event ID 29 – KDC Certificate Availability""; mskb.pkisolutions.com KB 967623",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+10016,System,DistributedCOM,DCOM,DCOM Permission Denied,"The application-specific or machine-default DCOM permission settings don't grant Local/Remote Activation or Launch permission for a COM application to the specified user or SID. Extremely common and, per Microsoft's own guidance, usually benign/by-design — baseline it rather than alerting per-event, but a newly-appearing CLSID/SID pairing is worth a look.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10016
+Level:         Error
+Computer:      WKS-0231.corp.local
+Description:
+The application-specific permission settings do not grant Local Activation permission for the COM Server application with CLSID {D63B10C5-BB46-4990-A94F-E40B9D520160} and APPID {9CA88EE3-ACB7-47C8-AFC4-AB702511C276} to the user CORP\jsmith SID (S-1-5-21-...) from address LocalHost (Using LRPC) running in the application container Unavailable SID (Unavailable). This security permission can be modified using the Component Services administrative tool.","Microsoft Learn, ""Event ID 10016 is logged in Windows"" (troubleshoot/windows-client/application-management/event-10016-logged-when-accessing-dcom)",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""clsid"":""guid"",""appid"":""guid"",""user"":""string"",""sid"":""string""}",,,
+10028,System,DistributedCOM,DCOM,DCOM Communication Failure,"DCOM was unable to communicate with a remote computer using any of its configured transport protocols — typically a network-reachability or firewall issue between the two machines, and rarely fatal to the requesting application.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10028
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+DCOM was unable to communicate with the computer 10.20.30.44 using any of the configured protocols; requested by PID 4020 (C:\Windows\System32\svchost.exe).","Community documentation on DistributedCOM Event ID 10028 (""DCOM was unable to communicate with the computer"")",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_host"":""ip"",""requesting_pid"":""integer""}",,,
+10029,System,DistributedCOM,DCOM,DCOM Server Registration Timeout,"A COM server did not register itself with DCOM within the expected timeout period, so the activation request failed — usually because the target application was slow to start or was already overloaded.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10029
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+DCOM got error ""1053"" attempting to start the service EventSystem with arguments ""C:\Windows\system32\svchost.exe -k netsvcs -p"" in order to run the server: {1BE1F766-5536-11D1-B726-00C04FB926AF}",Community documentation on DistributedCOM Event ID 10029 (server registration timeout),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""clsid"":""guid"",""service_name"":""string""}",,,
+1035,System,DHCP-Server,DHCP,DHCP Service Startup,The DHCP server was unable to create or look up the local 'DHCP Users' security group on this computer at service startup — typically seen when that built-in group is missing from Active Directory.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1035
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service was unable to create or lookup the DHCP Users local group on this computer. This may impact the security of this machine. Contact your network administrator to resolve this problem.",Community/Microsoft Learn documentation on DHCP Server Event ID 1035/1036 (missing DHCP Users/DHCP Administrators security groups),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1036,System,DHCP-Server,DHCP,DHCP Service Startup,"The DHCP server was unable to create or look up the local 'DHCP Administrators' security group on this computer at service startup — the counterpart to Event 1035, seen when that built-in group is missing.","Log Name:      System
+Source:        DhcpServer
+Event ID:      1036
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP server was unable to create or lookup the DHCP Administrators local group on this computer. This may impact the security of this machine. Contact your network administrator to resolve this problem.",Community/Microsoft Learn documentation on DHCP Server Event ID 1035/1036 (missing DHCP Users/DHCP Administrators security groups),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1046,System,DHCP-Server,DHCP,DHCP Server Authorization,"The DHCP server determined it is not authorized to service clients in this Active Directory domain and stopped servicing DHCP requests — either it (or another DHCP server it detected) isn't authorized, or it can no longer reach the directory service to confirm its authorization. Worth investigating as a possible sign of a rogue/unauthorized DHCP server on the segment, not just routine AD connectivity trouble.","Log Name:      System
+Source:        DhcpServer
+Event ID:      1046
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP/BINL service on the local machine, belonging to the Windows Administrative domain corp.local, has determined that it is not authorized to start. It has stopped servicing clients.","rakhesh.com, ""Event ID 1046 – DHCP server says it is not authorized even though it is authorized""; Microsoft Learn, DHCP authorization-failures troubleshooting guide",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""domain"":""string""}",,,
+11,System,Wininit,Startup and shutdown,AppInit DLLs,"Custom DLLs are configured to load into every process that links User32.dll, via the legacy AppInit_DLLs registry mechanism — a long-standing (if increasingly rare, since it's disabled by default from Vista onward and most modern loaders bypass it) injection/persistence technique. Logged once per boot whenever any AppInit DLL is configured, whether legitimate (some older AV/accessibility tooling) or not.","Log Name:      System
+Source:        Microsoft-Windows-Wininit
+Event ID:      11
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+Custom dynamic link libraries are being loaded for every application. The system administrator should review the list of libraries to ensure they are related to trusted applications.
+DLL Name(s): C:\Windows\System32\example_appinit.dll","Microsoft Q&A, ""Custom dynamic link libraries are being loaded for every application"" (Wininit Event ID 11); TechNet Wiki, ""Event ID 11 WinInt""",,illustrative,T1546.010,Yes,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""dll_names"":""string""}",,,
+10148,System,Windows Remote Management,Windows Remote Management,WinRM Listener,"The WinRM service has started a listener and is now accepting WS-Management requests on this host — the point at which the machine becomes reachable for PowerShell Remoting and other WinRM-based remote administration, worth knowing about on any host where it wasn't previously enabled.","Log Name:      System
+Source:        Windows Remote Management
+Event ID:      10148
+Level:         Information
+Computer:      WKS-0231.corp.local
+Description:
+The WinRM service is listening for WS-Management requests.","Microsoft Learn (previous-versions), ""Event ID 10148 — Listener Availability""",,illustrative,T1021.006,Yes,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+10149,System,Windows Remote Management,Windows Remote Management,WinRM Listener,"The WinRM service is no longer listening for WS-Management requests — either the listener was intentionally removed/reconfigured, or the service is failing to bring up a listener it's configured to create.","Log Name:      System
+Source:        Windows Remote Management
+Event ID:      10149
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The WinRM service is not listening for WS-Management requests.","Microsoft Learn archive, ""The WinRM service is not listening for WS-Management requests"" (Event ID 10149)",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+10154,System,Windows Remote Management,Windows Remote Management,WinRM SPN Registration,The WinRM service failed to register one or more of its Service Principal Names (e.g. WSMAN/hostname) in Active Directory — Kerberos authentication to this host's WinRM listener may fail until the computer account is granted rights to self-register SPNs or an administrator adds them manually.,"Log Name:      System
+Source:        Windows Remote Management
+Event ID:      10154
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The WinRM service failed to create the following SPNs: WSMAN/WKS-0231; WSMAN/WKS-0231.corp.local. Additional Data: The error received was 8344 The requested operation did not satisfy one or more constraints associated with the class of the object..
+User Action: Add the above SPNs to a user account different than the machine account using setspn.exe. If everything is already fine, this message may be safely ignored.","joshwieder.net, ""Fixing Event ID 10154 — The WinRM service failed to create the following SPN""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""spns"":""string"",""error_code"":""string""}",,,
