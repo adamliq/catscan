@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.15` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2406,6 +2406,55 @@ errors throughout.
 `1.4.15` (PATCH - a field/format picker added to an export control
 shipped in this same version; not a new catalogue, tab, or app-level
 capability).
+
+Given an uploaded `bash-history-siem.md` guide (PROMPT_COMMAND +
+syslog for real-time, timestamped, system-wide Bash history capture;
+auditd as a "stronger, harder to bypass" complementary layer; Bash
+4.4+'s own `syslog_history` builtin; a hardening/comparison table;
+forwarding to a SIEM via rsyslog UDP/TCP/TLS or Filebeat/Auditbeat)
+and asked where in Linux Events it best belongs. Checked first rather
+than assuming: none of the three existing content shapes fit it. The
+per-event `audit_configuration` config cards are one card per
+subcategory, a couple of sentences pointing at one `auditctl` rule -
+too terse for a multi-method guide, and wrong anyway, since the
+guide's own recommended approach isn't auditd at all (PROMPT_COMMAND
+is the primary method, auditd only the complementary "stronger
+option"). The `auditd_man_pages`/`fapolicyd_man_pages` shape (`{command,
+purpose, sections, notes}`, rendered as titled reference sections) is
+structurally the right fit, but both existing instances of it live
+*inside* the Auditd Rules and Fapolicyd tabs specifically, scoped to
+those subsystems' own commands - and this guide's own primary method
+being Bash-native, not that either subsystem. A raw `logger -t
+"bash-history"` tag also isn't a real vendor-assigned identifier the
+way `audit/*` type codes or systemd `MESSAGE_ID`s are, so it couldn't
+become an `events.csv` row without breaking this catalogue's own
+"real, verifiable identifiers only" rule for what counts as a
+catalogued event.
+
+Added a new top-level "Command Logging" tab, sibling to Events/Auditd
+Rules/Fapolicyd/Reference tables/Companion Tools, reusing the man-page
+shape and its existing list/detail rendering (`auditdCmdSectionsHtml`
+is called directly - no new rendering code, just a second list/detail
+pair and a new `command_logging_guides` DATA array) rather than
+inventing a new content model for one document. The guide's own
+sections became eight titled reference blocks (Recommended approach,
+rsyslog configuration, example log line, the auditd option, the
+Bash 4.4+ builtin, hardening notes, a quick test, and a method-
+comparison table), transcribed rather than summarized so the exact
+commands/config stay copy-pasteable.
+
+Verified: `node --check`. Confirmed via Playwright that the new tab
+button exists, activates its panel, lists the one guide with a correct
+section count, and that its detail view renders all eight sections
+plus Notes/Source with no code-block overflow at either 1500px or
+375px, in both themes. Confirmed search matches on content inside a
+section (e.g. "syslog_history") and shows the correct empty state for
+a non-matching query. Regression-checked Linux Events' own 77-event
+list and Microsoft Events' 4,913-event list - both unaffected, zero
+console errors throughout.
+
+`1.5.0` (MINOR - a whole new tab inside Linux Events; squarely the
+"new tab" case this repo's own versioning policy reserves MINOR for).
 
 ## Structure
 
