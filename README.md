@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.2` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.3` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2614,6 +2614,87 @@ console errors throughout.
 catalogue's data set, plus a bucket/channel-mapping reconciliation
 against an authoritative reference; not a new catalogue, tab, or
 app-level capability).
+
+Given an owner-supplied reference CSV of Microsoft-Windows-DNS-Server-
+Service event IDs - 233 rows across three channels (DNS Server, Audit,
+Analytical) - and asked to reconcile it against this catalogue's
+existing DNS-Server-side coverage. That coverage turned out to be
+almost entirely absent: prior work had only ever covered the DNS
+*client* side (163 rows across `Microsoft-Windows-DNS-Client` and
+related logs) plus a thin 11-row sliver of the server's own Analytical
+channel - the classic "DNS Server" log and the newer Audit channel had
+no coverage at all.
+
+The CSV itself split into two very different buckets. The 66 Audit-
+channel rows and 7 new Analytical rows (DNS-over-HTTPS lookup events,
+597-603) carried real, specific message-table text - clean, mechanical
+additions matching this catalogue's established CSV-to-row conventions.
+But 127 of the 154 "DNS Server"-channel rows had only generic
+category-level filler ("Configuration related event.", "AD integration
+related error.", etc.) with no real message text at all. Presented the
+choice between a quick pass (skip the 127) and a fuller pass (research
+each one's real wording individually); asked for the fuller option.
+
+Dispatched four parallel research passes - one per event-ID group (AD
+Integration; Zone Data/Transfer/Root Hints; and two roughly-equal
+splits of the remaining Configuration/Service Status events) - each
+independently searching for the real Windows message-table text rather
+than trusting the CSV's filler, consistent with this catalogue's
+standing verification discipline. 117 of the 127 came back with a
+real, sourced message; the other 10 were excluded rather than guessed,
+either because no verifiable text could be found at all, or (one case)
+because the only text found was close enough to a sibling event's own
+confirmed wording that publishing it risked misattributing the wrong
+event's message. One of the four passes found strong primary sourcing
+for its entire group - a mirrored WS2008R2 provider-manifest XML
+extracted directly from `dns.exe`'s own resource strings - which also
+caught a real accuracy problem in the vendor CSV: 15 of its 26 "AD
+Integration"-category events are marked Error in the CSV but are
+actually Warning or Informational in the DNS server's own manifest;
+the corrected, real severities were used instead of the CSV's claim.
+
+Two more existing conventions carried over unchanged from the prior
+DHCP-Server-Operational pass: `description` keeps `%N` tokens as
+literal "xxx" placeholders, while `sample` gets a realistic,
+context-aware substitution built from a rule table keyed to each
+placeholder's preceding phrase - extended here with DNS-specific
+labels (zone name, RDATA, TTL, directory partition, registry
+parameter, and so on) and a couple of ordering fixes so a value chosen
+for one placeholder in a message doesn't get reused verbatim for a
+different placeholder in the same message.
+
+Added 215 new rows in total: 66 Audit-channel, 17 Analytical (7 new
+DoH events; the pre-existing 10-row sliver untouched), and 132 to the
+classic "DNS Server" log (25 with real CSV text, 107 from the
+independent research pass). Category is `f"DNS Server {csv_category}"`,
+matching this catalogue's own existing precedent (row 6001's category
+was already literally "DNS Server Zone Transfer" before this batch).
+Applied to all three places this catalogue's Windows Events data
+lives: `windows/data/events.csv`/`events.json` (5,013 -> 5,130 rows)
+and the embedded `DATA.events` array in `index.html` (5,169 -> 5,286
+events; footer count corrected to match).
+
+Verified: `node --check`. Confirmed via a direct parse of the served
+page's embedded `DATA.events` that the 226 total DNS-Server-Service
+rows across all four log buckets are duplicate-free, and spot-checked
+seven event IDs including the corrected-severity 4013 (confirmed
+`Level: Warning`, not the CSV's claimed Error) and one of the fuller-
+pass's zone-transfer events. Screenshotted four detail panels (an AD
+Integration event, a DoH Analytical event, an Audit zone-update event
+with a multi-placeholder sample, and a classic-log Configuration
+event) - clean rendering in all four. Regression-checked across both
+themes and both 1500px/375px viewports, plus Linux Events' unaffected
+77-event count - zero console errors throughout.
+
+(Separately, this pass surfaced a pre-existing data-sync gap unrelated
+to DNS: 128 (log, event_id) pairs exist in `index.html`'s embedded
+`DATA.events` with no matching row in `windows/data/events.csv`/
+`events.json`, predating this session's work. Left as-is - out of
+scope for this batch - and flagged for a future pass.)
+
+`1.5.3` (PATCH - 215 additional events extending an already-existing
+catalogue's data set; not a new catalogue, tab, or app-level
+capability).
 
 ## Structure
 
