@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.4.14` as of this line) — this
+current [`VERSION`](VERSION) (`v1.4.15` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2345,6 +2345,66 @@ or the existing Heat Coverage matrix.
 
 `1.4.14` (PATCH - a read-only coverage insight surfaced on two
 already-existing pages; not a new catalogue, tab, or app-level
+capability).
+
+Added an Export button to Microsoft Events, mirroring Threat
+Detection's own existing `#td-export-btn` (same "Export current
+results as JSON" behavior, same Blob-download-and-toast mechanics) -
+this app was the one catalogue tab that didn't already have one.
+Placed at the end of the search-row toolbar, next to the existing
+filter controls it exports the output of. Downloads exactly what
+`filtered()` currently returns - honoring search text, the Log/
+Category selections, and the ACSC/reference-link/publication toggles,
+not the full 4,746-event catalogue - as
+`microsoft-events-export.json`. A small `#win-toast` component was
+added for the confirmation message ("Exported N events"), since this
+app didn't have Threat Detection's toast component to reuse; styled
+with this app's own `--ink`/`--bg` tokens rather than Threat
+Detection's `--text`/`--bg`, consistent with each app keeping its own
+scoped CSS tokens.
+
+Verified: `node --check`. Confirmed via Playwright that searching down
+to a subset (218 PowerShell-related events) and clicking Export
+downloads a JSON file named `microsoft-events-export.json` containing
+exactly those 218 events (not the full catalogue), and that the toast
+reads "Exported 218 events". Regression-checked across both themes and
+both 1500px/375px viewports - all 4,893 events still render, the
+Export button stays visible and correctly placed at every size, zero
+console errors throughout.
+
+Before this shipped, extended the same Export control with a field
+picker and a CSV option, since a fixed "every field, JSON only" export
+doesn't suit every downstream use (a quick spreadsheet import of a few
+columns vs. a full re-import of every field). The plain button became
+a combobox - the same `.combo`/`.combo-panel` pattern already used for
+the Log/Category filters right next to it - opening a panel with a
+JSON/CSV format toggle and a checklist of this catalogue's 18 exportable
+fields (Event ID, Log, Source, Category, Subcategory, Description,
+ACSC priority log, Reference, How to collect, MITRE ATT&CK techniques,
+AD compromise techniques, NIST 800-53, Splunk CIM mapping, Group
+Policy path, Opposite event ID, Sample log text, Sample type, Field
+schema), all selected by default so the export is unchanged unless a
+field is deselected. "All"/"None" buttons in the panel footer match
+the existing Log/Category combos' own footer pattern; the footer note
+between them tracks the live "N of 18 fields" count. CSV output is
+hand-rolled (comma/quote/newline-safe cell escaping, `\r\n` line
+endings) rather than pulling in a library, matching the general
+lightweight-dependency posture of this vendored, offline-first app.
+
+Verified: `node --check`. Confirmed via Playwright that deselecting to
+a 3-field subset (Event ID, Log, Description), filtering to the same
+218 PowerShell-related events, and exporting as CSV downloads
+`microsoft-events-export.csv` with exactly that 3-column header, 218
+data rows, and a toast reading "Exported 218 events · 3 fields · CSV";
+that re-selecting all 18 fields and switching to JSON downloads
+`microsoft-events-export.json` with all 18 keys present; and that the
+export panel opens, closes on an outside click, and stays fully
+on-screen (no horizontal overflow) at 375px width. Regression-checked
+across both themes and both 1500px/375px viewports - zero console
+errors throughout.
+
+`1.4.15` (PATCH - a field/format picker added to an export control
+shipped in this same version; not a new catalogue, tab, or app-level
 capability).
 
 ## Structure
