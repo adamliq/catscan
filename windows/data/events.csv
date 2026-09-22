@@ -46537,13 +46537,13 @@ Level:         Error
 Computer:      DC01.corp.local
 Description:
 The certificate for the user jsmith@corp.local could not be used for smartcard logon, or the certificate could not be verified. Please contact the user for more information about the certificate they're attempting to use.","Uwe Gradenegger, details of KDC Event ID 21 (Kerberos-Key-Distribution-Center)",,illustrative,T1649,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""user_principal_name"":""string""}",,,
-27,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Key Not Found,"The KDC could not find the encryption key requested for a ticket operation. An increase in this event's volume is a documented, benign side effect of Kerberos security-hardening updates rather than on its own an indicator of compromise.","Log Name:      System
+27,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Unsupported Encryption Type (TGS),"While processing a TGS (service-ticket) request, the KDC found the target account had no suitable key for the encryption type requested — the TGS-side counterpart to event 26's AS-side version. An encryption-type mismatch, most often surfaced after RC4 is disabled in favor of AES-only Kerberos.","Log Name:      System
 Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
 Event ID:      27
 Level:         Warning
 Computer:      DC01.corp.local
 Description:
-While processing an AS request for target service krbtgt, the account DC01$ did not have a suitable key for generating a Kerberos ticket. The requested etype was 23.","syfuhs.net, ""Kerberos Event ID 27""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_service"":""string"",""account"":""string"",""etype"":""integer""}",,,
+While processing a TGS request for the target server cifs/fileserver01, the account fileserver01$ did not have a suitable key for generating a Kerberos ticket (the missing key has an ID of 1). The requested etypes were 18. The accounts available etypes were 23 -133 -128.","syfuhs.net, ""Kerberos Event ID 27""; Microsoft Learn, ""KDC event ID 16 or 27 is logged if DES for Kerberos is disabled""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_service"":""string"",""account"":""string"",""missing_key_id"":""integer"",""requested_etypes"":""string"",""available_etypes"":""string""}",,,
 29,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Certificate Unavailable,"The KDC cannot find a suitable certificate for smart-card (PKINIT) logons, or the certificate it has could not be verified — smart-card logon across the domain will not function correctly until this is resolved.","Log Name:      System
 Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
 Event ID:      29
@@ -46565,13 +46565,13 @@ Level:         Warning
 Computer:      WKS-0231.corp.local
 Description:
 DCOM was unable to communicate with the computer 10.20.30.44 using any of the configured protocols; requested by PID 4020 (C:\Windows\System32\svchost.exe).","Community documentation on DistributedCOM Event ID 10028 (""DCOM was unable to communicate with the computer"")",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_host"":""ip"",""requesting_pid"":""integer""}",,,
-10029,System,DistributedCOM,DCOM,DCOM Server Registration Timeout,"A COM server did not register itself with DCOM within the expected timeout period, so the activation request failed — usually because the target application was slow to start or was already overloaded.","Log Name:      System
+10029,System,DistributedCOM,DCOM,DCOM Activation Timeout (Service Stop Wait),"A COM class's activation timed out while waiting for a Windows service it depends on to stop first — a different timeout from event 10010's ""never registered"" case; this one is specifically about the prerequisite service not stopping in time.","Log Name:      System
 Source:        Microsoft-Windows-DistributedCOM
 Event ID:      10029
 Level:         Warning
 Computer:      WKS-0231.corp.local
 Description:
-DCOM got error ""1053"" attempting to start the service EventSystem with arguments ""C:\Windows\system32\svchost.exe -k netsvcs -p"" in order to run the server: {1BE1F766-5536-11D1-B726-00C04FB926AF}",Community documentation on DistributedCOM Event ID 10029 (server registration timeout),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""clsid"":""guid"",""service_name"":""string""}",,,
+The activation of the CLSID {752073A1-23F2-4396-85F0-8FDB879ED0ED} timed out waiting for the service TrustedInstaller to stop.","EventTracker KB, DistributedCOM Event ID 10029",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""clsid"":""guid"",""service_name"":""string""}",,,
 1035,System,DHCP-Server,DHCP,DHCP Service Startup,The DHCP server was unable to create or look up the local 'DHCP Users' security group on this computer at service startup — typically seen when that built-in group is missing from Active Directory.,"Log Name:      System
 Source:        DhcpServer
 Event ID:      1035
@@ -46623,3 +46623,174 @@ Computer:      WKS-0231.corp.local
 Description:
 The WinRM service failed to create the following SPNs: WSMAN/WKS-0231; WSMAN/WKS-0231.corp.local. Additional Data: The error received was 8344 The requested operation did not satisfy one or more constraints associated with the class of the object..
 User Action: Add the above SPNs to a user account different than the machine account using setspn.exe. If everything is already fine, this message may be safely ignored.","joshwieder.net, ""Fixing Event ID 10154 — The WinRM service failed to create the following SPN""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""spns"":""string"",""error_code"":""string""}",,,
+5781,System,NETLOGON,Account Logon,Netlogon DNS Registration,"Dynamic registration or deregistration of one or more DNS records for this domain controller failed — other computers use these records to locate it as a DC/LDAP server, so a persistent failure here can silently strand clients that rely on DNS-based DC discovery.","Log Name:      System
+Source:        NETLOGON
+Event ID:      5781
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+Dynamic registration or deregistration of one or more DNS records failed with the following error:
+No DNS servers configured for local system.
+The record(s) in question are:
+_ldap._tcp.corp.local",Microsoft Learn/TechNet community documentation on Netlogon Event ID 5781 (dynamic DNS registration failure),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""dns_records"":""string"",""error"":""string""}",,,
+2114,System,NETLOGON,Account Logon,Netlogon Service Startup,"The Netlogon service failed to start because a service it depends on (commonly the Server service, LanmanServer) hadn't started — an older (Windows 2000/2003-era) startup-dependency failure, usually paired with a Service Control Manager 7024 event citing this same code.","Log Name:      System
+Source:        NETLOGON
+Event ID:      2114
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The Server service is not started.","Microsoft Support archive, ""The Netlogon service does not start and event IDs 2114 and 7024 are logged""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+5000,System,LSA (LsaSrv),Authentication,LSA Security Package Exception,"A security support provider (SSP) — Kerberos, NTLM, Negotiate, or another registered package — raised an unhandled exception inside LSASS, and LSA has disabled that package to protect itself. Losing an auth package mid-run is itself worth investigating, not just the underlying exception.","Log Name:      System
+Source:        LsaSrv
+Event ID:      5000
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The security package Kerberos generated an exception. The exception information is the data.","Microsoft Support (KB828873), ""LsaSrv Event ID 5000 disables authentication packages""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""security_package"":""string"",""exception_data"":""string""}",,,
+6037,System,LSA (LsaSrv),Authentication,LSA SPN Authentication,"A local process tried to authenticate to this same computer using a target/SPN name (e.g. HOST/servername, HTTP/remote.domain.com) that LSA doesn't recognize as referring to itself — the loopback-check warning behind the well-known BackConnectionHostNames registry workaround.","Log Name:      System
+Source:        LsaSrv
+Event ID:      6037
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The target name used is not valid and does not refer to any local computer name. Target name used was HTTP/remote.corp.local.","Community documentation on LsaSrv Event ID 6037 (target-name/SPN authentication warning, BackConnectionHostNames)",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_name"":""string""}",,,
+6038,System,LSA (LsaSrv),Authentication,NTLM Authentication Detected,"Windows detected that a client authenticated to this server using NTLM rather than Kerberos — logged once per boot, on the first NTLM use. Not itself an attack, but a starting point for auditing which clients/apps still can't or won't use Kerberos.","Log Name:      System
+Source:        LsaSrv
+Event ID:      6038
+Level:         Warning
+Computer:      FILESERVER01.corp.local
+Description:
+Microsoft Windows Server has detected that NTLM authentication is presently being used between clients and this server. This event occurs once per boot of the server on the first time a client uses NTLM with this server.","Nathan Levandowski, ""Event ID 6038 Auditing NTLM usage""; audministrator.wordpress.com, LsaSrv 6038 writeup",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+6155,System,LSA (LsaSrv),Authentication,LSA Package Signature,"LSA detected that an authentication package (msv1_0, kerberos, tspkg, pku2u, cloudap, wdigest, schannel, or negoexts) is not signed the way it expects — seen with Credential Guard enabled, usually caused by an update/compatibility issue rather than tampering, but worth distinguishing from the latter.","Log Name:      System
+Source:        LsaSrv
+Event ID:      6155
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The LSA package msv1_0 is not signed as expected. This might indicate that the package has been modified, or the signing infrastructure is not functioning correctly.","Microsoft Q&A / community documentation on LSA (LsaSrv) Event ID 6155 (""LSA package is not signed as expected"", Credential Guard)",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""package_name"":""string""}",,,
+40970,System,LSA (LsaSrv),Authentication,Kerberos Downgrade Blocked,"The security system detected and blocked an attempt to fall back from Kerberos to NTLM when contacting a 3-part SPN (LDAP/DC-FQDN/Domain\@Domain) — hardening introduced by the January 2022 updates. Worth reviewing each occurrence: it's either a real compatibility gap in an app that still needs the fallback, or a sign something is deliberately forcing a downgrade.","Log Name:      System
+Source:        LsaSrv
+Event ID:      40970
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The security System detected a downgrade attempt when contacting the 3-part SPN LDAP/DC01.corp.local/corp.local@CORP.LOCAL. The Kerberos error message was Client not found in Kerberos database (error code 0x6).","Community documentation on LsaSrv Event ID 40970 (Kerberos-to-NTLM downgrade blocked, January 2022 hardening)",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""spn"":""string"",""kerberos_error"":""string""}",,,
+7,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — SAM Request Failure,"The Security Account Manager failed a KDC request in an unexpected way. On Windows Server 2025 this can appear with a blank account name as a known, functionally-harmless issue Microsoft has acknowledged — worth checking the specific error/lookup-type data before treating any one occurrence as significant.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      7
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The Security Account Manager failed a KDC request in an unexpected way. The account name was jsmith. The error code was an NTSTATUS code found in winerror.h or ntstatus.h. The Lookup type was 0x108.","Microsoft Learn, ""Event ID 7 Is Intermittently Logged on a Windows Server 2025-Based DC""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""account_name"":""string"",""error_code"":""string"",""lookup_type"":""string""}",,,
+14,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — No Key Intersection (AS),"While processing an initial ticket (AS) request, the KDC and the target account had no encryption type in common — the AS-side counterpart to event 16's TGS-side version. Became far more common after the November 2022 updates removed RC4 from the default supported list.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      14
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+While processing an AS request for target service krbtgt, the account DC01$ did not have a suitable key for generating a Kerberos ticket (the missing key has an ID of 1).","dirteam.com, ""You experience errors with Event ID 14 and source Kerberos-Key-Distribution-Center on Domain Controllers""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_service"":""string"",""account"":""string"",""missing_key_id"":""integer""}",,,
+16,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — No Key Intersection (TGS),"While processing a service-ticket (TGS) request, the KDC and the target account had no encryption type in common — most often seen when AES is disabled/unsupported for an account still requiring it, resolved by resetting the affected account's password to regenerate its keys.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      16
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+While processing a TGS request for the target server cifs/fileserver01, the account fileserver01$ did not have a suitable key for generating a Kerberos ticket (the missing key has an ID of 1).","Microsoft Learn, ""KDC event ID 16 or 27 is logged if DES for Kerberos is disabled""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""target_service"":""string"",""account"":""string"",""missing_key_id"":""integer""}",,,
+35,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Missing PAC Attributes,"The KDC received a ticket-granting ticket from another KDC that didn't carry a PAC attributes field — part of the CVE-2021-42287 (sAMAccountName spoofing) hardening rollout, flagging cross-trust tickets that predate the fix or come from a KDC that hasn't applied it.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      35
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Key Distribution Center (KDC) encountered a ticket-granting-ticket (TGT) from another Key Distribution Center (KDC) that did not contain a PAC Attributes field.","Microsoft Japan Windows Technology Support Blog, ""CVE-2021-42287で追加されたイベント メッセージID 35, 37""",,illustrative,T1558,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""source_kdc"":""string""}",,,
+37,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Missing PAC Requestor,"The KDC encountered a ticket without the PAC Requestor buffer while processing a request for another ticket, preventing a security check from running — also part of the CVE-2021-42287 hardening; the accompanying PacRequestorEnforcement registry key controls whether this stays audit-only or starts rejecting such requests.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      37
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+While processing a request for another ticket, the Key Distribution Center (KDC) encountered a ticket that did not contain the PAC Requestor buffer.","Virtualization Howto, ""Domain Controller PacRequestorEnforcement Registry Key""",,illustrative,T1558,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+42,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Weak Encryption Keys,"The KDC issued (or would have issued) a service ticket using RC4 because the target account has no AES keys — the account is configured for weak/legacy Kerberos encryption, exactly the condition that makes an account's service tickets crackable offline (Kerberoasting). Resetting the account's password generates proper AES keys.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      42
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Kerberos Key Distribution Center (KDC) does not have strong keys for account svc-sql. You must reset the password on the account to prevent the use of weaker keys.","Microsoft Support (KB5021131), ""How to manage the Kerberos protocol changes related to CVE-2022-37966""",,illustrative,T1558.003,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""account"":""string""}",,,
+45,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Certificate Not in NTAuth Store,"The KDC accepted a client certificate for PKINIT/smart-card logon whose chain terminates at a root that isn't in the NTAuth store — part of the April 2025 (CVE-2025-26647) certificate-chain hardening; in audit mode the logon still succeeds but is flagged, ahead of the setting later being enforced.","Log Name:      System
+Source:        Microsoft-Windows-Kerberos-Key-Distribution-Center
+Event ID:      45
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Key Distribution Center (KDC) encountered a client certificate that was valid but did not chain to a Root Certification Authority that is in the NTAuth store.","Microsoft Support, ""Protections for CVE-2025-26647 (Kerberos Authentication)""",,illustrative,T1649,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""certificate_thumbprint"":""string""}",,,
+10006,System,DistributedCOM,DCOM,DCOM Server Activation Error,"DCOM returned an HRESULT error while attempting to activate a specific COM server on a remote computer — the error code in the event identifies the underlying failure (permissions, network, or the server application itself).","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10006
+Level:         Error
+Computer:      WKS-0231.corp.local
+Description:
+DCOM got error ""2147944122"" from the computer FILESERVER01 when attempting to activate the server: {000C101C-0000-0000-C000-000000000046}",Experts Exchange / community documentation on DistributedCOM Event ID 10006,,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""error_hresult"":""string"",""target_host"":""string"",""clsid"":""guid""}",,,
+10010,System,DistributedCOM,DCOM,DCOM Server Registration Timeout,"A COM server did not register itself with DCOM within the required timeout period, so the activation request failed — distinct from event 10029's ""waiting for a dependent service to stop"" timeout; this one is a flat registration deadline.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10010
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The server {D63B10C5-BB46-4990-A94F-E40B9D520160} did not register with DCOM within the required timeout.","Anavem, ""Windows Event ID 10010 — DistributedCOM: DCOM Server Process Launcher Access Denied""; Microsoft Q&A, ""Frequent DistributedDCOM event id 10029 and 10010""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""clsid"":""guid""}",,,
+10015,System,DistributedCOM,DCOM,DCOM Remote Launch Permission Denied,"The machine-wide DCOM limits don't grant Remote Launch permission for this COM server application to the specified user — the ""remote"" counterpart to event 10016's Local Activation check, and generally the more security-relevant of the two since it gates activation coming in over the network.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10015
+Level:         Error
+Computer:      WKS-0231.corp.local
+Description:
+The machine-wide limit settings do not grant Remote Launch permission for the COM Server application with CLSID {D63B10C5-BB46-4990-A94F-E40B9D520160} to the user CORP\jsmith SID (S-1-5-21-...). This security permission can be modified using the Component Services administrative tool.","itechguides.com, ""DistributedCOM Errors: Fix Event IDs 10016, 10001 and More""",,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""clsid"":""guid"",""user"":""string"",""sid"":""string""}",,,
+10036,System,DistributedCOM,DCOM,DCOM Authentication Hardening (Server-Side),"The server-side DCOM authentication-level policy rejected an activation request because the client's authentication level was below RPC_C_AUTHN_LEVEL_PKT_INTEGRITY — one of the three events (10036/10037/10038) added by the KB5004442 DCOM hardening rollout (CVE-2021-26414, an NTLM-relay-via-DCOM vulnerability) to flag incompatible clients ahead of enforcement.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10036
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+The server-side authentication level policy does not allow the user CORP\jsmith SID (S-1-5-21-...) from address 10.20.30.44 to activate DCOM server. Please raise the activation authentication level at least to RPC_C_AUTHN_LEVEL_PKT_INTEGRITY in client application.","Microsoft Community Hub, ""DCOM authentication hardening: what you need to know""",,illustrative,T1557,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""user"":""string"",""sid"":""string"",""source_address"":""ip""}",,,
+10037,System,DistributedCOM,DCOM,DCOM Authentication Hardening (Explicit Client Level),"A client application explicitly requested an authentication level below RPC_C_AUTHN_LEVEL_PKT_INTEGRITY when activating a DCOM server — the client-side, explicitly-set-level counterpart to event 10036, part of the same KB5004442/CVE-2021-26414 hardening rollout.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10037
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+Application SPECIFIC_APP_NAME with PID 4020 is requesting to activate CLSID {000C101C-0000-0000-C000-000000000046} on computer FILESERVER01 with explicitly set authentication level at 2, with the lowest activation authentication level required by DCOM being 5 (RPC_C_AUTHN_LEVEL_PKT_INTEGRITY).","Microsoft Community Hub, ""DCOM authentication hardening: what you need to know""",,illustrative,T1557,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""application"":""string"",""pid"":""integer"",""clsid"":""guid"",""target_host"":""string"",""auth_level"":""integer""}",,,
+10038,System,DistributedCOM,DCOM,DCOM Authentication Hardening (Default Client Level),"A client application activated a DCOM server using its default (not explicitly set) authentication level, and that default fell below RPC_C_AUTHN_LEVEL_PKT_INTEGRITY — the client-side, default-level counterpart to events 10036/10037, same KB5004442/CVE-2021-26414 hardening rollout.","Log Name:      System
+Source:        Microsoft-Windows-DistributedCOM
+Event ID:      10038
+Level:         Warning
+Computer:      WKS-0231.corp.local
+Description:
+Application SPECIFIC_APP_NAME with PID 4020 is requesting to activate CLSID {000C101C-0000-0000-C000-000000000046} on computer FILESERVER01 with default activation authentication level at 2, with the lowest activation authentication level required by DCOM being 5 (RPC_C_AUTHN_LEVEL_PKT_INTEGRITY).","Microsoft Community Hub, ""DCOM authentication hardening: what you need to know""",,illustrative,T1557,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""},""application"":""string"",""pid"":""integer"",""clsid"":""guid"",""target_host"":""string"",""auth_level"":""integer""}",,,
+1001,System,DHCP-Server,DHCP,DHCP Service Startup,"The DHCP Server service failed to register itself with the Service Controller at startup — the first in a family of four sequential startup-dependency failures (1001-1004) covering Service Controller, global parameters, registry parameters, and the lease database in turn.","Log Name:      System
+Source:        DhcpServer
+Event ID:      1001
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP Server service failed to register with Service Controller. Check that the Service Controller is running properly.",Community/Microsoft Learn documentation on DHCP Server startup-dependency events (1001–1004),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1002,System,DHCP-Server,DHCP,DHCP Service Startup,"The DHCP Server service failed to initialize its global parameters at startup — often a resource-exhaustion symptom (low memory, too many running processes) rather than a configuration error.","Log Name:      System
+Source:        DhcpServer
+Event ID:      1002
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP Server service failed to initialize its global parameters. Not enough storage is available to process this command.",Community/Microsoft Learn documentation on DHCP Server startup-dependency events (1001–1004),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1003,System,DHCP-Server,DHCP,DHCP Service Startup,The DHCP Server service failed to initialize its registry parameters at startup — usually a sign of a corrupted or permission-locked registry key under the DHCP server's own configuration hive.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1003
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP Server service failed to initialize its registry parameters. Access is denied.",Community/Microsoft Learn documentation on DHCP Server startup-dependency events (1001–1004),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1004,System,DHCP-Server,DHCP,DHCP Service Startup,"The DHCP Server service failed to initialize its lease database at startup, so it did not come up — the last of the 1001–1004 startup family; check permissions on the DHCP database directory before assuming corruption.","Log Name:      System
+Source:        DhcpServer
+Event ID:      1004
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service failed to initialize the database. Access is denied.",Community/Microsoft Learn documentation on DHCP Server startup-dependency events (1001–1004),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,

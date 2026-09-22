@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.1` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2455,6 +2455,91 @@ console errors throughout.
 
 `1.5.0` (MINOR - a whole new tab inside Linux Events; squarely the
 "new tab" case this repo's own versioning policy reserves MINOR for).
+
+Given a second pasted table of candidate Microsoft Events System-log
+event IDs for the same seven sources as `1.4.13` (NETLOGON, LSA
+(LsaSrv), Kerberos-Key-Distribution-Center, DistributedCOM,
+DHCP-Server, Wininit, Windows Remote Management) and asked to add
+them. Verified every one independently rather than transcribing the
+table as given - it turned out to need real correction, not just
+citation. Two categories of problem surfaced:
+
+**Wrong source/log entirely**, so excluded rather than added: three
+Wininit rows (12, 13, 1074) are documented under Kernel-General and
+User32 respectively, not Wininit, matching this repo's own earlier
+exclusion of 1074 for the same reason; four Windows Remote Management
+rows (6, 91, 169, 142) belong to the `Microsoft-Windows-WinRM/
+Operational` channel already covered by this catalogue's other 166
+rows, not the classic System log; a DHCP-Server 1000 turned out to be
+an Application-log crash record for `dhcpssvc.dll`, not a System-log
+service event; a DistributedCOM 10009 is the pre-Server-2012 event ID
+for the exact same message already covered under 10028, not a
+distinct event; and a Kerberos-Key-Distribution-Center 26 couldn't be
+corroborated distinctly enough from event 14 across sources to trust
+(both are described almost identically across secondary write-ups) -
+left out rather than guessed.
+
+**Two already-merged rows turned out to be mislabeled**, caught while
+cross-checking the table's claims against the same primary sources:
+Kerberos-Key-Distribution-Center 27's sample text was actually event
+14's message (both are "did not have a suitable key" wording,
+differing only in AS vs. TGS phrasing and whether etypes are listed -
+an easy mix-up, and exactly the kind of error this second pass was
+supposed to catch); DistributedCOM 10029's sample text was actually
+event 10010's ("did not register with DCOM within timeout" vs.
+10029's real "timed out waiting for a service to stop" meaning).
+Both corrected in place rather than left standing alongside the new,
+correctly-labeled rows for the same event family.
+
+Added 24 new events across six sources (Service Control Manager
+again needed nothing, unchanged from the last pass): NETLOGON 5781/
+2114 (DNS registration failure, legacy service-startup failure); LSA
+(LsaSrv) 5000/6037/6038/6155/40970 (security-package exception, SPN/
+loopback-check warning, NTLM-in-use detection, Credential Guard
+package-signature warning, and a January 2022-hardening Kerberos-to-
+NTLM downgrade block); Kerberos-Key-Distribution-Center 7/14/16/35/
+37/42/45 (SAM request failure, the AS/TGS "no key intersection" pair,
+the CVE-2021-42287 PAC-hardening pair, weak/RC4 keys, and the CVE-
+2025-26647 NTAuth-store certificate check); DistributedCOM 10006/
+10010/10015/10036/10037/10038 (an activation HRESULT error, the
+correctly-relabeled registration timeout, a Remote Launch permission
+denial, and the KB5004442/CVE-2021-26414 authentication-hardening
+trio); and DHCP-Server 1001/1002/1003/1004 (the four-stage Service
+Controller/global-parameters/registry-parameters/database startup
+sequence).
+
+MITRE mapping stayed as selective as last time, applied only where a
+CVE or attack technique is directly named in the sourcing rather than
+inferred: T1558 on the two PAC-hardening events (CVE-2021-42287 is
+specifically about Kerberos ticket/PAC forgery), T1558.003 on the
+weak-RC4-keys event (the precise condition that makes an account
+Kerberoastable), T1649 on the NTAuth-store event (matching the
+existing event 21's precedent for certificate-based auth abuse), and
+T1557 on the three DCOM authentication-hardening events (CVE-2021-
+26414 is an NTLM-relay-via-DCOM vulnerability). Twelve of the 24 got
+no mapping at all, left blank rather than stretched.
+
+Applied to all three places this catalogue's Windows Events data
+lives: `windows/data/events.csv`/`events.json` (4,757 -> 4,781 rows,
+including the 2 corrected in place) and the embedded `DATA.events`
+array in `index.html` (4,913 -> 4,937 events; footer count corrected
+to match).
+
+Verified: `node --check`. Confirmed via a direct parse of the served
+page's embedded `DATA.events` that all 24 new rows exist exactly once
+each with the correct `log`/`source`/event ID and a populated
+description; that all ten excluded candidates (the three Wininit, four
+WinRM, DHCP 1000, Kerberos 26, DCOM 10009) are correctly absent under
+these sources; and that both corrected rows now carry their real
+message text. Screenshotted three detail panels (the corrected KDC 27,
+the new Kerberoasting-relevant KDC 42, and the corrected DCOM 10029) -
+clean rendering, MITRE tags visible where set. Regression-checked
+across both themes and both 1500px/375px viewports, plus Linux
+Events' unaffected 77-event count - zero console errors throughout.
+
+`1.5.1` (PATCH - 24 additional events plus 2 corrections to an
+already-existing catalogue's data set; not a new catalogue, tab, or
+app-level capability).
 
 ## Structure
 
