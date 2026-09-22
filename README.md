@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.1` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.2` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2539,6 +2539,80 @@ Events' unaffected 77-event count - zero console errors throughout.
 
 `1.5.1` (PATCH - 24 additional events plus 2 corrections to an
 already-existing catalogue's data set; not a new catalogue, tab, or
+app-level capability).
+
+Given an owner-supplied reference CSV of Microsoft-Windows-DHCP-Server
+event IDs - 148 rows spanning six channels (Operational, Admin,
+System, DNS, Audit, Filter) - and asked to reconcile it against this
+catalogue's existing DHCP-Server coverage. Cross-checking first: the
+CSV's own "Admin" channel turned out to independently corroborate the
+catalogue's pre-existing classic-System-log DHCP-Server rows (20291/
+20292 among them) - identical message text under a channel label the
+CSV assigns on its own, strong confirmation those rows were already
+correct. That check also surfaced a real gap: the bulk of the CSV's
+Operational-channel family (plus the remaining Admin, System, DNS,
+Audit, and Filter rows) had no equivalent in the catalogue at all,
+since prior passes had only ever added the classic-System-log side of
+DHCP-Server. Presented the choice between a small Admin-channel-only
+addition and the full Operational-family catch-up; asked for the
+fuller option.
+
+Parsed the CSV directly rather than retyping it, to keep the mapping
+mechanical instead of hand-transcribed. Two existing conventions
+governed where each row landed: seven Admin-channel rows (1000, 1007-
+1011, 1056) describe service lifecycle events - startup, shutdown,
+cleanup - matching the numbering scheme of the catalogue's existing
+classic-System-log DHCP-Server bucket (`log="System"`), so they went
+there, each given its own correct level and subcategory rather than a
+uniform "Error"/"startup" label (1008-1010 are shutdown-path events,
+1011 is a routine runtime NACK, not an error). Everything else -
+Operational, the remaining Admin rows, System, DNS, Audit, and Filter
+- landed in the catalogue's other existing DHCP-Server bucket
+(`log="Microsoft-Windows-DHCP-Server"`), which the data already
+collapses across channels rather than fragmenting by channel (an
+existing-row precedent confirmed before following it); the per-row
+channel is preserved instead in each new row's illustrative sample
+text `Log Name:` line, which does vary by channel. Twenty-two
+already-covered Operational-bucket event IDs and the seven
+already-covered classic-System-log ones were skipped rather than
+duplicated.
+
+Matched two more existing field conventions for this event family
+exactly: `description` keeps the message template's `%N` tokens as
+literal "xxx" placeholders (as the pre-existing rows do), while
+`sample` gets a realistic, context-aware substitution - built via a
+rule table keyed to the phrase immediately preceding each placeholder
+(a scope name, a MAC address, a lease duration, a failover partner,
+and so on) rather than a single generic filler, so the illustrative
+text reads the way a real event would.
+
+Added 134 new rows: 127 to the `Microsoft-Windows-DHCP-Server`
+Operational-family bucket (covering NAP policy events, MAC-address
+filtering/allow-deny lists, failover-relationship state changes,
+DNS-registration failures, stateless-client inventory, superscope and
+multicast-scope lifecycle events, and PBA policy-condition changes,
+among others) and 7 to the classic-System-log bucket (service
+startup/shutdown lifecycle). Applied to all three places this
+catalogue's Windows Events data lives: `windows/data/events.csv`/
+`events.json` (4,781 -> 4,915 rows) and the embedded `DATA.events`
+array in `index.html` (4,937 -> 5,071 events; footer count corrected
+to match).
+
+Verified: `node --check`. Confirmed via a direct parse of the served
+page's embedded `DATA.events` that both new buckets are duplicate-free
+internally, that the total event count matches, and spot-checked nine
+specific event IDs (NAP, MAC filtering, failover, and classic-System-
+log entries among them) for the correct log/description/subcategory.
+Screenshotted four detail panels (a NAP event, a Filter-channel event,
+a DNS-channel event, and a classic-System-log startup event) - clean
+rendering, channel-correct `Log Name:`/`Level:` lines in each sample.
+Regression-checked across both themes and both 1500px/375px
+viewports, plus Linux Events' unaffected 77-event count - zero
+console errors throughout.
+
+`1.5.2` (PATCH - 134 additional events extending an already-existing
+catalogue's data set, plus a bucket/channel-mapping reconciliation
+against an authoritative reference; not a new catalogue, tab, or
 app-level capability).
 
 ## Structure

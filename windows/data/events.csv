@@ -46794,3 +46794,1068 @@ Level:         Error
 Computer:      DHCP01.corp.local
 Description:
 The DHCP service failed to initialize the database. Access is denied.",Community/Microsoft Learn documentation on DHCP Server startup-dependency events (1001–1004),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+71,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Modified by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      71
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Modified by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+77,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Enabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      77
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Enabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+78,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Disabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      78
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Disabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+79,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Updated with DNS Settings by xxx: to dynamically update DNS A and PTR records on request by the DHCP Clients.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      79
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Updated with DNS Settings by CORP\dhcpadmin: to dynamically update DNS A and PTR records on request by the DHCP Clients.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+80,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Updated with DNS Settings by xxx: to always dynamically update DNS A and PTR records.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      80
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Updated with DNS Settings by CORP\dhcpadmin: to always dynamically update DNS A and PTR records.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+81,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Enabled for DNS Settings by xxx: to discard DNS A and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      81
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Enabled for DNS Settings by CORP\dhcpadmin: to discard DNS A and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+82,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Disabled for DNS Settings by xxx: to discard DNS A and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      82
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Disabled for DNS Settings by CORP\dhcpadmin: to discard DNS A and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+83,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Enabled for DNS Settings by xxx: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      83
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Enabled for DNS Settings by CORP\dhcpadmin: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+84,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Disabled for DNS Settings by xxx: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      84
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Disabled for DNS Settings by CORP\dhcpadmin: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+85,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Policy,Policy based assignment has been disabled for scope xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      85
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Policy based assignment has been disabled for scope 10.20.30.0.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+86,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Policy,Policy based assignment has been enabled for scope xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      86
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Policy based assignment has been enabled for scope 10.20.30.0.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+87,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Name Protection setting is Enabled on Scope: xxx for IPv4 by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      87
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Name Protection setting is Enabled on Scope: 10.20.30.0 for IPv4 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+88,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Name Protection setting is Disabled on Scope: xxx for IPv4 by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      88
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Name Protection setting is Disabled on Scope: 10.20.30.0 for IPv4 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+90,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,NAP,NAP Enforcement is Enabled on Scope: xxx for IPv4 by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      90
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+NAP Enforcement is Enabled on Scope: 10.20.30.0 for IPv4 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+91,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,NAP,NAP Enforcement is Disabled on Scope: xxx for IPv4 by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      91
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+NAP Enforcement is Disabled on Scope: 10.20.30.0 for IPv4 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+92,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,NAP,NAP Profile is configured on Scope: xxx for IPv4 with the following NAP Profile: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      92
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+NAP Profile is configured on Scope: 10.20.30.0 for IPv4 with the following NAP Profile: Deny Non-Compliant Clients by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+93,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,NAP,NAP Profile is Updated on Scope: xxx for IPv4 with the following NAP Profile: xxx by xxx. The previous configured NAP Profile was: xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      93
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+NAP Profile is Updated on Scope: 10.20.30.0 for IPv4 with the following NAP Profile: Deny Non-Compliant Clients by CORP\dhcpadmin. The previous configured NAP Profile was: N/A.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+94,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,NAP,The following NAP Profile: xxx is deleted on Scope: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      94
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+The following NAP Profile: Deny Non-Compliant Clients is deleted on Scope: 10.20.30.0 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+95,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for Multicast IPv4 is Configured by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      95
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for Multicast IPv4 is Configured by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+96,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for Multicast IPv4 is Deleted by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      96
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for Multicast IPv4 is Deleted by 239.1.2.0.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+98,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,SuperScope: xxx for IPv4 is Configured by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      98
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+SuperScope: 10.20.30.0 for IPv4 is Configured by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+99,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,SuperScope: xxx for IPv4 is Deleted by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      99
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+SuperScope: 10.20.30.0 for IPv4 is Deleted by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+100,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx within SuperScope: xxx for IPv4 is Activated by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      100
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 within SuperScope: 10.20.30.0 for IPv4 is Activated by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+101,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx within SuperScope: xxx for IPv4 is DeActivated by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      101
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 within SuperScope: 10.20.30.0 for IPv4 is DeActivated by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+102,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Removed in Superscope: xxx by xxx. However the Scope exists outside the Superscope.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      102
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Removed in Superscope: CORP-Bldg1-SuperScope by CORP\dhcpadmin. However the Scope exists outside the Superscope.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+103,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv4 is Deleted in Superscope: xxx as well as Deleted permanently by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      103
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Deleted in Superscope: CORP-Bldg1-SuperScope as well as Deleted permanently by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+105,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Server level option xxx for IPv4 has been updated by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      105
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Server level option 006 DNS Servers for IPv4 has been updated by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+109,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Disabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      109
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Disabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+110,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Updated with DNS Settings by xxx: to dynamically update DNS A and PTR records on request by the DHCP Clients.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      110
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Updated with DNS Settings by CORP\dhcpadmin: to dynamically update DNS A and PTR records on request by the DHCP Clients.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+111,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Updated with DNS Settings by xxx: to always dynamically update DNS A and PTR records.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      111
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Updated with DNS Settings by CORP\dhcpadmin: to always dynamically update DNS A and PTR records.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+112,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Enabled for DNS Settings by xxx: to discard DNS A and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      112
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Enabled for DNS Settings by CORP\dhcpadmin: to discard DNS A and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+113,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Disabled for DNS Settings by xxx: to discard DNS A and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      113
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Disabled for DNS Settings by CORP\dhcpadmin: to discard DNS A and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+114,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Enabled for DNS Settings by xxx: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      114
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Enabled for DNS Settings by CORP\dhcpadmin: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+115,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Disabled for DNS Settings by xxx: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      115
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Disabled for DNS Settings by CORP\dhcpadmin: to dynamically update DNS A and PTR records for DHCP Clients that don't request updates.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+116,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv4 under Scope: xxx is Updated with Option Setting: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      116
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv4 under Scope: 10.20.30.0 is Updated with Option Setting: 006 DNS Servers by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+117,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Policy,Policy based assignment has been disabled at server level.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      117
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Policy based assignment has been disabled at server level.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+118,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Policy,Policy based assignment has been enabled at server level.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      118
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Policy based assignment has been enabled at server level.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+120,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Deleted exclusion IP Address range xxx in the Address Pool for IPv4 under Scope: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      120
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Deleted exclusion IP Address range 10.20.30.100-10.20.30.150 in the Address Pool for IPv4 under Scope: 10.20.30.0 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+121,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Link Layer based filtering is Enabled in the allowlist of the IPv4 by xxx,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      121
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Link Layer based filtering is Enabled in the allowlist of the IPv4 by CORP\dhcpadmin",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+122,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Link Layer based filtering is Disabled in the allowlist of the IPv4 by xxx,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      122
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Link Layer based filtering is Disabled in the allowlist of the IPv4 by CORP\dhcpadmin",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+123,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Filter for physical address: xxx hardware type: xxx added to the IPv4 allowlist by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      123
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Filter for physical address: 00-15-5D-01-02-03 hardware type: 1 (Ethernet) added to the IPv4 allowlist by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+124,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Filter for physical address: xxx hardware type: xxx removed from the IPv4 allowlist by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      124
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Filter for physical address: 00-15-5D-01-02-03 hardware type: 1 (Ethernet) removed from the IPv4 allowlist by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+125,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Link Layer based filtering is Enabled in the blocklist of the IPv4 by xxx,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      125
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Link Layer based filtering is Enabled in the blocklist of the IPv4 by CORP\dhcpadmin",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+126,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Link Layer based filtering is Disabled in the blocklist of the IPv4 by xxx,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      126
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Link Layer based filtering is Disabled in the blocklist of the IPv4 by CORP\dhcpadmin",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+127,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Filter for physical address: xxx hardware type: xxx added to the IPv4 blocklist by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      127
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Filter for physical address: 00-15-5D-01-02-03 hardware type: 1 (Ethernet) added to the IPv4 blocklist by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+128,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,Filter for physical address: xxx hardware type: xxx removed from the IPv4 blocklist by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      128
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Filter for physical address: 00-15-5D-01-02-03 hardware type: 1 (Ethernet) removed from the IPv4 blocklist by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+130,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Deleted by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      130
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Deleted by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+131,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Activated by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      131
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Activated by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+132,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is DeActivated by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      132
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is DeActivated by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+133,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Updated with Lease Preferred Lifetime: xxx by xxx. The previous configured Lease Preferred Lifetime was: xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      133
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Updated with Lease Preferred Lifetime: 86400 by CORP\dhcpadmin. The previous configured Lease Preferred Lifetime was: N/A.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+134,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Updated with Lease Valid Lifetime: xxx by xxx. The previous configured Lease Valid Lifetime was: xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      134
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Updated with Lease Valid Lifetime: 86400 by CORP\dhcpadmin. The previous configured Lease Valid Lifetime was: N/A.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+135,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Updated with Option Setting: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      135
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Updated with Option Setting: 006 DNS Servers by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+136,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Enabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      136
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Enabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+137,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Disabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      137
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Disabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+138,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Updated with DNS Settings by xxx: to dynamically update DNS AAAA and PTR records on request by the DHCP Clients.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      138
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Updated with DNS Settings by CORP\dhcpadmin: to dynamically update DNS AAAA and PTR records on request by the DHCP Clients.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+139,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Updated with DNS Settings by xxx: to always dynamically update DNS AAAA and PTR records.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      139
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Updated with DNS Settings by CORP\dhcpadmin: to always dynamically update DNS AAAA and PTR records.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+140,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Enabled for DNS Settings by xxx: to discard DNS AAAA and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      140
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Enabled for DNS Settings by CORP\dhcpadmin: to discard DNS AAAA and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+141,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Disabled for DNS Settings by xxx: to discard DNS AAAA and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      141
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Disabled for DNS Settings by CORP\dhcpadmin: to discard DNS AAAA and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+142,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Name Protection setting is Enabled on Scope: xxx for IPv6 by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      142
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Name Protection setting is Enabled on Scope: 10.20.30.0 for IPv6 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+143,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Name Protection setting is Disabled on Scope: xxx for IPv6 by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      143
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Name Protection setting is Disabled on Scope: 10.20.30.0 for IPv6 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+145,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 is Configured under Scope xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      145
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 is Configured under Scope 10.20.30.0 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+147,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 is Deleted under Scope xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      147
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 is Deleted under Scope 10.20.30.0 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+148,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Enabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      148
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Enabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+149,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Disabled for DNS Dynamic updates by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      149
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Disabled for DNS Dynamic updates by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+150,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Updated with DNS Settings by xxx: to dynamically update DNS AAAA and PTR records on request by the DHCP Clients.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      150
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Updated with DNS Settings by CORP\dhcpadmin: to dynamically update DNS AAAA and PTR records on request by the DHCP Clients.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+151,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Updated with DNS Settings by xxx: to always dynamically update DNS AAAA and PTR records.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      151
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Updated with DNS Settings by CORP\dhcpadmin: to always dynamically update DNS AAAA and PTR records.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+152,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Enabled for DNS Settings by xxx: to discard DNS AAAA and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      152
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Enabled for DNS Settings by CORP\dhcpadmin: to discard DNS AAAA and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+153,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Disabled for DNS Settings by xxx: to discard DNS AAAA and PTR records when lease is deleted.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      153
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Disabled for DNS Settings by CORP\dhcpadmin: to discard DNS AAAA and PTR records when lease is deleted.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+154,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Reservation: xxx for IPv6 under Scope: xxx is Updated with Option Setting: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      154
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Reservation: 10.20.30.55 for IPv6 under Scope: 10.20.30.0 is Updated with Option Setting: 006 DNS Servers by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""reservation"":""string"",""performed_by"":""string""}",,,
+155,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Added exclusion IP Address range xxx in the Address Pool for IPv6 under Scope: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      155
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Added exclusion IP Address range 10.20.30.100-10.20.30.150 in the Address Pool for IPv6 under Scope: 10.20.30.0 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+156,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Deleted exclusion IP Address range xxx in the Address Pool for IPv6 under Scope: xxx by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      156
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Deleted exclusion IP Address range 10.20.30.100-10.20.30.150 in the Address Pool for IPv6 under Scope: 10.20.30.0 by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+157,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Scope: xxx for IPv6 is Modified by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      157
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv6 is Modified by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+158,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Stateless Client Inventory,DHCPv6 Stateless client inventory has been enabled for the scope xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      158
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+DHCPv6 Stateless client inventory has been enabled for the scope 10.20.30.0.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+159,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Stateless Client Inventory,DHCPv6 Stateless client inventory has been disabled for the scope xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      159
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+DHCPv6 Stateless client inventory has been disabled for the scope 10.20.30.0.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+160,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Stateless Client Inventory,DHCPv6 Stateless client inventory has been enabled for the server.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      160
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+DHCPv6 Stateless client inventory has been enabled for the server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+161,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Stateless Client Inventory,DHCPv6 Stateless client inventory has been disabled for the server.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      161
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+DHCPv6 Stateless client inventory has been disabled for the server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+162,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Stateless Client Inventory,Purge time interval for DHCPv6 stateless client inventory for scope xxx has been set to xxx hours.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      162
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Purge time interval for DHCPv6 stateless client inventory for scope %1 has been set to %2 hours242424242424242424242424.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+163,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Stateless Client Inventory,Purge time interval for DHCPv6 stateless client inventory for server has been set to xxx hours.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      163
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Purge time interval for DHCPv6 stateless client inventory for server has been set to %1 hours242424242424242424242424.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+165,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Scope: xxx for IPv4 is Disabled for DNS Settings by xxx: to disable dynamic updates for DNS PTR records.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      165
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scope: 10.20.30.0 for IPv4 is Disabled for DNS Settings by CORP\dhcpadmin: to disable dynamic updates for DNS PTR records.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""scope"":""string"",""performed_by"":""string""}",,,
+166,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Server level option xxx for IPv6 has been updated by xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      166
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Server level option 006 DNS Servers for IPv6 has been updated by CORP\dhcpadmin.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20220,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Policy,Policy xxx for server is xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20220
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Policy VoIP-Phones for server is Enabled.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20222,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,Policy,The conditions for server policy xxx have been set to xxx. The conditions are grouped by logical operator xxx.,"Log Name:      Microsoft-Windows-DHCP-Server/Operational
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20222
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+The conditions for server policy VoIP-Phones have been set to MAC Address = 00-15-5D-*. The conditions are grouped by logical operator AND.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Operational channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+1001,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,The DHCP service failed to register with Service Controller.,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      1001
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service failed to register with Service Controller.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+1002,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,The DHCP service failed to initialize its global parameters.,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      1002
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service failed to initialize its global parameters.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+1003,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,The DHCP service failed to initialize its registry parameters.,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      1003
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service failed to initialize its registry parameters.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+1004,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,The DHCP service failed to initialize the database.,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      1004
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service failed to initialize the database.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+1046,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Competing / unauthorized DHCP server detected (rogue server).,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      1046
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Competing / unauthorized DHCP server detected (rogue server).",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20035,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,,Interface notification event.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20035
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Interface notification event.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20058,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover binding update related.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20058
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover binding update related.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20059,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover binding ack related.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20059
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover binding ack related.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20060,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover connection established.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20060
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover connection established.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20061,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover connection acknowledged.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20061
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover connection acknowledged.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20062,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover update request all.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20062
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover update request all.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20063,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover update done.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20063
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover update done.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20064,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover update request.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20064
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover update request.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20065,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover state related.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20065
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover state related.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20066,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover contact message.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20066
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover contact message.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20067,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Failover disconnect.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20067
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Failover disconnect.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20068,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Scavenger started.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20068
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scavenger started.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20069,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Scavenger ended.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20069
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Scavenger ended.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20096,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,DHCP Services denied to machine because it matched entry in the blocklist.,"Log Name:      Microsoft-Windows-DHCP-Server/Filter
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20096
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+DHCP Services denied to machine because it matched entry in the blocklist.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Filter channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20097,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,DHCP Services denied to machine because it did not match any entry in the allowlist.,"Log Name:      Microsoft-Windows-DHCP-Server/Filter
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20097
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+DHCP Services denied to machine because it did not match any entry in the allowlist.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Filter channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20099,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,DHCP Services denied (unspecified hostname) - matched blocklist.,"Log Name:      Microsoft-Windows-DHCP-Server/Filter
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20099
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+DHCP Services denied (unspecified hostname) - matched blocklist.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Filter channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20100,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,MAC Filtering,DHCP Services denied (unspecified hostname) - not in allowlist.,"Log Name:      Microsoft-Windows-DHCP-Server/Filter
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20100
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+DHCP Services denied (unspecified hostname) - not in allowlist.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Filter channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20161,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Address allocation triggered for failover relationship.,"Log Name:      Microsoft-Windows-DHCP-Server/System
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20161
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+Address allocation triggered for failover relationship.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (System channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20252,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,The failover state of server changed for relationship.,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20252
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+The failover state of server changed for relationship.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20253,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,Server detected time out of sync with partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Admin
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20253
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Server detected time out of sync with partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20289,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A BINDING-UPDATE message was sent for IP address to partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20289
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A BINDING-UPDATE message was sent for IP address to partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20290,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A BINDING-UPDATE message was received for IP address from partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20290
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A BINDING-UPDATE message was received for IP address from partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20293,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A UPDREQ message was sent to partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20293
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A UPDREQ message was sent to partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20294,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A UPDREQ message was received from partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20294
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A UPDREQ message was received from partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20295,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A UPDDONE message was sent to partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20295
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A UPDDONE message was sent to partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20296,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A UPDDONE message was received from partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20296
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A UPDDONE message was received from partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20297,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A UPDREQALL message was sent to partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20297
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A UPDREQALL message was sent to partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20298,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A UPDREQALL message was received from partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20298
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A UPDREQALL message was received from partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20299,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DHCP Failover,A CONTACT message was sent to partner server.,"Log Name:      Microsoft-Windows-DHCP-Server/Audit
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20299
+Task Category: None
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+A CONTACT message was sent to partner server.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Audit channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20317,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Forward record registration for IPv4 address and FQDN failed (likely missing forward lookup zone).,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20317
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Forward record registration for IPv4 address and FQDN failed (likely missing forward lookup zone).",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20318,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Forward record registration for IPv4 address and FQDN timed out.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20318
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Forward record registration for IPv4 address and FQDN timed out.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20319,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,PTR record registration for IPv4 address and FQDN failed (likely missing reverse lookup zone).,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20319
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+PTR record registration for IPv4 address and FQDN failed (likely missing reverse lookup zone).",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20320,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,PTR record registration for IPv4 address and FQDN timed out.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20320
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+PTR record registration for IPv4 address and FQDN timed out.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20321,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Forward record registration for IPv6 address and FQDN failed.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20321
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Forward record registration for IPv6 address and FQDN failed.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20322,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Forward record registration for IPv6 address and FQDN timed out.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20322
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Forward record registration for IPv6 address and FQDN timed out.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20323,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,PTR record registration for IPv6 address and FQDN failed.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20323
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+PTR record registration for IPv6 address and FQDN failed.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20324,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,PTR record registration for IPv6 address and FQDN timed out.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20324
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+PTR record registration for IPv6 address and FQDN timed out.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20325,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Forward/PTR record registration for IPv4 failed with error.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20325
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Forward/PTR record registration for IPv4 failed with error.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20326,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,Forward record registration for IPv6 failed with error.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20326
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+Forward record registration for IPv6 failed with error.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+20327,Microsoft-Windows-DHCP-Server,DHCP-Server,DHCP,DNS Registration,PTR record registration for IPv6 failed with error.,"Log Name:      Microsoft-Windows-DHCP-Server/DNS
+Source:        Microsoft-Windows-DHCP-Server
+Event ID:      20327
+Task Category: None
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+PTR record registration for IPv6 failed with error.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (DNS channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""task_category"":""string"",""level"":""enum"",""computer"":""string"",""description"":""string""},""performed_by"":""string""}",,,
+1000,System,DHCP-Server,DHCP,,The DHCP service received the unknown option xxx with a length of xxx.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1000
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service received the unknown option 186 with a length of 4.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1007,System,DHCP-Server,DHCP,DHCP Service Startup,The DHCP service failed to initialize Winsock data.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1007
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service failed to initialize Winsock data.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1008,System,DHCP-Server,DHCP,DHCP Service Shutdown,The DHCP service is shutting down due to the following error.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1008
+Level:         Error
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service is shutting down due to the following error.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1009,System,DHCP-Server,DHCP,DHCP Service Shutdown,The DHCP service encountered an error while cleaning up the pending client records.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1009
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service encountered an error while cleaning up the pending client records.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1010,System,DHCP-Server,DHCP,DHCP Service Shutdown,The DHCP service encountered an error while cleaning up the database.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1010
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service encountered an error while cleaning up the database.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1011,System,DHCP-Server,DHCP,,The DHCP service issued a NACK to the client for the address.,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1011
+Level:         Information
+Computer:      DHCP01.corp.local
+Description:
+The DHCP service issued a NACK to the client for the address.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+1056,System,DHCP-Server,DHCP,DHCP Service Startup,DHCP service running on DC without DNS credentials configured (older versions).,"Log Name:      System
+Source:        DhcpServer
+Event ID:      1056
+Level:         Warning
+Computer:      DHCP01.corp.local
+Description:
+DHCP service running on DC without DNS credentials configured (older versions).",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
