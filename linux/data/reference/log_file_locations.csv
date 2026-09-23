@@ -1,5 +1,5 @@
 path,type,category,description
-/var/log/messages,file,System,"Main system log (general messages from kernel, daemons, etc.)"
+/var/log/messages,file,System,"Main system log (general messages from kernel, daemons, etc.). In an IdM deployment, also carries some DNS (named) and PKI (Dogtag) subsystem messages."
 /var/log/secure,file,Security,"Security and authentication (SSH, sudo, PAM, failed logins)"
 /var/log/maillog,file,Mail,Mail server related messages; postfix / mail transfer agent + Dovecot (default on RHEL)
 /var/log/cron,file,System,Cron / scheduled task execution
@@ -13,8 +13,8 @@ path,type,category,description
 /var/log/firewalld,file,Security,firewalld debug and messages
 /var/log/kdump.log,file,Kernel,Kernel crash dump related
 /var/log/audit/audit.log,file,Security,Audit daemon logs (includes SELinux AVC denials)
-/var/log/httpd/access_log,file,Web Server,Apache HTTP Server access log
-/var/log/httpd/error_log,file,Web Server,Apache HTTP Server error log
+/var/log/httpd/access_log,file,Web Server,"Apache HTTP Server access log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
+/var/log/httpd/error_log,file,Web Server,"Apache HTTP Server error log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
 /var/log/nginx/access.log,file,Web Server,Nginx access log (if installed)
 /var/log/nginx/error.log,file,Web Server,Nginx error log (if installed)
 /var/log/journal/,directory,Systemd,Persistent systemd journal storage (binary - use journalctl)
@@ -89,3 +89,10 @@ ANSIBLE_LOG_PATH,env-var,Ansible,Override log path at runtime
 /var/log/tower/dispatcher.log,file,Ansible AAP,Dispatcher worker log
 /var/log/tower/job_lifecycle.log,file,Ansible AAP,Job lifecycle details
 /var/log/supervisor/,directory,Ansible AAP,Supervisor-managed service logs (AAP)
+/var/log/ipaserver-install.log,file,IdM / FreeIPA,"IdM server installation log, from ipa-server-install."
+/var/log/ipareplica-install.log,file,IdM / FreeIPA,"IdM replica installation log, from ipa-replica-install."
+/var/log/ipaclient-install.log,file,IdM / FreeIPA,"IdM client enrollment log, from ipa-client-install."
+~/.ipa/log/cli.log,file,IdM / FreeIPA,"IPA CLI / RPC error log, under the invoking user's own home directory (the effective system user running the ipa command, not a fixed system-wide path)."
+/var/log/pki/pki-tomcat/,directory,PKI / Certificate System,"Certificate System (Dogtag) logs, one subdirectory per subsystem (ca/, kra/, and so on) when IdM's integrated CA is enabled."
+/var/log/custodia/,directory,IdM / FreeIPA,"Custodia secrets-service logs — IdM's internal service for distributing secrets (keys, passwords) between its own subsystems."
+/etc/logrotate.d/,directory,System,"Log rotation policy snippets, one per service — not logs themselves, but where each service's rotation schedule and retention are configured."

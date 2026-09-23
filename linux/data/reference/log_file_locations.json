@@ -3,7 +3,7 @@
     "path": "/var/log/messages",
     "type": "file",
     "category": "System",
-    "description": "Main system log (general messages from kernel, daemons, etc.)"
+    "description": "Main system log (general messages from kernel, daemons, etc.). In an IdM deployment, also carries some DNS (named) and PKI (Dogtag) subsystem messages."
   },
   {
     "path": "/var/log/secure",
@@ -87,13 +87,13 @@
     "path": "/var/log/httpd/access_log",
     "type": "file",
     "category": "Web Server",
-    "description": "Apache HTTP Server access log"
+    "description": "Apache HTTP Server access log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
   },
   {
     "path": "/var/log/httpd/error_log",
     "type": "file",
     "category": "Web Server",
-    "description": "Apache HTTP Server error log"
+    "description": "Apache HTTP Server error log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
   },
   {
     "path": "/var/log/nginx/access.log",
@@ -538,5 +538,47 @@
     "type": "directory",
     "category": "Ansible AAP",
     "description": "Supervisor-managed service logs (AAP)"
+  },
+  {
+    "path": "/var/log/ipaserver-install.log",
+    "type": "file",
+    "category": "IdM / FreeIPA",
+    "description": "IdM server installation log, from ipa-server-install."
+  },
+  {
+    "path": "/var/log/ipareplica-install.log",
+    "type": "file",
+    "category": "IdM / FreeIPA",
+    "description": "IdM replica installation log, from ipa-replica-install."
+  },
+  {
+    "path": "/var/log/ipaclient-install.log",
+    "type": "file",
+    "category": "IdM / FreeIPA",
+    "description": "IdM client enrollment log, from ipa-client-install."
+  },
+  {
+    "path": "~/.ipa/log/cli.log",
+    "type": "file",
+    "category": "IdM / FreeIPA",
+    "description": "IPA CLI / RPC error log, under the invoking user's own home directory (the effective system user running the ipa command, not a fixed system-wide path)."
+  },
+  {
+    "path": "/var/log/pki/pki-tomcat/",
+    "type": "directory",
+    "category": "PKI / Certificate System",
+    "description": "Certificate System (Dogtag) logs, one subdirectory per subsystem (ca/, kra/, and so on) when IdM's integrated CA is enabled."
+  },
+  {
+    "path": "/var/log/custodia/",
+    "type": "directory",
+    "category": "IdM / FreeIPA",
+    "description": "Custodia secrets-service logs \u2014 IdM's internal service for distributing secrets (keys, passwords) between its own subsystems."
+  },
+  {
+    "path": "/etc/logrotate.d/",
+    "type": "directory",
+    "category": "System",
+    "description": "Log rotation policy snippets, one per service \u2014 not logs themselves, but where each service's rotation schedule and retention are configured."
   }
 ]

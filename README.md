@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.7` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.9` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2868,6 +2868,58 @@ screenshotted for visual confirmation - zero console errors.
 `1.5.7` (PATCH - three companion-tools entries updated/added to point
 at this merged project instead of the superseded standalone repos; not
 a new catalogue, tab, or app-level capability).
+
+Asked to move the RHEL log file locations table out of the Reference
+tables accordion into its own top-level tab next to Command Logging,
+and to add a second owner-supplied list of IdM/FreeIPA-specific log
+locations, deconflicted against the existing 90 rows rather than
+appended blind.
+
+Of the 12 candidate IdM rows, 6 were paths already covered (the httpd
+access/error logs, the `dirsrv` glob trio, `krb5kdc.log`/
+`kadmind.log`, `/var/log/sssd/`, `/var/log/messages`) - skipped as new
+rows, with 3 of those existing rows' descriptions enriched with the
+genuinely new IdM-specific context the list added (that Apache also
+serves the Web UI and XML-RPC/JSON-RPC API; that `/var/log/messages`
+also carries some DNS/PKI subsystem messages in an IdM deployment)
+rather than silently dropped. The remaining 7 were real additions: a
+new `IdM / FreeIPA` category for the three `ipa-*-install.log` files,
+the per-user `~/.ipa/log/cli.log`, and Custodia's log directory; a new
+`PKI / Certificate System` category for `/var/log/pki/pki-tomcat/`;
+and a `System`-category row for `/etc/logrotate.d/` (the rotation-
+policy config directory, not a log location itself - noted as such
+rather than miscategorized as one).
+
+Moved the table's UI out of the Reference tables accordion (now back
+down to 9 tables) into its own top-level **Log File Locations** tab,
+positioned right after Command Logging: a single search box over a
+`buildTable()`-rendered table, reusing the exact same rendering
+helper the accordion version used, just without the accordion
+wrapper, badge, or shared cross-table search. In the same pass, fixed
+two pre-existing documentation gaps this touched directly: the "five
+tabs" web-lookup count had been stale since the Command Logging tab
+was added, and Command Logging itself had never gotten a tab
+description in this README at all.
+
+Verified: a full page syntax check. Confirmed via Playwright that the
+new tab renders all 97 rows in the right position in the tab bar, its
+own search works (e.g. "IdM" correctly narrows to 11 matches across
+the new rows and the enriched/already-IdM-flagged existing ones), and
+that the table is fully gone from the Reference tables accordion
+(`#lnx-sec-log-files` no longer exists). Screenshotted the new tab.
+Regression-checked across both themes and both 1500px/375px
+viewports, plus Windows Events' and Linux Events' own main-catalogue
+counts - zero console errors throughout.
+
+`1.5.9` (PATCH - moved one reference table to its own tab and added
+IdM/FreeIPA log locations to it; not a new catalogue or app-level
+capability. Deliberately skips `1.5.8`: this branch and the build-
+script/CI/data-reconciliation batch documented in a separate PR both
+branch from this same `1.5.7`, and picking a version one step further
+ahead avoids repeating the `1.5.2`/`1.5.3` collision from earlier in
+this project's history, even though the two PRs will likely still
+need an ordinary merge-conflict resolution where they touch the same
+lines of this file).
 
 ## Structure
 

@@ -468,12 +468,12 @@ flagged low-confidence entries instead of guessing.
   (that file only covers the 2 tools an administrator runs day-to-day)
   but is included here for a complete man-page set. Powers the
   Fapolicyd tab's Man submenu.
-- `data/reference/log_file_locations.csv` / `.json` — 90 rows: where RHEL
-  and its common add-on services actually write their logs, repo
-  owner-supplied and not tied to any event in the main catalogue.
-  Columns: `path`, `type` (`file`, `directory`, `binary` — accounting
-  files like `/var/log/wtmp` best read with a dedicated tool rather than
-  opened directly, `glob` — a wildcard path such as
+- `data/reference/log_file_locations.csv` / `.json` — 97 rows: where RHEL,
+  IdM/FreeIPA, and other common add-on services actually write their
+  logs, repo owner-supplied and not tied to any event in the main
+  catalogue. Columns: `path`, `type` (`file`, `directory`, `binary` —
+  accounting files like `/var/log/wtmp` best read with a dedicated tool
+  rather than opened directly, `glob` — a wildcard path such as
   `/var/log/dirsrv/slapd-*/access`, `journal-unit` — logged only through
   `journalctl -u <unit>` with no flat file at all, or `env-var` — a path
   set by an environment variable, not a fixed location), `category`,
@@ -492,8 +492,26 @@ flagged low-confidence entries instead of guessing.
   `/var/log/messages` appears four times (bare, plus "(dhcpd entries)",
   "(named entries)", "(realmd entries)") because that's a real fact
   about the shared classic syslog file — four unrelated subsystems'
-  lines land in it — not a single path repeated. Powers the Reference
-  tables tab's 10th accordion table.
+  lines land in it — not a single path repeated.
+
+  A later pass added 7 IdM/FreeIPA-specific rows (a new `IdM / FreeIPA`
+  category: the three `ipa-*-install.log` files, the per-user
+  `~/.ipa/log/cli.log`, and Custodia's log directory; plus one `PKI /
+  Certificate System` row for `/var/log/pki/pki-tomcat/`, and one
+  `System` row for `/etc/logrotate.d/`, the rotation-policy config
+  directory rather than a log location itself) from a second
+  owner-supplied list, deconflicted rather than appended blind: 6 of
+  its 12 rows were paths already covered (the httpd access/error logs,
+  the `dirsrv` glob trio, `krb5kdc.log`/`kadmind.log`, `/var/log/sssd/`,
+  `/var/log/messages`) — skipped as new rows, with 3 of those existing
+  rows' descriptions enriched with the genuinely new IdM-specific
+  context the list added (that Apache also serves the Web UI and
+  XML-RPC/JSON-RPC API; that `/var/log/messages` also carries some
+  DNS/PKI subsystem messages in an IdM deployment) rather than silently
+  dropped. Powers its own **Log File Locations** tab (moved out of the
+  Reference tables accordion, where it started, once IdM coverage made
+  it substantial enough to warrant a tab of its own — Reference tables
+  is back down to 9 accordion tables).
 - `data/reference/companion_tools.csv` / `.json` — 5 rows, linked from
   the Companion Tools tab. Columns: `name`, `description`, `url`. Not
   generated from any upstream source — just a small static list. Three
@@ -508,7 +526,7 @@ flagged low-confidence entries instead of guessing.
 ## Web lookup
 
 `index.html` is a self-contained (no build step, no external requests)
-lookup page with five tabs. The page fills wide desktop viewports rather
+lookup page with seven tabs. The page fills wide desktop viewports rather
 than capping at a fixed width — it grows with the browser window up to a
 1600px ceiling (so a 1920px+ display isn't left with ~700px of unused
 margin on each side, and wide reference tables like the CIM-enriched
@@ -703,7 +721,28 @@ and `fapolicyd.rules(5)` round out the set with the full config-key and
 rule-syntax references the Rules/Fields/Decisions submenus above draw
 their data from in the first place.
 
-**Reference tables** — covers all 10 accordion-style reference tables
+**Command Logging** — a separate top-level tab, a list/detail view over
+`data/reference/command_logging_guides` (currently one guide, "Bash
+history → SIEM"): capturing user command activity (shell history, not
+just what auditd's own syscall rules see) and getting it to a SIEM in
+real time — a distinct topic from the Linux Audit Framework covered
+under Auditd Rules, though the guide's own recommended approach uses
+auditd as one layer. Each guide's detail view renders its sections
+(recommended approach, config snippets, example log line, alternative
+methods, hardening notes, a quick test, and a method-comparison table)
+as titled reference blocks, transcribed rather than summarized so the
+exact commands/config stay copy-pasteable.
+
+**Log File Locations** — a separate top-level tab, next to Command
+Logging: a single searchable table over all 97 rows of
+`data/reference/log_file_locations.csv` (`path`/`type`/`category`/
+`description` — see above). Started as the Reference tables tab's 10th
+accordion table; moved out to its own tab once the IdM/FreeIPA
+addition made it substantial enough to warrant one. No submenu, no
+list/detail split — just the one table, search-filtered the same way
+every other reference table is.
+
+**Reference tables** — covers all 9 accordion-style reference tables
 (`auditd_rules` gets its own dedicated tab instead, given its size) with
 the same single-search-filters-everything, sticky-jump-nav,
 height-capped-scrolling, collapsed-by-default-accordion behavior as the
