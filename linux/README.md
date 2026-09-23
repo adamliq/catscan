@@ -468,7 +468,7 @@ flagged low-confidence entries instead of guessing.
   (that file only covers the 2 tools an administrator runs day-to-day)
   but is included here for a complete man-page set. Powers the
   Fapolicyd tab's Man submenu.
-- `data/reference/log_file_locations.csv` / `.json` — 107 rows: where RHEL,
+- `data/reference/log_file_locations.csv` / `.json` — 111 rows: where RHEL,
   IdM/FreeIPA, and other common add-on services actually write their
   logs, repo owner-supplied and not tied to any event in the main
   catalogue. Columns: `path`, `type` (`file`, `directory`, `binary` —
@@ -555,6 +555,24 @@ flagged low-confidence entries instead of guessing.
   each got their own component), `/etc/logrotate.d/` (a config
   directory, not a log, spanning every service that rotates one), and
   the two Ansible AAP directory rows from the prior pass.
+
+  A gap-check pass (not owner-supplied, this catalogue's own review of
+  what the table was missing) added 4 more rows: `journalctl -u sshd`
+  and `journalctl -u crond`, for parity with the other daemons already
+  given their own journal-unit row despite also feeding a shared file
+  (`/var/log/secure` and `/var/log/cron` respectively) — SSH in
+  particular had no row of its own despite being arguably the most
+  security-relevant daemon in the table; `journalctl -u nfs-server`
+  under a `File Sharing` category that previously covered only Samba,
+  RHEL's other default file-sharing service; and
+  `/var/lib/systemd/coredump/` (`Kernel` category) for process-level
+  crash dumps, RHEL 8+'s default complement to `kdump.log`'s
+  kernel-level ones already in the table. Deliberately left out three
+  other candidates considered at the same time: `tlog` session
+  recording (IdM-relevant, but its default write target is
+  session-dependent rather than one fixed path/unit), Cockpit, and
+  ABRT (RHEL 8 vs. 9 default behavior differs enough to need
+  verification before committing to exact wording).
 
   Powers its own **Log File Locations** tab (moved out of the Reference
   tables accordion, where it started, once IdM coverage made it
@@ -782,13 +800,23 @@ as titled reference blocks, transcribed rather than summarized so the
 exact commands/config stay copy-pasteable.
 
 **Log File Locations** — a separate top-level tab, next to Command
-Logging: a single searchable table over all 107 rows of
-`data/reference/log_file_locations.csv` (`path`/`type`/`category`/
-`description` — see above). Started as the Reference tables tab's 10th
-accordion table; moved out to its own tab once the IdM/FreeIPA
-addition made it substantial enough to warrant one. No submenu, no
-list/detail split — just the one table, search-filtered the same way
-every other reference table is.
+Logging: a searchable, filterable, sortable table over all 111 rows
+of `data/reference/log_file_locations.csv` (`path`/`type`/`category`/
+`component`/`description` — see above). Started as the Reference
+tables tab's 10th accordion table; moved out to its own tab once the
+IdM/FreeIPA addition made it substantial enough to warrant one. Free-
+text search matches any column, same as every other reference table;
+two dropdowns (`Type`, `Category`) narrow further and combine with
+each other and with the search box — their options are generated
+from the data's own distinct values rather than hardcoded, so a
+future row with a new category shows up automatically. A "Clear
+filters" button (disabled unless something's actually applied) resets
+search text and both dropdowns together. Clicking any column header
+sorts the currently-filtered rows by that column (case-insensitive,
+numeric-aware for the few paths that end in a number); clicking the
+same header again reverses direction; the active column shows an
+accent-colored ▲/▼ in its header. No submenu, no list/detail split —
+just the one table.
 
 **Reference tables** — covers all 9 accordion-style reference tables
 (`auditd_rules` gets its own dedicated tab instead, given its size) with

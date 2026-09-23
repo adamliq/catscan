@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.13` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.16` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3125,6 +3125,106 @@ through `1.5.12`).
 build-script/CI/data-reconciliation batch onto `main` after the
 `1.5.9`-`1.5.12` Log File Locations work had already merged; no
 content change beyond the version line and changelog ordering).
+
+Added filtering and sorting to the Log File Locations tab, on top of
+its existing free-text search. Two dropdowns - `Type` and `Category`
+- narrow the table and combine with each other and with the search
+box; their options are built from the data's own distinct values
+(6 types, 33 categories) rather than hardcoded, so they can't drift
+out of sync with the CSV. A "Clear filters" button, disabled unless
+a filter or search term is actually active, resets both dropdowns
+and the search box together. Clicking a column header sorts the
+currently-filtered rows by that column - `localeCompare` with
+`numeric: true` so paths sort sensibly - and clicking the same header
+again reverses direction; the active header shows an accent-colored
+▲/▼. Left `component` out of the filter dropdowns deliberately: with
+85+ distinct values and 8 intentionally blank rows it isn't a
+meaningful narrowing control the way the 6-value `Type` and
+33-value `Category` columns are - `component` stays searchable and
+sortable like every other column, just not filterable by dropdown.
+Replaced this tab's use of the shared `buildTable()` helper with a
+dedicated renderer carrying clickable, sort-aware header cells;
+`buildTable()` itself is untouched, so the other reference tables
+that still use it are unaffected.
+
+Branched from `main` at `1.5.12` rather than the still-open
+`infra-improvements` PR (build script/CI/data-reconciliation,
+already merge-resolved to `1.5.13` on its own branch but not yet
+merged) - skips straight to `1.5.14` to avoid re-colliding with that
+claimed version, the same mitigation used for the `1.5.8`/`1.5.9`
+split earlier.
+
+Verified: a full page syntax check. Confirmed via Playwright that the
+type filter narrows correctly (e.g. "journal-unit" to 7 rows, all
+verified as that type), that combining it with a category filter
+narrows further, that "Clear filters" resets the count back to
+107 of 107 and both dropdowns to their "All" option, and that sorting
+by Path and by Type produces correctly ordered results in both
+directions with the right header showing the active arrow.
+Screenshotted the filter toolbar and a sorted table. Regression-
+checked across both themes and both 1500px/375px viewports (the
+toolbar wraps to a stacked layout on the narrow one) - zero console
+errors throughout.
+
+`1.5.14` (PATCH - added filtering and sorting to the Log File
+Locations tab; a UI enhancement to an existing tab, not a new
+catalogue or app-level capability).
+
+Asked whether there was anything else worth adding to the Log File
+Locations table - this catalogue's own gap-check against the
+existing 107 rows, not another owner-supplied list. Found four
+well-established RHEL default locations missing and added them:
+`journalctl -u sshd` and `journalctl -u crond` (`Security` and
+`System` categories) for parity with the other daemons that already
+get their own journal-unit row despite also feeding a shared file -
+`/var/log/secure` and `/var/log/cron` respectively - with SSH the
+more notable gap, being arguably the single most security-relevant
+daemon in the whole table and previously having no row of its own;
+`journalctl -u nfs-server` under `File Sharing`, a category that
+previously covered only Samba even though NFS is RHEL's other
+default file-sharing service; and `/var/lib/systemd/coredump/` under
+`Kernel`, RHEL 8+'s default location for process-level crash dumps,
+complementing `kdump.log`'s kernel-level ones already in the table.
+
+Three other candidates considered at the same time were deliberately
+left out rather than guessed at: `tlog` session recording (relevant
+given this table's existing IdM/FreeIPA depth, but its default write
+target is session-dependent rather than one fixed path or unit),
+Cockpit, and ABRT (RHEL 8 vs. 9 default behavior differs enough to
+need verification before committing to exact wording) - consistent
+with this project's standing rule of adding only what can be stated
+with confidence, not filling gaps with plausible-sounding guesses.
+Table is now 111 rows (up from 107).
+
+Verified: a full page syntax check. Re-synced `index.html`'s embedded
+copy and confirmed via Playwright that all four new rows are
+individually searchable, that the `nfs-server` row appears correctly
+under the `File Sharing` category filter alongside the two existing
+Samba rows, and that the total count reads 111 of 111 with no filters
+applied. Regression-checked across both themes and both 1500px/375px
+viewports - zero console errors throughout.
+
+`1.5.15` (PATCH - added four RHEL default log locations identified by
+a gap-check of the existing table - SSH and cron journal units, NFS,
+systemd-coredump; a data addition to an existing reference table, not
+a new capability).
+
+Merged this branch (the `1.5.8` reconciliation/build-script/CI batch,
+already once resolved onto `main` as `1.5.13`) against `main` again
+after two more Log File Locations PRs (`1.5.14` filtering/sorting,
+`1.5.15` the SSH/cron/NFS/coredump additions) merged ahead of it a
+second time. Same shape as the first resolution: the two lines of
+work still touch no common content, only `README.md`, `VERSION`, and
+`index.html`'s version-tag line, so this was a version-line and
+changelog-ordering resolution, not a content merge. `VERSION` and the
+version tag bump to `1.5.16`; this changelog's two runs concatenate
+in the order they were actually written (`1.5.13`, then `1.5.14`
+through `1.5.15`).
+
+`1.5.16` (PATCH - second merge-conflict resolution bringing the
+`1.5.8`/`1.5.13` build-script/CI/data-reconciliation batch onto
+`main` after `1.5.14`-`1.5.15` merged ahead of it again; no content
+change beyond the version line and changelog ordering).
 
 ## Structure
 
