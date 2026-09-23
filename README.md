@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.3` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.4` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2695,6 +2695,91 @@ scope for this batch - and flagged for a future pass.)
 `1.5.3` (PATCH - 215 additional events extending an already-existing
 catalogue's data set; not a new catalogue, tab, or app-level
 capability).
+
+Given three more owner-supplied reference CSVs in one pass - Certificate
+Services (60 rows), Kerberos (27 rows), and Group Policy (61 rows) - and
+asked to reconcile each against the existing catalogue. Checked every
+candidate's exact `(log, source, event_id)` combination against the
+existing data before touching anything, rather than assuming an upload
+implied a gap: this turned out to be mostly a verification pass, not a
+data-addition one.
+
+**Group Policy**: 60 of 61 rows already existed exactly as given. The
+one gap, event 5000, could not be safely filled - this source's
+existing rows all cite "a full Windows Server 2019 ETW event manifest
+export" as their reference, a stronger sourcing claim than a plausible
+guess should be added under, and no independent source reproduced
+event 5000's real text - left out.
+
+**Kerberos**: the seven Security-log audit events (4768-4773, 4820)
+and nine of the twenty `Kerberos-Key-Distribution-Center` (System log)
+events were already covered from two earlier passes (`1.4.13`,
+`1.5.1`). Of the eleven remaining, independently verified nine as
+genuine, distinct events (smart-card/PKINIT certificate availability,
+S4U2Self access checks, KB5014754-era weak-certificate-mapping
+warnings) and excluded two (24, 28) whose only available text was
+generic filler with no independently-verifiable real wording. Event
+26 needed particular care - the existing catalogue's own event 27
+description already named 26 as "its AS-side counterpart," so this
+was as much a confirmation of already-referenced-but-missing data as
+a fresh addition; sourced and added as the genuine AS-side sibling to
+27's TGS-side text, not confused with adjacent near-duplicate events
+14/16/27 the way an earlier pass had to correct.
+
+**Certificate Services**: all 33 Security-log audit events (4868-4900)
+were already covered. The CSV's other 27 rows, however, revealed a
+real gap: `Microsoft-Windows-CertificationAuthority` (the CA role's
+own Application-log events, as opposed to the Security-log audit
+trail) had exactly one existing row before this pass. Of the 27,
+excluded event 90 (already covered by an existing row whose text
+disagrees with both this CSV and independent web sourcing - a
+three-way conflict not safely resolved here, so the standing entry
+was left untouched rather than second-guessed) and three CA-key-
+archival events (1006-1008) whose only search results kept
+resurfacing an unrelated event family under a different source,
+suggesting a numbering mismatch in the CSV rather than a real gap.
+The remaining 23 were added; one (75, "Related CRL publication
+failure" in the CSV) was reconstructed by direct analogy to three
+already-confirmed siblings (65/66/74) rather than published as
+filler, since its exact structural counterpart among those three
+could be identified with confidence.
+
+Matched this source's own existing convention rather than the CSV's
+literal "Application" channel label: the catalogue's one pre-existing
+`Microsoft-Windows-CertificationAuthority` row already used that same
+string as its `log` value (not `Application`), so the new rows follow
+suit to keep this source's data internally consistent.
+
+Added 32 new rows total: 23 to `Microsoft-Windows-CertificationAuthority`
+and 9 to `Kerberos-Key-Distribution-Center`. Applied to all three
+places this catalogue's Windows Events data lives: `windows/data/
+events.csv`/`events.json` (4,915 -> 4,947 rows) and the embedded
+`DATA.events` array in `index.html` (5,071 -> 5,103 events; footer
+count corrected to match).
+
+Verified: `node --check`. Confirmed via a direct data-level diff
+(not a text diff) between the pre- and post-batch `events.json` that
+zero existing rows were missing or modified and exactly 32 were added,
+and that both new sources' rows are internally duplicate-free.
+Screenshotted three detail panels (a CertificationAuthority upgrade-
+failure event, and two Kerberos-KDC PKINIT-certificate events) - clean
+rendering. Regression-checked across both themes and both 1500px/
+375px viewports, plus Linux Events' unaffected 77-event count - zero
+console errors throughout.
+
+`1.5.3` (PATCH - 32 additional events extending two already-existing
+catalogue sources; not a new catalogue, tab, or app-level capability).
+
+This batch and the DNS-Server-Service batch above were developed in
+parallel on separate branches from the same `1.5.2` base, each
+independently bumping to `1.5.3`; merging both together to resolve
+that collision (concatenating each branch's own new rows onto the
+common base in `events.csv`/`events.json`/`index.html`'s `DATA.events`,
+rather than a line-level text merge, since both appended near the
+same file locations) bumped once more to `1.5.4`.
+
+`1.5.4` (PATCH - no new data of its own; resolves the parallel-branch
+version collision between the two `1.5.3` batches above).
 
 ## Structure
 

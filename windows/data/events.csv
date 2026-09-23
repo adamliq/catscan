@@ -47859,6 +47859,230 @@ Level:         Warning
 Computer:      DHCP01.corp.local
 Description:
 DHCP service running on DC without DNS credentials configured (older versions).",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,"{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""computer"":""string"",""description"":""string""}}",,,
+3,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,,Request failed,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      3
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Request failed",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+5,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,Active Directory Certificate Services could not find required registry information. May need to be reinstalled.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      5
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services could not find required registry information. May need to be reinstalled.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Request (Enrollment) Processing,Active Directory Certificate Services issued a certificate for request xxx for xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      6
+Level:         Information
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services issued a certificate for request xxx for xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+7,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Request (Enrollment) Processing,Active Directory Certificate Services denied request xxx because xxx. The request was for xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      7
+Level:         Information
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services denied request xxx because xxx. The request was for xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,T1649,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+8,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Request (Enrollment) Processing,Active Directory Certificate Services left request xxx pending in the queue for xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      8
+Level:         Information
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services left request xxx pending in the queue for xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+9,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,The Active Directory Certificate Services did not start: Unable to load an external policy module.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      9
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+The Active Directory Certificate Services did not start: Unable to load an external policy module.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+10,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Request (Enrollment) Processing,Active Directory Certificate Services were unable to build a new certificate or certificate chain: xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      10
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services were unable to build a new certificate or certificate chain: xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+15,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,Active Directory Certificate Services did not start: Version does not match certif.dll.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      15
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services did not start: Version does not match certif.dll.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+16,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,Active Directory Certificate Services did not start: Unable to initialize OLE: xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      16
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services did not start: Unable to initialize OLE: xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+17,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,Active Directory Certificate Services did not start: Unable to initialize the database connection for xxx. xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      17
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services did not start: Unable to initialize the database connection for xxx. xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+19,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,Active Directory Certificate Services did not start: The Subject Name Template string in the registry is invalid.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      19
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services did not start: The Subject Name Template string in the registry is invalid.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+48,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Revocation List (CRL) Publishing,CRL published successfully.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      48
+Level:         Information
+Computer:      CA01.corp.local
+Description:
+CRL published successfully.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+65,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Revocation List (CRL) Publishing,Active Directory Certificate Services could not publish a Base CRL.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      65
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services could not publish a Base CRL.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+66,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Revocation List (CRL) Publishing,Active Directory Certificate Services could not publish a Delta CRL for key xxx to the following location: xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      66
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services could not publish a Delta CRL for key xxx to the following location: xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+74,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Revocation List (CRL) Publishing,Active Directory Certificate Services could not publish a Base CRL for key xxx to the following location on server xxx: xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      74
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services could not publish a Base CRL for key xxx to the following location on server xxx: xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+75,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Revocation List (CRL) Publishing,Active Directory Certificate Services could not publish a Delta CRL for key xxx to the following location on server xxx: xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      75
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services could not publish a Delta CRL for key xxx to the following location on server xxx: xxx.","Constructed by analogy to the confirmed 65/66/74 sibling pattern (CSV gave only generic filler for this event; 75 is web-confirmed as 74's Delta-CRL counterpart, i.e. 66's Delta wording plus 74's server clause): Microsoft Learn, previous-versions AD CS Certification Authority event reference",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+92,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,,Active Directory Certificate Services could not update security permissions.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      92
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services could not update security permissions.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+100,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Startup,Active Directory Certificate Services did not start: Could not load or verify the current CA certificate. xxx xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      100
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services did not start: Could not load or verify the current CA certificate. xxx xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+101,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,,Active Directory Certificate Services created CA cross certificate xxx for xxx.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      101
+Level:         Information
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services created CA cross certificate xxx for xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+111,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certification Authority Upgrade,Active Directory Certificate Services upgrade failed because the upgrade path could not be determined.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      111
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services upgrade failed because the upgrade path could not be determined.","Microsoft-Windows-CertificationAuthority message-table text, independently sourced (CSV gave only generic category filler for this event): Microsoft Learn, previous-versions AD CS Certification Authority event reference",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+112,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certification Authority Upgrade,Active Directory Certificate Services upgrade failed because information required for the upgrade was unavailable.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      112
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+Active Directory Certificate Services upgrade failed because information required for the upgrade was unavailable.","Microsoft-Windows-CertificationAuthority message-table text, independently sourced (CSV gave only generic category filler for this event): Microsoft Learn, previous-versions AD CS Certification Authority event reference",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+113,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certification Authority Upgrade,The CertEnroll folder and/or shared folder could not be created with proper permissions.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      113
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+The CertEnroll folder and/or shared folder could not be created with proper permissions.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1023,Microsoft-Windows-CertificationAuthority,Microsoft-Windows-CertificationAuthority,Certificate Services,Certificate Revocation List (CRL) Publishing,CRL publishing failed.,"Log Name:      Microsoft-Windows-CertificationAuthority
+Source:        Microsoft-Windows-CertificationAuthority
+Event ID:      1023
+Level:         Error
+Computer:      CA01.corp.local
+Description:
+CRL publishing failed.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+19,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — No KDC Certificate,"An attempt was made to use smartcard logon, but the Key Distribution Center (KDC) is unable to use the PKINIT protocol because it is missing a suitable certificate. Enroll a domain controller certificate on this KDC and restart the KDC service to correct the problem.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      19
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+An attempt was made to use smartcard logon, but the Key Distribution Center (KDC) is unable to use the PKINIT protocol because it is missing a suitable certificate. Enroll a domain controller certificate on this KDC and restart the KDC service to correct the problem.","Uwe Gradenegger, details of KDC Event ID 19 (Kerberos-Key-Distribution-Center)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+20,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Invalid KDC Certificate,"The currently selected KDC certificate was once valid, but now is invalid, and no suitable replacement was found. Smart card logon may not function correctly if this problem is not remedied.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      20
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The currently selected KDC certificate was once valid, but now is invalid, and no suitable replacement was found. Smart card logon may not function correctly if this problem is not remedied.","Uwe Gradenegger, details of KDC Event ID 20 (Kerberos-Key-Distribution-Center); Microsoft Learn, previous-versions ""Event ID 20 — KDC Certificate Availability""",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+25,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — S4U2Self Access Denied,The user who asked for an S4U2Self ticket does not have sufficient access to the target user.,"Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      25
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The user who asked for an S4U2Self ticket does not have sufficient access to the target user.",Repo owner-supplied Microsoft-Windows-Kerberos-EventIDs.csv reference; consistent with documented S4U2Self access-check semantics,,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+26,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — No Suitable Key (AS),While processing an AS request the account did not have a suitable key for generating a Kerberos ticket — the AS-side counterpart to event 27's TGS-side version.,"Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      26
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+While processing an AS request the account did not have a suitable key for generating a Kerberos ticket — the AS-side counterpart to event 27's TGS-side version.","Uwe Gradenegger, DSForum KDC Event ID 26 (Kerberos-Key-Distribution-Center); cross-referenced against the existing catalogue's event 27 (its TGS-side counterpart)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+32,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Missing KDC EKU,"The KDC uses a certificate without the KDC Extended Key Usage (EKU), which can result in authentication failures for device certificate logon and smart card logon from non-domain-joined devices. Enroll a KDC certificate with the KDC EKU (Kerberos Authentication template) to remove this warning.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      32
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The KDC uses a certificate without the KDC Extended Key Usage (EKU), which can result in authentication failures for device certificate logon and smart card logon from non-domain-joined devices. Enroll a KDC certificate with the KDC EKU (Kerberos Authentication template) to remove this warning.","Uwe Gradenegger, details of KDC Event ID 32 (Kerberos-Key-Distribution-Center)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+39,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Certificate Mapping (Weak),The KDC encountered a certificate that was valid but could not be mapped to the requesting account in a secure way. Such certificates should either be replaced or mapped directly to the account via explicit mapping.,"Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      39
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The KDC encountered a certificate that was valid but could not be mapped to the requesting account in a secure way. Such certificates should either be replaced or mapped directly to the account via explicit mapping.","Uwe Gradenegger, details of KDC Event ID 39 (Kerberos-Key-Distribution-Center); related to KB5014754 certificate-mapping hardening",,illustrative,T1649,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+40,System,Kerberos-Key-Distribution-Center,Authentication,"Kerberos KDC — Certificate Mapping (Weak, Predates Account)","The KDC encountered a certificate that was valid but could not be mapped securely, and the certificate also predates the account it mapped to, so the certificate was rejected.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      40
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The KDC encountered a certificate that was valid but could not be mapped securely, and the certificate also predates the account it mapped to, so the certificate was rejected.","Repo owner-supplied Microsoft-Windows-Kerberos-EventIDs.csv reference; consistent with documented KB5014754 certificate-mapping hardening semantics (the ""predates"" strong-mapping check)",,illustrative,T1649,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+200,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — No Suitable Certificate,The KDC cannot find a suitable certificate to use. This KDC is not enabled for smart card or certificate authentication.,"Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      200
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The KDC cannot find a suitable certificate to use. This KDC is not enabled for smart card or certificate authentication.","Uwe Gradenegger, details of KDC Event ID 200 (Kerberos-Key-Distribution-Center)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+302,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — Certificate In Use,"The KDC uses the following KDC certificate for smart card or certificate authentication: Issuer Name xxx, Serial Number xxx, Thumbprint xxx, Template xxx.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      302
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The KDC uses the following KDC certificate for smart card or certificate authentication: Issuer Name xxx, Serial Number xxx, Thumbprint xxx, Template xxx.","Uwe Gradenegger, details of KDC Event ID 302 (Kerberos-Key-Distribution-Center)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 513,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Zone delete,The zone xxx was deleted.,"Log Name:      Microsoft-Windows-DNSServer/Audit
 Source:        Microsoft-Windows-DNS-Server-Service
 Event ID:      513
