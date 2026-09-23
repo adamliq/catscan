@@ -477,7 +477,10 @@ flagged low-confidence entries instead of guessing.
   `/var/log/dirsrv/slapd-*/access`, `journal-unit` — logged only through
   `journalctl -u <unit>` with no flat file at all, or `env-var` — a path
   set by an environment variable, not a fixed location), `category`,
-  `description`. Cleaned up from the owner-supplied source rather than
+  `component` (blank for almost every row — populated only where the
+  source data actually named a distinct sub-component, currently just
+  the Ansible AAP rows below), `description`. Cleaned up from the
+  owner-supplied source rather than
   transcribed as-is: 3 rows that just re-cited an already-listed path
   under a second heading (`/var/log/maillog`, `/var/log/chrony/`,
   `/var/log/anaconda/`) were merged into their first occurrence instead
@@ -524,9 +527,19 @@ flagged low-confidence entries instead of guessing.
   `tower_rbac_migrations.log`) and 3 under `/var/log/supervisor/`
   (`awx-callback-receiver.log`, `awx-daphne.log`, and a `glob`-typed
   `awx-*.log` covering the remaining supervisord-managed service logs).
-  No new schema column was added for the component names the source
-  table carried — they're folded into `description` prose to keep the
-  four-column schema uniform across every row.
+
+  A follow-up request added a dedicated `component` column rather than
+  leaving those names folded into `description` prose. For the 14
+  Ansible AAP file rows that had a component name (all but the two
+  `/var/log/tower/` and `/var/log/supervisor/` directory rows, which
+  each span several components), the name was split back out of the
+  description into its own `component` value and the leading
+  "Component — " prefix removed from the description text, restoring
+  the owner-supplied table's original Component/Description split.
+  Every other row in the table — all 93 of them, none ever supplied a
+  distinct component name — got an empty `component` value rather than
+  an invented one, so the column stays blank wherever the source data
+  simply doesn't have that information.
 
   Powers its own **Log File Locations** tab (moved out of the Reference
   tables accordion, where it started, once IdM coverage made it

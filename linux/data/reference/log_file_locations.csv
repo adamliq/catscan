@@ -1,108 +1,108 @@
-path,type,category,description
-/var/log/messages,file,System,"Main system log (general messages from kernel, daemons, etc.). In an IdM deployment, also carries some DNS (named) and PKI (Dogtag) subsystem messages."
-/var/log/secure,file,Security,"Security and authentication (SSH, sudo, PAM, failed logins)"
-/var/log/maillog,file,Mail,Mail server related messages; postfix / mail transfer agent + Dovecot (default on RHEL)
-/var/log/cron,file,System,Cron / scheduled task execution
-/var/log/boot.log,file,System,Boot and service startup messages
-/var/log/dmesg,file,Kernel,Kernel ring buffer (hardware detection and drivers at boot)
-/var/log/btmp,binary,Security,Failed login attempts (binary - use lastb)
-/var/log/wtmp,binary,Security,Successful login/logout history (binary - use last/who)
-/var/log/lastlog,binary,Security,Last login information per user (binary - use lastlog)
-/var/log/dnf.log,file,Package Management,DNF package manager activity (RHEL 8+)
-/var/log/yum.log,file,Package Management,YUM package manager activity (RHEL 7 and earlier)
-/var/log/firewalld,file,Security,firewalld debug and messages
-/var/log/kdump.log,file,Kernel,Kernel crash dump related
-/var/log/audit/audit.log,file,Security,Audit daemon logs (includes SELinux AVC denials)
-/var/log/httpd/access_log,file,Web Server,"Apache HTTP Server access log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
-/var/log/httpd/error_log,file,Web Server,"Apache HTTP Server error log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
-/var/log/nginx/access.log,file,Web Server,Nginx access log (if installed)
-/var/log/nginx/error.log,file,Web Server,Nginx error log (if installed)
-/var/log/journal/,directory,Systemd,Persistent systemd journal storage (binary - use journalctl)
-/var/log/anaconda/,directory,Installation,Installation logs (copied after successful install)
-/var/log/rhsm/,directory,Subscription,Red Hat Subscription Manager logs
-/var/log/chrony/,directory,Time Sync,"Chrony time synchronization logs; chrony NTP logs directory (measurements, statistics, tracking)"
-/var/log/tuned/,directory,Performance,Tuned performance profile logs
-/var/log/krb5kdc.log,file,Kerberos,Primary log file for the Kerberos KDC server
-/var/log/kadmind.log,file,Kerberos,Primary log file for the Kerberos administration server (kadmind)
-/var/log/sssd/,directory,LDAP / SSSD,SSSD main directory (contains multiple component logs)
-/var/log/sssd/sssd.log,file,LDAP / SSSD,Main SSSD daemon log
-/var/log/sssd/sssd_<domain>.log,file,LDAP / SSSD,Per-domain log (LDAP communication for each domain in sssd.conf)
-/var/log/sssd/sssd_nss.log,file,LDAP / SSSD,NSS responder log
-/var/log/sssd/sssd_pam.log,file,LDAP / SSSD,PAM responder log
-/var/log/sssd/krb5_child.log,file,Kerberos / SSSD,Short-lived helper process for Kerberos authentication
-/var/log/sssd/ldap_child.log,file,LDAP / SSSD,Short-lived helper process for obtaining Kerberos tickets for LDAP
-/var/log/sssd/sssd_ssh.log,file,LDAP / SSSD,SSH responder log
-/var/log/sssd/sssd_sudo.log,file,LDAP / SSSD,Sudo responder log
-/var/log/dirsrv/slapd-*/access,glob,LDAP,Directory Server (LDAP) access log (IdM environments)
-/var/log/dirsrv/slapd-*/errors,glob,LDAP,Directory Server (LDAP) errors log (IdM environments)
-/var/log/dirsrv/slapd-*/audit,glob,LDAP,Directory Server (LDAP) audit log (when auditing enabled)
-/var/log/samba/,directory,File Sharing,Samba (SMB/CIFS) logs
-/var/log/samba/log.*,glob,File Sharing,Samba per-client or general logs
-/var/log/mariadb/mariadb.log,file,Database,MariaDB error / general log
-/var/log/mysql/mysqld.log,file,Database,MySQL error log (older setups)
-/var/log/mysqld.log,file,Database,MySQL/MariaDB error log (common alternative location)
-/var/lib/pgsql/data/log/,directory,Database,PostgreSQL logs (RHEL default location when logging_collector is on)
-/var/log/postgresql/,directory,Database,PostgreSQL logs (alternative location)
-/var/log/containers/,directory,Containers,Podman/container logs (or use podman logs / journalctl)
-/var/log/pods/,directory,Containers,Kubernetes / CRI-O pod logs (if using OpenShift/K8s)
-/var/log/hawkey.log,file,Package Management,DNF dependency solver (Hawkey) log
-/var/log/dnf.librepo.log,file,Package Management,DNF repository download log
-/var/log/dnf.rpm.log,file,Package Management,DNF RPM transaction log
-/var/log/spooler,file,System,USENET / news related (rarely used)
-/var/log/Xorg.0.log,file,Desktop,X11 / graphical display server log
-/var/log/qemu-ga/,directory,Virtualization,QEMU Guest Agent logs (virtual machines)
-/var/log/libvirt/,directory,Virtualization,Libvirt / virtualization logs
-/var/log/fail2ban.log,file,Security,Fail2Ban intrusion prevention logs (if installed)
-/var/log/private/,directory,System,Private/temporary logs used by some services
-/var/log/messages (dhcpd entries),file,DHCP,DHCP server messages (default location for dhcpd)
-/var/log/dhcpd.log,file,DHCP,Dedicated DHCP server log (if configured via log-facility in dhcpd.conf)
-/var/lib/dhcpd/dhcpd.leases,binary,DHCP,"DHCP lease database (not a log, but critical for troubleshooting)"
-journalctl -u dhcpd,journal-unit,DHCP,DHCP server systemd journal logs
-/var/log/chrony/measurements.log,file,NTP,Chrony measurement data
-/var/log/chrony/statistics.log,file,NTP,Chrony statistics
-/var/log/chrony/tracking.log,file,NTP,Chrony tracking information
-journalctl -u chronyd,journal-unit,NTP,Chrony systemd journal logs
-journalctl -u realmd,journal-unit,Realm / AD,realmd (realm join/leave) systemd journal logs
-/var/log/messages (realmd entries),file,Realm / AD,realmd messages (often appear in system log)
-/var/log/messages (named entries),file,DNS,BIND/named DNS server messages (default)
-/var/named/data/named.run,file,DNS,BIND/named runtime log (common custom location)
-journalctl -u named,journal-unit,DNS,BIND/named systemd journal logs
-journalctl -u postfix,journal-unit,Mail,Postfix systemd journal logs
-journalctl -u dovecot,journal-unit,Mail,Dovecot IMAP/POP systemd journal logs
-/var/log/dovecot.log,file,Mail,Dovecot dedicated log (if configured)
-/var/log/php-fpm/,directory,Runtime,PHP-FPM logs directory
-/var/log/php-fpm/error.log,file,Runtime,PHP-FPM error log
-/var/log/redis/,directory,Database,Redis logs (if installed)
-/var/log/elasticsearch/,directory,Search,Elasticsearch logs (if installed)
-journalctl -u NetworkManager,journal-unit,Network,NetworkManager (including DHCP client) logs
-/var/log/cloud-init.log,file,Cloud,Cloud-init logs (cloud instances)
-/var/log/cloud-init-output.log,file,Cloud,Cloud-init output log
-/var/log/insights-client/,directory,Management,Red Hat Insights client logs
-/var/log/wpa_supplicant.log,file,Network,Wi-Fi / WPA supplicant logs
-/var/log/ansible.log,file,Ansible,Ansible control node log (enabled via log_path in ansible.cfg)
-/var/log/ansible/ansible.log,file,Ansible,Common alternative Ansible log path
-/var/log/ansible/hosts/,directory,Ansible,Per-host playbook logs (community.general.log_plays callback)
-ANSIBLE_LOG_PATH,env-var,Ansible,Override log path at runtime
-/var/log/tower/,directory,Ansible AAP,Ansible Automation Platform / AWX / Tower logs
-/var/log/tower/tower.log,file,Ansible AAP,"Automation Controller (Web / Application) — main application logs: runtime errors, web requests, general messages."
-/var/log/tower/callback_receiver.log,file,Ansible AAP,Callback Receiver — handles Ansible job callback events.
-/var/log/tower/dispatcher.log,file,Ansible AAP,Dispatcher — job scheduling and execution worker service.
-/var/log/tower/job_lifecycle.log,file,Ansible AAP,"Job Lifecycle — job state changes, blocked jobs, and blocking conditions."
-/var/log/supervisor/,directory,Ansible AAP,Supervisor-managed service logs (AAP)
-/var/log/ipaserver-install.log,file,IdM / FreeIPA,"IdM server installation log, from ipa-server-install."
-/var/log/ipareplica-install.log,file,IdM / FreeIPA,"IdM replica installation log, from ipa-replica-install."
-/var/log/ipaclient-install.log,file,IdM / FreeIPA,"IdM client enrollment log, from ipa-client-install."
-~/.ipa/log/cli.log,file,IdM / FreeIPA,"IPA CLI / RPC error log, under the invoking user's own home directory (the effective system user running the ipa command, not a fixed system-wide path)."
-/var/log/pki/pki-tomcat/,directory,PKI / Certificate System,"Certificate System (Dogtag) logs, one subdirectory per subsystem (ca/, kra/, and so on) when IdM's integrated CA is enabled."
-/var/log/custodia/,directory,IdM / FreeIPA,"Custodia secrets-service logs — IdM's internal service for distributing secrets (keys, passwords) between its own subsystems."
-/etc/logrotate.d/,directory,System,"Log rotation policy snippets, one per service — not logs themselves, but where each service's rotation schedule and retention are configured."
-/var/log/tower/management_playbooks.log,file,Ansible AAP,Management Playbooks — management playbook runs and isolated job metadata operations.
-/var/log/tower/task_system.log,file,Ansible AAP,"Task System — background tasks (cluster management, analytics gathering/processing)."
-/var/log/tower/rsyslog.err,file,Ansible AAP,rsyslog — errors authenticating or sending logs to external aggregators.
-/var/log/tower/wsrelay.log,file,Ansible AAP,Websocket Relay — websocket relay server communication.
-/var/log/tower/rsyslog_configurer.log,file,Ansible AAP,rsyslog Configurer — rsyslog configuration activity for external logging.
-/var/log/tower/cache_clear.log,file,Ansible AAP,Cache Management — cache clearing operations.
-/var/log/tower/tower_rbac_migrations.log,file,Ansible AAP,RBAC / Database — RBAC database migration and upgrade logs.
-/var/log/supervisor/awx-callback-receiver.log,file,Ansible AAP,Callback Receiver (supervisord) — the supervisord-managed callback receiver process.
-/var/log/supervisor/awx-daphne.log,file,Ansible AAP,Daphne / Websocket — ASGI communication for the Web UI.
-/var/log/supervisor/awx-*.log,glob,Ansible AAP,Other supervisord-managed service logs — various components beyond the callback receiver and Daphne above.
+path,type,category,component,description
+/var/log/messages,file,System,,"Main system log (general messages from kernel, daemons, etc.). In an IdM deployment, also carries some DNS (named) and PKI (Dogtag) subsystem messages."
+/var/log/secure,file,Security,,"Security and authentication (SSH, sudo, PAM, failed logins)"
+/var/log/maillog,file,Mail,,Mail server related messages; postfix / mail transfer agent + Dovecot (default on RHEL)
+/var/log/cron,file,System,,Cron / scheduled task execution
+/var/log/boot.log,file,System,,Boot and service startup messages
+/var/log/dmesg,file,Kernel,,Kernel ring buffer (hardware detection and drivers at boot)
+/var/log/btmp,binary,Security,,Failed login attempts (binary - use lastb)
+/var/log/wtmp,binary,Security,,Successful login/logout history (binary - use last/who)
+/var/log/lastlog,binary,Security,,Last login information per user (binary - use lastlog)
+/var/log/dnf.log,file,Package Management,,DNF package manager activity (RHEL 8+)
+/var/log/yum.log,file,Package Management,,YUM package manager activity (RHEL 7 and earlier)
+/var/log/firewalld,file,Security,,firewalld debug and messages
+/var/log/kdump.log,file,Kernel,,Kernel crash dump related
+/var/log/audit/audit.log,file,Security,,Audit daemon logs (includes SELinux AVC denials)
+/var/log/httpd/access_log,file,Web Server,,"Apache HTTP Server access log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
+/var/log/httpd/error_log,file,Web Server,,"Apache HTTP Server error log. In an IdM deployment, also serves the Web UI and the XML-RPC/JSON-RPC API."
+/var/log/nginx/access.log,file,Web Server,,Nginx access log (if installed)
+/var/log/nginx/error.log,file,Web Server,,Nginx error log (if installed)
+/var/log/journal/,directory,Systemd,,Persistent systemd journal storage (binary - use journalctl)
+/var/log/anaconda/,directory,Installation,,Installation logs (copied after successful install)
+/var/log/rhsm/,directory,Subscription,,Red Hat Subscription Manager logs
+/var/log/chrony/,directory,Time Sync,,"Chrony time synchronization logs; chrony NTP logs directory (measurements, statistics, tracking)"
+/var/log/tuned/,directory,Performance,,Tuned performance profile logs
+/var/log/krb5kdc.log,file,Kerberos,,Primary log file for the Kerberos KDC server
+/var/log/kadmind.log,file,Kerberos,,Primary log file for the Kerberos administration server (kadmind)
+/var/log/sssd/,directory,LDAP / SSSD,,SSSD main directory (contains multiple component logs)
+/var/log/sssd/sssd.log,file,LDAP / SSSD,,Main SSSD daemon log
+/var/log/sssd/sssd_<domain>.log,file,LDAP / SSSD,,Per-domain log (LDAP communication for each domain in sssd.conf)
+/var/log/sssd/sssd_nss.log,file,LDAP / SSSD,,NSS responder log
+/var/log/sssd/sssd_pam.log,file,LDAP / SSSD,,PAM responder log
+/var/log/sssd/krb5_child.log,file,Kerberos / SSSD,,Short-lived helper process for Kerberos authentication
+/var/log/sssd/ldap_child.log,file,LDAP / SSSD,,Short-lived helper process for obtaining Kerberos tickets for LDAP
+/var/log/sssd/sssd_ssh.log,file,LDAP / SSSD,,SSH responder log
+/var/log/sssd/sssd_sudo.log,file,LDAP / SSSD,,Sudo responder log
+/var/log/dirsrv/slapd-*/access,glob,LDAP,,Directory Server (LDAP) access log (IdM environments)
+/var/log/dirsrv/slapd-*/errors,glob,LDAP,,Directory Server (LDAP) errors log (IdM environments)
+/var/log/dirsrv/slapd-*/audit,glob,LDAP,,Directory Server (LDAP) audit log (when auditing enabled)
+/var/log/samba/,directory,File Sharing,,Samba (SMB/CIFS) logs
+/var/log/samba/log.*,glob,File Sharing,,Samba per-client or general logs
+/var/log/mariadb/mariadb.log,file,Database,,MariaDB error / general log
+/var/log/mysql/mysqld.log,file,Database,,MySQL error log (older setups)
+/var/log/mysqld.log,file,Database,,MySQL/MariaDB error log (common alternative location)
+/var/lib/pgsql/data/log/,directory,Database,,PostgreSQL logs (RHEL default location when logging_collector is on)
+/var/log/postgresql/,directory,Database,,PostgreSQL logs (alternative location)
+/var/log/containers/,directory,Containers,,Podman/container logs (or use podman logs / journalctl)
+/var/log/pods/,directory,Containers,,Kubernetes / CRI-O pod logs (if using OpenShift/K8s)
+/var/log/hawkey.log,file,Package Management,,DNF dependency solver (Hawkey) log
+/var/log/dnf.librepo.log,file,Package Management,,DNF repository download log
+/var/log/dnf.rpm.log,file,Package Management,,DNF RPM transaction log
+/var/log/spooler,file,System,,USENET / news related (rarely used)
+/var/log/Xorg.0.log,file,Desktop,,X11 / graphical display server log
+/var/log/qemu-ga/,directory,Virtualization,,QEMU Guest Agent logs (virtual machines)
+/var/log/libvirt/,directory,Virtualization,,Libvirt / virtualization logs
+/var/log/fail2ban.log,file,Security,,Fail2Ban intrusion prevention logs (if installed)
+/var/log/private/,directory,System,,Private/temporary logs used by some services
+/var/log/messages (dhcpd entries),file,DHCP,,DHCP server messages (default location for dhcpd)
+/var/log/dhcpd.log,file,DHCP,,Dedicated DHCP server log (if configured via log-facility in dhcpd.conf)
+/var/lib/dhcpd/dhcpd.leases,binary,DHCP,,"DHCP lease database (not a log, but critical for troubleshooting)"
+journalctl -u dhcpd,journal-unit,DHCP,,DHCP server systemd journal logs
+/var/log/chrony/measurements.log,file,NTP,,Chrony measurement data
+/var/log/chrony/statistics.log,file,NTP,,Chrony statistics
+/var/log/chrony/tracking.log,file,NTP,,Chrony tracking information
+journalctl -u chronyd,journal-unit,NTP,,Chrony systemd journal logs
+journalctl -u realmd,journal-unit,Realm / AD,,realmd (realm join/leave) systemd journal logs
+/var/log/messages (realmd entries),file,Realm / AD,,realmd messages (often appear in system log)
+/var/log/messages (named entries),file,DNS,,BIND/named DNS server messages (default)
+/var/named/data/named.run,file,DNS,,BIND/named runtime log (common custom location)
+journalctl -u named,journal-unit,DNS,,BIND/named systemd journal logs
+journalctl -u postfix,journal-unit,Mail,,Postfix systemd journal logs
+journalctl -u dovecot,journal-unit,Mail,,Dovecot IMAP/POP systemd journal logs
+/var/log/dovecot.log,file,Mail,,Dovecot dedicated log (if configured)
+/var/log/php-fpm/,directory,Runtime,,PHP-FPM logs directory
+/var/log/php-fpm/error.log,file,Runtime,,PHP-FPM error log
+/var/log/redis/,directory,Database,,Redis logs (if installed)
+/var/log/elasticsearch/,directory,Search,,Elasticsearch logs (if installed)
+journalctl -u NetworkManager,journal-unit,Network,,NetworkManager (including DHCP client) logs
+/var/log/cloud-init.log,file,Cloud,,Cloud-init logs (cloud instances)
+/var/log/cloud-init-output.log,file,Cloud,,Cloud-init output log
+/var/log/insights-client/,directory,Management,,Red Hat Insights client logs
+/var/log/wpa_supplicant.log,file,Network,,Wi-Fi / WPA supplicant logs
+/var/log/ansible.log,file,Ansible,,Ansible control node log (enabled via log_path in ansible.cfg)
+/var/log/ansible/ansible.log,file,Ansible,,Common alternative Ansible log path
+/var/log/ansible/hosts/,directory,Ansible,,Per-host playbook logs (community.general.log_plays callback)
+ANSIBLE_LOG_PATH,env-var,Ansible,,Override log path at runtime
+/var/log/tower/,directory,Ansible AAP,,Ansible Automation Platform / AWX / Tower logs
+/var/log/tower/tower.log,file,Ansible AAP,Automation Controller (Web / Application),"Main application logs: runtime errors, web requests, general messages."
+/var/log/tower/callback_receiver.log,file,Ansible AAP,Callback Receiver,Handles Ansible job callback events.
+/var/log/tower/dispatcher.log,file,Ansible AAP,Dispatcher,Job scheduling and execution worker service.
+/var/log/tower/job_lifecycle.log,file,Ansible AAP,Job Lifecycle,"Job state changes, blocked jobs, and blocking conditions."
+/var/log/supervisor/,directory,Ansible AAP,,Supervisor-managed service logs (AAP)
+/var/log/ipaserver-install.log,file,IdM / FreeIPA,,"IdM server installation log, from ipa-server-install."
+/var/log/ipareplica-install.log,file,IdM / FreeIPA,,"IdM replica installation log, from ipa-replica-install."
+/var/log/ipaclient-install.log,file,IdM / FreeIPA,,"IdM client enrollment log, from ipa-client-install."
+~/.ipa/log/cli.log,file,IdM / FreeIPA,,"IPA CLI / RPC error log, under the invoking user's own home directory (the effective system user running the ipa command, not a fixed system-wide path)."
+/var/log/pki/pki-tomcat/,directory,PKI / Certificate System,,"Certificate System (Dogtag) logs, one subdirectory per subsystem (ca/, kra/, and so on) when IdM's integrated CA is enabled."
+/var/log/custodia/,directory,IdM / FreeIPA,,"Custodia secrets-service logs — IdM's internal service for distributing secrets (keys, passwords) between its own subsystems."
+/etc/logrotate.d/,directory,System,,"Log rotation policy snippets, one per service — not logs themselves, but where each service's rotation schedule and retention are configured."
+/var/log/tower/management_playbooks.log,file,Ansible AAP,Management Playbooks,Management playbook runs and isolated job metadata operations.
+/var/log/tower/task_system.log,file,Ansible AAP,Task System,"Background tasks (cluster management, analytics gathering/processing)."
+/var/log/tower/rsyslog.err,file,Ansible AAP,rsyslog,Errors authenticating or sending logs to external aggregators.
+/var/log/tower/wsrelay.log,file,Ansible AAP,Websocket Relay,Websocket relay server communication.
+/var/log/tower/rsyslog_configurer.log,file,Ansible AAP,rsyslog Configurer,rsyslog configuration activity for external logging.
+/var/log/tower/cache_clear.log,file,Ansible AAP,Cache Management,Cache clearing operations.
+/var/log/tower/tower_rbac_migrations.log,file,Ansible AAP,RBAC / Database,RBAC database migration and upgrade logs.
+/var/log/supervisor/awx-callback-receiver.log,file,Ansible AAP,Callback Receiver (supervisord),The supervisord-managed callback receiver process.
+/var/log/supervisor/awx-daphne.log,file,Ansible AAP,Daphne / Websocket,ASGI communication for the Web UI.
+/var/log/supervisor/awx-*.log,glob,Ansible AAP,Other,Various supervisord-managed service logs beyond the callback receiver and Daphne above.

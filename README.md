@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.10` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.11` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2956,6 +2956,33 @@ errors throughout.
 `1.5.10` (PATCH - added Ansible Automation Platform log file
 locations to the Log File Locations tab; a data addition and
 deconfliction to an existing reference table, not a new capability).
+
+Added a `component` column to the Log File Locations table
+(`data/reference/log_file_locations.csv`/`.json`, schema now
+`path`/`type`/`category`/`component`/`description`), at the repo
+owner's request. Populated it for the 14 Ansible AAP file rows that
+had a component name embedded in their description text: the name
+was split back out into `component` and the "Component — " prefix
+removed from `description`, restoring the split the owner's original
+AAP table used before it was folded into prose in the previous
+version. The two `/var/log/tower/` and `/var/log/supervisor/`
+directory rows, and all 93 non-AAP rows, got an empty `component`
+value rather than a fabricated one, since none of that data ever
+carried a distinct component name. Wired the new column into the Log
+File Locations tab's table (`LOGFILES_COLUMNS` in `index.html`) right
+before Description.
+
+Verified: a full page syntax check. Re-synced `index.html`'s embedded
+copy and confirmed via Playwright that the tab now shows a Component
+header and column, still renders all 107 rows, that the populated
+AAP rows show the right component names, and that every other row
+renders an empty Component cell cleanly rather than "undefined" or a
+layout glitch. Regression-checked across both themes and both
+1500px/375px viewports - zero console errors throughout.
+
+`1.5.11` (PATCH - added a `component` column to the Log File
+Locations table; a schema addition to an existing reference table,
+not a new capability).
 
 ## Structure
 
