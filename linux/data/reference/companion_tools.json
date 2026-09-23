@@ -8,5 +8,10 @@
     "name": "Splunk Taxonomy — My Tools",
     "description": "A companion collection of Splunk field-taxonomy references and tooling by the same author.",
     "url": "https://adamliq.github.io/Splunk_Taxonomy/#my-tools"
+  },
+  {
+    "name": "Splunk Pipeline Explorer",
+    "description": "Follow data from source acquisition to searchable buckets.",
+    "url": "https://adamliq.github.io/Splunk-pipeline-explorer/"
   }
 ]
