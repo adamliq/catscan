@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.14` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.15` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3056,6 +3056,45 @@ errors throughout.
 `1.5.14` (PATCH - added filtering and sorting to the Log File
 Locations tab; a UI enhancement to an existing tab, not a new
 catalogue or app-level capability).
+
+Asked whether there was anything else worth adding to the Log File
+Locations table - this catalogue's own gap-check against the
+existing 107 rows, not another owner-supplied list. Found four
+well-established RHEL default locations missing and added them:
+`journalctl -u sshd` and `journalctl -u crond` (`Security` and
+`System` categories) for parity with the other daemons that already
+get their own journal-unit row despite also feeding a shared file -
+`/var/log/secure` and `/var/log/cron` respectively - with SSH the
+more notable gap, being arguably the single most security-relevant
+daemon in the whole table and previously having no row of its own;
+`journalctl -u nfs-server` under `File Sharing`, a category that
+previously covered only Samba even though NFS is RHEL's other
+default file-sharing service; and `/var/lib/systemd/coredump/` under
+`Kernel`, RHEL 8+'s default location for process-level crash dumps,
+complementing `kdump.log`'s kernel-level ones already in the table.
+
+Three other candidates considered at the same time were deliberately
+left out rather than guessed at: `tlog` session recording (relevant
+given this table's existing IdM/FreeIPA depth, but its default write
+target is session-dependent rather than one fixed path or unit),
+Cockpit, and ABRT (RHEL 8 vs. 9 default behavior differs enough to
+need verification before committing to exact wording) - consistent
+with this project's standing rule of adding only what can be stated
+with confidence, not filling gaps with plausible-sounding guesses.
+Table is now 111 rows (up from 107).
+
+Verified: a full page syntax check. Re-synced `index.html`'s embedded
+copy and confirmed via Playwright that all four new rows are
+individually searchable, that the `nfs-server` row appears correctly
+under the `File Sharing` category filter alongside the two existing
+Samba rows, and that the total count reads 111 of 111 with no filters
+applied. Regression-checked across both themes and both 1500px/375px
+viewports - zero console errors throughout.
+
+`1.5.15` (PATCH - added four RHEL default log locations identified by
+a gap-check of the existing table - SSH and cron journal units, NFS,
+systemd-coredump; a data addition to an existing reference table, not
+a new capability).
 
 ## Structure
 

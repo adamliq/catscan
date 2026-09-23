@@ -106,3 +106,7 @@ ANSIBLE_LOG_PATH,env-var,Ansible,Ansible (control node),Override log path at run
 /var/log/supervisor/awx-callback-receiver.log,file,Ansible AAP,Callback Receiver (supervisord),The supervisord-managed callback receiver process.
 /var/log/supervisor/awx-daphne.log,file,Ansible AAP,Daphne / Websocket,ASGI communication for the Web UI.
 /var/log/supervisor/awx-*.log,glob,Ansible AAP,Other,Various supervisord-managed service logs beyond the callback receiver and Daphne above.
+journalctl -u sshd,journal-unit,Security,OpenSSH (sshd),SSH daemon systemd journal logs (also feeds /var/log/secure)
+journalctl -u crond,journal-unit,System,crond,Cron daemon systemd journal logs (also feeds /var/log/cron)
+journalctl -u nfs-server,journal-unit,File Sharing,NFS server,"NFS server systemd journal logs; RHEL's other default file-sharing service alongside Samba, with no dedicated flat log file of its own"
+/var/lib/systemd/coredump/,directory,Kernel,systemd-coredump,"Process-level crash dumps (core files) captured by systemd-coredump, RHEL 8+ default; complements kdump.log's kernel-level crash dumps above"
