@@ -1,8 +1,8 @@
 path,type,category,component,description
 /var/log/messages,file,System,,"Main system log (general messages from kernel, daemons, etc.). In an IdM deployment, also carries some DNS (named) and PKI (Dogtag) subsystem messages."
-/var/log/secure,file,Security,,"Security and authentication (SSH, sudo, PAM, failed logins)"
+/var/log/secure,file,Security,,"Security and authentication (SSH, sudo, su, PAM, failed logins)"
 /var/log/maillog,file,Mail,Postfix / Dovecot,Mail server related messages; postfix / mail transfer agent + Dovecot (default on RHEL)
-/var/log/cron,file,System,crond,Cron / scheduled task execution
+/var/log/cron,file,System,crond,Cron and anacron scheduled task execution
 /var/log/boot.log,file,System,,Boot and service startup messages
 /var/log/dmesg,file,Kernel,Kernel,Kernel ring buffer (hardware detection and drivers at boot)
 /var/log/btmp,binary,Security,login accounting (PAM),Failed login attempts (binary - use lastb)
@@ -110,3 +110,25 @@ journalctl -u sshd,journal-unit,Security,OpenSSH (sshd),SSH daemon systemd journ
 journalctl -u crond,journal-unit,System,crond,Cron daemon systemd journal logs (also feeds /var/log/cron)
 journalctl -u nfs-server,journal-unit,File Sharing,NFS server,"NFS server systemd journal logs; RHEL's other default file-sharing service alongside Samba, with no dedicated flat log file of its own"
 /var/lib/systemd/coredump/,directory,Kernel,systemd-coredump,"Process-level crash dumps (core files) captured by systemd-coredump, RHEL 8+ default; complements kdump.log's kernel-level crash dumps above"
+/var/log/faillog,binary,Security,login accounting (PAM),Failed login attempt counters per user; legacy mechanism largely superseded by pam_faillock (view with the deprecated faillog command).
+/var/log/tallylog,binary,Security,login accounting (PAM),Failed login tally maintained by pam_tally2/pam_faillock; the modern successor to the legacy faillog file above.
+/run/log/journal/,directory,Systemd,systemd-journald,"Volatile in-memory systemd journal, used when persistent journal storage (Storage=persistent in journald.conf) is not enabled; lost on reboot."
+/var/log/httpd/ssl_access_log,file,Web Server,Apache HTTP Server (httpd),"HTTPS access requests, logged separately from the plain HTTP access_log when mod_ssl is enabled."
+/var/log/httpd/ssl_error_log,file,Web Server,Apache HTTP Server (httpd),"HTTPS error log, logged separately from the plain HTTP error_log when mod_ssl is enabled."
+/var/log/httpd/,directory,Web Server,Apache HTTP Server (httpd),"Apache's log directory, containing access_log/error_log and, when mod_ssl is enabled, the ssl_access_log/ssl_error_log pair above."
+/var/log/nginx/,directory,Web Server,Nginx,"Nginx's log directory, containing access.log and error.log above."
+/var/log/libvirt/qemu/,directory,Virtualization,libvirt / QEMU,"Per-guest QEMU/KVM console and startup logs, one file per virtual machine, distinct from libvirt's own management logs in the parent directory."
+/var/log/rhsm/rhsm.log,file,Subscription,Red Hat Subscription Manager,"Main Subscription Manager log, inside the rhsm log directory above."
+/var/log/anaconda/anaconda.log,file,Installation,Anaconda installer,"General installation messages, inside the Anaconda log directory above."
+/var/log/anaconda/syslog,file,Installation,Anaconda installer,Hardware-related messages captured during installation.
+/var/log/anaconda/packaging.log,file,Installation,Anaconda installer,Package installation messages during the install process.
+/var/log/anaconda/storage.log,file,Installation,Anaconda installer,Storage/partitioning module details during installation.
+/var/log/Xorg.0.log.old,file,Desktop,Xorg,"Previous X server session's log, rotated by Xorg itself (not logrotate) each time the display server restarts."
+/var/log/cups/,directory,Printing,CUPS,"CUPS printing system logs (access, error, and page logs)."
+/var/log/audit/,directory,Security,auditd,Directory containing audit.log and any auditd-related rotation/backup files.
+/var/log/rabbitmq/,directory,Messaging,RabbitMQ,RabbitMQ message broker logs.
+/var/log/kibana/,directory,Search,Kibana,"Kibana logs, if installed alongside Elasticsearch."
+/var/log/logstash/,directory,Search,Logstash,"Logstash logs, if installed as part of an ELK/Elastic stack."
+/var/log/vmware-*,glob,Virtualization,VMware Tools,"VMware Tools/agent logs, present only on VMware-hosted guests."
+/var/log/pcp/,directory,Performance,Performance Co-Pilot (PCP),"Performance Co-Pilot monitoring logs and archives, if installed."
+/var/log/sa/,directory,Performance,sysstat (sar),"System activity data files collected by sysstat sadc/sar, typically via a default cron job."

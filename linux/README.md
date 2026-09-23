@@ -468,7 +468,7 @@ flagged low-confidence entries instead of guessing.
   (that file only covers the 2 tools an administrator runs day-to-day)
   but is included here for a complete man-page set. Powers the
   Fapolicyd tab's Man submenu.
-- `data/reference/log_file_locations.csv` / `.json` — 111 rows: where RHEL,
+- `data/reference/log_file_locations.csv` / `.json` — 133 rows: where RHEL,
   IdM/FreeIPA, and other common add-on services actually write their
   logs, repo owner-supplied and not tied to any event in the main
   catalogue. Columns: `path`, `type` (`file`, `directory`, `binary` —
@@ -573,6 +573,37 @@ flagged low-confidence entries instead of guessing.
   session-dependent rather than one fixed path/unit), Cockpit, and
   ABRT (RHEL 8 vs. 9 default behavior differs enough to need
   verification before committing to exact wording).
+
+  A third owner-supplied CSV (79 candidate rows) was deconflicted
+  against the table rather than appended blind: ~50 were exact-path
+  duplicates dropped outright, 6 were rotated-log-suffix variants
+  (`boot.log-*`, `messages-*`, `secure-*`, `cron-*`, `maillog-*`,
+  `dnf.log-*`) that don't match this table's established convention of
+  not listing per-file logrotate artifacts separately (rotation policy
+  is already covered generally by `/etc/logrotate.d/`), 1 was an
+  ambiguous compound path ("`/var/log/mariadb/` or `/var/log/mysql/`")
+  already covered more precisely by the existing per-file rows, and 1
+  (`/var/log/rsyslog/`) was left out as not a genuine RHEL default
+  location — only present if an admin adds a custom rsyslog rule. 2
+  existing rows got a small description enrichment where the new list
+  added real information: `su` alongside sudo/SSH/PAM on
+  `/var/log/secure`, and `anacron` alongside cron on `/var/log/cron`.
+  22 rows were genuinely new: two legacy/modern failed-login-counter
+  files (`faillog`, `tallylog`); the volatile in-memory systemd journal
+  (`/run/log/journal/`, distinct from the persistent one already in the
+  table); Apache's `ssl_access_log`/`ssl_error_log` pair plus its own
+  directory row; an `nginx/` directory row; per-guest QEMU logs
+  (`libvirt/qemu/`, distinct from libvirt's own management logs); the
+  actual `rhsm.log` file inside the existing `rhsm/` directory row; the
+  four individual files inside the existing `anaconda/` directory row
+  (`anaconda.log`, `syslog`, `packaging.log`, `storage.log`); Xorg's
+  self-rotated `Xorg.0.log.old`; a new `Printing` category for CUPS; a
+  directory row for `/var/log/audit/` alongside the existing
+  `audit.log` file row; a new `Messaging` category for RabbitMQ; Kibana
+  and Logstash rows alongside the existing Elasticsearch one under
+  `Search`; a VMware Tools glob row; and Performance Co-Pilot and
+  sysstat rows under the existing `Performance` category. Table is now
+  133 rows (up from 111).
 
   Powers its own **Log File Locations** tab (moved out of the Reference
   tables accordion, where it started, once IdM coverage made it
@@ -800,7 +831,7 @@ as titled reference blocks, transcribed rather than summarized so the
 exact commands/config stay copy-pasteable.
 
 **Log File Locations** — a separate top-level tab, next to Command
-Logging: a searchable, filterable, sortable table over all 111 rows
+Logging: a searchable, filterable, sortable table over all 133 rows
 of `data/reference/log_file_locations.csv` (`path`/`type`/`category`/
 `component`/`description` — see above). Started as the Reference
 tables tab's 10th accordion table; moved out to its own tab once the

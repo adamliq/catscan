@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.16` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.17` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3225,6 +3225,60 @@ through `1.5.15`).
 `1.5.8`/`1.5.13` build-script/CI/data-reconciliation batch onto
 `main` after `1.5.14`-`1.5.15` merged ahead of it again; no content
 change beyond the version line and changelog ordering).
+
+Deconflicted a third owner-supplied CSV (79 candidate rows) against
+the Log File Locations table rather than appending it blind. Of the
+79: ~50 were exact-path duplicates of rows already in the table,
+dropped outright; 6 were rotated-log-suffix variants (`boot.log-*`,
+`messages-*`, `secure-*`, `cron-*`, `maillog-*`, `dnf.log-*`) that
+don't match this table's established convention of listing each
+service's log location once rather than its logrotate artifacts
+too - rotation policy is already covered generally by
+`/etc/logrotate.d/`; 1 was an ambiguous compound path
+("`/var/log/mariadb/` or `/var/log/mysql/`") already covered more
+precisely by the existing per-file rows; and 1 (`/var/log/rsyslog/`)
+was left out because it's not a genuine RHEL default location, only
+present if an admin adds a custom rsyslog rule - consistent with this
+project's standing rule of adding only what can be stated with
+confidence.
+
+2 existing rows got a small description enrichment where the new
+list added real information: `su` alongside sudo/SSH/PAM on
+`/var/log/secure`, and `anacron` alongside cron on `/var/log/cron`.
+
+22 rows were genuinely new: `faillog`/`tallylog` (legacy and modern
+failed-login counters); `/run/log/journal/` (the volatile in-memory
+systemd journal, distinct from the persistent one already in the
+table); Apache's `ssl_access_log`/`ssl_error_log` pair plus a
+directory row for `/var/log/httpd/`; a directory row for
+`/var/log/nginx/`; `/var/log/libvirt/qemu/` (per-guest QEMU logs,
+distinct from libvirt's own management logs); `rhsm.log` (the actual
+file inside the existing `rhsm/` directory row); the four individual
+files inside the existing `anaconda/` directory row (`anaconda.log`,
+`syslog`, `packaging.log`, `storage.log`); `Xorg.0.log.old` (Xorg's
+own self-rotated previous-session log); a new `Printing` category for
+CUPS; a directory row for `/var/log/audit/` alongside the existing
+`audit.log` file; a new `Messaging` category for RabbitMQ; Kibana and
+Logstash rows alongside the existing Elasticsearch one under
+`Search`; a VMware Tools glob row; and Performance Co-Pilot and
+sysstat rows under the existing `Performance` category. Table is now
+133 rows (up from 111).
+
+Verified: a full page syntax check (both the manual inline check and
+`tools/check_syntax.js`). Re-synced `index.html`'s embedded copy and
+confirmed via Playwright that a sample of the new rows (faillog,
+tallylog, the SSL log pair, CUPS, RabbitMQ, Kibana, Logstash, VMware,
+PCP, sar, the Anaconda file breakdown, the volatile journal path) are
+all individually searchable, that the new `Printing` and `Messaging`
+category filters each correctly narrow to their one row, and that the
+total count reads 133 of 133 with no filters applied. Regression-
+checked across both themes and both 1500px/375px viewports - zero
+console errors throughout.
+
+`1.5.17` (PATCH - deconflicted a third owner-supplied CSV into the
+Log File Locations table, adding 22 new rows and enriching 2 existing
+ones; a data addition to an existing reference table, not a new
+capability).
 
 ## Structure
 
