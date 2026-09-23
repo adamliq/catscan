@@ -48083,3 +48083,1508 @@ Level:         Information
 Computer:      DC01.corp.local
 Description:
 The KDC uses the following KDC certificate for smart card or certificate authentication: Issuer Name xxx, Serial Number xxx, Thumbprint xxx, Template xxx.","Uwe Gradenegger, details of KDC Event ID 302 (Kerberos-Key-Distribution-Center)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+513,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Zone delete,The zone xxx was deleted.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      513
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was deleted.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+514,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Zone updated,The zone xxx was updated. The xxx setting has been set to xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      514
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was updated. The AllowUpdate setting has been set to Secure.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+515,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Record create,A resource record of type xxx name xxx TTL xxx and RDATA xxx was created in scope xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      515
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A resource record of type A name www.corp.local TTL 3600 and RDATA 10.20.30.40 was created in scope CORP-Bldg1 of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+516,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Record delete,A resource record of type xxx name xxx and RDATA xxx was deleted from scope xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      516
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A resource record of type A name www.corp.local and RDATA 10.20.30.40 was deleted from scope CORP-Bldg1 of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+517,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,RRSET delete,All resource records of type xxx name xxx were deleted from scope xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      517
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+All resource records of type A name www.corp.local were deleted from scope CORP-Bldg1 of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+518,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Node delete,All resource records at Node name xxx were deleted from scope xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      518
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+All resource records at Node name www.corp.local were deleted from scope CORP-Bldg1 of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+519,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Dynamic update,Record create - dynamic update,A resource record of type xxx name xxx TTL xxx and RDATA xxx was created in scope xxx of zone xxx via dynamic update from IP Address xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      519
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A resource record of type A name www.corp.local TTL 3600 and RDATA 10.20.30.40 was created in scope CORP-Bldg1 of zone corp.local via dynamic update from IP Address 10.20.30.75.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+520,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Dynamic update,Record delete - dynamic update,A resource record of type xxx name xxx and RDATA xxx was deleted from scope xxx of zone xxx via dynamic update from IP Address xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      520
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A resource record of type A name www.corp.local and RDATA 10.20.30.40 was deleted from scope CORP-Bldg1 of zone corp.local via dynamic update from IP Address 10.20.30.75.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+521,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Aging,Record scavenge,A resource record of type xxx name xxx TTL xxx and RDATA xxx was scavenged from scope xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      521
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A resource record of type A name www.corp.local TTL 3600 and RDATA 10.20.30.40 was scavenged from scope CORP-Bldg1 of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+522,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Zone scope create,The scope xxx was created in zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      522
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The scope CORP-Bldg1 was created in zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+523,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Zone scope delete,The scope xxx was deleted in zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      523
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The scope CORP-Bldg1 was deleted in zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+525,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Online signing,Zone sign,The zone xxx was signed with following properties.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      525
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was signed with following properties.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+526,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Online signing,Zone unsign,The zone xxx was unsigned.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      526
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was unsigned.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+527,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Online signing,Zone re-sign,The zone xxx was re-signed with following properties.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      527
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was re-signed with following properties.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+528,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Key rollover start,Rollover was started on the type xxx with GUID xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      528
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Rollover was started on the type Key Signing Key with GUID a1b2c3d4-e5f6-4a5b-8c9d-0123456789ab of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+529,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Key rollover end,Rollover was completed on the type xxx with GUID xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      529
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Rollover was completed on the type Key Signing Key with GUID a1b2c3d4-e5f6-4a5b-8c9d-0123456789ab of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+530,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Key retire,The type xxx with GUID xxx of zone xxx was marked for retiral.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      530
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The type Key Signing Key with GUID a1b2c3d4-e5f6-4a5b-8c9d-0123456789ab of zone corp.local was marked for retiral.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+531,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Key rollover triggered,Manual rollover was triggered on the type xxx with GUID xxx of zone xxx.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      531
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Manual rollover was triggered on the type Key Signing Key with GUID a1b2c3d4-e5f6-4a5b-8c9d-0123456789ab of zone corp.local.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+533,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Key poke rollover,The key signing key that was waiting for a DS update has been forced to move to rollover completion.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      533
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The key signing key that was waiting for a DS update has been forced to move to rollover completion.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+534,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Export DNSSEC,DNSSEC setting metadata was exported from zone.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      534
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DNSSEC setting metadata was exported from zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+535,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Import DNSSEC,DNSSEC setting metadata was imported on zone.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      535
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DNSSEC setting metadata was imported on zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+536,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Cache operations,Cache purge,A record of type xxx QNAME xxx was purged from scope xxx in cache.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      536
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A record of type A QNAME www.corp.local was purged from scope CORP-Bldg1 in cache.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+537,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Cache operations,Forwarder reset,The forwarder list on scope has been reset.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      537
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The forwarder list on scope has been reset.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+540,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Root hints,The root hints have been modified.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      540
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The root hints have been modified.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+541,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Server setting,The setting on scope has been set.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      541
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The setting on scope has been set.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+542,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Server scope create,The scope of DNS server was created.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      542
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The scope of DNS server was created.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+543,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Server scope delete,The scope of DNS server was deleted.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      543
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The scope of DNS server was deleted.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+544,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Add trust point DNSKEY,The DNSKEY has been added at the trust point.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      544
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNSKEY has been added at the trust point.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+545,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Add trust point DS,The DS has been added at the trust point.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      545
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DS has been added at the trust point.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+546,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Remove trust point,The trust point has been removed.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      546
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The trust point has been removed.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+547,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Add trust point root,The trust anchor for the root zone has been added.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      547
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The trust anchor for the root zone has been added.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+548,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Restart server,A request to restart the DNS server service has been received.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      548
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A request to restart the DNS server service has been received.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+549,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Clear debug logs,The debug logs have been cleared.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      549
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The debug logs have been cleared.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+550,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Write dirty zones,The in-memory contents of all the zones have been flushed to their respective files.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      550
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The in-memory contents of all the zones have been flushed to their respective files.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+551,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Clear statistics,All the statistical data for the DNS server has been cleared.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      551
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+All the statistical data for the DNS server has been cleared.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+552,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Start scavenging,A resource record scavenging cycle has been started on the DNS Server.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      552
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A resource record scavenging cycle has been started on the DNS Server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+553,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Enlist directory partition,Directory partition enlistment related.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      553
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Directory partition enlistment related.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+554,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Abort scavenging,The resource record scavenging cycle has been terminated on the DNS Server.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      554
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The resource record scavenging cycle has been terminated on the DNS Server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+555,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Prepare for demotion,The DNS server has been prepared for demotion.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      555
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has been prepared for demotion.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+556,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Write root hints,The information about the root hints has been written back to persistent storage.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      556
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The information about the root hints has been written back to persistent storage.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+557,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Listen address,The addresses on which DNS server will listen has been changed.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      557
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The addresses on which DNS server will listen has been changed.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+558,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Server operations,Active refresh trust points,An immediate RFC 5011 active refresh has been scheduled for all trust points.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      558
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+An immediate RFC 5011 active refresh has been scheduled for all trust points.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+559,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Pause zone,The zone is paused.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      559
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone is paused.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+560,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Resume zone,The zone is resumed.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      560
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone is resumed.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+561,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Reload zone,The data for zone has been reloaded.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      561
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The data for zone has been reloaded.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+562,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Refresh zone,The data for zone has been refreshed from the primary server.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      562
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The data for zone has been refreshed from the primary server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+563,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Expire zone,The secondary zone has been expired and new data has been requested from the primary server.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      563
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The secondary zone has been expired and new data has been requested from the primary server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+564,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Update from DS,The zone has been reloaded from the Active Directory.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      564
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone has been reloaded from the Active Directory.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+565,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Write and notify,The content of the zone has been written to the disk and notification sent.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      565
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The content of the zone has been written to the disk and notification sent.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+566,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Force aging,All DNS records at the node will have their aging time stamp set to the current time.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      566
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+All DNS records at the node will have their aging time stamp set to the current time.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+567,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Scavenge servers,The Active Directory-integrated zone has been updated. Only specified servers can run scavenging.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      567
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The Active Directory-integrated zone has been updated. Only specified servers can run scavenging.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+568,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Zone operations,Transfer primary key server,The key management role for zone has been transferred.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      568
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The key management role for zone has been transferred.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+569,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Add SKD,A signing key descriptor has been added on the zone.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      569
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A signing key descriptor has been added on the zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+570,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Modify SKD,A signing key descriptor has been updated on the zone.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      570
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A signing key descriptor has been updated on the zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+571,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Delete SKD,A signing key descriptor has been removed from the zone.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      571
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A signing key descriptor has been removed from the zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+572,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Modify SKD state,The state of the signing key has been modified on zone.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      572
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The state of the signing key has been modified on zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+573,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server DNSSEC operations,Add delegation,A delegation has been added.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      573
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A delegation has been added.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+574,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Create client subnet record,The client subnet record has been added to the client subnet map.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      574
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The client subnet record has been added to the client subnet map.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+575,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Delete client subnet record,The client subnet record has been deleted from the client subnet map.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      575
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The client subnet record has been deleted from the client subnet map.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+576,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Update client subnet record,The client subnet record has been updated.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      576
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The client subnet record has been updated.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+577,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Create server level policy,A server level policy has been created.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      577
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A server level policy has been created.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+578,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Create zone level policy,A zone level policy has been created.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      578
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A zone level policy has been created.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+579,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Create forwarding policy,A forwarding policy has been created.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      579
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+A forwarding policy has been created.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+580,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Delete server level policy,The server level policy has been deleted.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      580
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The server level policy has been deleted.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+581,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Delete zone level policy,The zone level policy has been deleted.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      581
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The zone level policy has been deleted.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+582,Microsoft-Windows-DNSServer/Audit,Microsoft-Windows-DNS-Server-Service,DNS Server Policy operations,Delete forwarding policy,The forwarding policy has been deleted.,"Log Name:      Microsoft-Windows-DNSServer/Audit
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      582
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The forwarding policy has been deleted.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Audit channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+597,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Lookup,Encrypted query received,QUERY_RECEIVED - Encrypted (DoH) query received.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      597
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+QUERY_RECEIVED - Encrypted (DoH) query received.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+598,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Lookup,Encrypted response sent,RESPONSE_SUCCESS - Encrypted (DoH) response sent.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      598
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+RESPONSE_SUCCESS - Encrypted (DoH) response sent.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+599,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Lookup,Encrypted response failure,RESPONSE_FAILURE - Encrypted (DoH) response failure.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      599
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+RESPONSE_FAILURE - Encrypted (DoH) response failure.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+600,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Lookup,Encrypted query rejected,IGNORED_QUERY - Encrypted query rejected.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      600
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+IGNORED_QUERY - Encrypted query rejected.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+601,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Lookup,Encrypted response channel failure,Encrypted response channel failure.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      601
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+Encrypted response channel failure.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+602,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Dynamic update,Encrypted DDNS update request,DYN_UPDATE_RECV - Encrypted dynamic update request received.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      602
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DYN_UPDATE_RECV - Encrypted dynamic update request received.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+603,Microsoft-Windows-DNSServer/Analytical,Microsoft-Windows-DNS-Server-Service,DNS Server DoH Dynamic update,Encrypted DDNS update response,DYN_UPDATE_RESPONSE - Encrypted dynamic update response sent.,"Log Name:      Microsoft-Windows-DNSServer/Analytical
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      603
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DYN_UPDATE_RESPONSE - Encrypted dynamic update response sent.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (Analytical channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,Service Starting,Starting the DNS server.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Starting the DNS server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,Service Started,The DNS server has started.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has started.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,Service Stopped,The DNS server has shut down.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has shut down.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+131,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server WINS NetBIOS,Initialization,"The DNS server did not initialize WINSR reverse lookup, through NetBIOS adapter status lookup.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      131
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server did not initialize WINSR reverse lookup, through NetBIOS adapter status lookup.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler): https://kb.eventtracker.com/evtpass/evtPages/EventId_131_Microsoft-Windows-DNS-Server-Service_65406.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+140,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server RPC Protocol,Initialization,"The DNS server could not initialize the remote procedure call (RPC) service. If it is not running, start the RPC service or reboot the computer. The event data is the error code.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      140
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not initialize the remote procedure call (RPC) service. If it is not running, start the RPC service or reboot the computer. The event data is the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc726902(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+150,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Plugin,The DNS server could not load or initialize the plug-in DLL.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      150
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server could not load or initialize the plug-in DLL.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+407,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Socket,DNS server could not bind a datagram (UDP) socket.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      407
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+DNS server could not bind a datagram (UDP) socket.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+408,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Socket,The DNS server could not open socket for address.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      408
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server could not open socket for address.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+409,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Interfaces,Restricted interfaces contain IP addresses not configured on the server.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      409
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+Restricted interfaces contain IP addresses not configured on the server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+410,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Interfaces,The DNS server list of restricted interfaces does not contain a valid IP address for the server computer.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      410
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server list of restricted interfaces does not contain a valid IP address for the server computer.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler): https://kb.eventtracker.com/evtPass/evtPages/EventId_410_Microsoft-Windows-DNS-Server-Service_63669.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+500,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server has detected that the zone has invalid or corrupted registry data.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      500
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has detected that the zone has invalid or corrupted registry data.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+708,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,Caching Only,The DNS server did not detect any zones and will run as a caching-only server.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      708
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server did not detect any zones and will run as a caching-only server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+709,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Root Hints,The DNS server has moved the AD DS-integrated root hint data.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      709
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has moved the AD DS-integrated root hint data.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+710,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Type,An administrator has changed the type and zone storage options of a zone.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      710
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+An administrator has changed the type and zone storage options of a zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+711,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Zone Storage,An administrator has changed the type or AD DS location of a zone.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      711
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+An administrator has changed the type or AD DS location of a zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2001,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,Boot Method,The DNS server is now booting from the registry or directory.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2001
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server is now booting from the registry or directory.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2630,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Autoconfiguration,,"The DNS server could not configure the network connections of this computer with the local computer's IP address as the preferred DNS server, because this computer is connected to networks with different or invalid DNS namespaces.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2630
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not configure the network connections of this computer with the local computer's IP address as the preferred DNS server, because this computer is connected to networks with different or invalid DNS namespaces.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735854(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2631,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Autoconfiguration,,The DNS server successfully autoconfigured the network connections of this computer to use the local DNS server as the preferred DNS server.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2631
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server successfully autoconfigured the network connections of this computer to use the local DNS server as the preferred DNS server.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler): https://kb.eventtracker.com/evtpass/evtpages/EventId_2631_Microsoft-Windows-DNS-Server-Service_63579.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4004,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Zone Enumeration,The DNS server was unable to complete directory service enumeration of zone.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4004
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to complete directory service enumeration of zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4015,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Critical Error,The DNS server has encountered a critical error from the Active Directory.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4015
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has encountered a critical error from the Active Directory.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4016,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Timeout,The DNS server timed out attempting an Active Directory service operation.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4016
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server timed out attempting an Active Directory service operation.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+7504,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,Zone Load,The DNS server has encountered a critical error while attempting to load initialize or create the zone.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      7504
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has encountered a critical error while attempting to load initialize or create the zone.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+822,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server DNS over HTTPS,DoH URL registered,Successfully started HTTP server for DNS-over-HTTPS (DoH) server.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      822
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Successfully started HTTP server for DNS-over-HTTPS (DoH) server.",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+823,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server DNS over HTTPS,DoH initialization failed,The DNS server could not initialize the HTTP server for DNS-over-HTTPS (DoH).,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      823
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server could not initialize the HTTP server for DNS-over-HTTPS (DoH).",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+824,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server DNS over HTTPS,DoH sessions failed,The DNS server could not create the HTTP server session for DNS-over-HTTPS (DoH).,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      824
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create the HTTP server session for DNS-over-HTTPS (DoH).",Repo owner-supplied Microsoft-Windows-DNS-Server-EventIDs.csv reference (DNS Server channel),,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4000,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to open Active Directory. This DNS server is configured to obtain and use information from the directory for this zone and is unable to load the zone without it. Check that the Active Directory is functioning properly and reload the zone. The event data is the error code.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4000
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to open Active Directory. This DNS server is configured to obtain and use information from the directory for this zone and is unable to load the zone without it. Check that the Active Directory is functioning properly and reload the zone. The event data is the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4001,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to open zone xxx in the Active Directory. This DNS server is configured to obtain and use information from the directory for this zone and is unable to load the zone without it. Check that the Active Directory is functioning properly and reload the zone. The event data is the error code.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4001
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to open zone corp.local in the Active Directory. This DNS server is configured to obtain and use information from the directory for this zone and is unable to load the zone without it. Check that the Active Directory is functioning properly and reload the zone. The event data is the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4002,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server was unable to add zone xxx to the Active Directory. Check that the Active Directory is available. Note that the zone will not be be added to and written to the directory unless you re-attempt adding the zone using the DNS console. The event data contains the error. For more information see ""Add and Remove Zones"" in the online Help.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4002
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to add zone corp.local to the Active Directory. Check that the Active Directory is available. Note that the zone will not be be added to and written to the directory unless you re-attempt adding the zone using the DNS console. The event data contains the error. For more information see ""Add and Remove Zones"" in the online Help.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4003,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server was unable to delete zone xxx in the Active Directory. Check that the Active Directory is functioning properly. Note that this zone will not be removed from the directory unless you retry deleting of the zone using the DNS console. The event data contains the error. For more information see ""Add and Remove Zones"" in the online Help.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4003
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to delete zone corp.local in the Active Directory. Check that the Active Directory is functioning properly. Note that this zone will not be removed from the directory unless you retry deleting of the zone using the DNS console. The event data contains the error. For more information see ""Add and Remove Zones"" in the online Help.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4006,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server could not load the records for the DNS name xxx found in the Active Directory integrated zone xxx. A possible cause is that this DNS name contains character(s) not permitted by the name-checking setting on this DNS server. To allow these records to be loaded choose the appropriate name-checking setting on the DNS server. To delete these records from the Active Directory, first allow the DNS server to load them by changing the name-checking setting on this DNS server to allow all names. Then restart the DNS server service to cause the records to be loaded. The records will now appear in the DNS Manager and may be deleted. When the records have been deleted, restore the DNS server name-checking setting to the preferred value.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4006
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server could not load the records for the DNS name www.corp.local found in the Active Directory integrated zone corp.local. A possible cause is that this DNS name contains character(s) not permitted by the name-checking setting on this DNS server. To allow these records to be loaded choose the appropriate name-checking setting on the DNS server. To delete these records from the Active Directory, first allow the DNS server to load them by changing the name-checking setting on this DNS server to allow all names. Then restart the DNS server service to cause the records to be loaded. The records will now appear in the DNS Manager and may be deleted. When the records have been deleted, restore the DNS server name-checking setting to the preferred value.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4007,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to open zone xxx in the Active Directory from the application directory partition xxx. This DNS server is configured to obtain and use information from the directory for this zone and is unable to load the zone without it. Check that the Active Directory is functioning properly and reload the zone. The event data is the error code.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4007
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to open zone corp.local in the Active Directory from the application directory partition DC=ForestDnsZones,DC=corp,DC=local. This DNS server is configured to obtain and use information from the directory for this zone and is unable to load the zone without it. Check that the Active Directory is functioning properly and reload the zone. The event data is the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4010,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to create a resource record for xxx in zone xxx. The Active Directory definition of this resource record is corrupt or contains an invalid DNS name. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4010
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to create a resource record for corp.local in zone corp.local. The Active Directory definition of this resource record is corrupt or contains an invalid DNS name. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4011,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server was unable to add or write an update of domain name xxx in zone xxx to the Active Directory. Check that the Active Directory is functioning properly and add or update this domain name using the DNS console. The extended error debug information (which may be empty) is ""xxx"". The event data contains the error.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4011
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to add or write an update of domain name www.corp.local in zone corp.local to the Active Directory. Check that the Active Directory is functioning properly and add or update this domain name using the DNS console. The extended error debug information (which may be empty) is ""%3""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)""""0x2 (WSAECONNRESET)"". The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4012,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server timed out attempting to write resource records to the Active Directory at xxx. Check that the directory is functioning properly and add or update the records using the DNS console. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4012
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server timed out attempting to write resource records to the Active Directory at DC02.corp.local. Check that the directory is functioning properly and add or update the records using the DNS console. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4013,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server is waiting for Active Directory Domain Services (AD DS) to signal that the initial synchronization of the directory has been completed. The DNS server service cannot start until the initial synchronization is complete because critical DNS data might not yet be replicated onto this domain controller. If events in the AD DS event log indicate that there is a problem with DNS name resolution, consider adding the IP address of another DNS server for this domain to the DNS server list in the Internet Protocol properties of this computer. This event will be logged every two minutes until AD DS has signaled that the initial synchronization has successfully completed.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4013
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server is waiting for Active Directory Domain Services (AD DS) to signal that the initial synchronization of the directory has been completed. The DNS server service cannot start until the initial synchronization is complete because critical DNS data might not yet be replicated onto this domain controller. If events in the AD DS event log indicate that there is a problem with DNS name resolution, consider adding the IP address of another DNS server for this domain to the DNS server list in the Internet Protocol properties of this computer. This event will be logged every two minutes until AD DS has signaled that the initial synchronization has successfully completed.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4014,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to initialize Active Directory security interfaces. Check that the Active Directory is functioning properly and restart the DNS server. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4014
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to initialize Active Directory security interfaces. Check that the Active Directory is functioning properly and restart the DNS server. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4017,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to load or create the DnsAdmins group. The most likely cause is that the Group Name has been changed. The DNS server will continue but for full functionality the DnsAdmins group should be repaired. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4017
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to load or create the DnsAdmins group. The most likely cause is that the Group Name has been changed. The DNS server will continue but for full functionality the DnsAdmins group should be repaired. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4018,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to begin background loading of Active Directory-integrated zones. There may be a system resource problem. The DNS server service will now terminate. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4018
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to begin background loading of Active Directory-integrated zones. There may be a system resource problem. The DNS server service will now terminate. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4019,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server attempted to load the Active Directory-integrated zone xxx in the background but there was an error during load. This zone will now be shut down. Correct the error and restart the DNS server service. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4019
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server attempted to load the Active Directory-integrated zone corp.local in the background but there was an error during load. This zone will now be shut down. Correct the error and restart the DNS server service. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4400,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server is experiencing high SOA query load. This may be caused by a large number of local client machines performing updates. Single object replication of DNS records corresponding to SOA queries is being throttled. This may delay replication of updates to this RODC DNS server, however scheduled replication will not be affected.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4400
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server is experiencing high SOA query load. This may be caused by a large number of local client machines performing updates. Single object replication of DNS records corresponding to SOA queries is being throttled. This may delay replication of updates to this RODC DNS server, however scheduled replication will not be affected.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4510,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to connect to the domain naming FSMO xxx. No modifications to Directory Partitions are possible until the FSMO server is available for LDAP connections. The event data contains the error code.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4510
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to connect to the domain naming FSMO DC01.corp.local. No modifications to Directory Partitions are possible until the FSMO server is available for LDAP connections. The event data contains the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4511,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The zone xxx was not successfully saved to the new directory partition as xxx due to an error deleting the zone from the old directory partition as xxx. The DNS Server has attempted to undo the changes, but manual cleanup of the zone may be required. The event data contains the error code.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4511
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was not successfully saved to the new directory partition as DC=ForestDnsZones,DC=corp,DC=local due to an error deleting the zone from the old directory partition as DC=DomainDnsZones,DC=corp,DC=local. The DNS Server has attempted to undo the changes, but manual cleanup of the zone may be required. The event data contains the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4512,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server was unable to create the built-in directory partition xxx. The error was xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4512
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to create the built-in directory partition DC=ForestDnsZones,DC=corp,DC=local. The error was ERROR_DS_UNAVAILABLE.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4513,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server detected that it is not enlisted in the replication scope of the directory partition xxx. This prevents the zones that should be replicated to all DNS servers in the xxx forest from replicating to this DNS server. To create or repair the forest-wide DNS directory partition, open the DNS console. Right-click the applicable DNS server, and then click 'Create Default Application Directory Partitions'. Follow the instructions to create the default DNS application directory partitions. For more information, see 'To create the default DNS application directory partitions' in Help and Support. The error was xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4513
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server detected that it is not enlisted in the replication scope of the directory partition DC=ForestDnsZones,DC=corp,DC=local. This prevents the zones that should be replicated to all DNS servers in the corp.local forest from replicating to this DNS server. To create or repair the forest-wide DNS directory partition, open the DNS console. Right-click the applicable DNS server, and then click 'Create Default Application Directory Partitions'. Follow the instructions to create the default DNS application directory partitions. For more information, see 'To create the default DNS application directory partitions' in Help and Support. The error was ERROR_DS_UNAVAILABLE.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4514,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The DNS server detected that it is not enlisted in the replication scope of the directory partition xxx. This prevents the zones that should be replicated to all DNS servers in the xxx domain from replicating to this DNS server. For information on how to add a DNS server to the replication scope of an application directory partition, please see Help and Support. To create or repair the domain-wide DNS directory partition, open the DNS console. Right-click the applicable DNS server, and then click 'Create Default Application Directory Partitions'. Follow the instructions to create the default DNS application directory partitions. For more information, see 'To create the default DNS application directory partitions' in Help and Support. The error was xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4514
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server detected that it is not enlisted in the replication scope of the directory partition DC=ForestDnsZones,DC=corp,DC=local. This prevents the zones that should be replicated to all DNS servers in the corp.local domain from replicating to this DNS server. For information on how to add a DNS server to the replication scope of an application directory partition, please see Help and Support. To create or repair the domain-wide DNS directory partition, open the DNS console. Right-click the applicable DNS server, and then click 'Create Default Application Directory Partitions'. Follow the instructions to create the default DNS application directory partitions. For more information, see 'To create the default DNS application directory partitions' in Help and Support. The error was ERROR_DS_UNAVAILABLE.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4515,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,"The zone xxx was previously loaded from the directory partition xxx but another copy of the zone has been found in directory partition xxx. The DNS Server will ignore this new copy of the zone. Please resolve this conflict as soon as possible. If an administrator has moved this zone from one directory partition to another this may be a harmless transient condition. In this case, no action is necessary. The deletion of the original copy of the zone should soon replicate to this server. If there are two copies of this zone in two different directory partitions but this is not a transient caused by a zone move operation then one of these copies should be deleted as soon as possible to resolve this conflict. To change the replication scope of an application directory partition containing DNS zones and for more details on storing DNS zones in the application directory partitions, please see Help and Support.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4515
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The zone corp.local was previously loaded from the directory partition DC=ForestDnsZones,DC=corp,DC=local but another copy of the zone has been found in directory partition DC=ForestDnsZones,DC=corp,DC=local. The DNS Server will ignore this new copy of the zone. Please resolve this conflict as soon as possible. If an administrator has moved this zone from one directory partition to another this may be a harmless transient condition. In this case, no action is necessary. The deletion of the original copy of the zone should soon replicate to this server. If there are two copies of this zone in two different directory partitions but this is not a transient caused by a zone move operation then one of these copies should be deleted as soon as possible to resolve this conflict. To change the replication scope of an application directory partition containing DNS zones and for more details on storing DNS zones in the application directory partitions, please see Help and Support.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4520,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server encountered error xxx building the zone list from Active Directory. The DNS server will sleep for xxx seconds and try again. This can be caused by high Active Directory load and may be a transient condition.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4520
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered error ERROR_DS_UNAVAILABLE building the zone list from Active Directory. The DNS server will sleep for 30 seconds and try again. This can be caused by high Active Directory load and may be a transient condition.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4521,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server encountered error xxx attempting to load zone xxx from Active Directory. The DNS server will attempt to load this zone again on the next timeout cycle. This can be caused by high Active Directory load and may be a transient condition.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4521
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered error ERROR_DS_UNAVAILABLE attempting to load zone corp.local from Active Directory. The DNS server will attempt to load this zone again on the next timeout cycle. This can be caused by high Active Directory load and may be a transient condition.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4522,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server has deleted all records for a corrupt DNS node from Active Directory. The DNS node's distinguished name was xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4522
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The DNS server has deleted all records for a corrupt DNS node from Active Directory. The DNS node's distinguished name was DC=corp01,cn=MicrosoftDNS,DC=DomainDnsZones,DC=corp,DC=local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4523,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server has detected that the application directory partition xxx is replicating onto this domain controller. DNS data will not be loaded from this new directory partition until initial replication has completed.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4523
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has detected that the application directory partition DC=ForestDnsZones,DC=corp,DC=local is replicating onto this domain controller. DNS data will not be loaded from this new directory partition until initial replication has completed.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4524,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server AD Integration,Active Directory,The DNS server has detected that the application directory partition xxx has finished replicating onto this domain controller. DNS data will now be loaded from this directory partition.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      4524
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has detected that the application directory partition DC=ForestDnsZones,DC=corp,DC=local has finished replicating onto this domain controller. DNS data will now be loaded from this directory partition.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://github.com/nasbench/EVTX-ETW-Resources (Microsoft-Windows-DNS-Server-Service.xml provider manifest, WS2008R2)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+501,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server has detected that the zone xxx has a missing or corrupted zone type in registry data.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      501
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has detected that the zone corp.local has a missing or corrupted zone type in registry data.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_501_Microsoft-Windows-DNS-Server-Service_63597.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+502,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,"The DNS server has detected that for the primary zone xxx, the zone file name has no zone file name stored in registry data.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      502
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has detected that for the primary zone corp.local, the zone file name has no zone file name stored in registry data.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/884114",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+503,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server has detected that the secondary zone xxx has no master IP addresses in registry data.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      503
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has detected that the secondary zone corp.local has no master IP addresses in registry data.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_503_Microsoft-Windows-DNS-Server-Service_63598.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+504,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server could not create zone xxx from registry data.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      504
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create zone corp.local from registry data.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/884114",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+505,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server zone xxx has invalid or corrupted registry data for xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      505
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server zone corp.local has invalid or corrupted registry data for corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd349648(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+506,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server has invalid or corrupted registry parameter xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      506
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server has invalid or corrupted registry parameter ForwardingTimeout.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc735695(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+507,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,Zone Data,The DNS server encountered an invalid or corrupted forwarder registry parameter.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      507
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid or corrupted forwarder registry parameter.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735835(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+706,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Root Hints,Configuration,The DNS server does not have a cache or other database entry for root name servers.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      706
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server does not have a cache or other database entry for root name servers.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/ms854972(v=msdn.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+707,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Root Hints,Configuration,The DNS server is not root authoritative and no root hints were specified in the Cache.dns file.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      707
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server is not root authoritative and no root hints were specified in the Cache.dns file.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_707_Microsoft-Windows-DNS-Server-Service_65386.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1003,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Root Hints,Configuration,"The DNS server could not find or open the root hints file, Cache.dns, in the %SystemRoot%\System32\Dns directory.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1003
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not find or open the root hints file, Cache.dns, in the %SystemRoot%\System32\Dns directory.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-r2-and-2008/cc735819(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6001,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,The DNS server successfully completed transfer of zone xxx to DNS server at xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6001
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server successfully completed transfer of zone corp.local to DNS server at DC02.corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd349670(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6002,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,The transfer of zone xxx by the DNS Server was aborted by the server at xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6002
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The transfer of zone corp.local by the DNS Server was aborted by the server at DC02.corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd349623(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6003,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,The DNS server received a request from xxx for a UDP-based transfer of the entire zone. The request was ignored because full zone transfers must be made using TCP.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6003
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server received a request from 10.20.30.75 for a UDP-based transfer of the entire zone. The request was ignored because full zone transfers must be made using TCP.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/en-us/help/842006",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6004,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,The DNS server received a zone transfer request from xxx for a non-existent or non-authoritative zone xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6004
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server received a zone transfer request from 10.20.30.75 for a non-existent or non-authoritative zone corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/en-us/help/842006",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6522,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,"A more recent version, version xxx of zone xxx was found at DNS server at xxx. Zone transfer is in progress.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6522
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+A more recent version, version 2024092201 of zone corp.local was found at DNS server at DC02.corp.local. Zone transfer is in progress.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_6522_Microsoft-Windows-DNS-Server-Service_65411.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6523,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,Zone xxx failed zone refresh check. Unable to connect to master DNS server at xxx to receive zone transfer.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6523
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+Zone corp.local failed zone refresh check. Unable to connect to master DNS server at DC02.corp.local to receive zone transfer.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): http://www.eventid.net/display-eventid-6523-source-DNS-eventno-4285-phase-1.htm",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6524,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,Invalid response from master DNS server at xxx during attempted zone transfer of zone xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6524
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+Invalid response from master DNS server at DC02.corp.local during attempted zone transfer of zone corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): http://www.eventid.net/display-eventid-6524-source-DNS-eventno-2874-phase-1.htm",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6525,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,Zone transfer request for secondary zone xxx refused by master server at xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6525
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+Zone transfer request for secondary zone corp.local refused by master server at DC02.corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): http://www.eventid.net/display-eventid-6525-source-DNS-eventno-1031-phase-1.htm",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6534,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,Failed transfer of zone xxx from DNS server at xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6534
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+Failed transfer of zone corp.local from DNS server at DC02.corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735705(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6535,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,The master DNS server at xxx responded to IXFR (Incremental Zone Transfer) request for zone xxx with an invalid (FORMAT ERROR) response.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6535
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The master DNS server at DC02.corp.local responded to IXFR (Incremental Zone Transfer) request for zone corp.local with an invalid (FORMAT ERROR) response.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_6535_Microsoft-Windows-DNS-Server-Service_65415.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6536,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Zone Transfer,,Invalid IXFR (Incremental Zone Transfer) response from master DNS server at xxx during attempted incremental transfer of zone xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6536
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+Invalid IXFR (Incremental Zone Transfer) response from master DNS server at DC02.corp.local during attempted incremental transfer of zone corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/en-us/help/842006",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+111,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,"The DNS server could not create a thread. The system may be out of resources. You might close programs not in use, restart the DNS server or reboot your computer.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      111
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create a thread. The system may be out of resources. You might close programs not in use, restart the DNS server or reboot your computer.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): http://www.eventid.net/display-eventid-111-source-DNS-eventno-7162-phase-1.htm",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+403,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not create a Transmission Control Protocol (TCP) socket.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      403
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create a Transmission Control Protocol (TCP) socket.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_403_Microsoft-Windows-DNS-Server-Service_65391.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+404,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not bind a Transmission Control Protocol (TCP) socket to address xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      404
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not bind a Transmission Control Protocol (TCP) socket to address 10.20.30.75.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): http://www.chicagotech.net/WordPress/2019/10/22/event-id-404-the-dns-server-could-not-bind-a-user-datagram-protocol-udp-socket-to-10-0-0-84/",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+405,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not listen on Transmission Control Protocol (TCP) socket for address xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      405
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not listen on Transmission Control Protocol (TCP) socket for address 10.20.30.75.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_405_Microsoft-Windows-DNS-Server-Service_64342.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+406,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not create a User Datagram Protocol (UDP) socket.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      406
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create a User Datagram Protocol (UDP) socket.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/dd365049(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1001,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not map file xxx to memory.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1001
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not map file corp.local.dns to memory.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735808(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+414,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server computer currently does not have a DNS domain name. Its DNS name is a single-label host name with no domain (for example: ""host"" rather than ""host.microsoft.com"").","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      414
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server computer currently does not have a DNS domain name. Its DNS name is a single-label host name with no domain (for example: ""host"" rather than ""host.microsoft.com"").","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): http://www.eventid.net/display-eventid-414-source-DNS-eventno-298-phase-1.htm",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1200,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not find or open the boot file xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1200
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not find or open the boot file corp.local.dns.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735721(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1201,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not create zone xxx specified in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1201
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create zone corp.local specified in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/884114",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1202,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered an unsupported 'directory' directive in the server boot file xxx at line xxx. All database files must be located in the ""%SystemRoot%\system32\dns"" directory. The directive is ignored.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1202
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an unsupported 'directory' directive in the server boot file corp.local.dns at line 42. All database files must be located in the ""%SystemRoot%\system32\dns"" directory. The directive is ignored.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1202_Microsoft-Windows-DNS-Server-Service_63609.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1203,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a 'forwarders' directive with no forwarding addresses in file xxx at line xxx. Although the DNS server will continue running it will not be able to forward unresolved queries to the forwarders.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1203
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a 'forwarders' directive with no forwarding addresses in file corp.local.dns at line 42. Although the DNS server will continue running it will not be able to forward unresolved queries to the forwarders.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1203_Microsoft-Windows-DNS-Server-Service_63611.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1205,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an unknown boot option xxx in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1205
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an unknown boot option -nodfwd in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1205_Microsoft-Windows-DNS-Server-Service_63612.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1206,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"DNS Server encountered missing database folder name, in file xxx, line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1206
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DNS Server encountered missing database folder name, in file corp.local.dns, line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1206_Microsoft-Windows-DNS-Server-Service_63613.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1501,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not parse zone file xxx for zone xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1501
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not parse zone file corp.local.dns for zone corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1501_Microsoft-Windows-DNS-Server-Service_63614.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1503,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not parse the zone file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1503
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not parse the zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1503_Microsoft-Windows-DNS-Server-Service_63673.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1504,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server could not parse an unexpected token ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1504
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not parse an unexpected token ""@"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1504_Microsoft-Windows-DNS-Server-Service_63615.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1505,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server unexpected end of line, in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1505
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server unexpected end of line, in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1505_Microsoft-Windows-DNS-Server-Service_63617.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1506,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered invalid token ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1506
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered invalid token ""@"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1506_Microsoft-Windows-DNS-Server-Service_63618.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1507,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered invalid class token ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1507
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered invalid class token ""@"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1507_Microsoft-Windows-DNS-Server-Service_63620.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1508,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server is ignoring an invalid resource record in zone file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1508
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server is ignoring an invalid resource record in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1508_Microsoft-Windows-DNS-Server-Service_63621.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1520,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered the unknown directive 'xxx' in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1520
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered the unknown directive 'ixfr' in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1520_Microsoft-Windows-DNS-Server-Service_63622.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1521,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered the unsupported directive 'xxx' in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1521
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered the unsupported directive 'ixfr' in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1521_Microsoft-Windows-DNS-Server-Service_63623.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1522,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered the obsolete directive 'xxx' in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1522
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered the obsolete directive 'ixfr' in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1522_Microsoft-Windows-DNS-Server-Service_63624.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1523,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered the directive 'xxx' in file xxx at line xxx. The directive is not yet supported and was ignored.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1523
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered the directive 'ixfr' in file corp.local.dns at line 42. The directive is not yet supported and was ignored.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/884114",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1540,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server unable to create domain node.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1540
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server unable to create domain node.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_1540_Microsoft-Windows-DNS-Server-Service_63626.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1541,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered an invalid domain name ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1541
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid domain name ""ns_1.corp.local"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_1541_Microsoft-Windows-DNS-Server-Service_63627.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1543,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered domain name ""xxx"" exceeding maximum length.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1543
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered domain name ""ns1.corp.local"" exceeding maximum length.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1543_Microsoft-Windows-DNS-Server-Service_63619.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1545,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a name outside of the specified zone in zone file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1545
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a name outside of the specified zone in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1545_Microsoft-Windows-DNS-Server-Service_63630.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1547,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an invalid host (A) resource record in zone file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1547
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid host (A) resource record in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1547_Microsoft-Windows-DNS-Server-Service_63632.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1600,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an unknown or unsupported resource record (RR) type xxx in zone file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1600
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an unknown or unsupported resource record (RR) type A in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/884114",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1601,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"DNS Server encountered the obsolete record type xxx in database file xxx, line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1601
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DNS Server encountered the obsolete record type A in database file corp.local.dns, line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1601_Microsoft-Windows-DNS-Server-Service_63633.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1602,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an invalid SOA (Start Of Authority) resource record (RR) in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1602
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid SOA (Start Of Authority) resource record (RR) in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/884114",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1610,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a resource record (RR) in the zone file xxx at line xxx for a domain name with an existing CNAME (alias) RR.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1610
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a resource record (RR) in the zone file corp.local.dns at line 42 for a domain name with an existing CNAME (alias) RR.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1610_Microsoft-Windows-DNS-Server-Service_63634.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1611,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a CNAME (alias) resource record (RR) in zone file xxx at line xxx for a domain name with existing RRs.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1611
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a CNAME (alias) resource record (RR) in zone file corp.local.dns at line 42 for a domain name with existing RRs.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1611_Microsoft-Windows-DNS-Server-Service_63636.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1612,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a CNAME (alias) resource record (RR) in zone file xxx at line xxx that forms a CNAME loop with another CNAME RR in the zone.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1612
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a CNAME (alias) resource record (RR) in zone file corp.local.dns at line 42 that forms a CNAME loop with another CNAME RR in the zone.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1612_Microsoft-Windows-DNS-Server-Service_63637.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1613,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered an invalid preference value ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1613
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid preference value ""65536"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1613_Microsoft-Windows-DNS-Server-Service_63638.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1614,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered a token ""xxx"" of the wrong format in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1614
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a token ""@"" of the wrong format in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1614_Microsoft-Windows-DNS-Server-Service_63639.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1616,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a text string in zone file xxx at line xxx that exceeds the maximum permissible length.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1616
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a text string in zone file corp.local.dns at line 42 that exceeds the maximum permissible length.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1616_Microsoft-Windows-DNS-Server-Service_63640.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1617,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered an invalid IP address ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1617
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid IP address ""10.20.30.256"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1617_Microsoft-Windows-DNS-Server-Service_63641.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1618,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered an invalid IPv6 address ""xxx"" in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1618
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid IPv6 address ""2001:db8:zz::1"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/en-us/help/842006",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1619,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server could not find protocol ""xxx"" specified for the well known service (WKS) resource record (RR) in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1619
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not find protocol ""tcp"" specified for the well known service (WKS) resource record (RR) in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_1619_Microsoft-Windows-DNS-Server-Service_63643.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1620,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server could not find the service ""xxx"" specified for the well known service (WKS) resource record (RR) in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1620
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not find the service ""smtp"" specified for the well known service (WKS) resource record (RR) in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_1620_Microsoft-Windows-DNS-Server-Service_63644.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1621,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered the port ""xxx"" specified for the well known service (WKS) resource record (RR) in zone file xxx at line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1621
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered the port ""25"" specified for the well known service (WKS) resource record (RR) in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_1621_Microsoft-Windows-DNS-Server-Service_63646.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1650,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server encountered invalid WINS record in file xxx, line xxx.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1650
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered invalid WINS record in file corp.local.dns, line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735802(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1651,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an invalid WINS reverse lookup (WINSR) resource record (RR) in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1651
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an invalid WINS reverse lookup (WINSR) resource record (RR) in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1651_Microsoft-Windows-DNS-Server-Service_63650.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1654,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an unknown WINS-to-DNS mapping flag xxx in file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1654
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an unknown WINS-to-DNS mapping flag 0x8000 in file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_1654_Microsoft-Windows-DNS-Server-Service_63651.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1656,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a WINS reverse lookup (WINSR) resource record (RR) without a domain specified for resulting names in zone file xxx at line xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      1656
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a WINS reverse lookup (WINSR) resource record (RR) without a domain specified for resulting names in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735700(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2200,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not open registry key.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2200
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not open registry key.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735652(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2202,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not write a registry key. The server disk could be full or corrupted or the maximum permissible size for the server registry has been reached. The DNS server will not be able to save server or zone configuration parameters to in the registry unless the problem is fixed.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2202
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not write a registry key. The server disk could be full or corrupted or the maximum permissible size for the server registry has been reached. The DNS server will not be able to save server or zone configuration parameters to in the registry unless the problem is fixed.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_2202_Microsoft-Windows-DNS-Server-Service_63657.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2203,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server could not delete a registry key. The registry is likely corrupted. The DNS server will not be able to save DNS server or zone configuration parameters in the registry unless the problem is fixed.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2203
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not delete a registry key. The registry is likely corrupted. The DNS server will not be able to save DNS server or zone configuration parameters in the registry unless the problem is fixed.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_2203_Microsoft-Windows-DNS-Server-Service_63647.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2204,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The registry value HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DNS\Parameters\xxx contains an invalid value or could not be read.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      2204
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The registry value HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\DNS\Parameters\ForwardingTimeout contains an invalid value or could not be read.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/kb/842006",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3160,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered a non-writable or unknown resource record (RR) type when writing the zone database to file. The event data is applicable RR type.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3160
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered a non-writable or unknown resource record (RR) type when writing the zone database to file. The event data is applicable RR type.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_3160_Microsoft-Windows-DNS-Server-Service_63659.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3162,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server encountered an unknown protocol writing a well known service (WKS) resource record to the zone file. The event data is applicable the protocol number.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3162
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an unknown protocol writing a well known service (WKS) resource record to the zone file. The event data is applicable the protocol number.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://mskb.pkisolutions.com/en-us/help/842006",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3163,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"While writing a well known service (WKS) record to the zone file, the DNS server encountered a port number that is not associated with a known service. The event data is the port number of the unknown service.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3163
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+While writing a well known service (WKS) record to the zone file, the DNS server encountered a port number that is not associated with a known service. The event data is the port number of the unknown service.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_3163_Microsoft-Windows-DNS-Server-Service_63661.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+5105,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server attempted to cache a CNAME (alias) resource record for the domain node. The operation failed, since the CNAME RR must be the only RR for its domain name.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      5105
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server attempted to cache a CNAME (alias) resource record for the domain node. The operation failed, since the CNAME RR must be the only RR for its domain name.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_5105_Microsoft-Windows-DNS-Server-Service_63655.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+5106,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,DNS Server attempted to cache CNAME record for a domain name with existing resource records. CNAME record is ignored.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      5106
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DNS Server attempted to cache CNAME record for a domain name with existing resource records. CNAME record is ignored.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_5106_Microsoft-Windows-DNS-Server-Service_63662.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+5107,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,The DNS server created a CNAME (alias) loop caching CNAME resource records (RRs). The record is ignored.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      5107
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server created a CNAME (alias) loop caching CNAME resource records (RRs). The record is ignored.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_5107_Microsoft-Windows-DNS-Server-Service_63645.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+5108,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,DNS Server created CNAME loop loading CNAME at xxx.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      5108
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+DNS Server created CNAME loop loading CNAME at DC02.corp.local.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_5108_Microsoft-Windows-DNS-Server-Service_63652.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6527,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,Zone xxx expired before it could obtain a successful zone transfer or update from a master server acting as its source for the zone. The zone has been shut down.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6527
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+Zone corp.local expired before it could obtain a successful zone transfer or update from a master server acting as its source for the zone. The zone has been shut down.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735780(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6530,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"During transfer of zone xxx from master at xxx, the DNS Server received a resource record (RR) for domain node xxx at which a CNAME (alias) RR was already received. Since a CNAME RR must be the only RR at its domain name, the received RR is ignored.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6530
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+During transfer of zone corp.local from master at DC02.corp.local, the DNS Server received a resource record (RR) for domain node ns1.corp.local at which a CNAME (alias) RR was already received. Since a CNAME RR must be the only RR at its domain name, the received RR is ignored.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtpages/EventId_6530_Microsoft-Windows-DNS-Server-Service_63664.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6531,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"During transfer of zone xxx from master at xxx, the DNS Server received a CNAME (alias) resource record (RR) for domain node xxx for which other records of that name were already received. Since a CNAME RR must be the only record for its domain name, the CNAME RR for xxx will be ignored.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6531
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+During transfer of zone corp.local from master at DC02.corp.local, the DNS Server received a CNAME (alias) resource record (RR) for domain node ns1.corp.local for which other records of that name were already received. Since a CNAME RR must be the only record for its domain name, the CNAME RR for corp.local will be ignored.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_6531_Microsoft-Windows-DNS-Server-Service_63665.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6532,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"During transfer of zone xxx from master at xxx, the DNS Server received a CNAME (alias) resource record (RR) for domain node xxx which forms a CNAME loop.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6532
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+During transfer of zone corp.local from master at DC02.corp.local, the DNS Server received a CNAME (alias) resource record (RR) for domain node ns1.corp.local which forms a CNAME loop.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_6532_Microsoft-Windows-DNS-Server-Service_63666.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6702,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The DNS server has updated its own host (A) records. In order to ensure that its DS-integrated peer DNS servers are able to replicate with this server, an attempt was made to update them with the new records through dynamic update. An error was encountered during this update. The record data is the error code.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6702
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server has updated its own host (A) records. In order to ensure that its DS-integrated peer DNS servers are able to replicate with this server, an attempt was made to update them with the new records through dynamic update. An error was encountered during this update. The record data is the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://support.microsoft.com/en-us/topic/271eb25f-bf0b-965c-f6df-81ad8dd2b8e0",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+7600,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Configuration,,"The global query block list feature has caused the DNS server to fail a query with error code NAME ERROR for xxx even though data for this DNS name exists in the DNS database. Other queries in all locally authoritative zones for other names that begin with labels in the block list will also fail, but no event will be logged when further queries are blocked until the DNS server service on this computer is restarted.","Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      7600
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The global query block list feature has caused the DNS server to fail a query with error code NAME ERROR for corp.local even though data for this DNS name exists in the DNS database. Other queries in all locally authoritative zones for other names that begin with labels in the block list will also fail, but no event will be logged when further queries are blocked until the DNS server service on this computer is restarted.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735775(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3151,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server unable to write zone file xxx for zone xxx. Most likely the server disk is full. Free some disk space and re-initiate zone write.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3151
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server unable to write zone file corp.local.dns for zone corp.local. Most likely the server disk is full. Free some disk space and re-initiate zone write.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_3151_Microsoft-Windows-DNS-Server-Service_65393.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3152,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server was unable to open file xxx for write. Most likely the file is a zone file that is already open. Close the zone file and re-initiate zone write.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3152
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server was unable to open file corp.local.dns for write. Most likely the file is a zone file that is already open. Close the zone file and re-initiate zone write.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://learn.microsoft.com/en-us/previous-versions/windows/it-pro/windows-server-2008-R2-and-2008/cc735838(v=ws.10)",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+3153,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server encountered an error writing to file. Most likely the server disk is full. Free some disk space at the server and re-initiate zone write. The event data is the error code.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      3153
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server encountered an error writing to file. Most likely the server disk is full. Free some disk space at the server and re-initiate zone write. The event data is the error code.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_3153_Microsoft-Windows-DNS-Server-Service_65394.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+5051,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server is using a large amount of memory. The data is the current memory allocated.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      5051
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server is using a large amount of memory. The data is the current memory allocated.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://technet.microsoft.com/en-us/library/dd349675(v=ws.10).aspx",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+6533,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not create a zone transfer thread. The system may be out of resources. Close any applications not in use or reboot the computer to free memory. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      6533
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not create a zone transfer thread. The system may be out of resources. Close any applications not in use or reboot the computer to free memory. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_6533_Microsoft-Windows-DNS-Server-Service_65398.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+7060,DNS Server,Microsoft-Windows-DNS-Server-Service,DNS Server Service Status,,The DNS server could not connect to the DNS server at xxx. The event data contains the error.,"Log Name:      DNS Server
+Source:        Microsoft-Windows-DNS-Server-Service
+Event ID:      7060
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+The DNS server could not connect to the DNS server at DC02.corp.local. The event data contains the error.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtpass/evtPages/EventId_7060_Microsoft-Windows-DNS-Server-Service_65399.asp",,illustrative,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
