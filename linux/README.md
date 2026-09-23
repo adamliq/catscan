@@ -494,10 +494,16 @@ flagged low-confidence entries instead of guessing.
   about the shared classic syslog file — four unrelated subsystems'
   lines land in it — not a single path repeated. Powers the Reference
   tables tab's 10th accordion table.
-- `data/reference/companion_tools.csv` / `.json` — 3 rows: other tools
-  by the same author, linked from the Companion Tools tab. Columns:
-  `name`, `description`, `url`. Not generated from any upstream source —
-  just a small static list of external links.
+- `data/reference/companion_tools.csv` / `.json` — 5 rows, linked from
+  the Companion Tools tab. Columns: `name`, `description`, `url`. Not
+  generated from any upstream source — just a small static list. Three
+  rows point back at this same repo (`https://github.com/adamliq/catscan`)
+  rather than out to another author's tool: `Windows Event Catalogue`,
+  `Threat Detection Library`, and `Linux Event Catalogue` — the three
+  source repos this merged compendium was built from — each noting it
+  has moved into Cat Scan and naming the tab it now lives under, so a
+  reader who remembers the old standalone repos knows where they went.
+  The other two rows are genuinely external tools by the same author.
 
 ## Web lookup
 
@@ -705,10 +711,12 @@ Windows repo's Reference tab.
 
 **Companion Tools** — a simple static tab, not backed by any of this
 repo's own catalogued data: a small grid of link cards
-(`data/reference/companion_tools.csv` / `.json`, 3 rows) to other tools
-by the same author —
-[`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue),
-[Splunk Taxonomy — My Tools](https://adamliq.github.io/Splunk_Taxonomy/#my-tools),
+(`data/reference/companion_tools.csv` / `.json`, 5 rows) — three
+"moved into Cat Scan" notices for the Windows Event Catalogue, Threat
+Detection Library, and Linux Event Catalogue source repos this
+compendium was merged from, plus two genuinely external tools by the
+same author,
+[Splunk Taxonomy — My Tools](https://adamliq.github.io/Splunk_Taxonomy/#my-tools)
 and
 [Splunk Pipeline Explorer](https://adamliq.github.io/Splunk-pipeline-explorer/).
 No search box; there's nothing here to filter.
