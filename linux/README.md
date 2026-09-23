@@ -468,16 +468,20 @@ flagged low-confidence entries instead of guessing.
   (that file only covers the 2 tools an administrator runs day-to-day)
   but is included here for a complete man-page set. Powers the
   Fapolicyd tab's Man submenu.
-- `data/reference/log_file_locations.csv` / `.json` — 90 rows: where RHEL
-  and its common add-on services actually write their logs, repo
-  owner-supplied and not tied to any event in the main catalogue.
-  Columns: `path`, `type` (`file`, `directory`, `binary` — accounting
-  files like `/var/log/wtmp` best read with a dedicated tool rather than
-  opened directly, `glob` — a wildcard path such as
+- `data/reference/log_file_locations.csv` / `.json` — 107 rows: where RHEL,
+  IdM/FreeIPA, and other common add-on services actually write their
+  logs, repo owner-supplied and not tied to any event in the main
+  catalogue. Columns: `path`, `type` (`file`, `directory`, `binary` —
+  accounting files like `/var/log/wtmp` best read with a dedicated tool
+  rather than opened directly, `glob` — a wildcard path such as
   `/var/log/dirsrv/slapd-*/access`, `journal-unit` — logged only through
   `journalctl -u <unit>` with no flat file at all, or `env-var` — a path
   set by an environment variable, not a fixed location), `category`,
-  `description`. Cleaned up from the owner-supplied source rather than
+  `component` (the specific daemon/process/subsystem responsible for
+  that path, e.g. `SSSD NSS responder` or `BIND (named)`; left blank
+  on the 8 rows whose own description already says the path is shared
+  by more than one unrelated component — see below), `description`.
+  Cleaned up from the owner-supplied source rather than
   transcribed as-is: 3 rows that just re-cited an already-listed path
   under a second heading (`/var/log/maillog`, `/var/log/chrony/`,
   `/var/log/anaconda/`) were merged into their first occurrence instead
@@ -492,8 +496,70 @@ flagged low-confidence entries instead of guessing.
   `/var/log/messages` appears four times (bare, plus "(dhcpd entries)",
   "(named entries)", "(realmd entries)") because that's a real fact
   about the shared classic syslog file — four unrelated subsystems'
-  lines land in it — not a single path repeated. Powers the Reference
-  tables tab's 10th accordion table.
+  lines land in it — not a single path repeated.
+
+  A later pass added 7 IdM/FreeIPA-specific rows (a new `IdM / FreeIPA`
+  category: the three `ipa-*-install.log` files, the per-user
+  `~/.ipa/log/cli.log`, and Custodia's log directory; plus one `PKI /
+  Certificate System` row for `/var/log/pki/pki-tomcat/`, and one
+  `System` row for `/etc/logrotate.d/`, the rotation-policy config
+  directory rather than a log location itself) from a second
+  owner-supplied list, deconflicted rather than appended blind: 6 of
+  its 12 rows were paths already covered (the httpd access/error logs,
+  the `dirsrv` glob trio, `krb5kdc.log`/`kadmind.log`, `/var/log/sssd/`,
+  `/var/log/messages`) — skipped as new rows, with 3 of those existing
+  rows' descriptions enriched with the genuinely new IdM-specific
+  context the list added (that Apache also serves the Web UI and
+  XML-RPC/JSON-RPC API; that `/var/log/messages` also carries some
+  DNS/PKI subsystem messages in an IdM deployment) rather than silently
+  dropped.
+
+  A third pass added the Ansible Automation Platform (AWX/Tower) side —
+  `/var/log/tower/` and `/var/log/supervisor/` — from an owner-supplied
+  component-level breakdown, again deconflicted rather than appended
+  blind: 4 of its 14 rows were paths already covered (`tower.log`,
+  `callback_receiver.log`, `dispatcher.log`, `job_lifecycle.log`) and had
+  their descriptions enriched with the specific component names the new
+  list supplied (Automation Controller, Callback Receiver, Dispatcher,
+  Job Lifecycle) rather than duplicated; the other 10 were genuinely new
+  `Ansible AAP` rows — 7 more files under `/var/log/tower/`
+  (`management_playbooks.log`, `task_system.log`, `rsyslog.err`,
+  `wsrelay.log`, `rsyslog_configurer.log`, `cache_clear.log`,
+  `tower_rbac_migrations.log`) and 3 under `/var/log/supervisor/`
+  (`awx-callback-receiver.log`, `awx-daphne.log`, and a `glob`-typed
+  `awx-*.log` covering the remaining supervisord-managed service logs).
+
+  A follow-up request added a dedicated `component` column rather than
+  leaving those names folded into `description` prose. For the 14
+  Ansible AAP file rows that had a component name (all but the two
+  `/var/log/tower/` and `/var/log/supervisor/` directory rows, which
+  each span several components), the name was split back out of the
+  description into its own `component` value and the leading
+  "Component — " prefix removed from the description text, restoring
+  the owner-supplied table's original Component/Description split.
+
+  A second follow-up request then asked for the rest of the table's
+  component names too. Populated `component` for 85 more rows, each
+  value being the specific daemon/process/software already named in
+  that row's own `description` (e.g. "SSSD PAM responder" for
+  `sssd_pam.log`, "BIND (named)" for the named-related rows, "chronyd"
+  for the chrony rows) — nothing invented beyond what the row already
+  said. 8 rows were left blank on purpose because their own
+  description explicitly covers more than one unrelated component
+  sharing that one path rather than a single owner: the bare
+  `/var/log/messages` (kernel + assorted daemons + DNS/PKI in an IdM
+  deployment), `/var/log/secure` (SSH + sudo + PAM + failed logins),
+  `/var/log/boot.log` (generic startup messages), `/var/log/private/`
+  ("used by some services"), the `/var/log/sssd/` directory itself
+  ("contains multiple component logs" — its 8 individual files below
+  each got their own component), `/etc/logrotate.d/` (a config
+  directory, not a log, spanning every service that rotates one), and
+  the two Ansible AAP directory rows from the prior pass.
+
+  Powers its own **Log File Locations** tab (moved out of the Reference
+  tables accordion, where it started, once IdM coverage made it
+  substantial enough to warrant a tab of its own — Reference tables is
+  back down to 9 accordion tables).
 - `data/reference/companion_tools.csv` / `.json` — 5 rows, linked from
   the Companion Tools tab. Columns: `name`, `description`, `url`. Not
   generated from any upstream source — just a small static list. Three
@@ -508,7 +574,7 @@ flagged low-confidence entries instead of guessing.
 ## Web lookup
 
 `index.html` is a self-contained (no build step, no external requests)
-lookup page with five tabs. The page fills wide desktop viewports rather
+lookup page with seven tabs. The page fills wide desktop viewports rather
 than capping at a fixed width — it grows with the browser window up to a
 1600px ceiling (so a 1920px+ display isn't left with ~700px of unused
 margin on each side, and wide reference tables like the CIM-enriched
@@ -703,7 +769,28 @@ and `fapolicyd.rules(5)` round out the set with the full config-key and
 rule-syntax references the Rules/Fields/Decisions submenus above draw
 their data from in the first place.
 
-**Reference tables** — covers all 10 accordion-style reference tables
+**Command Logging** — a separate top-level tab, a list/detail view over
+`data/reference/command_logging_guides` (currently one guide, "Bash
+history → SIEM"): capturing user command activity (shell history, not
+just what auditd's own syscall rules see) and getting it to a SIEM in
+real time — a distinct topic from the Linux Audit Framework covered
+under Auditd Rules, though the guide's own recommended approach uses
+auditd as one layer. Each guide's detail view renders its sections
+(recommended approach, config snippets, example log line, alternative
+methods, hardening notes, a quick test, and a method-comparison table)
+as titled reference blocks, transcribed rather than summarized so the
+exact commands/config stay copy-pasteable.
+
+**Log File Locations** — a separate top-level tab, next to Command
+Logging: a single searchable table over all 107 rows of
+`data/reference/log_file_locations.csv` (`path`/`type`/`category`/
+`description` — see above). Started as the Reference tables tab's 10th
+accordion table; moved out to its own tab once the IdM/FreeIPA
+addition made it substantial enough to warrant one. No submenu, no
+list/detail split — just the one table, search-filtered the same way
+every other reference table is.
+
+**Reference tables** — covers all 9 accordion-style reference tables
 (`auditd_rules` gets its own dedicated tab instead, given its size) with
 the same single-search-filters-everything, sticky-jump-nav,
 height-capped-scrolling, collapsed-by-default-accordion behavior as the
