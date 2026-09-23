@@ -494,7 +494,7 @@ flagged low-confidence entries instead of guessing.
   about the shared classic syslog file — four unrelated subsystems'
   lines land in it — not a single path repeated. Powers the Reference
   tables tab's 10th accordion table.
-- `data/reference/companion_tools.csv` / `.json` — 2 rows: other tools
+- `data/reference/companion_tools.csv` / `.json` — 3 rows: other tools
   by the same author, linked from the Companion Tools tab. Columns:
   `name`, `description`, `url`. Not generated from any upstream source —
   just a small static list of external links.
@@ -705,11 +705,12 @@ Windows repo's Reference tab.
 
 **Companion Tools** — a simple static tab, not backed by any of this
 repo's own catalogued data: a small grid of link cards
-(`data/reference/companion_tools.csv` / `.json`, 2 rows) to other tools
+(`data/reference/companion_tools.csv` / `.json`, 3 rows) to other tools
 by the same author —
-[`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue)
+[`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue),
+[Splunk Taxonomy — My Tools](https://adamliq.github.io/Splunk_Taxonomy/#my-tools),
 and
-[Splunk Taxonomy — My Tools](https://adamliq.github.io/Splunk_Taxonomy/#my-tools).
+[Splunk Pipeline Explorer](https://adamliq.github.io/Splunk-pipeline-explorer/).
 No search box; there's nothing here to filter.
 
 Open `index.html` directly in a browser.

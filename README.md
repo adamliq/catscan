@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.5` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.6` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2829,6 +2829,24 @@ Events' own unaffected counts - zero console errors throughout.
 
 `1.5.5` (PATCH - one new reference table in an already-existing
 catalogue; not a new catalogue, tab, or app-level capability).
+
+Asked to add a link to `Splunk Pipeline Explorer` (a companion tool by
+the same author, at `adamliq.github.io/Splunk-pipeline-explorer`) to
+Linux Events' Companion Tools tab. The page itself wasn't reachable
+(network egress blocked for that domain) and no description turned up
+via search - rather than write one from a guess at what a tool named
+"pipeline explorer" might do, asked for a one-line description; got
+"Follow data from source acquisition to searchable buckets." Added as
+a third row to `linux/data/reference/companion_tools.csv`/`.json` and
+the embedded `DATA.companion_tools` in `index.html`, matching the
+existing two entries' exact shape (`name`/`description`/`url`).
+
+Verified: `node --check`. Confirmed via Playwright that the Companion
+Tools tab renders all three cards with no layout issues, screenshotted
+for visual confirmation - zero console errors.
+
+`1.5.6` (PATCH - one new companion-tools link; not a new catalogue,
+tab, or app-level capability).
 
 ## Structure
 
