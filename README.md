@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.7` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.8` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2869,9 +2869,135 @@ screenshotted for visual confirmation - zero console errors.
 at this merged project instead of the superseded standalone repos; not
 a new catalogue, tab, or app-level capability).
 
+Asked for suggested improvements after a long run of Windows Events
+data-addition PRs, all done by hand: a script per PR that brace-
+balance-parsed `index.html`'s embedded `DATA.events` out of a multi-
+megabyte single-line blob, edited it alongside `events.csv`/`.json`,
+and hand-bumped the footer count and version tag in three places.
+Flagged four concrete gaps and was asked to build all of them: no
+build script (so every addition repeated that bespoke parse-and-patch
+work from scratch), a known-but-unfixed 128-row data-sync gap between
+`index.html` and `events.csv`/`.json` flagged during the DNS-Server-
+Service batch but left out of scope at the time, two PRs that had
+independently bumped `VERSION` from the same base and collided at
+merge, and no CI running any of this project's own manual checks
+automatically.
+
+**The reconciliation turned out bigger than the earlier 128-row
+estimate.** Re-investigating properly (not just re-counting) found
+`index.html`'s embedded copy was the *more* complete and current one,
+not `events.csv`/`.json`: a pre-this-session enrichment pass had
+updated the embedded copy directly with 156 additional rows, richer
+`reference` text on 43 existing rows, a corrected `acsc_priority_log`
+on 3 rows, and an entirely new `ad_compromise_techniques` field
+(ASD/ACSC attack-technique tags — Golden Ticket, DCSync, Skeleton Key,
+Kerberoasting, and so on) on 54 rows total — none of it ever written
+back to `events.csv`/`.json`, which had no column for the new field at
+all. Matched every row between the two by `(log, source, event_id,
+subcategory)` rather than the 3-tuple used everywhere else in this
+project's own scripts so far: 19 `(log, source, event_id)` groups are
+intentional duplicates (the same Security-log event ID genuinely fires
+for several distinct reasons, distinguished only by `subcategory`,
+e.g. 4625 under both "Audit Account Lockout" and "Audit Logon") that a
+3-tuple match would have silently collapsed into one row, losing 38
+rows outright — caught by checking that both files agreed on exactly
+which `subcategory` values exist per group before trusting the 4-tuple
+as a matching key, not just assuming it.
+
+Three of the 156 orphan rows (Kerberos-KDC events 39/40/41) needed a
+real fix, not a blind copy: a malformed `log` value
+("Applications and Servers->Microsoft->Windows->…", not a real Windows
+log-name format) and a `source` string carrying the "Microsoft-
+Windows-" prefix this catalogue's own convention drops for this exact
+source. Normalizing both surfaced that events 39 and 40 then collided
+with rows PR #68 had already added this session, sourced from a
+third-party blog — the orphan rows' ASD/ACSC joint-guidance sourcing
+(cross-agency, more detailed, matching this catalogue's own established
+sourcing hierarchy) is more authoritative, so PR #68's versions were
+replaced rather than kept alongside as a duplicate, restyled to this
+family's established category/subcategory convention. Event 41 was a
+genuinely new addition.
+
+Added `tools/build_windows_events.py`, which now owns regenerating
+`index.html`'s embedded `DATA.events` (plus `events.json` and the
+footer count) from `events.csv` — the single source of truth for this
+data going forward, replacing the one-off parse-and-patch script every
+prior PR wrote for itself. Anchored on the Windows Events app's own
+container id (`getElementById('app-win')`) rather than which
+`event_id` happens to sit first in the array, specifically because the
+script's own first run reordered that array (row order now follows
+`events.csv`, not whatever order the page happened to be left in) —
+an event-id-specific marker would have broken itself on first use.
+
+Added `tools/check_syntax.js` (the inline-script `new Function()`
+parse check every PR has been running by hand as an ad hoc one-liner)
+and `tools/check_version.py` (fails unless this branch's `VERSION` is
+strictly newer than a given base ref's — the exact check that would
+have caught the DNS-Server-Service/Certificate-Services-Kerberos-KDC
+`1.5.2` → `1.5.3` collision before merge instead of after). Wired both
+plus `build_windows_events.py --check` into
+`.github/workflows/build-check.yml`, running on every pull request
+into `main` (and the syntax/sync checks again on every push to `main`).
+
+Applied to `windows/data/events.csv`/`.json` (5,162 -> 5,316 rows,
+plus the new `ad_compromise_techniques` column) and the embedded
+`DATA.events` array in `index.html` (regenerated via the new build
+script; footer count corrected to match).
+
+Verified: `node tools/check_syntax.js`. Confirmed via a direct data-
+level diff (not a text diff) between the pre- and post-reconciliation
+`events.csv` that exactly 48 rows changed content, 155 rows were
+added outright (the 156th orphan landed as a same-key content change
+rather than a new row, since its normalized subcategory text happened
+to match its replaced predecessor's), and zero rows were lost.
+Confirmed `tools/build_windows_events.py --check` passes after the
+build (and correctly fails, with the right message, when a test edit
+is made to `events.csv` without rebuilding). Screenshotted the two
+corrected Kerberos-KDC detail panels (events 40 and 41) - clean
+rendering, MITRE T1649 and the new "AD COMPROMISE" field both
+displaying correctly, confirming the app's own detail view already
+expected this field and was just never fed it. Regression-checked
+across both themes and both 1500px/375px viewports, plus Linux
+Events' unaffected 77-event count - zero console errors throughout.
+
+`1.5.8` (PATCH - a data-completeness reconciliation plus new build/CI
+tooling for this project's own maintenance, not a new catalogue, tab,
+or app-level capability).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
+- `tools/` — repo-wide build/CI scripts, for `index.html` itself rather
+  than any one source's own data (that's what each source's own nested
+  `tools/` directory, e.g. `windows/tools/`, is for):
+  - `tools/build_windows_events.py` — regenerates `index.html`'s embedded
+    Windows Events `DATA.events` array (plus `windows/data/events.json`
+    and the page's "N events indexed" footer count) from
+    `windows/data/events.csv`, the single source of truth. Run this
+    after editing `events.csv` instead of hand-editing the embedded copy
+    directly — every prior PR that touched Windows Events data did the
+    latter, each with its own bespoke brace-balancing parse script,
+    which is exactly how `events.csv`/`.json` and `index.html` drifted
+    156 rows apart before the `1.5.8` reconciliation below. `--check`
+    exits non-zero instead of writing anything if the three are out of
+    sync — what CI runs on every PR.
+  - `tools/check_syntax.js` — parses every inline `<script>` block in
+    `index.html` with `new Function()` to catch a syntax error before
+    it ships. The same check every PR this project has had was running
+    by hand as an ad hoc one-liner; now a committed script, and what CI
+    runs on every PR.
+  - `tools/check_version.py` — fails unless this branch's `VERSION` is
+    strictly newer than a given base ref's (`--base origin/main` in
+    CI). Exists because two PRs (the DNS-Server-Service batch and the
+    Certificate Services/Kerberos-KDC batch) once branched from the same
+    commit and each independently bumped `1.5.2` → `1.5.3`; the second
+    to merge needed a manual merge-conflict resolution to fix. This
+    check would have failed that PR before merge instead, with a
+    message saying to rebase and bump again.
+  - `.github/workflows/build-check.yml` runs all three on every pull
+    request into `main` (and the syntax/sync checks again on every push
+    to `main`, so a direct push or an already-open PR's later commit
+    can't silently skip them either).
 - `windows/` — `Winevent-catalogue`'s data and docs, unchanged:
   `data/events.csv`/`.json`, `data/cloud_logs.csv`/`.json`,
   `data/cloud_actions.csv`/`.json`, `data/reference/*`, `docs/*`, and its

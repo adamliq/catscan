@@ -1,0 +1,33 @@
+name: Build check
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Syntax-check index.html's inline scripts
+        run: node tools/check_syntax.js
+
+      - name: Windows Events data/page sync check
+        run: python3 tools/build_windows_events.py --check
+
+      - name: VERSION bump check
+        if: github.event_name == 'pull_request'
+        run: python3 tools/check_version.py --base origin/${{ github.base_ref }}
