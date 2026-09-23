@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.12` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.14` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3012,6 +3012,50 @@ populated). Regression-checked across both themes and both
 `1.5.12` (PATCH - populated the `component` column for the remaining
 rows of the Log File Locations table; a data addition to an existing
 reference table, not a new capability).
+
+Added filtering and sorting to the Log File Locations tab, on top of
+its existing free-text search. Two dropdowns - `Type` and `Category`
+- narrow the table and combine with each other and with the search
+box; their options are built from the data's own distinct values
+(6 types, 33 categories) rather than hardcoded, so they can't drift
+out of sync with the CSV. A "Clear filters" button, disabled unless
+a filter or search term is actually active, resets both dropdowns
+and the search box together. Clicking a column header sorts the
+currently-filtered rows by that column - `localeCompare` with
+`numeric: true` so paths sort sensibly - and clicking the same header
+again reverses direction; the active header shows an accent-colored
+▲/▼. Left `component` out of the filter dropdowns deliberately: with
+85+ distinct values and 8 intentionally blank rows it isn't a
+meaningful narrowing control the way the 6-value `Type` and
+33-value `Category` columns are - `component` stays searchable and
+sortable like every other column, just not filterable by dropdown.
+Replaced this tab's use of the shared `buildTable()` helper with a
+dedicated renderer carrying clickable, sort-aware header cells;
+`buildTable()` itself is untouched, so the other reference tables
+that still use it are unaffected.
+
+Branched from `main` at `1.5.12` rather than the still-open
+`infra-improvements` PR (build script/CI/data-reconciliation,
+already merge-resolved to `1.5.13` on its own branch but not yet
+merged) - skips straight to `1.5.14` to avoid re-colliding with that
+claimed version, the same mitigation used for the `1.5.8`/`1.5.9`
+split earlier.
+
+Verified: a full page syntax check. Confirmed via Playwright that the
+type filter narrows correctly (e.g. "journal-unit" to 7 rows, all
+verified as that type), that combining it with a category filter
+narrows further, that "Clear filters" resets the count back to
+107 of 107 and both dropdowns to their "All" option, and that sorting
+by Path and by Type produces correctly ordered results in both
+directions with the right header showing the active arrow.
+Screenshotted the filter toolbar and a sorted table. Regression-
+checked across both themes and both 1500px/375px viewports (the
+toolbar wraps to a stacked layout on the narrow one) - zero console
+errors throughout.
+
+`1.5.14` (PATCH - added filtering and sorting to the Log File
+Locations tab; a UI enhancement to an existing tab, not a new
+catalogue or app-level capability).
 
 ## Structure
 
