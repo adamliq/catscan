@@ -1,8 +1,18 @@
 [
   {
-    "name": "Winevent-catalogue",
-    "description": "The Windows Event ID catalogue this repo mirrors — the same structure and depth, for Windows Security/System/Application logs.",
-    "url": "https://github.com/adamliq/Winevent-catalogue"
+    "name": "Windows Event Catalogue",
+    "description": "This repo has moved into Cat Scan (this project) — see the Microsoft Events tab.",
+    "url": "https://github.com/adamliq/catscan"
+  },
+  {
+    "name": "Threat Detection Library",
+    "description": "This repo has moved into Cat Scan (this project) — see the Threat Detection tab.",
+    "url": "https://github.com/adamliq/catscan"
+  },
+  {
+    "name": "Linux Event Catalogue",
+    "description": "This repo has moved into Cat Scan (this project) — see the Linux Events tab.",
+    "url": "https://github.com/adamliq/catscan"
   },
   {
     "name": "Splunk Taxonomy — My Tools",

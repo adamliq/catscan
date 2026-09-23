@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.6` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.7` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2847,6 +2847,27 @@ for visual confirmation - zero console errors.
 
 `1.5.6` (PATCH - one new companion-tools link; not a new catalogue,
 tab, or app-level capability).
+
+Asked to update Companion Tools to note that the Windows Event
+Catalogue, Threat Detection Library, and Linux Event Catalogue - the
+three source repos this compendium was merged from - have moved into
+Cat Scan. Replaced the existing `Winevent-catalogue` row (which still
+pointed out to the old standalone repo) and added two more, one per
+source repo, each linking back to `github.com/adamliq/catscan` and
+naming the tab that repo's content now lives under (Microsoft Events,
+Threat Detection, Linux Events respectively), rather than a repo URL
+that no longer reflects where the content actually is. The two
+genuinely external Splunk tool links were left unchanged. Applied to
+`linux/data/reference/companion_tools.csv`/`.json` (now 5 rows) and
+the embedded `DATA.companion_tools` in `index.html`.
+
+Verified: `node --check`. Confirmed via Playwright that the Companion
+Tools tab renders all five cards with correct text and links,
+screenshotted for visual confirmation - zero console errors.
+
+`1.5.7` (PATCH - three companion-tools entries updated/added to point
+at this merged project instead of the superseded standalone repos; not
+a new catalogue, tab, or app-level capability).
 
 ## Structure
 
