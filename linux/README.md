@@ -468,7 +468,7 @@ flagged low-confidence entries instead of guessing.
   (that file only covers the 2 tools an administrator runs day-to-day)
   but is included here for a complete man-page set. Powers the
   Fapolicyd tab's Man submenu.
-- `data/reference/log_file_locations.csv` / `.json` — 97 rows: where RHEL,
+- `data/reference/log_file_locations.csv` / `.json` — 107 rows: where RHEL,
   IdM/FreeIPA, and other common add-on services actually write their
   logs, repo owner-supplied and not tied to any event in the main
   catalogue. Columns: `path`, `type` (`file`, `directory`, `binary` —
@@ -508,10 +508,30 @@ flagged low-confidence entries instead of guessing.
   context the list added (that Apache also serves the Web UI and
   XML-RPC/JSON-RPC API; that `/var/log/messages` also carries some
   DNS/PKI subsystem messages in an IdM deployment) rather than silently
-  dropped. Powers its own **Log File Locations** tab (moved out of the
-  Reference tables accordion, where it started, once IdM coverage made
-  it substantial enough to warrant a tab of its own — Reference tables
-  is back down to 9 accordion tables).
+  dropped.
+
+  A third pass added the Ansible Automation Platform (AWX/Tower) side —
+  `/var/log/tower/` and `/var/log/supervisor/` — from an owner-supplied
+  component-level breakdown, again deconflicted rather than appended
+  blind: 4 of its 14 rows were paths already covered (`tower.log`,
+  `callback_receiver.log`, `dispatcher.log`, `job_lifecycle.log`) and had
+  their descriptions enriched with the specific component names the new
+  list supplied (Automation Controller, Callback Receiver, Dispatcher,
+  Job Lifecycle) rather than duplicated; the other 10 were genuinely new
+  `Ansible AAP` rows — 7 more files under `/var/log/tower/`
+  (`management_playbooks.log`, `task_system.log`, `rsyslog.err`,
+  `wsrelay.log`, `rsyslog_configurer.log`, `cache_clear.log`,
+  `tower_rbac_migrations.log`) and 3 under `/var/log/supervisor/`
+  (`awx-callback-receiver.log`, `awx-daphne.log`, and a `glob`-typed
+  `awx-*.log` covering the remaining supervisord-managed service logs).
+  No new schema column was added for the component names the source
+  table carried — they're folded into `description` prose to keep the
+  four-column schema uniform across every row.
+
+  Powers its own **Log File Locations** tab (moved out of the Reference
+  tables accordion, where it started, once IdM coverage made it
+  substantial enough to warrant a tab of its own — Reference tables is
+  back down to 9 accordion tables).
 - `data/reference/companion_tools.csv` / `.json` — 5 rows, linked from
   the Companion Tools tab. Columns: `name`, `description`, `url`. Not
   generated from any upstream source — just a small static list. Three
@@ -734,7 +754,7 @@ as titled reference blocks, transcribed rather than summarized so the
 exact commands/config stay copy-pasteable.
 
 **Log File Locations** — a separate top-level tab, next to Command
-Logging: a single searchable table over all 97 rows of
+Logging: a single searchable table over all 107 rows of
 `data/reference/log_file_locations.csv` (`path`/`type`/`category`/
 `description` — see above). Started as the Reference tables tab's 10th
 accordion table; moved out to its own tab once the IdM/FreeIPA

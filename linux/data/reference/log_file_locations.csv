@@ -84,10 +84,10 @@ journalctl -u NetworkManager,journal-unit,Network,NetworkManager (including DHCP
 /var/log/ansible/hosts/,directory,Ansible,Per-host playbook logs (community.general.log_plays callback)
 ANSIBLE_LOG_PATH,env-var,Ansible,Override log path at runtime
 /var/log/tower/,directory,Ansible AAP,Ansible Automation Platform / AWX / Tower logs
-/var/log/tower/tower.log,file,Ansible AAP,Main Automation Controller log
-/var/log/tower/callback_receiver.log,file,Ansible AAP,Callback receiver log
-/var/log/tower/dispatcher.log,file,Ansible AAP,Dispatcher worker log
-/var/log/tower/job_lifecycle.log,file,Ansible AAP,Job lifecycle details
+/var/log/tower/tower.log,file,Ansible AAP,"Automation Controller (Web / Application) — main application logs: runtime errors, web requests, general messages."
+/var/log/tower/callback_receiver.log,file,Ansible AAP,Callback Receiver — handles Ansible job callback events.
+/var/log/tower/dispatcher.log,file,Ansible AAP,Dispatcher — job scheduling and execution worker service.
+/var/log/tower/job_lifecycle.log,file,Ansible AAP,"Job Lifecycle — job state changes, blocked jobs, and blocking conditions."
 /var/log/supervisor/,directory,Ansible AAP,Supervisor-managed service logs (AAP)
 /var/log/ipaserver-install.log,file,IdM / FreeIPA,"IdM server installation log, from ipa-server-install."
 /var/log/ipareplica-install.log,file,IdM / FreeIPA,"IdM replica installation log, from ipa-replica-install."
@@ -96,3 +96,13 @@ ANSIBLE_LOG_PATH,env-var,Ansible,Override log path at runtime
 /var/log/pki/pki-tomcat/,directory,PKI / Certificate System,"Certificate System (Dogtag) logs, one subdirectory per subsystem (ca/, kra/, and so on) when IdM's integrated CA is enabled."
 /var/log/custodia/,directory,IdM / FreeIPA,"Custodia secrets-service logs — IdM's internal service for distributing secrets (keys, passwords) between its own subsystems."
 /etc/logrotate.d/,directory,System,"Log rotation policy snippets, one per service — not logs themselves, but where each service's rotation schedule and retention are configured."
+/var/log/tower/management_playbooks.log,file,Ansible AAP,Management Playbooks — management playbook runs and isolated job metadata operations.
+/var/log/tower/task_system.log,file,Ansible AAP,"Task System — background tasks (cluster management, analytics gathering/processing)."
+/var/log/tower/rsyslog.err,file,Ansible AAP,rsyslog — errors authenticating or sending logs to external aggregators.
+/var/log/tower/wsrelay.log,file,Ansible AAP,Websocket Relay — websocket relay server communication.
+/var/log/tower/rsyslog_configurer.log,file,Ansible AAP,rsyslog Configurer — rsyslog configuration activity for external logging.
+/var/log/tower/cache_clear.log,file,Ansible AAP,Cache Management — cache clearing operations.
+/var/log/tower/tower_rbac_migrations.log,file,Ansible AAP,RBAC / Database — RBAC database migration and upgrade logs.
+/var/log/supervisor/awx-callback-receiver.log,file,Ansible AAP,Callback Receiver (supervisord) — the supervisord-managed callback receiver process.
+/var/log/supervisor/awx-daphne.log,file,Ansible AAP,Daphne / Websocket — ASGI communication for the Web UI.
+/var/log/supervisor/awx-*.log,glob,Ansible AAP,Other supervisord-managed service logs — various components beyond the callback receiver and Daphne above.

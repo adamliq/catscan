@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.9` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.10` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2920,6 +2920,42 @@ ahead avoids repeating the `1.5.2`/`1.5.3` collision from earlier in
 this project's history, even though the two PRs will likely still
 need an ordinary merge-conflict resolution where they touch the same
 lines of this file).
+
+Added the Ansible Automation Platform (AWX/Tower) side of the Log
+File Locations table, from an owner-supplied component-level
+breakdown of `/var/log/tower/` and `/var/log/supervisor/`.
+Deconflicted rather than appended blind: 4 of the 14 supplied rows
+were paths already in the table (`tower.log`, `callback_receiver.log`,
+`dispatcher.log`, `job_lifecycle.log`) and had their descriptions
+enriched with the specific component names the new list supplied
+(Automation Controller, Callback Receiver, Dispatcher, Job Lifecycle)
+rather than duplicated as new rows. The other 10 were genuinely new
+`Ansible AAP` rows: 7 more files under `/var/log/tower/`
+(`management_playbooks.log`, `task_system.log`, `rsyslog.err`,
+`wsrelay.log`, `rsyslog_configurer.log`, `cache_clear.log`,
+`tower_rbac_migrations.log`) and 3 under `/var/log/supervisor/`
+(`awx-callback-receiver.log`, `awx-daphne.log`, and a `glob`-typed
+`awx-*.log` for the remaining supervisord-managed service logs).
+Kept the table's existing four-column schema rather than adding a
+"Component" column for the source table's per-file component names -
+those are folded into each row's `description` prose instead, so
+every row across the whole table stays structurally uniform. Table
+is now 107 rows (up from 97).
+
+Verified: a full page syntax check. Re-synced `index.html`'s embedded
+copy from `linux/data/reference/log_file_locations.json` and
+confirmed via Playwright that the Log File Locations tab renders all
+107 rows, that a "tower" search correctly narrows to the 12 rows
+under `/var/log/tower/` (including the enriched originals) and an
+"awx" search to the 4 supervisor-managed rows, and that the enriched
+descriptions render with the new component names. Regression-checked
+across both themes and both 1500px/375px viewports, plus Windows
+Events' and Linux Events' own main-catalogue counts - zero console
+errors throughout.
+
+`1.5.10` (PATCH - added Ansible Automation Platform log file
+locations to the Log File Locations tab; a data addition and
+deconfliction to an existing reference table, not a new capability).
 
 ## Structure
 

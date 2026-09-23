@@ -513,25 +513,25 @@
     "path": "/var/log/tower/tower.log",
     "type": "file",
     "category": "Ansible AAP",
-    "description": "Main Automation Controller log"
+    "description": "Automation Controller (Web / Application) \u2014 main application logs: runtime errors, web requests, general messages."
   },
   {
     "path": "/var/log/tower/callback_receiver.log",
     "type": "file",
     "category": "Ansible AAP",
-    "description": "Callback receiver log"
+    "description": "Callback Receiver \u2014 handles Ansible job callback events."
   },
   {
     "path": "/var/log/tower/dispatcher.log",
     "type": "file",
     "category": "Ansible AAP",
-    "description": "Dispatcher worker log"
+    "description": "Dispatcher \u2014 job scheduling and execution worker service."
   },
   {
     "path": "/var/log/tower/job_lifecycle.log",
     "type": "file",
     "category": "Ansible AAP",
-    "description": "Job lifecycle details"
+    "description": "Job Lifecycle \u2014 job state changes, blocked jobs, and blocking conditions."
   },
   {
     "path": "/var/log/supervisor/",
@@ -580,5 +580,65 @@
     "type": "directory",
     "category": "System",
     "description": "Log rotation policy snippets, one per service \u2014 not logs themselves, but where each service's rotation schedule and retention are configured."
+  },
+  {
+    "path": "/var/log/tower/management_playbooks.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Management Playbooks \u2014 management playbook runs and isolated job metadata operations."
+  },
+  {
+    "path": "/var/log/tower/task_system.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Task System \u2014 background tasks (cluster management, analytics gathering/processing)."
+  },
+  {
+    "path": "/var/log/tower/rsyslog.err",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "rsyslog \u2014 errors authenticating or sending logs to external aggregators."
+  },
+  {
+    "path": "/var/log/tower/wsrelay.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Websocket Relay \u2014 websocket relay server communication."
+  },
+  {
+    "path": "/var/log/tower/rsyslog_configurer.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "rsyslog Configurer \u2014 rsyslog configuration activity for external logging."
+  },
+  {
+    "path": "/var/log/tower/cache_clear.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Cache Management \u2014 cache clearing operations."
+  },
+  {
+    "path": "/var/log/tower/tower_rbac_migrations.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "RBAC / Database \u2014 RBAC database migration and upgrade logs."
+  },
+  {
+    "path": "/var/log/supervisor/awx-callback-receiver.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Callback Receiver (supervisord) \u2014 the supervisord-managed callback receiver process."
+  },
+  {
+    "path": "/var/log/supervisor/awx-daphne.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Daphne / Websocket \u2014 ASGI communication for the Web UI."
+  },
+  {
+    "path": "/var/log/supervisor/awx-*.log",
+    "type": "glob",
+    "category": "Ansible AAP",
+    "description": "Other supervisord-managed service logs \u2014 various components beyond the callback receiver and Daphne above."
   }
 ]
