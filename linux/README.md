@@ -477,10 +477,11 @@ flagged low-confidence entries instead of guessing.
   `/var/log/dirsrv/slapd-*/access`, `journal-unit` — logged only through
   `journalctl -u <unit>` with no flat file at all, or `env-var` — a path
   set by an environment variable, not a fixed location), `category`,
-  `component` (blank for almost every row — populated only where the
-  source data actually named a distinct sub-component, currently just
-  the Ansible AAP rows below), `description`. Cleaned up from the
-  owner-supplied source rather than
+  `component` (the specific daemon/process/subsystem responsible for
+  that path, e.g. `SSSD NSS responder` or `BIND (named)`; left blank
+  on the 8 rows whose own description already says the path is shared
+  by more than one unrelated component — see below), `description`.
+  Cleaned up from the owner-supplied source rather than
   transcribed as-is: 3 rows that just re-cited an already-listed path
   under a second heading (`/var/log/maillog`, `/var/log/chrony/`,
   `/var/log/anaconda/`) were merged into their first occurrence instead
@@ -536,10 +537,24 @@ flagged low-confidence entries instead of guessing.
   description into its own `component` value and the leading
   "Component — " prefix removed from the description text, restoring
   the owner-supplied table's original Component/Description split.
-  Every other row in the table — all 93 of them, none ever supplied a
-  distinct component name — got an empty `component` value rather than
-  an invented one, so the column stays blank wherever the source data
-  simply doesn't have that information.
+
+  A second follow-up request then asked for the rest of the table's
+  component names too. Populated `component` for 85 more rows, each
+  value being the specific daemon/process/software already named in
+  that row's own `description` (e.g. "SSSD PAM responder" for
+  `sssd_pam.log`, "BIND (named)" for the named-related rows, "chronyd"
+  for the chrony rows) — nothing invented beyond what the row already
+  said. 8 rows were left blank on purpose because their own
+  description explicitly covers more than one unrelated component
+  sharing that one path rather than a single owner: the bare
+  `/var/log/messages` (kernel + assorted daemons + DNS/PKI in an IdM
+  deployment), `/var/log/secure` (SSH + sudo + PAM + failed logins),
+  `/var/log/boot.log` (generic startup messages), `/var/log/private/`
+  ("used by some services"), the `/var/log/sssd/` directory itself
+  ("contains multiple component logs" — its 8 individual files below
+  each got their own component), `/etc/logrotate.d/` (a config
+  directory, not a log, spanning every service that rotates one), and
+  the two Ansible AAP directory rows from the prior pass.
 
   Powers its own **Log File Locations** tab (moved out of the Reference
   tables accordion, where it started, once IdM coverage made it

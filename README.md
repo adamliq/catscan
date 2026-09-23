@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.11` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.12` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2983,6 +2983,35 @@ layout glitch. Regression-checked across both themes and both
 `1.5.11` (PATCH - added a `component` column to the Log File
 Locations table; a schema addition to an existing reference table,
 not a new capability).
+
+Populated the new `component` column for the other 85 rows that
+launched with it blank (everything except the 14 Ansible AAP file
+rows from the previous version). Each value is the specific
+daemon/process already named in that row's own `description` - e.g.
+"SSSD NSS responder" for `sssd_nss.log`, "BIND (named)" for the
+named-related rows, "chronyd" for the chrony rows, "DHCP server
+(dhcpd)" for the dhcpd-related rows - nothing invented beyond what
+the row already said. 8 rows stay blank on purpose because their own
+description explicitly names more than one unrelated component
+sharing that path: the bare `/var/log/messages`, `/var/log/secure`,
+`/var/log/boot.log`, `/var/log/private/`, the `/var/log/sssd/`
+directory itself (each of its 8 individual files got its own
+component), `/etc/logrotate.d/`, and the two Ansible AAP directory
+rows (`/var/log/tower/`, `/var/log/supervisor/`) left blank in the
+previous version.
+
+Verified: a full page syntax check. Re-synced `index.html`'s embedded
+copy and confirmed via Playwright that the Component column now
+carries a value on 99 of 107 rows (107 minus the 8 intentional
+blanks), that the blank cells render cleanly rather than
+"undefined", and spot-checked the SSSD rows specifically (the
+directory row blank, all 8 individual responder/helper logs
+populated). Regression-checked across both themes and both
+1500px/375px viewports - zero console errors throughout.
+
+`1.5.12` (PATCH - populated the `component` column for the remaining
+rows of the Log File Locations table; a data addition to an existing
+reference table, not a new capability).
 
 ## Structure
 
