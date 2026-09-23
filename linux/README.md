@@ -468,6 +468,32 @@ flagged low-confidence entries instead of guessing.
   (that file only covers the 2 tools an administrator runs day-to-day)
   but is included here for a complete man-page set. Powers the
   Fapolicyd tab's Man submenu.
+- `data/reference/log_file_locations.csv` / `.json` — 90 rows: where RHEL
+  and its common add-on services actually write their logs, repo
+  owner-supplied and not tied to any event in the main catalogue.
+  Columns: `path`, `type` (`file`, `directory`, `binary` — accounting
+  files like `/var/log/wtmp` best read with a dedicated tool rather than
+  opened directly, `glob` — a wildcard path such as
+  `/var/log/dirsrv/slapd-*/access`, `journal-unit` — logged only through
+  `journalctl -u <unit>` with no flat file at all, or `env-var` — a path
+  set by an environment variable, not a fixed location), `category`,
+  `description`. Cleaned up from the owner-supplied source rather than
+  transcribed as-is: 3 rows that just re-cited an already-listed path
+  under a second heading (`/var/log/maillog`, `/var/log/chrony/`,
+  `/var/log/anaconda/`) were merged into their first occurrence instead
+  of publishing a duplicate path twice, 5 rows had an unquoted comma
+  inside their own description that silently broke a naive CSV parse
+  into extra columns (e.g. "Main system log (general messages from
+  kernel, daemons, etc.)" splitting into 5 fields instead of 3) and were
+  reconstructed field-by-field rather than left corrupted, and the one
+  `ANSIBLE_LOG_PATH (env var)` row had that qualifier moved into the new
+  `type` column instead of left baked into the path text. The genuinely
+  intentional near-duplicates were kept as separate rows on purpose:
+  `/var/log/messages` appears four times (bare, plus "(dhcpd entries)",
+  "(named entries)", "(realmd entries)") because that's a real fact
+  about the shared classic syslog file — four unrelated subsystems'
+  lines land in it — not a single path repeated. Powers the Reference
+  tables tab's 10th accordion table.
 - `data/reference/companion_tools.csv` / `.json` — 2 rows: other tools
   by the same author, linked from the Companion Tools tab. Columns:
   `name`, `description`, `url`. Not generated from any upstream source —
@@ -671,7 +697,7 @@ and `fapolicyd.rules(5)` round out the set with the full config-key and
 rule-syntax references the Rules/Fields/Decisions submenus above draw
 their data from in the first place.
 
-**Reference tables** — covers all 9 accordion-style reference tables
+**Reference tables** — covers all 10 accordion-style reference tables
 (`auditd_rules` gets its own dedicated tab instead, given its size) with
 the same single-search-filters-everything, sticky-jump-nav,
 height-capped-scrolling, collapsed-by-default-accordion behavior as the

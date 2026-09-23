@@ -1,0 +1,542 @@
+[
+  {
+    "path": "/var/log/messages",
+    "type": "file",
+    "category": "System",
+    "description": "Main system log (general messages from kernel, daemons, etc.)"
+  },
+  {
+    "path": "/var/log/secure",
+    "type": "file",
+    "category": "Security",
+    "description": "Security and authentication (SSH, sudo, PAM, failed logins)"
+  },
+  {
+    "path": "/var/log/maillog",
+    "type": "file",
+    "category": "Mail",
+    "description": "Mail server related messages; postfix / mail transfer agent + Dovecot (default on RHEL)"
+  },
+  {
+    "path": "/var/log/cron",
+    "type": "file",
+    "category": "System",
+    "description": "Cron / scheduled task execution"
+  },
+  {
+    "path": "/var/log/boot.log",
+    "type": "file",
+    "category": "System",
+    "description": "Boot and service startup messages"
+  },
+  {
+    "path": "/var/log/dmesg",
+    "type": "file",
+    "category": "Kernel",
+    "description": "Kernel ring buffer (hardware detection and drivers at boot)"
+  },
+  {
+    "path": "/var/log/btmp",
+    "type": "binary",
+    "category": "Security",
+    "description": "Failed login attempts (binary - use lastb)"
+  },
+  {
+    "path": "/var/log/wtmp",
+    "type": "binary",
+    "category": "Security",
+    "description": "Successful login/logout history (binary - use last/who)"
+  },
+  {
+    "path": "/var/log/lastlog",
+    "type": "binary",
+    "category": "Security",
+    "description": "Last login information per user (binary - use lastlog)"
+  },
+  {
+    "path": "/var/log/dnf.log",
+    "type": "file",
+    "category": "Package Management",
+    "description": "DNF package manager activity (RHEL 8+)"
+  },
+  {
+    "path": "/var/log/yum.log",
+    "type": "file",
+    "category": "Package Management",
+    "description": "YUM package manager activity (RHEL 7 and earlier)"
+  },
+  {
+    "path": "/var/log/firewalld",
+    "type": "file",
+    "category": "Security",
+    "description": "firewalld debug and messages"
+  },
+  {
+    "path": "/var/log/kdump.log",
+    "type": "file",
+    "category": "Kernel",
+    "description": "Kernel crash dump related"
+  },
+  {
+    "path": "/var/log/audit/audit.log",
+    "type": "file",
+    "category": "Security",
+    "description": "Audit daemon logs (includes SELinux AVC denials)"
+  },
+  {
+    "path": "/var/log/httpd/access_log",
+    "type": "file",
+    "category": "Web Server",
+    "description": "Apache HTTP Server access log"
+  },
+  {
+    "path": "/var/log/httpd/error_log",
+    "type": "file",
+    "category": "Web Server",
+    "description": "Apache HTTP Server error log"
+  },
+  {
+    "path": "/var/log/nginx/access.log",
+    "type": "file",
+    "category": "Web Server",
+    "description": "Nginx access log (if installed)"
+  },
+  {
+    "path": "/var/log/nginx/error.log",
+    "type": "file",
+    "category": "Web Server",
+    "description": "Nginx error log (if installed)"
+  },
+  {
+    "path": "/var/log/journal/",
+    "type": "directory",
+    "category": "Systemd",
+    "description": "Persistent systemd journal storage (binary - use journalctl)"
+  },
+  {
+    "path": "/var/log/anaconda/",
+    "type": "directory",
+    "category": "Installation",
+    "description": "Installation logs (copied after successful install)"
+  },
+  {
+    "path": "/var/log/rhsm/",
+    "type": "directory",
+    "category": "Subscription",
+    "description": "Red Hat Subscription Manager logs"
+  },
+  {
+    "path": "/var/log/chrony/",
+    "type": "directory",
+    "category": "Time Sync",
+    "description": "Chrony time synchronization logs; chrony NTP logs directory (measurements, statistics, tracking)"
+  },
+  {
+    "path": "/var/log/tuned/",
+    "type": "directory",
+    "category": "Performance",
+    "description": "Tuned performance profile logs"
+  },
+  {
+    "path": "/var/log/krb5kdc.log",
+    "type": "file",
+    "category": "Kerberos",
+    "description": "Primary log file for the Kerberos KDC server"
+  },
+  {
+    "path": "/var/log/kadmind.log",
+    "type": "file",
+    "category": "Kerberos",
+    "description": "Primary log file for the Kerberos administration server (kadmind)"
+  },
+  {
+    "path": "/var/log/sssd/",
+    "type": "directory",
+    "category": "LDAP / SSSD",
+    "description": "SSSD main directory (contains multiple component logs)"
+  },
+  {
+    "path": "/var/log/sssd/sssd.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "Main SSSD daemon log"
+  },
+  {
+    "path": "/var/log/sssd/sssd_<domain>.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "Per-domain log (LDAP communication for each domain in sssd.conf)"
+  },
+  {
+    "path": "/var/log/sssd/sssd_nss.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "NSS responder log"
+  },
+  {
+    "path": "/var/log/sssd/sssd_pam.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "PAM responder log"
+  },
+  {
+    "path": "/var/log/sssd/krb5_child.log",
+    "type": "file",
+    "category": "Kerberos / SSSD",
+    "description": "Short-lived helper process for Kerberos authentication"
+  },
+  {
+    "path": "/var/log/sssd/ldap_child.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "Short-lived helper process for obtaining Kerberos tickets for LDAP"
+  },
+  {
+    "path": "/var/log/sssd/sssd_ssh.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "SSH responder log"
+  },
+  {
+    "path": "/var/log/sssd/sssd_sudo.log",
+    "type": "file",
+    "category": "LDAP / SSSD",
+    "description": "Sudo responder log"
+  },
+  {
+    "path": "/var/log/dirsrv/slapd-*/access",
+    "type": "glob",
+    "category": "LDAP",
+    "description": "Directory Server (LDAP) access log (IdM environments)"
+  },
+  {
+    "path": "/var/log/dirsrv/slapd-*/errors",
+    "type": "glob",
+    "category": "LDAP",
+    "description": "Directory Server (LDAP) errors log (IdM environments)"
+  },
+  {
+    "path": "/var/log/dirsrv/slapd-*/audit",
+    "type": "glob",
+    "category": "LDAP",
+    "description": "Directory Server (LDAP) audit log (when auditing enabled)"
+  },
+  {
+    "path": "/var/log/samba/",
+    "type": "directory",
+    "category": "File Sharing",
+    "description": "Samba (SMB/CIFS) logs"
+  },
+  {
+    "path": "/var/log/samba/log.*",
+    "type": "glob",
+    "category": "File Sharing",
+    "description": "Samba per-client or general logs"
+  },
+  {
+    "path": "/var/log/mariadb/mariadb.log",
+    "type": "file",
+    "category": "Database",
+    "description": "MariaDB error / general log"
+  },
+  {
+    "path": "/var/log/mysql/mysqld.log",
+    "type": "file",
+    "category": "Database",
+    "description": "MySQL error log (older setups)"
+  },
+  {
+    "path": "/var/log/mysqld.log",
+    "type": "file",
+    "category": "Database",
+    "description": "MySQL/MariaDB error log (common alternative location)"
+  },
+  {
+    "path": "/var/lib/pgsql/data/log/",
+    "type": "directory",
+    "category": "Database",
+    "description": "PostgreSQL logs (RHEL default location when logging_collector is on)"
+  },
+  {
+    "path": "/var/log/postgresql/",
+    "type": "directory",
+    "category": "Database",
+    "description": "PostgreSQL logs (alternative location)"
+  },
+  {
+    "path": "/var/log/containers/",
+    "type": "directory",
+    "category": "Containers",
+    "description": "Podman/container logs (or use podman logs / journalctl)"
+  },
+  {
+    "path": "/var/log/pods/",
+    "type": "directory",
+    "category": "Containers",
+    "description": "Kubernetes / CRI-O pod logs (if using OpenShift/K8s)"
+  },
+  {
+    "path": "/var/log/hawkey.log",
+    "type": "file",
+    "category": "Package Management",
+    "description": "DNF dependency solver (Hawkey) log"
+  },
+  {
+    "path": "/var/log/dnf.librepo.log",
+    "type": "file",
+    "category": "Package Management",
+    "description": "DNF repository download log"
+  },
+  {
+    "path": "/var/log/dnf.rpm.log",
+    "type": "file",
+    "category": "Package Management",
+    "description": "DNF RPM transaction log"
+  },
+  {
+    "path": "/var/log/spooler",
+    "type": "file",
+    "category": "System",
+    "description": "USENET / news related (rarely used)"
+  },
+  {
+    "path": "/var/log/Xorg.0.log",
+    "type": "file",
+    "category": "Desktop",
+    "description": "X11 / graphical display server log"
+  },
+  {
+    "path": "/var/log/qemu-ga/",
+    "type": "directory",
+    "category": "Virtualization",
+    "description": "QEMU Guest Agent logs (virtual machines)"
+  },
+  {
+    "path": "/var/log/libvirt/",
+    "type": "directory",
+    "category": "Virtualization",
+    "description": "Libvirt / virtualization logs"
+  },
+  {
+    "path": "/var/log/fail2ban.log",
+    "type": "file",
+    "category": "Security",
+    "description": "Fail2Ban intrusion prevention logs (if installed)"
+  },
+  {
+    "path": "/var/log/private/",
+    "type": "directory",
+    "category": "System",
+    "description": "Private/temporary logs used by some services"
+  },
+  {
+    "path": "/var/log/messages (dhcpd entries)",
+    "type": "file",
+    "category": "DHCP",
+    "description": "DHCP server messages (default location for dhcpd)"
+  },
+  {
+    "path": "/var/log/dhcpd.log",
+    "type": "file",
+    "category": "DHCP",
+    "description": "Dedicated DHCP server log (if configured via log-facility in dhcpd.conf)"
+  },
+  {
+    "path": "/var/lib/dhcpd/dhcpd.leases",
+    "type": "binary",
+    "category": "DHCP",
+    "description": "DHCP lease database (not a log, but critical for troubleshooting)"
+  },
+  {
+    "path": "journalctl -u dhcpd",
+    "type": "journal-unit",
+    "category": "DHCP",
+    "description": "DHCP server systemd journal logs"
+  },
+  {
+    "path": "/var/log/chrony/measurements.log",
+    "type": "file",
+    "category": "NTP",
+    "description": "Chrony measurement data"
+  },
+  {
+    "path": "/var/log/chrony/statistics.log",
+    "type": "file",
+    "category": "NTP",
+    "description": "Chrony statistics"
+  },
+  {
+    "path": "/var/log/chrony/tracking.log",
+    "type": "file",
+    "category": "NTP",
+    "description": "Chrony tracking information"
+  },
+  {
+    "path": "journalctl -u chronyd",
+    "type": "journal-unit",
+    "category": "NTP",
+    "description": "Chrony systemd journal logs"
+  },
+  {
+    "path": "journalctl -u realmd",
+    "type": "journal-unit",
+    "category": "Realm / AD",
+    "description": "realmd (realm join/leave) systemd journal logs"
+  },
+  {
+    "path": "/var/log/messages (realmd entries)",
+    "type": "file",
+    "category": "Realm / AD",
+    "description": "realmd messages (often appear in system log)"
+  },
+  {
+    "path": "/var/log/messages (named entries)",
+    "type": "file",
+    "category": "DNS",
+    "description": "BIND/named DNS server messages (default)"
+  },
+  {
+    "path": "/var/named/data/named.run",
+    "type": "file",
+    "category": "DNS",
+    "description": "BIND/named runtime log (common custom location)"
+  },
+  {
+    "path": "journalctl -u named",
+    "type": "journal-unit",
+    "category": "DNS",
+    "description": "BIND/named systemd journal logs"
+  },
+  {
+    "path": "journalctl -u postfix",
+    "type": "journal-unit",
+    "category": "Mail",
+    "description": "Postfix systemd journal logs"
+  },
+  {
+    "path": "journalctl -u dovecot",
+    "type": "journal-unit",
+    "category": "Mail",
+    "description": "Dovecot IMAP/POP systemd journal logs"
+  },
+  {
+    "path": "/var/log/dovecot.log",
+    "type": "file",
+    "category": "Mail",
+    "description": "Dovecot dedicated log (if configured)"
+  },
+  {
+    "path": "/var/log/php-fpm/",
+    "type": "directory",
+    "category": "Runtime",
+    "description": "PHP-FPM logs directory"
+  },
+  {
+    "path": "/var/log/php-fpm/error.log",
+    "type": "file",
+    "category": "Runtime",
+    "description": "PHP-FPM error log"
+  },
+  {
+    "path": "/var/log/redis/",
+    "type": "directory",
+    "category": "Database",
+    "description": "Redis logs (if installed)"
+  },
+  {
+    "path": "/var/log/elasticsearch/",
+    "type": "directory",
+    "category": "Search",
+    "description": "Elasticsearch logs (if installed)"
+  },
+  {
+    "path": "journalctl -u NetworkManager",
+    "type": "journal-unit",
+    "category": "Network",
+    "description": "NetworkManager (including DHCP client) logs"
+  },
+  {
+    "path": "/var/log/cloud-init.log",
+    "type": "file",
+    "category": "Cloud",
+    "description": "Cloud-init logs (cloud instances)"
+  },
+  {
+    "path": "/var/log/cloud-init-output.log",
+    "type": "file",
+    "category": "Cloud",
+    "description": "Cloud-init output log"
+  },
+  {
+    "path": "/var/log/insights-client/",
+    "type": "directory",
+    "category": "Management",
+    "description": "Red Hat Insights client logs"
+  },
+  {
+    "path": "/var/log/wpa_supplicant.log",
+    "type": "file",
+    "category": "Network",
+    "description": "Wi-Fi / WPA supplicant logs"
+  },
+  {
+    "path": "/var/log/ansible.log",
+    "type": "file",
+    "category": "Ansible",
+    "description": "Ansible control node log (enabled via log_path in ansible.cfg)"
+  },
+  {
+    "path": "/var/log/ansible/ansible.log",
+    "type": "file",
+    "category": "Ansible",
+    "description": "Common alternative Ansible log path"
+  },
+  {
+    "path": "/var/log/ansible/hosts/",
+    "type": "directory",
+    "category": "Ansible",
+    "description": "Per-host playbook logs (community.general.log_plays callback)"
+  },
+  {
+    "path": "ANSIBLE_LOG_PATH",
+    "type": "env-var",
+    "category": "Ansible",
+    "description": "Override log path at runtime"
+  },
+  {
+    "path": "/var/log/tower/",
+    "type": "directory",
+    "category": "Ansible AAP",
+    "description": "Ansible Automation Platform / AWX / Tower logs"
+  },
+  {
+    "path": "/var/log/tower/tower.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Main Automation Controller log"
+  },
+  {
+    "path": "/var/log/tower/callback_receiver.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Callback receiver log"
+  },
+  {
+    "path": "/var/log/tower/dispatcher.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Dispatcher worker log"
+  },
+  {
+    "path": "/var/log/tower/job_lifecycle.log",
+    "type": "file",
+    "category": "Ansible AAP",
+    "description": "Job lifecycle details"
+  },
+  {
+    "path": "/var/log/supervisor/",
+    "type": "directory",
+    "category": "Ansible AAP",
+    "description": "Supervisor-managed service logs (AAP)"
+  }
+]

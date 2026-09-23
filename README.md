@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.4` as of this line) — this
+current [`VERSION`](VERSION) (`v1.5.5` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -2780,6 +2780,55 @@ same file locations) bumped once more to `1.5.4`.
 
 `1.5.4` (PATCH - no new data of its own; resolves the parallel-branch
 version collision between the two `1.5.3` batches above).
+
+Asked where an owner-supplied 93-row CSV of RHEL log file locations
+(paths like `/var/log/secure`, `/var/log/audit/audit.log`, plus a
+handful of `journalctl -u <unit>` commands and one environment
+variable for services with no flat log file) would best fit in Linux
+Events. Recommended the Reference tables tab as a new standalone table
+- the same shape as its existing `ssh_disconnect_codes`/`errno_codes`/
+etc. tables, a static lookup rather than an event record, so it
+doesn't belong in the main `events.csv` (strictly keyed by numeric/
+UUID event ID) - and flagged two data-quality issues to fix before
+publishing: literal duplicate rows re-citing an already-listed path,
+and several rows that aren't plain files (a directory, a binary
+accounting file, a journalctl-only service, an env var) mixed in
+without saying so. Asked to go ahead and build it.
+
+Cleaned up the source CSV mechanically rather than transcribing it:
+merged 3 rows that just re-cited an already-listed path under a
+second heading (`/var/log/maillog`, `/var/log/chrony/`,
+`/var/log/anaconda/`) into their first occurrence; reconstructed 5
+rows whose description contained an unquoted comma, which had
+silently broken a naive CSV parse into extra columns (e.g. "Main
+system log (general messages from kernel, daemons, etc.)" splitting
+into 5 fields instead of 3 - caught by checking every row's actual
+field count against the header rather than trusting `csv.DictReader`
+to fail loudly, which it doesn't); and added a `type` column (`file`,
+`directory`, `binary`, `glob`, `journal-unit`, `env-var`) so the
+genuinely different kinds of location aren't all presented as plain
+files. Kept the real near-duplicates as separate rows on purpose:
+`/var/log/messages` appears four times (bare, plus "(dhcpd entries)",
+"(named entries)", "(realmd entries)") because that's a true fact
+about the shared classic syslog file - four unrelated subsystems'
+lines land in it - not a repeated path.
+
+Added `linux/data/reference/log_file_locations.csv`/`.json` (90 rows
+after the merge), wired into `index.html` as the Reference tables
+tab's 10th accordion table (`REF_TABLES` entry, static accordion
+markup, and the underlying `DATA.log_file_locations` array), matching
+every other reference table's search/jump-nav/badge-count behavior
+exactly rather than needing any UI code of its own.
+
+Verified: `node --check`. Confirmed via Playwright that the new table
+renders all 90 rows, its jump-nav badge updates as filtered, and the
+tab's shared global search finds matches inside it (e.g. "chrony"
+correctly narrows to 5 rows). Regression-checked across both themes
+and both 1500px/375px viewports, plus Windows Events' and Linux
+Events' own unaffected counts - zero console errors throughout.
+
+`1.5.5` (PATCH - one new reference table in an already-existing
+catalogue; not a new catalogue, tab, or app-level capability).
 
 ## Structure
 
