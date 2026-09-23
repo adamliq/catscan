@@ -747,5 +747,33 @@
     "category": "Ansible AAP",
     "component": "Other",
     "description": "Various supervisord-managed service logs beyond the callback receiver and Daphne above."
+  },
+  {
+    "path": "journalctl -u sshd",
+    "type": "journal-unit",
+    "category": "Security",
+    "component": "OpenSSH (sshd)",
+    "description": "SSH daemon systemd journal logs (also feeds /var/log/secure)"
+  },
+  {
+    "path": "journalctl -u crond",
+    "type": "journal-unit",
+    "category": "System",
+    "component": "crond",
+    "description": "Cron daemon systemd journal logs (also feeds /var/log/cron)"
+  },
+  {
+    "path": "journalctl -u nfs-server",
+    "type": "journal-unit",
+    "category": "File Sharing",
+    "component": "NFS server",
+    "description": "NFS server systemd journal logs; RHEL's other default file-sharing service alongside Samba, with no dedicated flat log file of its own"
+  },
+  {
+    "path": "/var/lib/systemd/coredump/",
+    "type": "directory",
+    "category": "Kernel",
+    "component": "systemd-coredump",
+    "description": "Process-level crash dumps (core files) captured by systemd-coredump, RHEL 8+ default; complements kdump.log's kernel-level crash dumps above"
   }
 ]
