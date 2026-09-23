@@ -782,13 +782,23 @@ as titled reference blocks, transcribed rather than summarized so the
 exact commands/config stay copy-pasteable.
 
 **Log File Locations** — a separate top-level tab, next to Command
-Logging: a single searchable table over all 107 rows of
-`data/reference/log_file_locations.csv` (`path`/`type`/`category`/
-`description` — see above). Started as the Reference tables tab's 10th
-accordion table; moved out to its own tab once the IdM/FreeIPA
-addition made it substantial enough to warrant one. No submenu, no
-list/detail split — just the one table, search-filtered the same way
-every other reference table is.
+Logging: a searchable, filterable, sortable table over all 107 rows
+of `data/reference/log_file_locations.csv` (`path`/`type`/`category`/
+`component`/`description` — see above). Started as the Reference
+tables tab's 10th accordion table; moved out to its own tab once the
+IdM/FreeIPA addition made it substantial enough to warrant one. Free-
+text search matches any column, same as every other reference table;
+two dropdowns (`Type`, `Category`) narrow further and combine with
+each other and with the search box — their options are generated
+from the data's own distinct values rather than hardcoded, so a
+future row with a new category shows up automatically. A "Clear
+filters" button (disabled unless something's actually applied) resets
+search text and both dropdowns together. Clicking any column header
+sorts the currently-filtered rows by that column (case-insensitive,
+numeric-aware for the few paths that end in a number); clicking the
+same header again reverses direction; the active column shows an
+accent-colored ▲/▼ in its header. No submenu, no list/detail split —
+just the one table.
 
 **Reference tables** — covers all 9 accordion-style reference tables
 (`auditd_rules` gets its own dedicated tab instead, given its size) with
