@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.3` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.4` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3568,6 +3568,48 @@ in both themes at 1500px and 375px - no page errors.
 
 `1.6.3` (PATCH - three new Winlogon events and 64 enriched
 descriptions; a data addition to an existing catalogue).
+
+Checked an owner-supplied `Windows_Startup_Shutdown_Event_IDs.csv` (15
+rows) against the catalogue. Nearly all of it was already there:
+
+- **10 already described properly, unchanged:** Kernel-Power 41, 42,
+  107 and 109; User32 1074 and 1076; EventLog 6005, 6006, 6008 and
+  6009.
+- **4 present but only as bare labels, enriched with their real
+  message text:** Kernel-General 12 ("Windows Startup") and 13
+  ("Windows Shutdown"), now quoting "The operating system started /
+  is shutting down at system time <time>"; WER-SystemErrorReporting
+  1001 ("BSOD"), now "The computer has rebooted from a bugcheck",
+  noting it records the bugcheck code and dump location; and EventLog
+  6013 ("System uptime was recorded"), now quoting "The system uptime
+  is <n> seconds". The samples for 12, 13 and 1001 now show that
+  message text instead of the label.
+- **1 new, with its provider corrected:** the file lists "last
+  shutdown success status / last boot success status" as
+  Kernel-General 20, but the catalogue's Kernel-General 20 (from the
+  Server 2019 manifest) is the leap-second update event. That message
+  comes from Microsoft-Windows-Kernel-Boot, so it was added as
+  Kernel-Boot 20 (System log), the catalogue's first Kernel-Boot event
+  - its manifest export only took security-relevant channels - with
+  the correction recorded in the row's own reference field. A false
+  "last shutdown" status means the previous shutdown wasn't clean.
+
+Existing data problems noticed along the way and not changed here:
+four rows (41, 1074, 1076, 6006) from `docs/event-log-operations.md`
+carry a composite source, "EventLog / Kernel-Power / USER32", rather
+than their single real provider (their samples show the right one);
+and an NSA-guidance row files 1074 under a log named "User32" with the
+label "Shutdown Initiate Failed".
+
+Regenerated with `tools/build_windows_events.py` (5,326 -> 5,327
+events); a data-level diff confirmed exactly 1 row added and 4
+changed. Verified with the three build checks and in Playwright (the
+new and enriched rows are found by their message text; 5,327 events
+listed; all tabs regression-checked in both themes at 1500px and
+375px - no page errors).
+
+`1.6.4` (PATCH - one new Windows event and four enriched; a data
+addition to an existing catalogue).
 
 ## Structure
 

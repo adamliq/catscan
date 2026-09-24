@@ -10489,13 +10489,13 @@ Level:         Warning
 Computer:      WKS-0142.corp.local
 Description:
 Remote Desktop Services failed to retrieve information about a connection for session {Session} within the time allocated","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Remote Desktop Services\Remote Desktop Session Host,,
-13,System,Microsoft-Windows-Kernel-General,Boot Events,,Windows Shutdown,"Log Name:      System
+13,System,Microsoft-Windows-Kernel-General,Boot Events,,"Windows Shutdown: ""The operating system is shutting down at system time <time>."" A normal shutdown marker.","Log Name:      System
 Source:        Microsoft-Windows-Kernel-General
 Event ID:      13
 Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
-Windows Shutdown","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+The operating system is shutting down at system time 2025-03-09T18:31:04.211000000Z.","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""; message text from repo owner-supplied Windows_Startup_Shutdown_Event_IDs.csv",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 5024,Security,Microsoft-Windows-Security-Auditing,System,Audit Other System Events,The Windows Firewall Service has started successfully.,"Log Name:      Security
 Source:        Microsoft-Windows-Security-Auditing
 Event ID:      5024
@@ -18674,7 +18674,7 @@ Keywords:      PSWorkflow Hosting And Execution Layer
 Computer:      WKS-0142.corp.local
 Description:
 Forced workflow shutdown finished.  	 WorkflowId: {workflowId}","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}}",,,
-6013,System,EventLog,Startup and shutdown,,System uptime was recorded.,"Log Name:      System
+6013,System,EventLog,Startup and shutdown,,"System uptime was recorded: ""The system uptime is <n> seconds."" Useful for working out when the machine last started.","Log Name:      System
 Source:        EventLog
 Event ID:      6013
 Level:         Information
@@ -18682,7 +18682,7 @@ Computer:      WKS-0142.corp.local
 Description:
 System uptime was recorded.
 
-[Collection note: Correlate with Kernel-Power 41 and User32 1074.]","Uploaded ""Windows Event ID Catalogue"" reference CSV",,illustrative,T1529,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+[Collection note: Correlate with Kernel-Power 41 and User32 1074.]","Uploaded ""Windows Event ID Catalogue"" reference CSV; message text from repo owner-supplied Windows_Startup_Shutdown_Event_IDs.csv",,illustrative,T1529,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 14066,Microsoft-Windows-WLAN-AutoConfig/Diagnostic,Microsoft-Windows-WLAN-AutoConfig,Microsoft-Windows-WLAN-AutoConfig,,InternalPrivateQuerySetInterfaceCall for {OpCode} on Interface {InterfaceGuid},"Log Name:      Microsoft-Windows-WLAN-AutoConfig/Diagnostic
 Source:        Microsoft-Windows-WLAN-AutoConfig
 Event ID:      14066
@@ -19070,13 +19070,13 @@ Level:         Information
 Computer:      DC01.corp.local
 Description:
 The DNS server encountered invalid class token ""@"" in zone file corp.local.dns at line 42.","Microsoft-Windows-DNS-Server-Service message-table text, independently sourced (CSV gave only generic category filler for this event): https://kb.eventtracker.com/evtPass/evtPages/EventId_1507_Microsoft-Windows-DNS-Server-Service_63620.asp",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
-1001,System,Microsoft-Windows-WER-SystemErrorReporting,Application Crashes,,BSOD,"Log Name:      System
+1001,System,Microsoft-Windows-WER-SystemErrorReporting,Application Crashes,,"BSOD: ""The computer has rebooted from a bugcheck."" Records the bugcheck code and where the crash dump was saved.","Log Name:      System
 Source:        Microsoft-Windows-WER-SystemErrorReporting
 Event ID:      1001
 Level:         Error
 Computer:      WKS-0142.corp.local
 Description:
-BSOD","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+The computer has rebooted from a bugcheck.  The bugcheck was: 0x0000009f (0x0000000000000003, 0xffffc0002f6e8a40, 0xfffff80417e5f850, 0xffffc0002e4c7010). A dump was saved in: C:\Windows\MEMORY.DMP. Report Id: 8b2c1e4f-0d3a-4c56-9e7b-1a2b3c4d5e6f.","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""; message text from repo owner-supplied Windows_Startup_Shutdown_Event_IDs.csv",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 24603,System,Microsoft-Windows-BitLocker-Driver,Microsoft-Windows-BitLocker-Driver,,A boot application hash did not match expected value during restart.,"Log Name:      System
 Source:        Microsoft-Windows-BitLocker-Driver
 Event ID:      24603
@@ -32808,13 +32808,13 @@ Level:         Warning
 Computer:      WKS-0142.corp.local
 Description:
 (no message template provided by the manifest for this event)",Full Windows 11 24H2 Pro (build 26100.1742) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue),,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\BitLocker Drive Encryption,,
-12,System,Microsoft-Windows-Kernel-General,Boot Events,,Windows Startup,"Log Name:      System
+12,System,Microsoft-Windows-Kernel-General,Boot Events,,"Windows Startup: ""The operating system started at system time <time>."" A normal startup marker.","Log Name:      System
 Source:        Microsoft-Windows-Kernel-General
 Event ID:      12
 Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
-Windows Startup","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+The operating system started at system time 2025-03-10T07:58:12.500000000Z.","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""; message text from repo owner-supplied Windows_Startup_Shutdown_Event_IDs.csv",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 3,Microsoft-Windows-Security-SPP/Perf,Microsoft-Windows-Security-SPP,Microsoft-Windows-Security-SPP,SLSvcInit_PhaseTwo,(SLSvcInit_PhaseTwo from Microsoft-Windows-Security-SPP; no message template provided by the manifest),"Log Name:      Microsoft-Windows-Security-SPP/Perf
 Source:        Microsoft-Windows-Security-SPP
 Event ID:      3
@@ -50868,3 +50868,10 @@ Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
 User Logon Notification for Customer Experience Improvement Program",Repo owner-supplied Microsoft-Windows-Winlogon_Event_IDs.csv reference (System channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+20,System,Microsoft-Windows-Kernel-Boot,Microsoft-Windows-Kernel-Boot,,The last shutdown's success status was <true/false>. The last boot's success status was <true/false>. Logged at boot; false for the last shutdown means the previous shutdown wasn't clean.,"Log Name:      System
+Source:        Microsoft-Windows-Kernel-Boot
+Event ID:      20
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The last shutdown's success status was true. The last boot's success status was true.","Repo owner-supplied Windows_Startup_Shutdown_Event_IDs.csv reference (System channel); the file lists this under Microsoft-Windows-Kernel-General, but Kernel-General's event 20 is the leap-second update event, and this message comes from Microsoft-Windows-Kernel-Boot",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
