@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.8` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.9` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3764,6 +3764,71 @@ were regression-checked in both themes at 1500px and 375px, with no
 page errors.
 
 `1.6.8` (PATCH - six new Windows events and three enriched; a data
+addition to an existing catalogue).
+
+Checked the catalogue against the Windows versions released after its
+two manifest exports (Server 2019 build 17763 and Windows 11 24H2 build
+26100.1742): Windows Server 2022 (20348), Windows Server 2025 (26100),
+Windows 11 25H2 (26200) and Windows 11 26H2 (26300, in Release Preview).
+Server 2025 and 25H2 share 24H2's code base, so the gaps were events
+added by later cumulative updates or new Server 2025 features, not by
+new releases. The families already covered were left as they were:
+Kerberos certificate mapping (KDC 39-45), Secure Boot 1795-1800,
+Administrator protection, SMB security and NTLM 8001-8006.
+
+Added 51 events in seven groups:
+
+- **Enhanced NTLM auditing** (Windows 11 24H2 / Server 2025, on by
+  default): NTLM/Operational 4020-4023 (client and server) and
+  4030-4033 (domain controller). Each has an Information event for
+  NTLMv2 and a Warning event for weaker NTLM (NTLMv1, no channel
+  binding, or no MIC). They record who used NTLM, against which
+  target/SPN, and why Kerberos wasn't used.
+- **Kerberos RC4 retirement** (CVE-2026-20833, January 2026 updates):
+  KDC 201-209 in the System log. 201, 202, 206 and 207 are audit
+  warnings; 203, 204, 208 and 209 mean RC4 was blocked (the default
+  since April 2026); 205 flags a DefaultDomainSupportedEncTypes that
+  enables RC4. Filed under the existing Kerberos-Key-Distribution-Center
+  source; Microsoft's KB names it "Kdcsvc".
+- **Delegated managed service accounts** (Server 2025): 307 (migration),
+  308 (permission added) and 309 (key fetch) in a new
+  Security-Kerberos/Operational log, which is off by default.
+- **Windows LAPS** (April 2023 updates onward): a new LAPS/Operational
+  log with 14 events. They cover the processing cycle (10003/10004/
+  10005), password backup and rotation (10018, 10020, 10029), the
+  policy in effect (10021-10023), a blocked outside password change
+  (10031) and the post-authentication reset (10041-10044).
+- **Secure Boot certificate update**: TPM-WMI 1801 (the 2023
+  certificates are not yet in firmware) and 1808 (they are). The 2011
+  certificates expire in June and October 2026.
+- **LDAP signing and channel binding**: Directory Service 2886-2888
+  (2889 was already there), 3039-3041, and 3074/3075, which are new in
+  Server 2025.
+- **Netlogon hardening**: 5829-5831 (the rest of the Zerologon set;
+  5827/5828 were already there) and 5838-5841 (RPC sealing and RC4,
+  CVE-2022-38023).
+
+Sources: the LAPS, dMSA and LDAP-signing texts come from Microsoft's
+documentation (its public GitHub source). LAPS and 2886-2888 quote
+Microsoft's example messages verbatim, and 2886 is marked `original`.
+The other groups are documented on support.microsoft.com, which
+couldn't be read from the build environment. Their descriptions
+summarise what Microsoft documents each event as recording, the samples
+are marked illustrative, and each reference field says so.
+
+Also corrected the existing 2889 sample: Microsoft documents it as
+Level Information with task category "LDAP Interface", not Warning /
+"LDAP Interface Events".
+
+Regenerated with `tools/build_windows_events.py` (5,331 -> 5,382
+events). A keyed data diff showed exactly 51 rows added, 1 changed and
+none removed. Verified with the three build checks and in Playwright:
+each group is found by its own terms (e.g. "Enhanced NTLM auditing",
+"CVE-2026-20833", "Secure Boot CA/keys") and the new rows open with
+their details; all tabs regression-checked in both themes at 1500px and
+375px - no page errors.
+
+`1.6.9` (PATCH - 51 new Windows events and one corrected; a data
 addition to an existing catalogue).
 
 ## Structure

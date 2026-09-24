@@ -26609,15 +26609,15 @@ User credentials cannot be sent to Remote Access server {serverAddress} using ba
 2889,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Signing,"A client made an LDAP bind without requesting signing (or a simple bind over a non-SSL/TLS connection), which will be rejected once LDAP signing/channel binding enforcement is enabled.","Log Name:      Directory Service
 Source:        Microsoft-Windows-ActiveDirectory_DomainService
 Event ID:      2889
-Task Category: LDAP Interface Events
-Level:         Warning
+Task Category: LDAP Interface
+Level:         Information
 Computer:      DC01.corp.local
 Description:
 The following client performed a SASL (Negotiate/Kerberos/NTLM/Digest) LDAP bind without requesting signing (integrity verification), or performed a simple bind over a non-SSL/TLS connection.
 
 Client IP address:	10.20.40.142:52344
 Identity the client attempted to authenticate as:	CORP\legacy-app-svc
-Binding Type:	0","ASD/ACSC ""Priority logs for SIEM ingestion: Practitioner guidance"" (2025), Microsoft Domain Controller / AD & Domain Service Security Logs / Microsoft Windows endpoint logs / Windows DNS server analytic event logs tables; ASD's ACSC, jointly with CISA, NSA, CCCS, NCSC-NZ and NCSC-UK, ""Detecting and mitigating Active Directory compromises"" (September 2026), https://www.cyber.gov.au/business-government/detecting-responding-to-threats/detecting-and-mitigating-active-directory-compromises, Appendix B, Table 18 (Domain Controller events)",,illustrative,T1040; T1557,Yes,,Password Spray,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""client_ip_address"": ""ip"", ""identity_the_client_attempted_to_authenticate_as"": ""principal"", ""binding_type"": ""integer""}",,,
+Binding Type:	0","ASD/ACSC ""Priority logs for SIEM ingestion: Practitioner guidance"" (2025), Microsoft Domain Controller / AD & Domain Service Security Logs / Microsoft Windows endpoint logs / Windows DNS server analytic event logs tables; ASD's ACSC, jointly with CISA, NSA, CCCS, NCSC-NZ and NCSC-UK, ""Detecting and mitigating Active Directory compromises"" (September 2026), https://www.cyber.gov.au/business-government/detecting-responding-to-threats/detecting-and-mitigating-active-directory-compromises, Appendix B, Table 18 (Domain Controller events); Microsoft Learn, ""How to enable LDAP signing in Windows Server"" (troubleshoot/windows-server/active-directory/enable-ldap-signing-in-windows-server), ""Event reference for LDAP signing requirements"" (level and task category corrected against it)",,illustrative,T1040; T1557,Yes,,Password Spray,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""client_ip_address"": ""ip"", ""identity_the_client_attempted_to_authenticate_as"": ""principal"", ""binding_type"": ""integer""}",,,
 132,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,Microsoft-Windows-RemoteDesktopServices-RdpCoreTS,RemoteFX module,A channel {ChannelName} has been connected between the server and the client using transport tunnel: {TunnelID}.,"Log Name:      Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational
 Source:        Microsoft-Windows-RemoteDesktopServices-RdpCoreTS
 Event ID:      132
@@ -50925,3 +50925,549 @@ Level:         Information
 Computer:      RDCB-01.corp.local
 Description:
 This connection request has resulted in a successful session logon.",Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel). Not independently confirmed: no Microsoft documentation or quoted event text for 814 was found. Logged only on a server running the RD Connection Broker role.,,illustrative,T1021.001,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""user"": ""principal""}",Computer Configuration\Administrative Templates\Windows Components\Remote Desktop Services\Remote Desktop Session Host,,Authentication
+4020,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,"NTLM authentication attempted by this computer (client). Records who (user, process name and ID), where (target server and SPN) and why (the reason NTLM was chosen instead of Kerberos), plus the NTLM version and negotiation flags. The Information event is the normal NTLMv2 case. New in Windows 11 24H2 / Windows Server 2025; enabled by default.","Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4020
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+NTLM authentication attempted by this computer (client). Records who (user, process name and ID), where (target server and SPN) and why (the reason NTLM was chosen instead of Kerberos), plus the NTLM version and negotiation flags. The Information event is the normal NTLMv2 case.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4021,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,"NTLM authentication attempted by this computer (client) in a weaker form: NTLMv1, no Extended Protection for Authentication (channel binding), or no message integrity check (MIC). Same who/where/why fields as 4020. New in Windows 11 24H2 / Windows Server 2025; enabled by default.","Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4021
+Level:         Warning
+Computer:      WKS-0142.corp.local
+Description:
+NTLM authentication attempted by this computer (client) in a weaker form: NTLMv1, no Extended Protection for Authentication (channel binding), or no message integrity check (MIC). Same who/where/why fields as 4020.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4022,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,"NTLM authentication received by this computer (server). Records the client, the account, the SPN being accessed, the reason NTLM was used and the negotiated NTLM version. The Information event is the normal NTLMv2 case. New in Windows 11 24H2 / Windows Server 2025; enabled by default.","Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4022
+Level:         Information
+Computer:      FS01.corp.local
+Description:
+NTLM authentication received by this computer (server). Records the client, the account, the SPN being accessed, the reason NTLM was used and the negotiated NTLM version. The Information event is the normal NTLMv2 case.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4023,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,"NTLM authentication received by this computer (server) in a weaker form: NTLMv1, no Extended Protection for Authentication, or no MIC. Same fields as 4022. New in Windows 11 24H2 / Windows Server 2025; enabled by default.","Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4023
+Level:         Warning
+Computer:      FS01.corp.local
+Description:
+NTLM authentication received by this computer (server) in a weaker form: NTLMv1, no Extended Protection for Authentication, or no MIC. Same fields as 4022.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4030,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,NTLM authentication handled by this domain controller for an account in another domain (cross-domain / trust pass-through). The Information event is the normal NTLMv2 case. New in Windows 11 24H2 / Windows Server 2025; enabled by default.,"Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4030
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+NTLM authentication handled by this domain controller for an account in another domain (cross-domain / trust pass-through). The Information event is the normal NTLMv2 case.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4031,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,"NTLM authentication handled by this domain controller for an account in another domain (cross-domain / trust pass-through) in a weaker form, such as NTLMv1. New in Windows 11 24H2 / Windows Server 2025; enabled by default.","Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4031
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+NTLM authentication handled by this domain controller for an account in another domain (cross-domain / trust pass-through) in a weaker form, such as NTLMv1.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4032,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,NTLM authentication validated by this domain controller for an account in its own domain. Shows the negotiated NTLM version from the DC log alone. The Information event is the normal NTLMv2 case. New in Windows 11 24H2 / Windows Server 2025; enabled by default.,"Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4032
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+NTLM authentication validated by this domain controller for an account in its own domain. Shows the negotiated NTLM version from the DC log alone. The Information event is the normal NTLMv2 case.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+4033,Microsoft-Windows-NTLM/Operational,Microsoft-Windows-NTLM,Microsoft-Windows-NTLM,Enhanced NTLM auditing,"NTLM authentication validated by this domain controller for an account in its own domain in a weaker form, such as NTLMv1. New in Windows 11 24H2 / Windows Server 2025; enabled by default.","Log Name:      Microsoft-Windows-NTLM/Operational
+Source:        Microsoft-Windows-NTLM
+Event ID:      4033
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+NTLM authentication validated by this domain controller for an account in its own domain in a weaker form, such as NTLMv1.","Microsoft Support, ""Overview of NTLM auditing enhancements in Windows 11, version 24H2 and Windows Server 2025"". Added to 24H2 / Server 2025 by a cumulative update after build 26100.1742, so absent from this catalogue's 24H2 manifest export. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""process_name"": ""string"", ""process_id"": ""integer"", ""user"": ""principal"", ""target_name"": ""string"", ""spn"": ""string"", ""ntlm_fallback_reason"": ""string"", ""ntlm_version"": ""string"", ""negotiate_flags"": ""string""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Network security: Restrict NTLM,,
+201,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use detected (audit): the client advertises only RC4 and the service account has no msDS-SupportedEncryptionTypes defined. Becomes blocking event 203 under enforcement. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      201
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+RC4 use detected (audit): the client advertises only RC4 and the service account has no msDS-SupportedEncryptionTypes defined. Becomes blocking event 203 under enforcement.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+202,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use detected (audit): the service account has no AES keys and no msDS-SupportedEncryptionTypes defined. Becomes blocking event 204 under enforcement. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      202
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+RC4 use detected (audit): the service account has no AES keys and no msDS-SupportedEncryptionTypes defined. Becomes blocking event 204 under enforcement.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+203,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use blocked (enforcement): the client advertises only RC4 and the service account has no msDS-SupportedEncryptionTypes defined. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      203
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+RC4 use blocked (enforcement): the client advertises only RC4 and the service account has no msDS-SupportedEncryptionTypes defined.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+204,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use blocked (enforcement): the service account has no AES keys and no msDS-SupportedEncryptionTypes defined. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      204
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+RC4 use blocked (enforcement): the service account has no AES keys and no msDS-SupportedEncryptionTypes defined.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+205,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"The domain's DefaultDomainSupportedEncTypes setting explicitly enables an insecure algorithm such as RC4. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      205
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The domain's DefaultDomainSupportedEncTypes setting explicitly enables an insecure algorithm such as RC4.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+206,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use detected (audit): the service accepts only AES but the client does not advertise AES support. Becomes blocking event 208 under enforcement. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      206
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+RC4 use detected (audit): the service accepts only AES but the client does not advertise AES support. Becomes blocking event 208 under enforcement.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+207,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use detected (audit): the service is configured for AES but its account has no AES keys (e.g. the password predates AES key generation). Becomes blocking event 209 under enforcement. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      207
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+RC4 use detected (audit): the service is configured for AES but its account has no AES keys (e.g. the password predates AES key generation). Becomes blocking event 209 under enforcement.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+208,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use blocked (enforcement): the service accepts only AES and the client does not advertise AES support. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      208
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+RC4 use blocked (enforcement): the service accepts only AES and the client does not advertise AES support.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+209,System,Kerberos-Key-Distribution-Center,Authentication,Kerberos KDC — RC4 Retirement,"RC4 use blocked (enforcement): the service accepts only AES but its account has no AES keys. Part of the Kerberos RC4 retirement (CVE-2026-20833): audit from January 2026, enforced by default from April 2026.","Log Name:      System
+Source:        Kerberos-Key-Distribution-Center
+Event ID:      209
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+RC4 use blocked (enforcement): the service accepts only AES but its account has no AES keys.","Microsoft Support, ""How to manage Kerberos KDC usage of RC4 for service account ticket issuance changes related to CVE-2026-20833"" (the KB names the event source ""Kdcsvc""; filed here under the catalogue's existing Kerberos-Key-Distribution-Center source). Logged by domain controllers with the January 2026 or later updates. The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1558.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+307,Microsoft-Windows-Security-Kerberos/Operational,Microsoft-Windows-Security-Kerberos,Account Management,Delegated Managed Service Accounts,"dMSA Migration: written for a delegated Managed Service Account (dMSA) that is being migrated or has migrated from a traditional service account. Contains information about the old service account and the new dMSA. New in Windows Server 2025; relevant to ""BadSuccessor""-style dMSA abuse.","Log Name:      Microsoft-Windows-Security-Kerberos/Operational
+Source:        Microsoft-Windows-Security-Kerberos
+Event ID:      307
+Level:         Information
+Computer:      FS01.corp.local
+Description:
+dMSA Migration: written for a delegated Managed Service Account (dMSA) that is being migrated or has migrated from a traditional service account. Contains information about the old service account and the new dMSA.","Microsoft Learn, ""Set up delegated Managed Service Accounts"" (windows-server/identity/ad-ds/manage/delegated-managed-service-accounts/delegated-managed-service-accounts-set-up-dmsa). The log is disabled by default (Event Viewer: right-click Operational > Enable Log). Microsoft documents what each event records, not its message text, so the sample is illustrative.",,illustrative,T1098,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\Kerberos\Enable Delegated Managed Service Account logons,,
+308,Microsoft-Windows-Security-Kerberos/Operational,Microsoft-Windows-Security-Kerberos,Account Management,Delegated Managed Service Accounts,"dMSA Permission Add: a machine attempted to add itself to the principals allowed to retrieve the managed password of a dMSA during migration. New in Windows Server 2025; relevant to ""BadSuccessor""-style dMSA abuse.","Log Name:      Microsoft-Windows-Security-Kerberos/Operational
+Source:        Microsoft-Windows-Security-Kerberos
+Event ID:      308
+Level:         Information
+Computer:      FS01.corp.local
+Description:
+dMSA Permission Add: a machine attempted to add itself to the principals allowed to retrieve the managed password of a dMSA during migration.","Microsoft Learn, ""Set up delegated Managed Service Accounts"" (windows-server/identity/ad-ds/manage/delegated-managed-service-accounts/delegated-managed-service-accounts-set-up-dmsa). The log is disabled by default (Event Viewer: right-click Operational > Enable Log). Microsoft documents what each event records, not its message text, so the sample is illustrative.",,illustrative,T1098,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\Kerberos\Enable Delegated Managed Service Account logons,,
+309,Microsoft-Windows-Security-Kerberos/Operational,Microsoft-Windows-Security-Kerberos,Account Management,Delegated Managed Service Accounts,"dMSA Key Fetch: the Kerberos client attempted to fetch keys for a dMSA from the domain controller. New in Windows Server 2025; relevant to ""BadSuccessor""-style dMSA abuse.","Log Name:      Microsoft-Windows-Security-Kerberos/Operational
+Source:        Microsoft-Windows-Security-Kerberos
+Event ID:      309
+Level:         Information
+Computer:      FS01.corp.local
+Description:
+dMSA Key Fetch: the Kerberos client attempted to fetch keys for a dMSA from the domain controller.","Microsoft Learn, ""Set up delegated Managed Service Accounts"" (windows-server/identity/ad-ds/manage/delegated-managed-service-accounts/delegated-managed-service-accounts-set-up-dmsa). The log is disabled by default (Event Viewer: right-click Operational > Enable Log). Microsoft documents what each event records, not its message text, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\Kerberos\Enable Delegated Managed Service Account logons,,
+10003,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,LAPS policy processing is now starting.,"Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10003
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS policy processing is now starting.","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10004,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,LAPS policy processing succeeded.,"Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10004
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS policy processing succeeded.","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10005,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"LAPS policy processing failed with the error code below.
+
+Error code: {ErrorCode}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10005
+Level:         Error
+Computer:      WKS-0142.corp.local
+Description:
+LAPS policy processing failed with the error code below.
+
+Error code: 80070032","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""error_code"": ""string""}",Computer Configuration\Administrative Templates\System\LAPS,,
+10018,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,LAPS successfully updated Active Directory with the new password.,"Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10018
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS successfully updated Active Directory with the new password.","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10020,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"LAPS successfully updated the local admin account with the new password.
+
+Account name: {AccountName}
+Account RID: {AccountRID}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10020
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS successfully updated the local admin account with the new password.
+
+Account name: ContosoLocalAdminAccount
+Account RID: 1087","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""account_name"": ""string"", ""account_rid"": ""integer""}",Computer Configuration\Administrative Templates\System\LAPS,,
+10021,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"The current LAPS policy is configured as follows:
+
+Policy source: {PolicySource}
+Backup directory: {BackupDirectory}
+Local administrator account name: {AccountName}
+Password age in days: {PasswordAgeDays}
+Password complexity: {PasswordComplexity}
+Password length: {PasswordLength}
+(Logged each cycle when the policy backs the password up to Active Directory; also lists expiration protection, encryption, encrypted history size, DSRM backup and post-authentication settings.)","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10021
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The current LAPS policy is configured as follows:
+
+Policy source: GPO
+Backup directory: Active Directory
+Local administrator account name:
+Password age in days: 30
+Password complexity: 4
+Password length: 14
+Password expiration protection enabled: 1
+Password encryption enabled: 1
+Password encryption target principal: LapsAdministrators@contoso.com
+Password encrypted history size: 12
+Backup DSRM password on domain controllers: 0
+Post authentication grace period (hours): 8
+Post authentication actions: 1","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10022,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"The current LAPS policy is configured as follows:
+
+Policy source: {PolicySource}
+Backup directory: {BackupDirectory}
+Local administrator account name: {AccountName}
+Password age in days: {PasswordAgeDays}
+Password complexity: {PasswordComplexity}
+Password length: {PasswordLength}
+(Logged each cycle when the policy backs the password up to Microsoft Entra ID.)","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10022
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The current LAPS policy is configured as follows:
+
+Policy source: CSP
+Backup directory: Azure AD
+Local administrator account name: ContosoLocalAdminAccount
+Password age in days: 7
+Password complexity: 4
+Password length: 64
+Post authentication grace period (hours): 8
+Post authentication actions: 3","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10023,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"The current LAPS policy is configured as follows:
+
+Policy source: {PolicySource}
+Backup directory: {BackupDirectory}
+Local administrator account name: {AccountName}
+Password age in days: {PasswordAgeDays}
+Password complexity: {PasswordComplexity}
+Password length: {PasswordLength}
+(Logged each cycle when Windows LAPS is running under a legacy Microsoft LAPS policy.)","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10023
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The current LAPS policy is configured as follows:
+
+Policy source: Legacy LAPS
+Backup directory: Active Directory
+Local administrator account name:
+Password age in days: 30
+Password complexity: 4
+Password length: 8
+Password expiration protection enabled: 0","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10029,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,LAPS successfully updated Azure Active Directory with the new password.,"Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10029
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS successfully updated Azure Active Directory with the new password.","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\System\LAPS,,
+10031,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"LAPS blocked an external request that tried to modify the password of the current managed account.
+
+Account name: {AccountName}
+Account RID: {AccountRID}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10031
+Level:         Warning
+Computer:      WKS-0142.corp.local
+Description:
+LAPS blocked an external request that tried to modify the password of the current managed account.
+
+Account name: ContosoLocalAdminAccount
+Account RID: 1087","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,T1098,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""account_name"": ""string"", ""account_rid"": ""integer""}",Computer Configuration\Administrative Templates\System\LAPS,,
+10041,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"LAPS detected a successful authentication for the currently managed account. A background task has been scheduled to execute the configured post-authentication actions after the configured grace period has expired.
+
+Account name: {AccountName}
+Account RID: {AccountRID}
+Password reset timer deadline: {Deadline}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10041
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS detected a successful authentication for the currently managed account. A background task has been scheduled to execute the configured post-authentication actions after the configured grace period has expired.
+
+Account name: ContosoLocalAdminAccount
+Account RID: 1087
+Password reset timer deadline: 2026-09-25 06:14:02","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,T1078.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""account_name"": ""string"", ""account_rid"": ""integer"", ""password_reset_timer_deadline"": ""datetime""}",Computer Configuration\Administrative Templates\System\LAPS,,
+10042,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"The post-authentication grace period has expired per policy. The configured post-authentication actions will now be executed.
+
+Account name: {AccountName}
+Account RID: {AccountRID}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10042
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The post-authentication grace period has expired per policy. The configured post-authentication actions will now be executed.
+
+Account name: ContosoLocalAdminAccount
+Account RID: 1087","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""account_name"": ""string"", ""account_rid"": ""integer""}",Computer Configuration\Administrative Templates\System\LAPS,,
+10043,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"LAPS failed to reset the password for the currently managed account. The password is considered expired due to an authentication event. LAPS will continue retrying the password reset operation until it succeeds.
+
+Account name: {AccountName}
+Account RID: {AccountRID}
+Password reset retry count: {RetryCount}
+Error code: {ErrorCode}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10043
+Level:         Error
+Computer:      WKS-0142.corp.local
+Description:
+LAPS failed to reset the password for the currently managed account. The password is considered expired due to an authentication event. LAPS will continue retrying the password reset operation until it succeeds.
+
+Account name: ContosoLocalAdminAccount
+Account RID: 1087
+Password reset retry count: 1
+Error code: 80070032","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""account_name"": ""string"", ""account_rid"": ""integer"", ""password_reset_retry_count"": ""integer"", ""error_code"": ""string""}",Computer Configuration\Administrative Templates\System\LAPS,,
+10044,Microsoft-Windows-LAPS/Operational,Microsoft-Windows-LAPS,Account Management,Windows LAPS,"LAPS successfully reset the password for the currently managed account and completed all configured post-authentication actions.
+
+Account name: {AccountName}
+Account RID: {AccountRID}","Log Name:      Microsoft-Windows-LAPS/Operational
+Source:        Microsoft-Windows-LAPS
+Event ID:      10044
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+LAPS successfully reset the password for the currently managed account and completed all configured post-authentication actions.
+
+Account name: ContosoLocalAdminAccount
+Account RID: 1087","Microsoft Learn, ""Use Windows LAPS event logs"" (windows-server/identity/laps/laps-management-event-log); message text verbatim from Microsoft's examples. Windows LAPS ships in Windows 10/11 and Windows Server 2019 and later from the April 2023 updates. On a domain controller this log only covers the DSRM account.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""account_name"": ""string"", ""account_rid"": ""integer""}",Computer Configuration\Administrative Templates\System\LAPS,,
+1801,System,Microsoft-Windows-TPM-WMI,System Integrity,Secure Boot certificate update,"Secure Boot CA/keys need to be updated: the updated Secure Boot certificates (Microsoft's 2023 CAs) are available on this device but have not yet been applied to the firmware. The 2011 Secure Boot certificates expire in June 2026 (KEK CA 2011 on 24 June, UEFI CA 2011 on 27 June) and October 2026 (Windows Production PCA 2011 on 19 October); a device still on them can no longer receive Secure Boot and boot-manager security updates. Pairs with 1808.","Log Name:      System
+Source:        Microsoft-Windows-TPM-WMI
+Event ID:      1801
+Level:         Error
+Computer:      WKS-0142.corp.local
+Description:
+Secure Boot CA/keys need to be updated. This device has not yet applied the updated Secure Boot certificates to the firmware.","Microsoft Support, ""Secure Boot DB and DBX variable update events""; Microsoft Tech Community, ""Secure Boot playbook for certificates expiring in 2026"". Added by 2025-2026 cumulative updates, after this catalogue's 24H2 manifest export (which has 1795-1800). The message wording varies between update releases; the sample shows one documented form.",,illustrative,T1542.003,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+1808,System,Microsoft-Windows-TPM-WMI,System Integrity,Secure Boot certificate update,This device has updated Secure Boot CA/keys: the 2023 Secure Boot certificates are applied to the firmware. The success counterpart of 1801.,"Log Name:      System
+Source:        Microsoft-Windows-TPM-WMI
+Event ID:      1808
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+This device has updated Secure Boot CA/keys.","Microsoft Support, ""Secure Boot DB and DBX variable update events""; Microsoft Tech Community, ""Secure Boot playbook for certificates expiring in 2026"". Added by 2025-2026 cumulative updates, after this catalogue's 24H2 manifest export (which has 1795-1800). The message wording varies between update releases; the sample shows one documented form.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2886,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Signing,"Logged at Directory Service start while the DC does not require LDAP signing.
+The security of this directory server can be significantly enhanced by configuring the server to reject SASL (Negotiate, Kerberos, NTLM, or Digest) LDAP binds that do not request signing (integrity verification) and LDAP simple binds that are performed on a clear text (non-SSL/TLS-encrypted) connection. Even if no clients are using such binds, configuring the server to reject them will improve the security of this server.
+
+Some clients may currently be relying on unsigned SASL binds or LDAP simple binds over a non-SSL/TLS connection, and will stop working if this configuration change is made. To assist in identifying these clients, if such binds occur this directory server will log a summary event once every 24 hours indicating how many such binds occurred. You are encouraged to configure those clients to not use such binds. Once no such events are observed for an extended period, it is recommended that you configure the server to reject such binds.
+
+For more details and information on how to make this configuration change to the server, please see http://go.microsoft.com/fwlink/?LinkID=87923.
+
+You can enable additional logging to log an event each time a client makes such a bind, including information on which client made the bind. To do so, please raise the setting for the ""LDAP Interface Events"" event logging category to level 2 or higher.","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      2886
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The security of this directory server can be significantly enhanced by configuring the server to reject SASL (Negotiate, Kerberos, NTLM, or Digest) LDAP binds that do not request signing (integrity verification) and LDAP simple binds that are performed on a clear text (non-SSL/TLS-encrypted) connection. Even if no clients are using such binds, configuring the server to reject them will improve the security of this server.
+
+Some clients may currently be relying on unsigned SASL binds or LDAP simple binds over a non-SSL/TLS connection, and will stop working if this configuration change is made. To assist in identifying these clients, if such binds occur this directory server will log a summary event once every 24 hours indicating how many such binds occurred. You are encouraged to configure those clients to not use such binds. Once no such events are observed for an extended period, it is recommended that you configure the server to reject such binds.
+
+For more details and information on how to make this configuration change to the server, please see http://go.microsoft.com/fwlink/?LinkID=87923.
+
+You can enable additional logging to log an event each time a client makes such a bind, including information on which client made the bind. To do so, please raise the setting for the ""LDAP Interface Events"" event logging category to level 2 or higher.","Microsoft Learn, ""How to enable LDAP signing in Windows Server"" (troubleshoot/windows-server/active-directory/enable-ldap-signing-in-windows-server), ""Event reference for LDAP signing requirements""; message text verbatim.",,original,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server signing requirements,,
+2887,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Signing,"Daily summary while unsigned/clear-text binds are allowed.
+During the previous 24 hour period, some clients attempted to perform LDAP binds that were either:
+(1) A SASL (Negotiate, Kerberos, NTLM, or Digest) LDAP bind that did not request signing (integrity validation), or
+(2) A LDAP simple bind that was performed on a clear text (non-SSL/TLS-encrypted) connection
+
+This directory server is not currently configured to reject such binds. The security of this directory server can be significantly enhanced by configuring the server to reject such binds. For more details and information on how to make this configuration change to the server, please see http://go.microsoft.com/fwlink/?LinkID=87923.
+
+Summary information on the number of these binds received within the past 24 hours is below.
+
+You can enable additional logging to log an event each time a client makes such a bind, including information on which client made the bind. To do so, please raise the setting for the ""LDAP Interface Events"" event logging category to level 2 or higher.
+
+Number of simple binds performed without SSL/TLS: {SimpleBindCount}
+Number of Negotiate/Kerberos/NTLM/Digest binds performed without signing: {UnsignedSaslBindCount}","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      2887
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+During the previous 24 hour period, some clients attempted to perform LDAP binds that were either:
+(1) A SASL (Negotiate, Kerberos, NTLM, or Digest) LDAP bind that did not request signing (integrity validation), or
+(2) A LDAP simple bind that was performed on a clear text (non-SSL/TLS-encrypted) connection
+
+This directory server is not currently configured to reject such binds. The security of this directory server can be significantly enhanced by configuring the server to reject such binds. For more details and information on how to make this configuration change to the server, please see http://go.microsoft.com/fwlink/?LinkID=87923.
+
+Summary information on the number of these binds received within the past 24 hours is below.
+
+You can enable additional logging to log an event each time a client makes such a bind, including information on which client made the bind. To do so, please raise the setting for the ""LDAP Interface Events"" event logging category to level 2 or higher.
+
+Number of simple binds performed without SSL/TLS: 37
+Number of Negotiate/Kerberos/NTLM/Digest binds performed without signing: 112","Microsoft Learn, ""How to enable LDAP signing in Windows Server"" (troubleshoot/windows-server/active-directory/enable-ldap-signing-in-windows-server), ""Event reference for LDAP signing requirements""; message text verbatim.",,illustrative,T1040; T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server signing requirements,,
+2888,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Signing,"Daily summary while unsigned/clear-text binds are rejected (the recommended setting).
+During the previous 24 hour period, some clients attempted to perform LDAP binds that were either:
+(1) A SASL (Negotiate, Kerberos, NTLM, or Digest) LDAP bind that did not request signing (integrity validation), or
+(2) A LDAP simple bind that was performed on a clear text (non-SSL/TLS-encrypted) connection
+
+This directory server is configured to reject such binds.  This is the recommended configuration setting, and significantly enhances the security of this server. For more details, please see http://go.microsoft.com/fwlink/?LinkID=87923.
+
+Summary information on the number of such binds received within the past 24 hours is below.
+
+You can enable additional logging to log an event each time a client makes such a bind, including information on which client made the bind. To do so, please raise the setting for the ""LDAP Interface Events"" event logging category to level 2 or higher.
+
+Number of simple binds rejected because they were performed without SSL/TLS: {SimpleBindCount}
+Number of Negotiate/Kerberos/NTLM/Digest binds rejected because they were performed without signing: {UnsignedSaslBindCount}","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      2888
+Task Category: LDAP Interface
+Level:         Information
+Computer:      DC01.corp.local
+Description:
+During the previous 24 hour period, some clients attempted to perform LDAP binds that were either:
+(1) A SASL (Negotiate, Kerberos, NTLM, or Digest) LDAP bind that did not request signing (integrity validation), or
+(2) A LDAP simple bind that was performed on a clear text (non-SSL/TLS-encrypted) connection
+
+This directory server is configured to reject such binds.  This is the recommended configuration setting, and significantly enhances the security of this server. For more details, please see http://go.microsoft.com/fwlink/?LinkID=87923.
+
+Summary information on the number of such binds received within the past 24 hours is below.
+
+You can enable additional logging to log an event each time a client makes such a bind, including information on which client made the bind. To do so, please raise the setting for the ""LDAP Interface Events"" event logging category to level 2 or higher.
+
+Number of simple binds rejected because they were performed without SSL/TLS: 4
+Number of Negotiate/Kerberos/NTLM/Digest binds rejected because they were performed without signing: 9","Microsoft Learn, ""How to enable LDAP signing in Windows Server"" (troubleshoot/windows-server/active-directory/enable-ldap-signing-in-windows-server), ""Event reference for LDAP signing requirements""; message text verbatim.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server signing requirements,,
+3039,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Channel Binding,"A client performed an LDAP bind over SSL/TLS and failed LDAP channel binding token (CBT) validation. Records the client IP and the identity it tried to authenticate as. Logged only when channel binding is set to ""When supported"" or ""Always"".","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      3039
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+A client performed an LDAP bind over SSL/TLS and failed LDAP channel binding token (CBT) validation. Records the client IP and the identity it tried to authenticate as. Logged only when channel binding is set to ""When supported"" or ""Always"".","Microsoft Support KB4520412, ""2020, 2023, and 2024 LDAP channel binding and LDAP signing requirements for Windows"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server channel binding token requirements,,
+3040,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Channel Binding,"Daily summary: during the previous 24 hours, LDAP binds over SSL/TLS were completed without channel binding protection. Logged when the channel binding policy is ""Never"".","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      3040
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+Daily summary: during the previous 24 hours, LDAP binds over SSL/TLS were completed without channel binding protection. Logged when the channel binding policy is ""Never"".","Microsoft Support KB4520412, ""2020, 2023, and 2024 LDAP channel binding and LDAP signing requirements for Windows"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server channel binding token requirements,,
+3041,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Channel Binding,"Reminder logged at Directory Service start while the channel binding policy is ""Never"": the DC's security can be significantly enhanced by enforcing validation of LDAP channel binding tokens.","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      3041
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+Reminder logged at Directory Service start while the channel binding policy is ""Never"": the DC's security can be significantly enhanced by enforcing validation of LDAP channel binding tokens.","Microsoft Support KB4520412, ""2020, 2023, and 2024 LDAP channel binding and LDAP signing requirements for Windows"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server channel binding token requirements,,
+3074,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Channel Binding,"A client attempted an LDAP bind over SSL/TLS with a channel binding token (CBT) that was constructed inadequately, so it would fail once CBT validation is enforced. Records the client and identity.","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      3074
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+A client attempted an LDAP bind over SSL/TLS with a channel binding token (CBT) that was constructed inadequately, so it would fail once CBT validation is enforced. Records the client and identity.","Microsoft Learn, ""What's new in Windows Server 2025"" (Channel binding audit support): events 3074 and 3075 are new in Windows Server 2025 and also available in Windows Server 2022 and later via KB4520412. Like 3039, they are logged only when channel binding is set to ""When supported"" or ""Always"", with the ""16 LDAP Interface Events"" diagnostic logging level raised (e.g. to 2). The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server channel binding token requirements,,
+3075,Directory Service,Microsoft-Windows-ActiveDirectory_DomainService,DS Access,LDAP Channel Binding,"A client that can send a channel binding token (CBT) performed an LDAP bind over SSL/TLS without sending one, so it would fail once CBT validation is enforced. Records the client and identity.","Log Name:      Directory Service
+Source:        Microsoft-Windows-ActiveDirectory_DomainService
+Event ID:      3075
+Task Category: LDAP Interface
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+A client that can send a channel binding token (CBT) performed an LDAP bind over SSL/TLS without sending one, so it would fail once CBT validation is enforced. Records the client and identity.","Microsoft Learn, ""What's new in Windows Server 2025"" (Channel binding audit support): events 3074 and 3075 are new in Windows Server 2025 and also available in Windows Server 2022 and later via KB4520412. Like 3039, they are logged only when channel binding is set to ""When supported"" or ""Always"", with the ""16 LDAP Interface Events"" diagnostic logging level raised (e.g. to 2). The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: LDAP server channel binding token requirements,,
+5829,System,NETLOGON,Account Logon,Netlogon Secure Channel,"The Netlogon service allowed a vulnerable Netlogon secure channel connection (Zerologon, CVE-2020-1472). Logged during the initial deployment phase, before enforcement, to find non-compliant devices.","Log Name:      System
+Source:        NETLOGON
+Event ID:      5829
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Netlogon service allowed a vulnerable Netlogon secure channel connection (Zerologon, CVE-2020-1472). Logged during the initial deployment phase, before enforcement, to find non-compliant devices.
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB4557222, ""How to manage the changes in Netlogon secure channel connections associated with CVE-2020-1472"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1210,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",,,
+5830,System,NETLOGON,Account Logon,Netlogon Secure Channel,"The Netlogon service allowed a vulnerable Netlogon secure channel connection from a machine account because it is allowed by the ""Domain controller: Allow vulnerable Netlogon secure channel connections"" group policy (Zerologon, CVE-2020-1472).","Log Name:      System
+Source:        NETLOGON
+Event ID:      5830
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Netlogon service allowed a vulnerable Netlogon secure channel connection from a machine account because it is allowed by the ""Domain controller: Allow vulnerable Netlogon secure channel connections"" group policy (Zerologon, CVE-2020-1472).
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB4557222, ""How to manage the changes in Netlogon secure channel connections associated with CVE-2020-1472"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1210,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: Allow vulnerable Netlogon secure channel connections,,
+5831,System,NETLOGON,Account Logon,Netlogon Secure Channel,"The Netlogon service allowed a vulnerable Netlogon secure channel connection from a trust account because it is allowed by the ""Domain controller: Allow vulnerable Netlogon secure channel connections"" group policy (Zerologon, CVE-2020-1472).","Log Name:      System
+Source:        NETLOGON
+Event ID:      5831
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Netlogon service allowed a vulnerable Netlogon secure channel connection from a trust account because it is allowed by the ""Domain controller: Allow vulnerable Netlogon secure channel connections"" group policy (Zerologon, CVE-2020-1472).
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB4557222, ""How to manage the changes in Netlogon secure channel connections associated with CVE-2020-1472"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1210,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",Computer Configuration\Windows Settings\Security Settings\Local Policies\Security Options\Domain controller: Allow vulnerable Netlogon secure channel connections,,
+5838,System,NETLOGON,Account Logon,Netlogon Secure Channel,The Netlogon service encountered a client using RPC signing instead of RPC sealing (CVE-2022-38023).,"Log Name:      System
+Source:        NETLOGON
+Event ID:      5838
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Netlogon service encountered a client using RPC signing instead of RPC sealing (CVE-2022-38023).
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB5021130, ""How to manage the Netlogon protocol changes related to CVE-2022-38023"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",,,
+5839,System,NETLOGON,Account Logon,Netlogon Secure Channel,The Netlogon service encountered a trust using RPC signing instead of RPC sealing (CVE-2022-38023).,"Log Name:      System
+Source:        NETLOGON
+Event ID:      5839
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Netlogon service encountered a trust using RPC signing instead of RPC sealing (CVE-2022-38023).
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB5021130, ""How to manage the Netlogon protocol changes related to CVE-2022-38023"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,T1557,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",,,
+5840,System,NETLOGON,Account Logon,Netlogon Secure Channel,The Netlogon service created a secure channel with a client using RC4 (weak cryptography; CVE-2022-38023).,"Log Name:      System
+Source:        NETLOGON
+Event ID:      5840
+Level:         Warning
+Computer:      DC01.corp.local
+Description:
+The Netlogon service created a secure channel with a client using RC4 (weak cryptography; CVE-2022-38023).
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB5021130, ""How to manage the Netlogon protocol changes related to CVE-2022-38023"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",,,
+5841,System,NETLOGON,Account Logon,Netlogon Secure Channel,"The Netlogon service denied a client using RC4 because of the ""RejectMd5Clients"" setting (CVE-2022-38023).","Log Name:      System
+Source:        NETLOGON
+Event ID:      5841
+Level:         Error
+Computer:      DC01.corp.local
+Description:
+The Netlogon service denied a client using RC4 because of the ""RejectMd5Clients"" setting (CVE-2022-38023).
+
+Machine/Trust Account:	WKS-LEGACY01$
+Source Address:	10.20.41.20","Microsoft Support KB5021130, ""How to manage the Netlogon protocol changes related to CVE-2022-38023"". The description summarises what Microsoft documents the event as recording; the verbatim message text is not reproduced, so the sample is illustrative.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""machine_trust_account"": ""string"", ""source_address"": ""ip""}",,,
