@@ -62291,9 +62291,9 @@
     "source": "Microsoft-Windows-RemoteDesktopServices-RdpCoreTS",
     "category": "Microsoft-Windows-RemoteDesktopServices-RdpCoreTS",
     "subcategory": "RemoteFX module",
-    "description": "(RemoteFX module from Microsoft-Windows-RemoteDesktopServices-RdpCoreTS; no message template provided by the manifest)",
-    "sample": "Log Name:      Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational\nSource:        Microsoft-Windows-RemoteDesktopServices-RdpCoreTS\nEvent ID:      98\nTask Category: RemoteFX module\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\n(no message template provided by the manifest for this event)",
-    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",
+    "description": "A successful RDP connection. It correlates with 131 (the server accepted a new connection from the client, with its IP address).",
+    "sample": "Log Name:      Microsoft-Windows-RemoteDesktopServices-RdpCoreTS/Operational\nSource:        Microsoft-Windows-RemoteDesktopServices-RdpCoreTS\nEvent ID:      98\nTask Category: RemoteFX module\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nA successful RDP connection.",
+    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue); Description from the repo owner-supplied RDP_Event_IDs_Full.csv reference (the manifest has no message template for this event)",
     "how_to_collect": "",
     "sample_type": "template",
     "mitre_techniques": "",
@@ -89299,9 +89299,9 @@
     "source": "Microsoft-Windows-TerminalServices-RemoteConnectionManager",
     "category": "Microsoft-Windows-TerminalServices-RemoteConnectionManager",
     "subcategory": "",
-    "description": "(Event from Microsoft-Windows-TerminalServices-RemoteConnectionManager; no message template provided by the manifest)",
-    "sample": "Log Name:      Microsoft-Windows-TerminalServices-RemoteConnectionManager/Admin\nSource:        Microsoft-Windows-TerminalServices-RemoteConnectionManager\nEvent ID:      20498\nLevel:         Warning\nComputer:      WKS-0142.corp.local\nDescription:\n(no message template provided by the manifest for this event)",
-    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",
+    "description": "Remote Desktop Services has taken too long to complete the client connection.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-RemoteConnectionManager/Admin\nSource:        Microsoft-Windows-TerminalServices-RemoteConnectionManager\nEvent ID:      20498\nLevel:         Warning\nComputer:      WKS-0142.corp.local\nDescription:\nRemote Desktop Services has taken too long to complete the client connection.",
+    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue); Description from the repo owner-supplied RDP_Event_IDs_Full.csv reference (the manifest has no message template for this event)",
     "how_to_collect": "",
     "sample_type": "template",
     "mitre_techniques": "",
@@ -90875,9 +90875,9 @@
     "source": "Microsoft-Windows-TerminalServices-LocalSessionManager",
     "category": "Microsoft-Windows-TerminalServices-LocalSessionManager",
     "subcategory": "",
-    "description": "(Event from Microsoft-Windows-TerminalServices-LocalSessionManager; no message template provided by the manifest)",
-    "sample": "Log Name:      Microsoft-Windows-TerminalServices-LocalSessionManager/Operational\nSource:        Microsoft-Windows-TerminalServices-LocalSessionManager\nEvent ID:      18\nLevel:         Error\nComputer:      WKS-0142.corp.local\nDescription:\n(no message template provided by the manifest for this event)",
-    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",
+    "description": "Remote Desktop Service is shutdown for unknown reason.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-LocalSessionManager/Operational\nSource:        Microsoft-Windows-TerminalServices-LocalSessionManager\nEvent ID:      18\nLevel:         Error\nComputer:      WKS-0142.corp.local\nDescription:\nRemote Desktop Service is shutdown for unknown reason.",
+    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue); Description from the repo owner-supplied RDP_Event_IDs_Full.csv reference (the manifest has no message template for this event)",
     "how_to_collect": "",
     "sample_type": "template",
     "mitre_techniques": "",
@@ -166242,6 +166242,186 @@
         "computer": "string",
         "description": "string"
       }
+    }
+  },
+  {
+    "event_id": "786",
+    "log": "Microsoft-Windows-TerminalServices-SessionBroker/Operational",
+    "source": "Microsoft-Windows-TerminalServices-SessionBroker",
+    "category": "Remote access",
+    "subcategory": "",
+    "description": "Session state for user {User} changed to: {State}.\nRecords a brokered session changing state (e.g. Session Reconnected, Session Disconnected, Logged Off).",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-SessionBroker/Operational\nSource:        Microsoft-Windows-TerminalServices-SessionBroker\nEvent ID:      786\nLevel:         Information\nComputer:      RDCB-01.corp.local\nDescription:\nSession state for user CORP\\jsmith changed to: Session Disconnected.",
+    "reference": "Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel); message wording cross-checked against event text quoted in Microsoft Q&A RD Connection Broker threads. Logged only on a server running the RD Connection Broker role.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Administrative Templates\\Windows Components\\Remote Desktop Services\\Remote Desktop Session Host",
+    "opposite_event_id": "",
+    "cim_mapping": "Network_Sessions",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal"
+    }
+  },
+  {
+    "event_id": "787",
+    "log": "Microsoft-Windows-TerminalServices-SessionBroker/Operational",
+    "source": "Microsoft-Windows-TerminalServices-SessionBroker",
+    "category": "Remote access",
+    "subcategory": "",
+    "description": "Session for user {User} successfully added to RD Connection Broker's database.\nTarget Name = {TargetName}\nSession ID = {SessionID}\nFarm Name = {FarmName}",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-SessionBroker/Operational\nSource:        Microsoft-Windows-TerminalServices-SessionBroker\nEvent ID:      787\nLevel:         Information\nComputer:      RDCB-01.corp.local\nDescription:\nSession for user CORP\\jsmith successfully added to RD Connection Broker's database.\nTarget Name = RDSH-01\nSession ID = 3\nFarm Name = Desktops",
+    "reference": "Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel); message wording cross-checked against event text quoted in Microsoft Q&A RD Connection Broker threads. Logged only on a server running the RD Connection Broker role.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Administrative Templates\\Windows Components\\Remote Desktop Services\\Remote Desktop Session Host",
+    "opposite_event_id": "",
+    "cim_mapping": "Network_Sessions",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal"
+    }
+  },
+  {
+    "event_id": "800",
+    "log": "Microsoft-Windows-TerminalServices-SessionBroker/Operational",
+    "source": "Microsoft-Windows-TerminalServices-SessionBroker",
+    "category": "Remote access",
+    "subcategory": "",
+    "description": "RD Connection Broker received connection request for user {User}.\nThe first broker event for an incoming connection; pairs with 801 (processed) or 802 (failed).",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-SessionBroker/Operational\nSource:        Microsoft-Windows-TerminalServices-SessionBroker\nEvent ID:      800\nLevel:         Information\nComputer:      RDCB-01.corp.local\nDescription:\nRD Connection Broker received connection request for user CORP\\jsmith.",
+    "reference": "Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel); message wording cross-checked against event text quoted in Microsoft Q&A RD Connection Broker threads. Logged only on a server running the RD Connection Broker role.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Administrative Templates\\Windows Components\\Remote Desktop Services\\Remote Desktop Session Host",
+    "opposite_event_id": "",
+    "cim_mapping": "Authentication",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal"
+    }
+  },
+  {
+    "event_id": "801",
+    "log": "Microsoft-Windows-TerminalServices-SessionBroker/Operational",
+    "source": "Microsoft-Windows-TerminalServices-SessionBroker",
+    "category": "Remote access",
+    "subcategory": "",
+    "description": "RD Connection Broker successfully processed the connection request for user {User}. Redirection info:\nTarget Name = {TargetName}\nTarget IP Address = {TargetIP}\nTarget Netbios = {TargetNetbios}\nTarget FQDN = {TargetFQDN}\nDisconnected Session Found = {DisconnectedSessionFound}\nNames the session host the user was redirected to.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-SessionBroker/Operational\nSource:        Microsoft-Windows-TerminalServices-SessionBroker\nEvent ID:      801\nLevel:         Information\nComputer:      RDCB-01.corp.local\nDescription:\nRD Connection Broker successfully processed the connection request for user CORP\\jsmith. Redirection info:\nTarget Name = RDSH-01\nTarget IP Address = 10.20.4.21\nTarget Netbios = RDSH-01\nTarget FQDN = rdsh-01.corp.local\nDisconnected Session Found = 0x0",
+    "reference": "Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel); message wording cross-checked against event text quoted in Microsoft Q&A RD Connection Broker threads. Logged only on a server running the RD Connection Broker role.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Administrative Templates\\Windows Components\\Remote Desktop Services\\Remote Desktop Session Host",
+    "opposite_event_id": "",
+    "cim_mapping": "Authentication",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal"
+    }
+  },
+  {
+    "event_id": "803",
+    "log": "Microsoft-Windows-TerminalServices-SessionBroker/Operational",
+    "source": "Microsoft-Windows-TerminalServices-SessionBroker",
+    "category": "Remote access",
+    "subcategory": "",
+    "description": "RD Connection Broker has successfully determined the end point for this connection request.\nEndPoint name = {EndPointName}\nEndPoint Type = {EndPointType}",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-SessionBroker/Operational\nSource:        Microsoft-Windows-TerminalServices-SessionBroker\nEvent ID:      803\nLevel:         Information\nComputer:      RDCB-01.corp.local\nDescription:\nRD Connection Broker has successfully determined the end point for this connection request.\nEndPoint name = rdsh-01.corp.local\nEndPoint Type = 0",
+    "reference": "Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel); message wording cross-checked against event text quoted in Microsoft Q&A RD Connection Broker threads. Logged only on a server running the RD Connection Broker role.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Administrative Templates\\Windows Components\\Remote Desktop Services\\Remote Desktop Session Host",
+    "opposite_event_id": "",
+    "cim_mapping": "Network_Sessions",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal"
+    }
+  },
+  {
+    "event_id": "814",
+    "log": "Microsoft-Windows-TerminalServices-SessionBroker/Operational",
+    "source": "Microsoft-Windows-TerminalServices-SessionBroker",
+    "category": "Remote access",
+    "subcategory": "",
+    "description": "This connection request has resulted in a successful session logon.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-SessionBroker/Operational\nSource:        Microsoft-Windows-TerminalServices-SessionBroker\nEvent ID:      814\nLevel:         Information\nComputer:      RDCB-01.corp.local\nDescription:\nThis connection request has resulted in a successful session logon.",
+    "reference": "Repo owner-supplied RDP_Event_IDs_Full.csv reference (SessionBroker/Operational channel). Not independently confirmed: no Microsoft documentation or quoted event text for 814 was found. Logged only on a server running the RD Connection Broker role.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Administrative Templates\\Windows Components\\Remote Desktop Services\\Remote Desktop Session Host",
+    "opposite_event_id": "",
+    "cim_mapping": "Authentication",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal"
     }
   }
 ]
