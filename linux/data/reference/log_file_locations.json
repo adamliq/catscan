@@ -11,7 +11,7 @@
     "type": "file",
     "category": "Security",
     "component": "",
-    "description": "Security and authentication (SSH, sudo, PAM, failed logins)"
+    "description": "Security and authentication (SSH, sudo, su, PAM, failed logins)"
   },
   {
     "path": "/var/log/maillog",
@@ -25,7 +25,7 @@
     "type": "file",
     "category": "System",
     "component": "crond",
-    "description": "Cron / scheduled task execution"
+    "description": "Cron and anacron scheduled task execution"
   },
   {
     "path": "/var/log/boot.log",
@@ -775,5 +775,159 @@
     "category": "Kernel",
     "component": "systemd-coredump",
     "description": "Process-level crash dumps (core files) captured by systemd-coredump, RHEL 8+ default; complements kdump.log's kernel-level crash dumps above"
+  },
+  {
+    "path": "/var/log/faillog",
+    "type": "binary",
+    "category": "Security",
+    "component": "login accounting (PAM)",
+    "description": "Failed login attempt counters per user; legacy mechanism largely superseded by pam_faillock (view with the deprecated faillog command)."
+  },
+  {
+    "path": "/var/log/tallylog",
+    "type": "binary",
+    "category": "Security",
+    "component": "login accounting (PAM)",
+    "description": "Failed login tally maintained by pam_tally2/pam_faillock; the modern successor to the legacy faillog file above."
+  },
+  {
+    "path": "/run/log/journal/",
+    "type": "directory",
+    "category": "Systemd",
+    "component": "systemd-journald",
+    "description": "Volatile in-memory systemd journal, used when persistent journal storage (Storage=persistent in journald.conf) is not enabled; lost on reboot."
+  },
+  {
+    "path": "/var/log/httpd/ssl_access_log",
+    "type": "file",
+    "category": "Web Server",
+    "component": "Apache HTTP Server (httpd)",
+    "description": "HTTPS access requests, logged separately from the plain HTTP access_log when mod_ssl is enabled."
+  },
+  {
+    "path": "/var/log/httpd/ssl_error_log",
+    "type": "file",
+    "category": "Web Server",
+    "component": "Apache HTTP Server (httpd)",
+    "description": "HTTPS error log, logged separately from the plain HTTP error_log when mod_ssl is enabled."
+  },
+  {
+    "path": "/var/log/httpd/",
+    "type": "directory",
+    "category": "Web Server",
+    "component": "Apache HTTP Server (httpd)",
+    "description": "Apache's log directory, containing access_log/error_log and, when mod_ssl is enabled, the ssl_access_log/ssl_error_log pair above."
+  },
+  {
+    "path": "/var/log/nginx/",
+    "type": "directory",
+    "category": "Web Server",
+    "component": "Nginx",
+    "description": "Nginx's log directory, containing access.log and error.log above."
+  },
+  {
+    "path": "/var/log/libvirt/qemu/",
+    "type": "directory",
+    "category": "Virtualization",
+    "component": "libvirt / QEMU",
+    "description": "Per-guest QEMU/KVM console and startup logs, one file per virtual machine, distinct from libvirt's own management logs in the parent directory."
+  },
+  {
+    "path": "/var/log/rhsm/rhsm.log",
+    "type": "file",
+    "category": "Subscription",
+    "component": "Red Hat Subscription Manager",
+    "description": "Main Subscription Manager log, inside the rhsm log directory above."
+  },
+  {
+    "path": "/var/log/anaconda/anaconda.log",
+    "type": "file",
+    "category": "Installation",
+    "component": "Anaconda installer",
+    "description": "General installation messages, inside the Anaconda log directory above."
+  },
+  {
+    "path": "/var/log/anaconda/syslog",
+    "type": "file",
+    "category": "Installation",
+    "component": "Anaconda installer",
+    "description": "Hardware-related messages captured during installation."
+  },
+  {
+    "path": "/var/log/anaconda/packaging.log",
+    "type": "file",
+    "category": "Installation",
+    "component": "Anaconda installer",
+    "description": "Package installation messages during the install process."
+  },
+  {
+    "path": "/var/log/anaconda/storage.log",
+    "type": "file",
+    "category": "Installation",
+    "component": "Anaconda installer",
+    "description": "Storage/partitioning module details during installation."
+  },
+  {
+    "path": "/var/log/Xorg.0.log.old",
+    "type": "file",
+    "category": "Desktop",
+    "component": "Xorg",
+    "description": "Previous X server session's log, rotated by Xorg itself (not logrotate) each time the display server restarts."
+  },
+  {
+    "path": "/var/log/cups/",
+    "type": "directory",
+    "category": "Printing",
+    "component": "CUPS",
+    "description": "CUPS printing system logs (access, error, and page logs)."
+  },
+  {
+    "path": "/var/log/audit/",
+    "type": "directory",
+    "category": "Security",
+    "component": "auditd",
+    "description": "Directory containing audit.log and any auditd-related rotation/backup files."
+  },
+  {
+    "path": "/var/log/rabbitmq/",
+    "type": "directory",
+    "category": "Messaging",
+    "component": "RabbitMQ",
+    "description": "RabbitMQ message broker logs."
+  },
+  {
+    "path": "/var/log/kibana/",
+    "type": "directory",
+    "category": "Search",
+    "component": "Kibana",
+    "description": "Kibana logs, if installed alongside Elasticsearch."
+  },
+  {
+    "path": "/var/log/logstash/",
+    "type": "directory",
+    "category": "Search",
+    "component": "Logstash",
+    "description": "Logstash logs, if installed as part of an ELK/Elastic stack."
+  },
+  {
+    "path": "/var/log/vmware-*",
+    "type": "glob",
+    "category": "Virtualization",
+    "component": "VMware Tools",
+    "description": "VMware Tools/agent logs, present only on VMware-hosted guests."
+  },
+  {
+    "path": "/var/log/pcp/",
+    "type": "directory",
+    "category": "Performance",
+    "component": "Performance Co-Pilot (PCP)",
+    "description": "Performance Co-Pilot monitoring logs and archives, if installed."
+  },
+  {
+    "path": "/var/log/sa/",
+    "type": "directory",
+    "category": "Performance",
+    "component": "sysstat (sar)",
+    "description": "System activity data files collected by sysstat sadc/sar, typically via a default cron job."
   }
 ]
