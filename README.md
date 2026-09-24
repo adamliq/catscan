@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.5.17` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.0` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -57,14 +57,18 @@ Infoblox's 75 log categories, Zscaler's 28 log inputs, Cisco IOS XE's
 message-ID-prefix reference (see
 [`other/`](other/README.md)) so far, with a real vendor picker and room
 for more over time, each keeping
-its own schema shape rather than a forced common one.
+its own schema shape rather than a forced common one. An **Event Trace**
+menu shows the order events are logged in across a whole activity rather
+than one event at a time — starting with an RDP event trail: which
+Windows events an RDP host logs through logon, disconnect and logoff,
+branching on NLA, credential success and session reconnect.
 
 ## Web lookup
 
 `index.html` is a single, self-contained page (no build step, one runtime
 fetch — see below) — open it directly in a browser. A menu bar at the top
 switches between **Microsoft Events**, **AWS Events**, **Linux Events**,
-**Threat Detection**, **Other Events**, and **Search**; Microsoft Events, Linux Events, and
+**Threat Detection**, **Other Events**, **Event Trace**, and **Search**; Microsoft Events, Linux Events, and
 Threat Detection are the exact lookup tool from their source repo (search,
 filters, detail views, reference tables, and so on), running independently
 side by side on the same page. AWS Events is this repo's own Action
@@ -207,7 +211,7 @@ merging:
   `data/mitre-attack-*.json` fetch paths are also repointed at
   `threat-detection/data/…` to match this repo's layout (see Structure).
 - The shell's own light/dark toggle sets `data-theme` on `<body>` and on
-  all five app containers at once, so Windows/Linux/AWS/Other Events'
+  all six app containers at once, so Windows/Linux/AWS/Other Events'
   existing (but,
   before this toggle existed, unreachable-without-changing-your-OS-theme)
   `:root[data-theme="…"]` CSS and Threat Detection's own become live
@@ -3279,6 +3283,57 @@ console errors throughout.
 Log File Locations table, adding 22 new rows and enriching 2 existing
 ones; a data addition to an existing reference table, not a new
 capability).
+
+Added a new top-level **Event Trace** menu, between Other Events and
+Search, using an owner-supplied standalone page - an RDP event trail -
+as its content. Where every other tab looks events up one at a time,
+this one shows the order a whole activity logs them in: pick a phase
+(Logon, Disconnect, Logoff) and, for logon, whether NLA was used,
+whether the credentials were accepted, and whether a session already
+existed, and it highlights the resulting path through a flow chart of
+34 events across six logs (RemoteConnectionManager, Security,
+RdpCoreTS, LocalSessionManager, Application, System), numbers each
+step, lists the expected sequence, and can copy the event IDs. Tapping
+an event opens a details sheet with what it means, which log channel
+it lands in, and whether it needs advanced audit policy, is logged on
+the domain controller, or carries the session's Logon ID.
+
+Brought in as-is in content and look, but not pasted in raw: the page
+was written to own a whole document, so every one of its CSS rules was
+scoped under `#app-trace` (its generic class names - `.tabs`, `.card`,
+`.node`, `.legend`, `.toast` and so on - would otherwise have been
+free to reach into the other apps), its `:root` theme tokens moved onto
+the container, every element id prefixed `trace-`, and every script
+lookup scoped to the container - the original used page-wide
+`document.querySelectorAll('.tabs button')` and a document-level click
+handler, which would have collided with the other tabs. The container
+was added to the menu router and to the shared light/dark toggle's
+container list, so the page follows Cat Scan's own theme switch as well
+as the OS setting. Its Barlow / Barlow Condensed fonts load from Google
+Fonts via the page head, the first external stylesheet this page has
+used; if that request fails, the page falls back to its declared system
+font stack. Remembers the last scenario picked (`localStorage`, key
+`rdpTrail`), as the original did.
+
+Verified: `tools/check_syntax.js` (now 30 inline script blocks, all
+OK) and `tools/build_windows_events.py --check`. Driven in Playwright:
+the menu shows the new tab and the breadcrumb reads "Event Trace"; the
+default scenario lists 15 events across 4 logs; rejecting credentials
+cuts it to 6 with the "trail ends here" note and disables the
+session-exists question; the reconnect path, the Disconnect and Logoff
+phases, find (jumps phases to a match, highlights it, reports "Not on
+this chart" for a miss), the details sheet (opens, Escape closes), and
+copy (toast) all work; the shared theme toggle switches it to dark;
+and switching to Linux and Microsoft Events afterwards still shows 77
+and 5,316 events. Screenshotted light, dark, the details sheet, and a
+375px phone width (no sideways scroll). Regression-checked all tabs
+across both themes and both 1500px/375px viewports - no page errors.
+The only console error in the sandbox was the Google Fonts request
+failing certificate verification behind this environment's network
+proxy, which doesn't happen on the live site.
+
+`1.6.0` (MINOR - a new top-level tab, the kind of change this project's
+versioning reserves the MINOR number for).
 
 ## Structure
 
