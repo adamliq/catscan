@@ -28,6 +28,9 @@ jobs:
       - name: Windows Events data/page sync check
         run: python3 tools/build_windows_events.py --check
 
+      - name: Linux Events reference data/page sync check
+        run: python3 tools/build_linux_reference.py --check
+
       - name: VERSION bump check
         if: github.event_name == 'pull_request'
         run: python3 tools/check_version.py --base origin/${{ github.base_ref }}
