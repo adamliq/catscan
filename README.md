@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.9` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.10` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3830,6 +3830,61 @@ their details; all tabs regression-checked in both themes at 1500px and
 
 `1.6.9` (PATCH - 51 new Windows events and one corrected; a data
 addition to an existing catalogue).
+
+Checked the Event Trace tab for events it was missing, against the
+catalogue, including the events added in `1.6.8` and `1.6.9`, and added
+the ones that fill real gaps. There are now 88 trace events, up from
+74, and every one is in the catalogue, so its "Open in Microsoft
+Events" link works.
+
+- **RDP into a host:**
+  - A new **Through a Connection Broker?** question, shown in all three
+    phases. For an RDS farm, the Connection Broker's 800 (request
+    received), 803 (end point determined) and 801 (redirected to a
+    session host) come before the host's own events. After logon the
+    broker logs 787 for a new session or 786 for a reconnect, and 786
+    again on disconnect and logoff. These events are logged on the
+    broker, so they carry a new "Broker" tag, and SessionBroker is a
+    new colour in the legend.
+  - **RdpCoreTS 140** on the failed-NLA path: the host's record of a
+    wrong user name or password, with the client's IP address.
+  - **LSM 40** in the Disconnect phase, with its reason codes. Before,
+    it only appeared at logoff.
+  - **LSM 42** on the new-session path, marked "Sometimes" and noted as
+    unconfirmed until it's checked against a lab capture.
+  - The **enhanced NTLM audit event 4032** in the NTLM branch, logged
+    only by Windows Server 2025 or later domain controllers. NTLM is a
+    new colour in the legend.
+- **RDP from the source machine:** a new **NTLM used?** question that
+  adds **NTLM 4020** (Windows 11 24H2 / Server 2025 or later), which
+  records the target and why Kerberos wasn't used.
+- **Turning RDP on:** a new **Service had been disabled?** question
+  that adds **System 7040** (the Remote Desktop Services start type
+  changed) and **7036** (the service started).
+
+Supporting changes: a trace question can now apply to more than one
+phase, and the sequence list marks broker events "(broker)" the way it
+marks domain controller events "(DC)". The host trace's footnote lists
+the additions, and it now names the order of the broker's 800, 803 and
+801 as a best guess.
+
+Not added:
+- RD Gateway (302, 303, 312): the catalogue has no Gateway log yet.
+- Windows 11's newer firewall-rule event IDs: reported as 2097/2099
+  and, on the newest builds, 2071/2073, in place of 2004/2005. Microsoft
+  doesn't document them, and they need confirming first.
+
+Verified with `tools/check_syntax.js` and the two data sync checks. In
+Playwright, every new branch gives the expected trail: broker with a
+new session, with a reconnect, on disconnect and on logoff; NTLM
+success and failure; NLA failure; the source machine with NTLM; and the
+service re-enabled. The broker event's details panel shows its log and
+tag and opens its Microsoft Events entry. All tabs were
+regression-checked in both themes at 1500px and 375px, with no page
+errors and no sideways scrolling.
+
+`1.6.10` (PATCH - new events and questions within the existing Event
+Trace tab).
 
 ## Structure
 
