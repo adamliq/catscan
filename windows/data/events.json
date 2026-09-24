@@ -168004,5 +168004,268 @@
       "machine_trust_account": "string",
       "source_address": "ip"
     }
+  },
+  {
+    "event_id": "200",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", met connection authorization policy requirements and was therefore authorized to access the RD Gateway server. The following authentication method was used: \"{AuthMethod}\".\nThe user passed the gateway's connection authorization policy (CAP): who may use the gateway. \"Client computer\" is the address the connection came from, usually the user's public IP, which makes this the best record of where an external RDP session started.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      200\nLevel:         Information\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", met connection authorization policy requirements and was therefore authorized to access the RD Gateway server. The following authentication method was used: \"NTLM\".",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string",
+      "authentication_method": "string"
+    }
+  },
+  {
+    "event_id": "201",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", did not meet connection authorization policy requirements and was therefore not authorized to access the RD Gateway server. The following authentication method was attempted: \"{AuthMethod}\". The following error occurred: \"{ErrorCode}\".\nThe user authenticated but failed the gateway's connection authorization policy (CAP): who may use the gateway. Error 23003, for example, means the account isn't in any of the CAP's user groups. A wrong password is not a 201: it shows up as Security 4625 (logon type 3) on the gateway, with the client's external IP address, though not every wrong-password attempt is logged (PureRDS, \"Remote Desktop Gateway Login Failure Auditing\").",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      201\nLevel:         Error\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", did not meet connection authorization policy requirements and was therefore not authorized to access the RD Gateway server. The following authentication method was attempted: \"NTLM\". The following error occurred: \"23003\".",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string",
+      "authentication_method": "string",
+      "error_code": "string"
+    }
+  },
+  {
+    "event_id": "300",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", met resource authorization policy requirements and was therefore authorized to connect to resource \"{Resource}\".\nThe user passed the gateway's resource authorization policy (RAP): which internal computers they may reach through it.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      300\nLevel:         Information\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", met resource authorization policy requirements and was therefore authorized to connect to resource \"rdsh-01.corp.local\".",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string"
+    }
+  },
+  {
+    "event_id": "301",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", did not meet resource authorization policy requirements and was therefore not authorized to resource \"{Resource}\". The following error occurred: \"{ErrorCode}\".\nThe user tried to reach an internal computer the gateway's resource authorization policy (RAP) doesn't allow them. Worth reviewing when an account probes hosts it has no business connecting to.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      301\nLevel:         Error\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", did not meet resource authorization policy requirements and was therefore not authorized to resource \"rdsh-01.corp.local\". The following error occurred: \"23002\".",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string",
+      "error_code": "string"
+    }
+  },
+  {
+    "event_id": "302",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", connected to resource \"{Resource}\".\nThe gateway connected the user through to an internal computer. Ties the external client address to the internal RDP host it reached.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      302\nLevel:         Information\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", connected to resource \"rdsh-01.corp.local\".",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133; T1021.001",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string"
+    }
+  },
+  {
+    "event_id": "303",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", disconnected from the following network resource: \"{Resource}\". Before the user disconnected, the client transferred {BytesSent} bytes and received {BytesReceived} bytes. The client session duration was {Duration} seconds.\nThe gateway connection ended normally (a disconnect or a logoff on the host). Gives the session's length and the bytes sent each way, which helps spot unusually large transfers.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      303\nLevel:         Information\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", disconnected from the following network resource: \"rdsh-01.corp.local\". Before the user disconnected, the client transferred 9919 bytes and received 48331 bytes. The client session duration was 17 seconds.",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check. The byte counts and duration line matches a real 303 quoted in a Microsoft TechNet forum thread (\"RDG clients often disconnect after a few seconds\").",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string",
+      "bytes_transferred": "integer",
+      "bytes_received": "integer",
+      "session_duration_seconds": "integer"
+    }
+  },
+  {
+    "event_id": "307",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", disconnected from the following network resource: \"{Resource}\" because the session exceeded the session timeout limit of \"{TimeoutMinutes}\" minutes.\nThe gateway ended the connection because it hit the session timeout set in the RD Gateway policy. A normal condition.",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      307\nLevel:         Information\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", disconnected from the following network resource: \"rdsh-01.corp.local\" because the session exceeded the session timeout limit of \"480\" minutes.",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip",
+      "resource": "string",
+      "session_timeout_minutes": "integer"
+    }
+  },
+  {
+    "event_id": "312",
+    "log": "Microsoft-Windows-TerminalServices-Gateway/Operational",
+    "source": "Microsoft-Windows-TerminalServices-Gateway",
+    "category": "Remote access",
+    "subcategory": "RD Gateway",
+    "description": "The user \"{User}\", on client computer \"{ClientComputer}\", has initiated an outbound connection.\nLogged as soon as the client's connection request reaches the gateway, before the user is authenticated, so it appears for failed logons too. On success it's followed by 200, 300 and 302. A wrong password is not a 201: it shows up as Security 4625 (logon type 3) on the gateway, with the client's external IP address, though not every wrong-password attempt is logged (PureRDS, \"Remote Desktop Gateway Login Failure Auditing\").",
+    "sample": "Log Name:      Microsoft-Windows-TerminalServices-Gateway/Operational\nSource:        Microsoft-Windows-TerminalServices-Gateway\nEvent ID:      312\nLevel:         Information\nComputer:      RDGW-01.corp.local\nDescription:\nThe user \"CORP\\jsmith\", on client computer \"203.0.113.45\", has initiated an outbound connection.",
+    "reference": "Microsoft TechNet, \"RD Gateway Server Connections\" / \"TS Gateway Server Connections\" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.; PureRDS, \"Remote Desktop Gateway Login Failure Auditing\" (purerds.org), for 312 before authentication and 4625 on a wrong password",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1133",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      },
+      "user": "principal",
+      "client_computer": "ip"
+    }
   }
 ]

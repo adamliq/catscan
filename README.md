@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.10` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.11` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3885,6 +3885,58 @@ errors and no sideways scrolling.
 
 `1.6.10` (PATCH - new events and questions within the existing Event
 Trace tab).
+
+Added the RD Gateway events, in a new
+`Microsoft-Windows-TerminalServices-Gateway/Operational` log, and a
+matching branch in the Event Trace tab.
+
+**Windows Events (8 new):**
+- 200 / 201: the connection authorization policy (CAP), which controls
+  who may use the gateway, was met or failed.
+- 300 / 301: the resource authorization policy (RAP), which controls
+  which internal computers a user may reach, was met or failed.
+- 302 / 303: connected to, and disconnected from, the internal computer.
+  303 includes the bytes sent each way and the session length.
+- 307: disconnected at the session timeout.
+- 312: an outbound connection was initiated.
+
+The message text is Microsoft's, from its TechNet "RD Gateway Server
+Connections" event pages, with the `%n` inserts shown as named fields.
+The 303 sample matches a real event quoted in a TechNet forum thread.
+Samples are marked illustrative. The events' "client computer" is
+usually the user's public IP address, which makes 200 and 302 the best
+record of where an external RDP session came from.
+
+While checking the failure path, one detail changed the design: a
+wrong password at the gateway is not a 201. It's logged as Security
+4625 (logon type 3) on the gateway, with the client's external IP
+address, though not every time. 312 is logged as soon as the request
+arrives, before authentication, so it comes first and appears for
+failed logons too (PureRDS, "Remote Desktop Gateway Login Failure
+Auditing"). The 201 and 312 descriptions say so. 304-306 weren't added
+because their message text couldn't be sourced.
+
+**Event Trace:** a new **Through an RD Gateway?** question in all three
+phases of RDP into a host. On success the gateway logs 312, 200, 300
+and 302 before the host's events (the order of 200, 300 and 302 is a
+best guess). With a wrong password the trail is 312 and then 4625 on
+the gateway, and it ends there, because the connection never reaches
+the host. 303 appears on disconnect and logoff. Gateway events get
+their own "Gateway" tag, legend colour and "(gateway)" marker in the
+sequence list. The footnote notes that, with a Connection Broker as
+well, the gateway logs 300 and 302 again for the session host. The
+traces now have 94 events, and every one is in the catalogue.
+
+Regenerated with `tools/build_windows_events.py` (5,382 -> 5,390
+events). Verified with the build checks and in Playwright: the gateway
+trail on success, on success with a broker, on a wrong password (with
+its own end-of-trail message), and on disconnect and logoff; the 302
+details panel opens its Microsoft Events entry. All tabs were
+regression-checked in both themes at 1500px and 375px, with no page
+errors and no sideways scrolling.
+
+`1.6.11` (PATCH - eight new Windows events and a matching Event Trace
+branch; additions to existing tabs).
 
 ## Structure
 
