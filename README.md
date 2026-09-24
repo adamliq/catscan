@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.4` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.5` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3610,6 +3610,40 @@ listed; all tabs regression-checked in both themes at 1500px and
 
 `1.6.4` (PATCH - one new Windows event and four enriched; a data
 addition to an existing catalogue).
+
+Fixed the two data problems noted in `1.6.4`, which affected five
+Windows Events rows:
+
+- Four rows imported from `windows/docs/event-log-operations.md` (41,
+  1074, 1076 and 6006) had the composite source "EventLog /
+  Kernel-Power / USER32" - the doc's section heading - instead of
+  their own provider, so they didn't group or search with the rest of
+  their provider's events. 1076 is now User32 and 6006 EventLog, the
+  providers their own samples already showed.
+- 1074 also had a second row, from NSA's "Event Forwarding Guidance",
+  filed under a log named "User32" (the provider, not a log) with the
+  label "Shutdown Initiate Failed" - which describes 1073, not 1074
+  (1074 records who or what initiated a restart or shutdown, and why).
+  The two 1074 rows were merged into one System / User32 row keeping
+  the correct description; the NSA reference was carried over to it so
+  the collection recommendation isn't lost.
+- The composite-source 41 duplicated the manifest-derived
+  Kernel-Power 41 row (same event, fuller message text), so it was
+  removed and its `docs/event-log-operations.md` reference added to
+  the kept row.
+
+No other catalogue row has a composite source or a log named "User32".
+Checked that neither dropped row carried metadata (ACSC flag, MITRE,
+NIST, CIM, etc.) the kept row lacked - none did. Regenerated with
+`tools/build_windows_events.py` (5,327 -> 5,325 events). Verified with
+the three build checks and in Playwright: "has initiated the restart"
+finds the single 1074; "Shutdown Initiate Failed" and "Kernel-Power /
+USER32" find nothing; "rebooted without cleanly shutting down" finds
+the one Kernel-Power 41 (plus the separate event 142); all tabs
+regression-checked in both themes at 1500px and 375px - no page
+errors.
+
+`1.6.5` (PATCH - data corrections to existing Windows events).
 
 ## Structure
 

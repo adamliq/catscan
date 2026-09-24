@@ -28117,11 +28117,11 @@
   {
     "event_id": "1076",
     "log": "System",
-    "source": "EventLog / Kernel-Power / USER32",
+    "source": "User32",
     "category": "Shutdown / Restart",
     "subcategory": "",
     "description": "The reason supplied by user Y for the last unexpected shutdown of this computer.",
-    "sample": "Log Name:      System\nSource:        USER32\nEvent ID:      1076\nTask Category: None\nLevel:         Information\nComputer:      DC01.corp.local\nDescription:\nThe reason supplied by user CORP\\admin.jsmith for the last unexpected shutdown of this computer is: Operating System: Recovery (Planned)\nReason Code: 0x80020002\nComment: Applying monthly security updates",
+    "sample": "Log Name:      System\nSource:        User32\nEvent ID:      1076\nTask Category: None\nLevel:         Information\nComputer:      DC01.corp.local\nDescription:\nThe reason supplied by user CORP\\admin.jsmith for the last unexpected shutdown of this computer is: Operating System: Recovery (Planned)\nReason Code: 0x80020002\nComment: Applying monthly security updates",
     "reference": "docs/event-log-operations.md",
     "how_to_collect": "",
     "sample_type": "illustrative",
@@ -47882,12 +47882,12 @@
   {
     "event_id": "1074",
     "log": "System",
-    "source": "EventLog / Kernel-Power / USER32",
+    "source": "User32",
     "category": "Shutdown / Restart",
     "subcategory": "",
     "description": "The process X has initiated the restart/shutdown of computer on behalf of user Y for reason Z.",
-    "sample": "Log Name:      System\nSource:        USER32\nEvent ID:      1074\nTask Category: None\nLevel:         Information\nComputer:      DC01.corp.local\nDescription:\nThe process C:\\Windows\\System32\\winlogon.exe (DC01) has initiated the restart of computer DC01 on behalf of user CORP\\admin.jsmith for the following reason: Operating System: Recovery (Planned)\nReason Code: 0x80020002\nShutdown Type: restart\nComment: Applying monthly security updates",
-    "reference": "docs/event-log-operations.md",
+    "sample": "Log Name:      System\nSource:        User32\nEvent ID:      1074\nTask Category: None\nLevel:         Information\nComputer:      DC01.corp.local\nDescription:\nThe process C:\\Windows\\System32\\winlogon.exe (DC01) has initiated the restart of computer DC01 on behalf of user CORP\\admin.jsmith for the following reason: Operating System: Recovery (Planned)\nReason Code: 0x80020002\nShutdown Type: restart\nComment: Applying monthly security updates",
+    "reference": "docs/event-log-operations.md; NSA, \"Event Forwarding Guidance\" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) \u2014 companion to \"Spotting the Adversary with Windows Event Log Monitoring\"",
     "how_to_collect": "",
     "sample_type": "illustrative",
     "mitre_techniques": "",
@@ -52214,36 +52214,6 @@
         "event_id": "integer",
         "level": "enum",
         "keywords": "string",
-        "computer": "string",
-        "description": "string"
-      }
-    }
-  },
-  {
-    "event_id": "41",
-    "log": "System",
-    "source": "EventLog / Kernel-Power / USER32",
-    "category": "Shutdown / Restart",
-    "subcategory": "",
-    "description": "The system has rebooted without cleanly shutting down first (kernel-power / unexpected shutdown).",
-    "sample": "Log Name:      System\nSource:        Microsoft-Windows-Kernel-Power\nEvent ID:      41\nTask Category: (63)\nLevel:         Critical\nComputer:      DC01.corp.local\nDescription:\nThe system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding, crashed, or lost power unexpectedly.",
-    "reference": "docs/event-log-operations.md",
-    "how_to_collect": "",
-    "sample_type": "illustrative",
-    "mitre_techniques": "",
-    "acsc_priority_log": "",
-    "nist_800_53_au": "",
-    "ad_compromise_techniques": "",
-    "group_policy_path": "",
-    "opposite_event_id": "",
-    "cim_mapping": "",
-    "field_schema": {
-      "header": {
-        "log_name": "string",
-        "source": "string",
-        "event_id": "integer",
-        "task_category": "string",
-        "level": "enum",
         "computer": "string",
         "description": "string"
       }
@@ -63067,7 +63037,7 @@
   {
     "event_id": "6006",
     "log": "System",
-    "source": "EventLog / Kernel-Power / USER32",
+    "source": "EventLog",
     "category": "Shutdown / Restart",
     "subcategory": "",
     "description": "The Event log service was stopped (clean shutdown marker).",
@@ -63769,35 +63739,6 @@
         "event_id": "integer",
         "level": "enum",
         "keywords": "string",
-        "computer": "string",
-        "description": "string"
-      }
-    }
-  },
-  {
-    "event_id": "1074",
-    "log": "User32",
-    "source": "User32",
-    "category": "Boot Events",
-    "subcategory": "",
-    "description": "Shutdown Initiate Failed",
-    "sample": "Log Name:      User32\nSource:        User32\nEvent ID:      1074\nLevel:         Warning\nComputer:      WKS-0142.corp.local\nDescription:\nShutdown Initiate Failed",
-    "reference": "NSA, \"Event Forwarding Guidance\" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) \u2014 companion to \"Spotting the Adversary with Windows Event Log Monitoring\"",
-    "how_to_collect": "",
-    "sample_type": "illustrative",
-    "mitre_techniques": "",
-    "acsc_priority_log": "",
-    "nist_800_53_au": "",
-    "ad_compromise_techniques": "",
-    "group_policy_path": "",
-    "opposite_event_id": "",
-    "cim_mapping": "",
-    "field_schema": {
-      "header": {
-        "log_name": "string",
-        "source": "string",
-        "event_id": "integer",
-        "level": "enum",
         "computer": "string",
         "description": "string"
       }
@@ -165036,7 +164977,7 @@
     "subcategory": "DirtyTransition",
     "description": "The system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding; crashed; or lost power unexpectedly.",
     "sample": "Log Name:      System\nSource:        Microsoft-Windows-Kernel-Power\nEvent ID:      41\nTask Category: DirtyTransition\nLevel:         Critical\nComputer:      WKS-0142.corp.local\nDescription:\nThe system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding; crashed; or lost power unexpectedly.",
-    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",
+    "reference": "Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue); docs/event-log-operations.md",
     "how_to_collect": "",
     "sample_type": "template",
     "mitre_techniques": "",

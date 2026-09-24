@@ -8534,8 +8534,8 @@ Level:         Error
 Computer:      WKS-0142.corp.local
 Description:
 Service configuration update to standalone was attempted due to the presence of Group Policy client extension {UpdateCauseExtensionName} that is not part of the operating system and completed with status {ErrorCode}.","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
-1076,System,EventLog / Kernel-Power / USER32,Shutdown / Restart,,The reason supplied by user Y for the last unexpected shutdown of this computer.,"Log Name:      System
-Source:        USER32
+1076,System,User32,Shutdown / Restart,,The reason supplied by user Y for the last unexpected shutdown of this computer.,"Log Name:      System
+Source:        User32
 Event ID:      1076
 Task Category: None
 Level:         Information
@@ -14553,8 +14553,8 @@ Level:         Error
 Computer:      DHCP01.corp.local
 Description:
 The DHCP service is shutting down due to the following error.",Repo owner-supplied Microsoft-Windows-DHCP-Server message-table reference (Admin channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
-1074,System,EventLog / Kernel-Power / USER32,Shutdown / Restart,,The process X has initiated the restart/shutdown of computer on behalf of user Y for reason Z.,"Log Name:      System
-Source:        USER32
+1074,System,User32,Shutdown / Restart,,The process X has initiated the restart/shutdown of computer on behalf of user Y for reason Z.,"Log Name:      System
+Source:        User32
 Event ID:      1074
 Task Category: None
 Level:         Information
@@ -14563,7 +14563,7 @@ Description:
 The process C:\Windows\System32\winlogon.exe (DC01) has initiated the restart of computer DC01 on behalf of user CORP\admin.jsmith for the following reason: Operating System: Recovery (Planned)
 Reason Code: 0x80020002
 Shutdown Type: restart
-Comment: Applying monthly security updates",docs/event-log-operations.md,,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""reason_code"": ""hex"", ""shutdown_type"": ""string"", ""comment"": ""string""}",,,
+Comment: Applying monthly security updates","docs/event-log-operations.md; NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""reason_code"": ""hex"", ""shutdown_type"": ""string"", ""comment"": ""string""}",,,
 4678,Security,Microsoft-Windows-Security-Auditing,Account Logon,Kerberos,Kerberos logon ticket activity (as categorised by the source guidance; verify exact semantics in your environment).,"Log Name:      Security
 Source:        Microsoft-Windows-Security-Auditing
 Event ID:      4678
@@ -15912,14 +15912,6 @@ Keywords:      AssocMgr
 Computer:      WKS-0142.corp.local
 Description:
 Diagnostic Statistics Difference Adapter Guid {AdapterGuid} TxUnicastCount: {TxUnicastCount} RxUnicastCount: {RxUnicastCount} TxBroadcastCount: {TxBroadcastCount} RxBroadcastCount: {RxBroadcastCount} TxMulticastCount: {TxMulticastCount} RxMulticastCount: {RxMulticastCount} TimeDiffMs: {TimeDiffMs}",Full Windows 11 24H2 Pro (build 26100.1742) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue),,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}}",,,
-41,System,EventLog / Kernel-Power / USER32,Shutdown / Restart,,The system has rebooted without cleanly shutting down first (kernel-power / unexpected shutdown).,"Log Name:      System
-Source:        Microsoft-Windows-Kernel-Power
-Event ID:      41
-Task Category: (63)
-Level:         Critical
-Computer:      DC01.corp.local
-Description:
-The system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding, crashed, or lost power unexpectedly.",docs/event-log-operations.md,,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 13100,Microsoft-Windows-WLAN-AutoConfig/Operational,Microsoft-Windows-WLAN-AutoConfig,Microsoft-Windows-WLAN-AutoConfig,Connection Cost,{CostSource} Cost is changed to {CostValue} for profile {ProfileName} on interface {InterfaceGuid},"Log Name:      Microsoft-Windows-WLAN-AutoConfig/Operational
 Source:        Microsoft-Windows-WLAN-AutoConfig
 Event ID:      13100
@@ -19263,7 +19255,7 @@ Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
 Connection Closed","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
-6006,System,EventLog / Kernel-Power / USER32,Shutdown / Restart,,The Event log service was stopped (clean shutdown marker).,"Log Name:      System
+6006,System,EventLog,Shutdown / Restart,,The Event log service was stopped (clean shutdown marker).,"Log Name:      System
 Source:        EventLog
 Event ID:      6006
 Task Category: None
@@ -19470,13 +19462,6 @@ Keywords:      MSMSEC
 Computer:      WKS-0142.corp.local
 Description:
 Port({PortId}) Indicate Security Result; Peer {PeerAddr}; Reason {Reason} Error {Error}",Full Windows 11 24H2 Pro (build 26100.1742) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue),,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}}",,,
-1074,User32,User32,Boot Events,,Shutdown Initiate Failed,"Log Name:      User32
-Source:        User32
-Event ID:      1074
-Level:         Warning
-Computer:      WKS-0142.corp.local
-Description:
-Shutdown Initiate Failed","NSA, ""Event Forwarding Guidance"" (github.com/nsacyber/Event-Forwarding-Guidance, Events/RecommendedEvents.csv) — companion to ""Spotting the Adversary with Windows Event Log Monitoring""",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 8202,Microsoft-Windows-HelloForBusiness/Operational,Microsoft-Windows-HelloForBusiness,Microsoft-Windows-HelloForBusiness,Prerequisites Check,(Prerequisites Check from Microsoft-Windows-HelloForBusiness; no message template provided by the manifest),"Log Name:      Microsoft-Windows-HelloForBusiness/Operational
 Source:        Microsoft-Windows-HelloForBusiness
 Event ID:      8202
@@ -50551,7 +50536,7 @@ Task Category: DirtyTransition
 Level:         Critical
 Computer:      WKS-0142.corp.local
 Description:
-The system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding; crashed; or lost power unexpectedly.","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+The system has rebooted without cleanly shutting down first. This error could be caused if the system stopped responding; crashed; or lost power unexpectedly.","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue); docs/event-log-operations.md",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
 409,Microsoft-Windows-Kernel-Power/Diagnostic,Microsoft-Windows-Kernel-Power,Microsoft-Windows-Kernel-Power,SensorInvalid,Reason code:{Code},"Log Name:      Microsoft-Windows-Kernel-Power/Diagnostic
 Source:        Microsoft-Windows-Kernel-Power
 Event ID:      409
