@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.7` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.8` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3710,6 +3710,61 @@ Microsoft Events" tests, and regression-checked all tabs in both
 themes at 1500px and 375px - no page errors.
 
 `1.6.7` (PATCH - a wording fix within the Event Trace tab).
+Checked an owner-supplied `RDP_Event_IDs_Full.csv` (64 rows) against
+the catalogue. Most of it was already there:
+
+- **42 already present and unchanged:** the LocalSessionManager,
+  RdpCoreTS and RemoteConnectionManager connection/session events (21-25,
+  39, 40, 65, 66, 131, 140, 142, 261, 1149 and others); the Security
+  logon, Kerberos and NTLM events (4624-4779, 5156); and the
+  startup/shutdown events (12, 13, 109, 1074, 6005, 6006, 7002, 9009).
+- **6 new, from the RD Connection Broker:** SessionBroker 786 (session
+  state changed), 787 (session added to the broker database), 800
+  (connection request received), 801 (request processed, naming the
+  session host the user was sent to), 803 (end point determined) and
+  814 (request resulted in a successful logon), in a new
+  `Microsoft-Windows-TerminalServices-SessionBroker/Operational` log.
+  The catalogue only had the SessionBroker-Client provider, because its
+  manifest export came from a server without the Connection Broker role.
+  The message text for 786-803 matches event text quoted in Microsoft
+  Q&A threads about RD Connection Broker. No independent source was
+  found for 814, and its reference field says so.
+- **3 placeholder descriptions filled in:** LocalSessionManager 18,
+  RdpCoreTS 98 and RemoteConnectionManager 20498 had only the
+  manifest's "no message template" placeholder. They now use the file's
+  text, and each reference field records where that text came from.
+
+Not applied, because they contradict the catalogue or a primary source:
+
+- RemoteConnectionManager 1150 ("user authentication failed"): in the
+  manifest, 1150 is "User config data have been merged". A failed RDP
+  authentication shows up as Security 4625 instead.
+- 1151 and 1152 ("RDP-TCP connection established/disconnected"): the
+  manifest gives both IDs different messages.
+- RemoteConnectionManager 2049: neither the Server 2019 nor the Windows
+  11 24H2 manifest has it.
+- SessionBroker 1011 and 1012 ("redirected"/"failed to redirect"): for
+  this provider, Microsoft documents 1011 as the broker service failing
+  to start because of a database initialisation problem. 1048 and 1049
+  (service started/stopped) have no source at all.
+- Security 4685 ("the state of a transaction has changed"): that is the
+  text of 4985. 4685 is not a real Security audit event.
+- LocalSessionManager 41 ("Begin Session Activation"): the manifest's
+  wording, "Begin session arbitration", was kept.
+- 163, 168 and 227: the catalogue already has their real messages, and
+  the file's text is only a vague summary.
+
+Regenerated with `tools/build_windows_events.py` (5,325 -> 5,331
+events). A data-level diff showed exactly 6 rows added and 3 changed,
+with nothing removed. Verified with the three build checks and in
+Playwright: "RD Connection Broker" finds 787, 800, 801 and 803 alongside
+the existing SessionBroker-Client events; "successful session logon"
+finds 814; and each enriched row is found by its new text. All tabs
+were regression-checked in both themes at 1500px and 375px, with no
+page errors.
+
+`1.6.8` (PATCH - six new Windows events and three enriched; a data
+addition to an existing catalogue).
 
 ## Structure
 
