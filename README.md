@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.6` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.7` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3679,6 +3679,37 @@ four-trace tests and regression-checked all tabs in both themes at
 
 `1.6.6` (PATCH - a link between two existing tabs, not a new
 capability).
+
+Re-checked two of the RDP trail red-team items - Kerberos logons, and
+the NLA path's missing type 10 logon - against what's live on `main`.
+Both were already fixed in `1.6.1`, and driving every Kerberos/NTLM x
+NLA combination in Playwright confirmed it: Kerberos gives
+4768/4769 on the domain controller (4771 on a bad password), NTLM
+gives 4776; a successful NLA logon shows 4624 type 3, then 4634, then
+1149, and every successful path goes on to the session's own 4624
+type 10; the only events tagged as logged on the domain controller
+are 4768, 4769, 4771 and 4776 - no 4624.
+
+One part of the second item wasn't fully there. That a reconnect can
+log type 7 (Unlock) rather than type 10 was only mentioned inside the
+4624's details text, so picking "Session already exists? - Yes" still
+showed the chart asserting "type 10". The 4624's title now depends on
+the scenario: "Account logged on, type 10 or 7" on the reconnect path,
+in the chart, the expected-events list and the details panel, and
+back to "type 10" for a new session. Its description now also says
+the type 7 behaviour is on newer Windows versions and not yet
+confirmed against a lab capture. Done with a small per-event title
+hook (`LIVE_TITLE`) in the trace script, so other scenario-dependent
+titles can be added the same way.
+
+Verified: `tools/check_syntax.js` and the two data sync checks. In
+Playwright, the four Kerberos/NTLM x NLA sequences above, the title
+switching on and off with the reconnect question, the details panel
+title and text; re-ran the four-trace tests and the "Open in
+Microsoft Events" tests, and regression-checked all tabs in both
+themes at 1500px and 375px - no page errors.
+
+`1.6.7` (PATCH - a wording fix within the Event Trace tab).
 
 ## Structure
 
