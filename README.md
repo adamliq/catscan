@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.2` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.3` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3514,6 +3514,60 @@ page errors.
 
 `1.6.2` (PATCH - seven new Windows events and one enriched; a data
 addition to an existing catalogue).
+
+Checked an owner-supplied `Microsoft-Windows-Winlogon_Event_IDs.csv`
+(83 rows) against the catalogue's existing 100 Winlogon rows. Those
+come from the Windows Server 2019 ETW manifest export, so they were
+treated as the authority on which event ID belongs to which task and
+channel, with the file's rows matched by event ID *and* task name, not
+ID alone.
+
+- **3 new, added:** 6000 and 6001 (Application; a winlogon
+  notification subscriber was unavailable / failed a notification
+  event) and 7001 (System; the CEIP user-logon notification, logon
+  partner of the 7002 already here, which the RDP red-team review
+  flagged as missing - it carries the user's SID, so the pair gives a
+  logon/logoff timeline from the System log).
+- **64 present but with no readable description, enriched:** these
+  rows only said "no message template provided by the manifest",
+  because Winlogon defines no message text for them. Their
+  descriptions now carry the file's plain-English meaning (e.g.
+  "Start: updating per-user system parameters") and still say there's
+  no message text; their reference field names the file as the
+  source of the description. Channels were left as the manifest has
+  them: 63 of the 64 are in `Microsoft-Windows-Winlogon/Diagnostic`,
+  not `/Operational` as the file lists every ETW event - which matters
+  when deciding what to collect.
+- **4 already present with real message text, unchanged:** 2, 811,
+  1001 and 7002.
+- **3 contradicting the manifest, not applied:** the file lists 1101
+  and 1102 as CEIP logon/logoff notifications, but the manifest has
+  both as Exchange ActiveSync lockout events (whose message text the
+  catalogue already carries); it lists 6114 as Logoff, but 6114 is
+  Lock and Logoff is 6116.
+- **9 with IDs that don't exist, not added:** 1201 (EAS) and
+  1301-1308 (delay-lock through Assigned Access unlock). The same
+  tasks do exist in the manifest, at 1101-1104 and 6117-6124, so the
+  file's IDs for them look wrong rather than missing.
+
+Added to the same pull request as the Desktop Window Manager batch
+(`1.6.2`), still unmerged at the time, so the two Windows Events
+batches don't collide on version numbers. Regenerated with
+`tools/build_windows_events.py` (5,323 -> 5,326 events). A data-level
+diff against the previous commit confirmed exactly 3 rows added, 64
+changed (description and reference only, all Winlogon), none removed.
+
+Verified: `tools/build_windows_events.py --check`,
+`tools/build_linux_reference.py --check`, `tools/check_syntax.js`. In
+Playwright, Microsoft Events lists 5,326 events; "notification
+subscriber" finds 6000 and 6001 alongside the existing 811/812;
+"Customer Experience Improvement" finds 7001 and 7002; "updating
+per-user system parameters" finds the enriched 3 and 4, whose detail
+view still shows the Diagnostic channel. Regression-checked all tabs
+in both themes at 1500px and 375px - no page errors.
+
+`1.6.3` (PATCH - three new Winlogon events and 64 enriched
+descriptions; a data addition to an existing catalogue).
 
 ## Structure
 
