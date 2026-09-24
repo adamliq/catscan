@@ -3286,6 +3286,57 @@ Log File Locations table, adding 22 new rows and enriching 2 existing
 ones; a data addition to an existing reference table, not a new
 capability).
 
+Asked for suggested improvements after five rounds of Log File
+Locations edits this session, every one of which relied on an ad hoc,
+never-committed scratchpad script to sync `index.html`'s embedded
+copy with the table's `.csv`/`.json`. Flagged that as the exact class
+of gap `tools/build_windows_events.py` closed for Windows Events -
+just not extended to any of Linux Events' ~27 reference tables - and
+was asked to build the broad version: one script covering all of
+them, not just `log_file_locations`.
+
+Added `tools/build_linux_reference.py`, which syncs `index.html`'s
+embedded Linux Events `DATA` object with every JSON file under
+`linux/data/` - `data/events.json` (the `events` key) and each file
+under `data/reference/` (one DATA key per file, named after the
+file's stem) - discovered generically via a directory listing rather
+than a hardcoded key list, so a newly added reference table's JSON
+file gets picked up without editing this script. Scoped narrower
+than `build_windows_events.py` on purpose: it syncs JSON into the
+embedded DATA only, it does not regenerate a table's `.json` from its
+`.csv`, since each of the ~27 tables has its own CSV schema and this
+project's existing per-table add/update scripts already keep each
+table's `.csv` and `.json` in sync with each other as part of making
+an edit. Uses the same container-id anchor technique as the Windows
+script (`getElementById('app-lnx')`, immediately before Linux
+Events' own `const DATA = ` declaration) rather than anything
+value-dependent, and preserves every DATA key it doesn't own by
+reading the current embedded object as its base before overwriting
+just the keys with a source file - five keys
+(`auditd_command_cheatsheet`, `auditd_record_type_tip`,
+`command_logging_guides`, `fapolicyd_command_cheatsheet`,
+`fapolicyd_rule_eval_tip`) are short hand-authored text/list values
+with no backing JSON file, and are left untouched rather than
+requiring them to be migrated into new files just for this script's
+sake. `--check` exits non-zero without writing if any key is out of
+sync, naming which ones - wired into `.github/workflows/build-check.yml`
+alongside the other three checks.
+
+Verified: ran `--check` cold (passed, confirming all 27 keys were
+already in sync going into this change). Deliberately drifted
+`pam_result_codes.json` by hand, confirmed `--check` correctly failed
+and named exactly that key, then confirmed the non-`--check` run
+fixed it and `--check` passed again afterward. Confirmed
+`tools/check_syntax.js` and `tools/build_windows_events.py --check`
+both still pass. Regression-checked across both themes and both
+1500px/375px viewports - zero console errors throughout (expected,
+since this PR makes no data or rendering change, only adds the
+tooling).
+
+`1.5.18` (PATCH - added a generic build script syncing every Linux
+Events reference table's JSON into `index.html`'s embedded DATA, plus
+a CI check for it; project tooling, not a new capability).
+
 Added a new top-level **Event Trace** menu, between Other Events and
 Search, using an owner-supplied standalone page - an RDP event trail -
 as its content. Where every other tab looks events up one at a time,
@@ -3445,7 +3496,22 @@ not a new tab).
     to merge needed a manual merge-conflict resolution to fix. This
     check would have failed that PR before merge instead, with a
     message saying to rebase and bump again.
-  - `.github/workflows/build-check.yml` runs all three on every pull
+  - `tools/build_linux_reference.py` — syncs `index.html`'s embedded
+    Linux Events `DATA` object with every JSON file under `linux/data/`:
+    `data/events.json` (the `events` key) and each of the ~27 files
+    under `data/reference/` (one DATA key per file, named after the
+    file's stem). Unlike `build_windows_events.py`, this doesn't
+    regenerate a table's `.json` from its `.csv` — each Linux reference
+    table has its own CSV schema, and this project's per-table
+    add/update scripts already keep each table's `.csv` and `.json` in
+    sync as part of making an edit; this script's job is only making
+    sure `index.html` doesn't drift from what's actually in those JSON
+    files, the same class of gap `build_windows_events.py` closed for
+    Windows Events, just generalized across every Linux reference table
+    at once instead of one table's own ad hoc, previously-uncommitted
+    sync script. `--check` exits non-zero instead of writing anything
+    if any key is out of sync, naming which ones.
+  - `.github/workflows/build-check.yml` runs all four on every pull
     request into `main` (and the syntax/sync checks again on every push
     to `main`, so a direct push or an already-open PR's later commit
     can't silently skip them either).
