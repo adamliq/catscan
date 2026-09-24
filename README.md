@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.5` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.6` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3644,6 +3644,41 @@ regression-checked in both themes at 1500px and 375px - no page
 errors.
 
 `1.6.5` (PATCH - data corrections to existing Windows events).
+
+Event Trace's details panel now has an "Open in Microsoft Events"
+button that jumps to that event's full catalogue entry - its sample,
+field schema, MITRE mapping and references, which the trace itself
+doesn't carry. It takes the same route the global Search tab already
+uses: it clicks the Microsoft Events menu button, then calls that
+app's own `window.__compHub.win.open({id, log})`, so it lands in
+exactly the same state a search result would, with nothing added to
+the Microsoft Events code. It matches on event ID *and* log, so an ID
+shared by several logs lands on the right one (1024 opens the RDP
+client Operational event, not the Debug-log event with the same
+number). The button only appears when the catalogue has that event in
+that log; all 74 events across the four traces currently do. Opening
+it closes the panel, and Event Trace keeps its trace, phase and
+answers for when you come back.
+
+Four IDs (4625, 4672, 4778, 4779) have two catalogue entries each under
+different audit subcategories; Microsoft Events opens the first. For
+4625, 4778 and 4779 that's already the subcategory the trace means;
+4672's two entries both carry the wrong subcategory (the known
+"Special Logon" issue), so preferring a subcategory would change
+nothing today and wasn't added.
+
+Verified: `tools/check_syntax.js` and the two data sync checks. In
+Playwright, jumping from 4624 (type 10) and 4769 in the host trace,
+9009 in its logoff phase, 1024 in the source trace and 2005 in Turning
+RDP on each switched to Microsoft Events with that event and log
+selected and the page back at the top; Enter on the button works from
+the keyboard; the button reads correctly in light and dark;
+returning to Event Trace shows the trace you left. Re-ran the
+four-trace tests and regression-checked all tabs in both themes at
+1500px and 375px - no page errors.
+
+`1.6.6` (PATCH - a link between two existing tabs, not a new
+capability).
 
 ## Structure
 
