@@ -49103,7 +49103,7 @@
     "source": "Application Error",
     "category": "Application reliability",
     "subcategory": "",
-    "description": "An application crashed.",
+    "description": "An application crashed. For a Desktop Window Manager crash, the faulting application is dwm.exe (or the faulting module dwmcore.dll), and the faulting module often points at the graphics driver.",
     "sample": "Log Name:      Application\nSource:        Application Error\nEvent ID:      1000\nLevel:         Error\nComputer:      WKS-0142.corp.local\nDescription:\nAn application crashed.\n\n[Collection note: Event ID 1000 is not globally unique; always retain provider and channel.]",
     "reference": "Uploaded \"Windows Event ID Catalogue\" reference CSV",
     "how_to_collect": "",
@@ -165975,6 +165975,209 @@
         "source": "string",
         "event_id": "integer",
         "task_category": "string",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "9007",
+    "log": "Application",
+    "source": "Desktop Window Manager",
+    "category": "Desktop Window Manager",
+    "subcategory": "",
+    "description": "The Desktop Window Manager was unable to start because WDDM is not in use. Points at the graphics driver or hardware: the display isn't using a WDDM driver.",
+    "sample": "Log Name:      Application\nSource:        Desktop Window Manager\nEvent ID:      9007\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe Desktop Window Manager was unable to start because WDDM is not in use.",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Application channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "9009",
+    "log": "Application",
+    "source": "Desktop Window Manager",
+    "category": "Desktop Window Manager",
+    "subcategory": "",
+    "description": "The Desktop Window Manager has exited with code (0x...). On a workstation this often comes with display flicker or a black screen; on an RDP host it's also logged routinely as each session's desktop closes at logoff.",
+    "sample": "Log Name:      Application\nSource:        Desktop Window Manager\nEvent ID:      9009\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe Desktop Window Manager has exited with code (0x40010004)",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Application channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "9010",
+    "log": "Application",
+    "source": "Desktop Window Manager",
+    "category": "Desktop Window Manager",
+    "subcategory": "",
+    "description": "A request to disable the Desktop Window Manager was made by process (...). Names the process that turned desktop composition off.",
+    "sample": "Log Name:      Application\nSource:        Desktop Window Manager\nEvent ID:      9010\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nA request to disable the Desktop Window Manager was made by process (contoso-app.exe)",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Application channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "9013",
+    "log": "Application",
+    "source": "Desktop Window Manager",
+    "category": "Desktop Window Manager",
+    "subcategory": "",
+    "description": "The Desktop Window Manager was unable to start because composition was disabled by a running application.",
+    "sample": "Log Name:      Application\nSource:        Desktop Window Manager\nEvent ID:      9013\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe Desktop Window Manager was unable to start because composition was disabled by a running application.",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Application channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "9027",
+    "log": "Application",
+    "source": "Desktop Window Manager",
+    "category": "Desktop Window Manager",
+    "subcategory": "",
+    "description": "The Desktop Window Manager has registered the session port. Routine at session start or when DWM recovers, and usually harmless.",
+    "sample": "Log Name:      Application\nSource:        Desktop Window Manager\nEvent ID:      9027\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe Desktop Window Manager has registered the session port.",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Application channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "500",
+    "log": "Microsoft-Windows-Diagnostics-Performance/Operational",
+    "source": "Microsoft-Windows-Diagnostics-Performance",
+    "category": "Microsoft-Windows-Diagnostics-Performance",
+    "subcategory": "",
+    "description": "The Desktop Window Manager is experiencing heavy resource contention. Logged when desktop responsiveness has degraded.",
+    "sample": "Log Name:      Microsoft-Windows-Diagnostics-Performance/Operational\nSource:        Microsoft-Windows-Diagnostics-Performance\nEvent ID:      500\nLevel:         Warning\nComputer:      WKS-0142.corp.local\nDescription:\nThe Desktop Window Manager is experiencing heavy resource contention.\nScenario: Responsiveness has degraded.",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Operational channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "501",
+    "log": "Microsoft-Windows-Diagnostics-Performance/Operational",
+    "source": "Microsoft-Windows-Diagnostics-Performance",
+    "category": "Microsoft-Windows-Diagnostics-Performance",
+    "subcategory": "",
+    "description": "The Desktop Window Manager is experiencing heavy resource contention, for example because CPU resources are over-utilized.",
+    "sample": "Log Name:      Microsoft-Windows-Diagnostics-Performance/Operational\nSource:        Microsoft-Windows-Diagnostics-Performance\nEvent ID:      501\nLevel:         Warning\nComputer:      WKS-0142.corp.local\nDescription:\nThe Desktop Window Manager is experiencing heavy resource contention.\nReason: CPU resources are over-utilized.",
+    "reference": "Repo owner-supplied DWM_Event_IDs.csv reference (Operational channel)",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
         "level": "enum",
         "computer": "string",
         "description": "string"

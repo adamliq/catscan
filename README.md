@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.1` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.2` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3465,6 +3465,55 @@ both themes at 1500px and 375px - no page errors.
 `1.6.1` (PATCH - corrections to the Event Trace tab's existing trace
 and three more traces in it; content within the tab added in `1.6.0`,
 not a new tab).
+
+Added Desktop Window Manager events to Windows Events from an
+owner-supplied `DWM_Event_IDs.csv` (nine rows), deconflicted against
+the catalogue by `(log, source, event_id, subcategory)` rather than
+event ID alone. Seven were new: DWM's own Application-log events 9007
+(couldn't start, no WDDM driver), 9009 (DWM exited), 9010 (a process
+asked to turn DWM off), 9013 (couldn't start, composition disabled by
+an application) and 9027 (session port registered, routine), plus
+Microsoft-Windows-Diagnostics-Performance/Operational 500 and 501 (DWM
+under heavy resource contention). The catalogue's existing 9007-9013
+rows are unrelated Netlogon events, so these sit alongside them rather
+than colliding. The other two were already in the catalogue:
+Application Error 1000 got one sentence appended with the file's
+genuinely new triage clue (a DWM crash shows dwm.exe or dwmcore.dll as
+the faulting application or module, and the faulting module often
+points at the graphics driver); Windows Error Reporting 1001 was left
+alone, since the file's note on it ("related error reporting for
+dwm.exe failures") adds nothing its row doesn't already say. 9009 is
+also the event the Event Trace tab's RDP logoff step uses, which until
+now had no catalogue entry.
+
+New rows follow the catalogue's existing shape for Application-log
+events: the provider name as category, an Event Viewer-style
+illustrative sample (9009's uses exit code 0x40010004, the code
+commonly seen at logoff), the header field schema, and a reference
+naming the source file and channel. Where the file gave two levels
+(e.g. "Information/Error"), the sample uses the first. The file's
+event ID-to-message pairings for 9007, 9010, 9013 and 500 weren't
+independently verified.
+
+Applied to `windows/data/events.csv` (5,316 -> 5,323 rows) and
+regenerated `events.json`, `index.html`'s embedded data and its footer
+count with `tools/build_windows_events.py`, the first data addition
+to go through it rather than a one-off script. The CSV was checked to
+round-trip byte-for-byte through the writer first, so the diff shows
+only the real changes.
+
+Verified: `tools/build_windows_events.py --check`,
+`tools/build_linux_reference.py --check`, `tools/check_syntax.js`.
+In Playwright, the Microsoft Events tab lists 5,323 events and its
+footer reads "5,323 events indexed"; a "Desktop Window Manager" search
+returns all seven new rows (plus the enriched 1000 and two existing
+RDP media-redirection rows that mention DWM); 9009's detail view shows
+its sample and reference; a "dwmcore" search finds the enriched 1000.
+Regression-checked all tabs in both themes at 1500px and 375px - no
+page errors.
+
+`1.6.2` (PATCH - seven new Windows events and one enriched; a data
+addition to an existing catalogue).
 
 ## Structure
 

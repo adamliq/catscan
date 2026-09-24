@@ -14934,7 +14934,7 @@ Level:         Information
 Computer:      CA01.corp.local
 Description:
 Active Directory Certificate Services issued a certificate for request xxx for xxx.",Repo owner-supplied Microsoft-Windows-CertificateServices-EventIDs.csv reference (Application channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
-1000,Application,Application Error,Application reliability,,An application crashed.,"Log Name:      Application
+1000,Application,Application Error,Application reliability,,"An application crashed. For a Desktop Window Manager crash, the faulting application is dwm.exe (or the faulting module dwmcore.dll), and the faulting module often points at the graphics driver.","Log Name:      Application
 Source:        Application Error
 Event ID:      1000
 Level:         Error
@@ -50793,3 +50793,54 @@ Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
 The system has resumed from sleep.","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+9007,Application,Desktop Window Manager,Desktop Window Manager,,The Desktop Window Manager was unable to start because WDDM is not in use. Points at the graphics driver or hardware: the display isn't using a WDDM driver.,"Log Name:      Application
+Source:        Desktop Window Manager
+Event ID:      9007
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The Desktop Window Manager was unable to start because WDDM is not in use.",Repo owner-supplied DWM_Event_IDs.csv reference (Application channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+9009,Application,Desktop Window Manager,Desktop Window Manager,,The Desktop Window Manager has exited with code (0x...). On a workstation this often comes with display flicker or a black screen; on an RDP host it's also logged routinely as each session's desktop closes at logoff.,"Log Name:      Application
+Source:        Desktop Window Manager
+Event ID:      9009
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The Desktop Window Manager has exited with code (0x40010004)",Repo owner-supplied DWM_Event_IDs.csv reference (Application channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+9010,Application,Desktop Window Manager,Desktop Window Manager,,A request to disable the Desktop Window Manager was made by process (...). Names the process that turned desktop composition off.,"Log Name:      Application
+Source:        Desktop Window Manager
+Event ID:      9010
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+A request to disable the Desktop Window Manager was made by process (contoso-app.exe)",Repo owner-supplied DWM_Event_IDs.csv reference (Application channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+9013,Application,Desktop Window Manager,Desktop Window Manager,,The Desktop Window Manager was unable to start because composition was disabled by a running application.,"Log Name:      Application
+Source:        Desktop Window Manager
+Event ID:      9013
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The Desktop Window Manager was unable to start because composition was disabled by a running application.",Repo owner-supplied DWM_Event_IDs.csv reference (Application channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+9027,Application,Desktop Window Manager,Desktop Window Manager,,"The Desktop Window Manager has registered the session port. Routine at session start or when DWM recovers, and usually harmless.","Log Name:      Application
+Source:        Desktop Window Manager
+Event ID:      9027
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The Desktop Window Manager has registered the session port.",Repo owner-supplied DWM_Event_IDs.csv reference (Application channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+500,Microsoft-Windows-Diagnostics-Performance/Operational,Microsoft-Windows-Diagnostics-Performance,Microsoft-Windows-Diagnostics-Performance,,The Desktop Window Manager is experiencing heavy resource contention. Logged when desktop responsiveness has degraded.,"Log Name:      Microsoft-Windows-Diagnostics-Performance/Operational
+Source:        Microsoft-Windows-Diagnostics-Performance
+Event ID:      500
+Level:         Warning
+Computer:      WKS-0142.corp.local
+Description:
+The Desktop Window Manager is experiencing heavy resource contention.
+Scenario: Responsiveness has degraded.",Repo owner-supplied DWM_Event_IDs.csv reference (Operational channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+501,Microsoft-Windows-Diagnostics-Performance/Operational,Microsoft-Windows-Diagnostics-Performance,Microsoft-Windows-Diagnostics-Performance,,"The Desktop Window Manager is experiencing heavy resource contention, for example because CPU resources are over-utilized.","Log Name:      Microsoft-Windows-Diagnostics-Performance/Operational
+Source:        Microsoft-Windows-Diagnostics-Performance
+Event ID:      501
+Level:         Warning
+Computer:      WKS-0142.corp.local
+Description:
+The Desktop Window Manager is experiencing heavy resource contention.
+Reason: CPU resources are over-utilized.",Repo owner-supplied DWM_Event_IDs.csv reference (Operational channel),,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
