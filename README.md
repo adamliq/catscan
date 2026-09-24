@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.1` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.4` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3465,6 +3465,151 @@ both themes at 1500px and 375px - no page errors.
 `1.6.1` (PATCH - corrections to the Event Trace tab's existing trace
 and three more traces in it; content within the tab added in `1.6.0`,
 not a new tab).
+
+Added Desktop Window Manager events to Windows Events from an
+owner-supplied `DWM_Event_IDs.csv` (nine rows), deconflicted against
+the catalogue by `(log, source, event_id, subcategory)` rather than
+event ID alone. Seven were new: DWM's own Application-log events 9007
+(couldn't start, no WDDM driver), 9009 (DWM exited), 9010 (a process
+asked to turn DWM off), 9013 (couldn't start, composition disabled by
+an application) and 9027 (session port registered, routine), plus
+Microsoft-Windows-Diagnostics-Performance/Operational 500 and 501 (DWM
+under heavy resource contention). The catalogue's existing 9007-9013
+rows are unrelated Netlogon events, so these sit alongside them rather
+than colliding. The other two were already in the catalogue:
+Application Error 1000 got one sentence appended with the file's
+genuinely new triage clue (a DWM crash shows dwm.exe or dwmcore.dll as
+the faulting application or module, and the faulting module often
+points at the graphics driver); Windows Error Reporting 1001 was left
+alone, since the file's note on it ("related error reporting for
+dwm.exe failures") adds nothing its row doesn't already say. 9009 is
+also the event the Event Trace tab's RDP logoff step uses, which until
+now had no catalogue entry.
+
+New rows follow the catalogue's existing shape for Application-log
+events: the provider name as category, an Event Viewer-style
+illustrative sample (9009's uses exit code 0x40010004, the code
+commonly seen at logoff), the header field schema, and a reference
+naming the source file and channel. Where the file gave two levels
+(e.g. "Information/Error"), the sample uses the first. The file's
+event ID-to-message pairings for 9007, 9010, 9013 and 500 weren't
+independently verified.
+
+Applied to `windows/data/events.csv` (5,316 -> 5,323 rows) and
+regenerated `events.json`, `index.html`'s embedded data and its footer
+count with `tools/build_windows_events.py`, the first data addition
+to go through it rather than a one-off script. The CSV was checked to
+round-trip byte-for-byte through the writer first, so the diff shows
+only the real changes.
+
+Verified: `tools/build_windows_events.py --check`,
+`tools/build_linux_reference.py --check`, `tools/check_syntax.js`.
+In Playwright, the Microsoft Events tab lists 5,323 events and its
+footer reads "5,323 events indexed"; a "Desktop Window Manager" search
+returns all seven new rows (plus the enriched 1000 and two existing
+RDP media-redirection rows that mention DWM); 9009's detail view shows
+its sample and reference; a "dwmcore" search finds the enriched 1000.
+Regression-checked all tabs in both themes at 1500px and 375px - no
+page errors.
+
+`1.6.2` (PATCH - seven new Windows events and one enriched; a data
+addition to an existing catalogue).
+
+Checked an owner-supplied `Microsoft-Windows-Winlogon_Event_IDs.csv`
+(83 rows) against the catalogue's existing 100 Winlogon rows. Those
+come from the Windows Server 2019 ETW manifest export, so they were
+treated as the authority on which event ID belongs to which task and
+channel, with the file's rows matched by event ID *and* task name, not
+ID alone.
+
+- **3 new, added:** 6000 and 6001 (Application; a winlogon
+  notification subscriber was unavailable / failed a notification
+  event) and 7001 (System; the CEIP user-logon notification, logon
+  partner of the 7002 already here, which the RDP red-team review
+  flagged as missing - it carries the user's SID, so the pair gives a
+  logon/logoff timeline from the System log).
+- **64 present but with no readable description, enriched:** these
+  rows only said "no message template provided by the manifest",
+  because Winlogon defines no message text for them. Their
+  descriptions now carry the file's plain-English meaning (e.g.
+  "Start: updating per-user system parameters") and still say there's
+  no message text; their reference field names the file as the
+  source of the description. Channels were left as the manifest has
+  them: 63 of the 64 are in `Microsoft-Windows-Winlogon/Diagnostic`,
+  not `/Operational` as the file lists every ETW event - which matters
+  when deciding what to collect.
+- **4 already present with real message text, unchanged:** 2, 811,
+  1001 and 7002.
+- **3 contradicting the manifest, not applied:** the file lists 1101
+  and 1102 as CEIP logon/logoff notifications, but the manifest has
+  both as Exchange ActiveSync lockout events (whose message text the
+  catalogue already carries); it lists 6114 as Logoff, but 6114 is
+  Lock and Logoff is 6116.
+- **9 with IDs that don't exist, not added:** 1201 (EAS) and
+  1301-1308 (delay-lock through Assigned Access unlock). The same
+  tasks do exist in the manifest, at 1101-1104 and 6117-6124, so the
+  file's IDs for them look wrong rather than missing.
+
+Added to the same pull request as the Desktop Window Manager batch
+(`1.6.2`), still unmerged at the time, so the two Windows Events
+batches don't collide on version numbers. Regenerated with
+`tools/build_windows_events.py` (5,323 -> 5,326 events). A data-level
+diff against the previous commit confirmed exactly 3 rows added, 64
+changed (description and reference only, all Winlogon), none removed.
+
+Verified: `tools/build_windows_events.py --check`,
+`tools/build_linux_reference.py --check`, `tools/check_syntax.js`. In
+Playwright, Microsoft Events lists 5,326 events; "notification
+subscriber" finds 6000 and 6001 alongside the existing 811/812;
+"Customer Experience Improvement" finds 7001 and 7002; "updating
+per-user system parameters" finds the enriched 3 and 4, whose detail
+view still shows the Diagnostic channel. Regression-checked all tabs
+in both themes at 1500px and 375px - no page errors.
+
+`1.6.3` (PATCH - three new Winlogon events and 64 enriched
+descriptions; a data addition to an existing catalogue).
+
+Checked an owner-supplied `Windows_Startup_Shutdown_Event_IDs.csv` (15
+rows) against the catalogue. Nearly all of it was already there:
+
+- **10 already described properly, unchanged:** Kernel-Power 41, 42,
+  107 and 109; User32 1074 and 1076; EventLog 6005, 6006, 6008 and
+  6009.
+- **4 present but only as bare labels, enriched with their real
+  message text:** Kernel-General 12 ("Windows Startup") and 13
+  ("Windows Shutdown"), now quoting "The operating system started /
+  is shutting down at system time <time>"; WER-SystemErrorReporting
+  1001 ("BSOD"), now "The computer has rebooted from a bugcheck",
+  noting it records the bugcheck code and dump location; and EventLog
+  6013 ("System uptime was recorded"), now quoting "The system uptime
+  is <n> seconds". The samples for 12, 13 and 1001 now show that
+  message text instead of the label.
+- **1 new, with its provider corrected:** the file lists "last
+  shutdown success status / last boot success status" as
+  Kernel-General 20, but the catalogue's Kernel-General 20 (from the
+  Server 2019 manifest) is the leap-second update event. That message
+  comes from Microsoft-Windows-Kernel-Boot, so it was added as
+  Kernel-Boot 20 (System log), the catalogue's first Kernel-Boot event
+  - its manifest export only took security-relevant channels - with
+  the correction recorded in the row's own reference field. A false
+  "last shutdown" status means the previous shutdown wasn't clean.
+
+Existing data problems noticed along the way and not changed here:
+four rows (41, 1074, 1076, 6006) from `docs/event-log-operations.md`
+carry a composite source, "EventLog / Kernel-Power / USER32", rather
+than their single real provider (their samples show the right one);
+and an NSA-guidance row files 1074 under a log named "User32" with the
+label "Shutdown Initiate Failed".
+
+Regenerated with `tools/build_windows_events.py` (5,326 -> 5,327
+events); a data-level diff confirmed exactly 1 row added and 4
+changed. Verified with the three build checks and in Playwright (the
+new and enriched rows are found by their message text; 5,327 events
+listed; all tabs regression-checked in both themes at 1500px and
+375px - no page errors).
+
+`1.6.4` (PATCH - one new Windows event and four enriched; a data
+addition to an existing catalogue).
 
 ## Structure
 
