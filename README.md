@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.0` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.1` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,9 +59,11 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — starting with an RDP event trail: which
-Windows events an RDP host logs through logon, disconnect and logoff,
-branching on NLA, credential success and session reconnect.
+than one event at a time — four RDP traces so far: an RDP logon to a
+host (logon, disconnect and logoff, branching on Kerberos vs NTLM, NLA,
+credential success and session reconnect), the same connection seen
+from the machine it was made from, session takeover with `tscon` and
+shadowing, and turning RDP on.
 
 ## Web lookup
 
@@ -3334,6 +3336,84 @@ proxy, which doesn't happen on the live site.
 
 `1.6.0` (MINOR - a new top-level tab, the kind of change this project's
 versioning reserves the MINOR number for).
+
+Red-teamed the RDP event trail against this repo's own Windows Events
+catalogue and fixed what didn't hold up, then added three more traces.
+
+Fixes to the RDP trail (now "RDP into a host"):
+- The "Adv audit" tag was on the wrong events. 4624, 4625 and 4648 are
+  Audit Logon, which is on by default; the ones that really need
+  auditing turned on - 4778/4779 (Other Logon/Logoff Events), 4688
+  (Process Creation) - weren't tagged. Replaced it with an "Audit off by
+  default" tag on the right events, and every Security event's details
+  sheet now names its audit subcategory and whether it's on by default.
+- Added the domain controller's side, which the trail had no real
+  version of: a new "Kerberos used?" question, with 4768/4769 (or 4771
+  for a wrong password) for Kerberos and 4776 for NTLM. These replace
+  the two "4624 on the domain controller" events, which a domain
+  controller doesn't log for an RDP logon to another machine.
+- Moved the connection events (131, 65) ahead of the credential checks
+  (credentials can't be validated before the connection exists), and
+  1149 after them.
+- The NLA path now shows the short type 3 network logon closing (4634)
+  and then the session's own type 10 logon, which it was missing; 4648
+  now comes before 4624, where winlogon logs it.
+- Dropped 4985, a file-system transaction event rather than an RDP one.
+- Logon ID tags corrected (removed from 4648, which carries the
+  machine's logon rather than the session's; added to the 4624 type 10,
+  4647 and 4634 that do carry it). A "Sometimes" tag marks events only
+  logged in some cases (4768, 4672).
+
+New traces, each built from events already in the catalogue, picked
+from a row of buttons at the top of the tab:
+- **RDP from the source** - what the machine a connection is made from
+  logs: mstsc.exe starting (4688), 4648 when different credentials are
+  used, the outbound connection (5156), and the RDPClient log's
+  1024/1025/1027/1029/1102/1026, which name the target and hash the
+  username. Branches on different credentials and on whether the
+  connection succeeded.
+- **Session takeover** - two phases. Takeover with `tscon` (MITRE
+  T1563.002): the service often used to get SYSTEM (7045/4697),
+  tscon.exe (4688), the victim's session being taken (39, 40, 4779),
+  then the reconnect under the victim's name from the attacker's
+  address (25, 4778). Shadowing: mstsc /shadow (4688), permission
+  granted or denied (20508-20511), and the view or control session
+  starting and stopping (20503/20504, 20506/20507).
+- **Turning RDP on** - a new account (4720/4722), adding it to Remote
+  Desktop Users (4732), the registry change allowing connections and
+  optionally turning NLA off (4657), and the firewall rule, added
+  (2004/4946) or built-in enabled (2005/4947).
+
+The page script was rebuilt so the four traces share one renderer, each
+defined as data (phases, questions, flow chart, path, notes). Find now
+searches every trace and switches to the one it's in. The legend and
+tag key show only what the current trace uses. Two new log colours
+(RDP client, Firewall) were added in both themes. The last trace,
+phase and answers are remembered (`localStorage`, key
+`catscanEventTrace`, replacing `rdpTrail`).
+
+Still needs checking against a lab capture: the order of the RDPClient
+events, whether the shadow permission-granted events are logged when
+policy allows shadowing without asking, whether reconnects log as type
+7, and anything on Server 2019 or later. Separately, the catalogue
+itself is missing 9009 and files 4672 under "Sensitive Privilege Use"
+rather than Special Logon; neither was changed here.
+
+Verified: `tools/check_syntax.js` (30 inline script blocks, all OK).
+Driven in Playwright: every question path in all four traces produces
+the expected sequence (e.g. the default host logon is 16 events across
+4 logs; NTLM with bad credentials stops at 5 with the "trail ends here"
+note; a refused shadow request stops at 2); 4985 appears nowhere; the
+corrected audit tags and the details sheet's audit line; find jumps
+from the host trace to 20506 in Session takeover's Shadowing phase and
+reports "Not in any trace" for 4985; a reload reopens the last trace
+and phase. Screenshotted every trace, in light and dark, and the
+picker at 375px (no sideways scroll). Regression-checked all tabs in
+both themes at 1500px and 375px - no page errors.
+
+`1.6.1` (PATCH - corrections to the Event Trace tab's existing trace
+and three more traces in it; content within the tab added in `1.6.0`,
+not a new tab).
 
 ## Structure
 
