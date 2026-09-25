@@ -909,3 +909,68 @@ happened in the same session) matters more than the event alone.
 type=PATH msg=audit(1732212500.700:51850): item=0 name=""/usr/bin/shred""
 inode=98166 dev=fd:01 mode=0100755 ouid=0 ogid=0 rdev=00:00
 objtype=NORMAL key=""anti_forensics""","See auditd_rules.csv rows 36-01, 36-02.",Anti-Forensics,illustrative,T1070,Yes,,,,"AU-2, AU-3, AU-12","{""header"":{""log_name"":""string"",""source"":""string"",""event_id"":""integer"",""level"":""enum"",""host"":""string"",""description"":""string""},""record"":{""item"":""integer"",""name"":""path"",""inode"":""integer"",""dev"":""string"",""mode"":""hex"",""ouid"":""integer"",""ogid"":""integer"",""objtype"":""enum"",""key"":""string""}}"
+1100,audit/USER,sshd (pam_unix),Account Logon,Credential Validation,PAM authentication attempt for an SSH login (password or keyboard-interactive). res= says whether the password check passed.,"Log Name:      audit/USER
+Source:        sshd (pam_unix)
+Event ID:      1100 (USER_AUTH)
+Level:         Notice
+Host:          bastion01.prod.example.org
+Description:
+A user's password was checked while starting an SSH session, and the check failed.
+type=USER_AUTH msg=audit(1732201011.221:49012): pid=21044 uid=0 auid=4294967295 ses=4294967295
+subj=system_u:system_r:sshd_t:s0-s0:c0.c1023
+msg='op=PAM:authentication grantors=? acct=""jsmith"" exe=""/usr/sbin/sshd""
+hostname=203.0.113.42 addr=203.0.113.42 terminal=ssh res=failed'",See PAM result codes reference table for the full set of `res=`/failure values.,Credential Validation,illustrative,T1110,,0582; 1546,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""process"": {""pid"": ""integer"", ""exe"": ""path""}, ""subject"": {""uid"": ""integer"", ""auid"": ""integer"", ""ses"": ""integer"", ""subj"": ""string""}, ""message"": {""op"": ""string"", ""grantors"": ""string"", ""acct"": ""principal"", ""hostname"": ""string"", ""addr"": ""ip"", ""terminal"": ""string"", ""res"": ""enum""}}"
+1103,audit/USER,sshd (pam_unix),Account Logon,Credential Lifecycle,"PAM credentials acquired at the start of an SSH session, once authentication has succeeded.","Log Name:      audit/USER
+Source:        sshd (pam_unix)
+Event ID:      1103 (CRED_ACQ)
+Level:         Notice
+Host:          bastion01.prod.example.org
+Description:
+A user's PAM credentials were set up for an SSH session.
+type=CRED_ACQ msg=audit(1732201012.004:49013): pid=21044 uid=0 auid=1000 ses=15
+subj=system_u:system_r:sshd_t:s0-s0:c0.c1023
+msg='op=PAM:setcred grantors=pam_unix acct=""jsmith"" exe=""/usr/sbin/sshd""
+hostname=203.0.113.42 addr=203.0.113.42 terminal=ssh res=success'",,Credential Validation,illustrative,,,0582; 1546,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""process"": {""pid"": ""integer"", ""exe"": ""path""}, ""subject"": {""uid"": ""integer"", ""auid"": ""integer"", ""ses"": ""integer"", ""subj"": ""string""}, ""message"": {""op"": ""string"", ""grantors"": ""string"", ""acct"": ""principal"", ""hostname"": ""string"", ""addr"": ""ip"", ""terminal"": ""string"", ""res"": ""enum""}}"
+1104,audit/USER,sshd (pam_unix),Account Logon,Credential Lifecycle,"PAM credentials disposed of at the end of an SSH session, as the user logs off.","Log Name:      audit/USER
+Source:        sshd (pam_unix)
+Event ID:      1104 (CRED_DISP)
+Level:         Notice
+Host:          bastion01.prod.example.org
+Description:
+A user's PAM credentials were disposed of at the end of an SSH session.
+type=CRED_DISP msg=audit(1732201612.881:49201): pid=21044 uid=0 auid=1000 ses=15
+subj=system_u:system_r:sshd_t:s0-s0:c0.c1023
+msg='op=PAM:setcred grantors=pam_unix acct=""jsmith"" exe=""/usr/sbin/sshd""
+hostname=203.0.113.42 addr=203.0.113.42 terminal=ssh res=success'",,Credential Validation,illustrative,,,0582; 1546,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""process"": {""pid"": ""integer"", ""exe"": ""path""}, ""subject"": {""uid"": ""integer"", ""auid"": ""integer"", ""ses"": ""integer"", ""subj"": ""string""}, ""message"": {""op"": ""string"", ""grantors"": ""string"", ""acct"": ""principal"", ""hostname"": ""string"", ""addr"": ""ip"", ""terminal"": ""string"", ""res"": ""enum""}}"
+1112,audit/USER,sshd (pam_unix),Logon,Logon,A user has logged in via SSH (paired with the USER_START session-open record). The audit type name is USER_LOGIN.,"Log Name:      audit/USER
+Source:        sshd (pam_unix)
+Event ID:      1112 (USER_LOGIN)
+Level:         Notice
+Host:          bastion01.prod.example.org
+Description:
+A user has logged in via SSH.
+type=USER_LOGIN msg=audit(1732201012.310:49015): pid=21044 uid=0 auid=1000 ses=15
+subj=system_u:system_r:sshd_t:s0-s0:c0.c1023
+msg='op=login acct=""jsmith"" exe=""/usr/sbin/sshd""
+hostname=203.0.113.42 addr=203.0.113.42 terminal=ssh res=success'",,Logon/Logoff,illustrative,,,0582; 1546,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""process"": {""pid"": ""integer"", ""exe"": ""path""}, ""subject"": {""uid"": ""integer"", ""auid"": ""integer"", ""ses"": ""integer"", ""subj"": ""string""}, ""message"": {""op"": ""string"", ""acct"": ""principal"", ""hostname"": ""string"", ""addr"": ""ip"", ""terminal"": ""string"", ""res"": ""enum""}}"
+3,ssh/protocol,sshd,Network,SSH Session Disconnect,"Key exchange failed (SSH2_DISCONNECT_KEY_EXCHANGE_FAILED): no algorithm both sides support, for example after a crypto-policy change dropped an older KexAlgorithm.","Log Name:      ssh/protocol
+Source:        sshd
+Event ID:      3 (SSH2_DISCONNECT_KEY_EXCHANGE_FAILED)
+Level:         Error
+Host:          bastion01.prod.example.org
+Description:
+Unable to negotiate with 203.0.113.42 port 51422: no matching key exchange method found. Their offer: diffie-hellman-group1-sha1",RFC 4253 §11.1; verified against OpenSSH's own ssh2.h (SSH2_DISCONNECT_KEY_EXCHANGE_FAILED = 3).,,illustrative,,,,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""client"": {""address"": ""ip"", ""port"": ""integer""}}"
+9,ssh/protocol,sshd,Network,SSH Session Disconnect,The client rejected the server's host key (SSH2_DISCONNECT_HOST_KEY_NOT_VERIFIABLE) - typically a REMOTE HOST IDENTIFICATION HAS CHANGED warning at the client after the server's host key was regenerated or a MITM is in progress.,"Log Name:      ssh/protocol
+Source:        sshd
+Event ID:      9 (SSH2_DISCONNECT_HOST_KEY_NOT_VERIFIABLE)
+Level:         Error
+Host:          bastion01.prod.example.org
+Description:
+Unable to negotiate with 203.0.113.42 port 51500: fatal: Unable to negotiate a key exchange method
+(client side: REMOTE HOST IDENTIFICATION HAS CHANGED! / Host key verification failed.)",RFC 4253 §11.1; verified against OpenSSH's own ssh2.h (SSH2_DISCONNECT_HOST_KEY_NOT_VERIFIABLE = 9).,,illustrative,T1557,Yes,,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""client"": {""address"": ""ip"", ""port"": ""integer""}}"
+7,utmp/wtmp,login/sshd (pam_unix),Logon,Session Accounting,"A USER_PROCESS record was written to /var/log/wtmp (and /var/log/lastlog) as an interactive session started - the record `last`/`lastlog` read. ut_type=7 (USER_PROCESS) is the same numeric constant a console login, an su, or an SSH session all use; only the file (wtmp vs btmp) and the surrounding fields (ut_line/ut_host/ut_time) tell them apart.","$ last -1 jsmith
+jsmith   pts/2        203.0.113.42     Wed Nov 20 14:30   still logged in
+(binary /var/log/wtmp record: ut_type=USER_PROCESS(7) ut_user=""jsmith"" ut_line=""pts/2"" ut_host=""203.0.113.42"" ut_time=1732201012)","glibc/util-linux `utmp.h` (ut_type constants: EMPTY=0 ... USER_PROCESS=7, DEAD_PROCESS=8); man 5 utmp.",,illustrative,,,,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""utmp"": {""ut_type"": ""enum"", ""ut_pid"": ""integer"", ""ut_line"": ""string"", ""ut_user"": ""principal"", ""ut_host"": ""string"", ""ut_time"": ""datetime""}}"
+7,utmp/btmp,login/sshd (pam_unix),Logon,Failed Login Accounting,"A record was appended to /var/log/btmp for a failed login attempt - the record `lastb` reads. Uses the same utmp struct and the same ut_type constant as a successful /var/log/wtmp entry; it's the destination file, written by the PAM stack on a failed check, that marks it as a failure rather than the type field itself (not independently confirmed against a kernel/glibc source for the exact ut_type value PAM writes on failure; treat as likely rather than certain).","$ lastb -1
+jsmith   ssh:notty    203.0.113.42     Wed Nov 20 14:29 - 14:29  (00:00)
+(binary /var/log/btmp record: ut_user=""jsmith"" ut_line=""ssh:notty"" ut_host=""203.0.113.42"" ut_time=1732200987)",man 5 utmp; man 1 lastb. ut_type value for a btmp entry not independently verified from this environment.,,illustrative,,,,,,"AU-2, AU-3, AU-12","{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""host"": ""string"", ""description"": ""string""}, ""utmp"": {""ut_pid"": ""integer"", ""ut_line"": ""string"", ""ut_user"": ""principal"", ""ut_host"": ""string"", ""ut_time"": ""datetime""}}"

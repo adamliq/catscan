@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.20` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.21` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -40,7 +40,7 @@ serves that role in far more detail than a changelog would.
 A single entry point for [`Winevent-catalogue`](https://github.com/adamliq/Winevent-catalogue)
 (4,737 Windows Event Log events),
 [`linuxevent-catalogue`](https://github.com/adamliq/linuxevent-catalogue)
-(77 Linux security/system events), and
+(85 Linux security/system events), and
 [`Threat-detection-library`](https://github.com/adamliq/Threat-detection-library)
 (4,017 platform-specific threat detections across fourteen catalogues),
 merged into one self-contained web app with a menu to switch between them —
@@ -59,7 +59,7 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — ten traces so far. Four cover RDP: an RDP
+than one event at a time — eleven traces so far. Four cover RDP: an RDP
 logon to a host (logon, disconnect and logoff, branching on Kerberos vs
 NTLM, NLA, credential success, session reconnect, RD Gateway and RD
 Connection Broker), the same connection seen from the machine it was
@@ -71,6 +71,10 @@ logon at the console — logon, lock and unlock, and logoff. The ninth is
 accessing a network share, shown on the file server and on the client.
 The tenth is object-level file and folder access auditing: opening,
 changing and deleting an audited file, and access denied by permissions.
+The eleventh, and first to jump into the Linux Events catalogue instead
+of Windows Events, is an RHEL SSH login: key exchange and host-key
+checking, PAM authentication and account checks, session start and
+SELinux enforcement, then logout.
 
 ## Web lookup
 
@@ -4346,6 +4350,74 @@ errors or sideways scrolling at 1500px or 375px in either theme.
 
 `1.6.20` (PATCH - two Azure AI Cloud Logs categories added and two
 enriched, within the existing Cloud Logs data).
+
+Added an eleventh Event Trace: **RHEL SSH login** — the first trace built
+from the Linux Events catalogue rather than Windows Events, from an
+owner-supplied SSH event-flow diagram (client, key exchange, host-key
+checking, PAM authentication, account checks, session start, SELinux
+enforcement, and logout, across `/var/log/secure`, `/var/log/messages`,
+`/var/log/audit/audit.log`, `/var/log/btmp`, `/var/log/wtmp`,
+`/var/log/lastlog`, `journalctl` and `~/.ssh/known_hosts`). Three phases:
+
+- **Connect** — network/TCP reachability (no log anywhere if this fails),
+  sshd itself accepting connections (a unit failure or, distinctly, an
+  SELinux port-label denial), key exchange, and host-key trust.
+- **Authenticate** — PAM credential check (or an existing pam_faillock
+  lockout instead), account validation (AllowUsers, expiry), then session
+  open and login.
+- **Session** — an optional SELinux session-setup denial, session
+  bookkeeping (logind, wtmp/lastlog), and a clean vs. dropped disconnect.
+
+**Catalogue:** eight new Linux rows (77 -> 85), each sourced from a
+primary source rather than guessed - the kernel's own `audit.h` range
+markers for the `audit/USER` PAM records, OpenSSH's `ssh2.h` for the exact
+`SSH2_DISCONNECT_*` codes behind the two new `ssh/protocol` rows, and
+`utmp.h`'s `ut_type` constants for two new `utmp/wtmp` and `utmp/btmp`
+rows - the catalogue's first use of that log family. Three systemd/journal
+rows reuse MESSAGE_ID UUIDs the catalogue already had. Consistent with
+this catalogue's own no-invented-ID discipline, a few diagram stages were
+deliberately left as plain trace notes instead of new catalogue rows: the
+client's own command line, a plain sshd syslog "Failed password" line, and
+the CRYPTO_KEY_USER/CRYPTO_SESSION audit types (no numeric type code could
+be verified for either from a primary source).
+
+**Two mechanism gaps found and fixed along the way:**
+- Unlike `events.csv` and `cloud_logs.csv`, the Linux catalogue's own
+  `events.csv` had no script keeping `events.json` (and, downstream, the
+  embedded `DATA.events`) in sync with it - a hand-edit to the CSV alone
+  would have silently drifted. New `tools/build_linux_events.py`, mirroring
+  `build_windows_events.py`'s approach, closes this; `--check` wired into
+  CI as a sixth check.
+- Event Trace's "Open in catalogue" jump link was hardcoded to the
+  Windows Events tab and `window.__compHub.win` - the first ten traces
+  never needed anything else. Generalized to an opt-in `hub`/`tabTarget`
+  field on each trace (defaulting to `'win'`, so all ten existing traces
+  are unaffected), letting this one declare `hub:'lnx', tabTarget:'lnx'`
+  and jump into Linux Events instead.
+
+**A display bug found and fixed while testing:** the systemd MESSAGE_ID
+reuse nodes render a full 36-character UUID as their event ID, and the
+trace node/detail-panel ID display was sized for Windows' short numeric
+IDs - it overflowed sideways at 375px. Fixed by displaying just the UUID's
+first 8 characters on the button and detail panel (with the full UUID in
+a hover title and still used underneath for the actual catalogue-ID
+match), not by widening shared CSS every trace renders through.
+
+Verified with all six build checks and in Playwright: every question and
+branch combination gives the expected highlighted trail and dead-end
+message (network unreachable, sshd down grouped by SELinux-port-block vs.
+other failure, key exchange failure, host key rejected, wrong credentials
+vs. already-locked, account policy denial, SELinux session denial, clean
+vs. dropped disconnect); each of the twenty new nodes opens its own
+correct Linux Events entry, confirmed individually by ID and log, not just
+that some link exists; the two most recent traces were re-run to confirm
+they're unaffected by the hub/tabTarget change. All tabs regression-checked
+in both themes at 1500px and 375px, with no page errors and no sideways
+scrolling.
+
+`1.6.21` (PATCH - a new trace, the first to use the Linux Events
+catalogue, plus eight supporting Linux events, a new sync script, and a
+generalization to Event Trace's catalogue-jump mechanism).
 
 ## Structure
 
