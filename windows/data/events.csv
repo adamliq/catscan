@@ -19496,7 +19496,8 @@ Subject:
 	Account Name:		admin.jsmith
 	Account Domain:		CORP
 	Logon ID:		0x3E7F21",,,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""user"": ""string"", ""computer"": ""string"", ""description"": ""string""}, ""subject"": {""security_id"": ""sid"", ""account_name"": ""string"", ""account_domain"": ""string"", ""logon_id"": ""hex""}}",,,Change.Auditing_Changes
-192,Microsoft-Windows-WinRM/Operational,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,User authorization,The authorization of the user failed with error {errorCode},"Log Name:      Microsoft-Windows-WinRM/Operational
+192,Microsoft-Windows-WinRM/Operational,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,User authorization,"The authorization of the user failed with error {errorCode}
+Version caveat: in JPCERT/CC's lab capture (Tool Analysis Result Sheet, WinRS), 192 read ""Authorizing the user"" and was logged on every successful WinRM request, so on some Windows versions it's routine rather than a failure; check the message text. The Server 2019 manifest carries ""Authorizing the user"" as Analytic 1536.","Log Name:      Microsoft-Windows-WinRM/Operational
 Source:        Microsoft-Windows-WinRM
 Event ID:      192
 Task Category: User authorization
@@ -19504,7 +19505,7 @@ Level:         Information
 Keywords:      Server Security
 Computer:      WKS-0142.corp.local
 Description:
-The authorization of the user failed with error {errorCode}","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+The authorization of the user failed with error {errorCode}","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue); JPCERT/CC ""Tool Analysis Result Sheet"", WinRS (a lab capture of the destination host's WinRM/Operational log)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
 2008,Microsoft-Windows-Windows Firewall With Advanced Security/Firewall,Microsoft-Windows-Windows Firewall With Advanced Security,Microsoft-Windows-Windows Firewall With Advanced Security,,(Event from Microsoft-Windows-Windows Firewall With Advanced Security; no message template provided by the manifest),"Log Name:      Microsoft-Windows-Windows Firewall With Advanced Security/Firewall
 Source:        Microsoft-Windows-Windows Firewall With Advanced Security
 Event ID:      2008
@@ -51535,3 +51536,76 @@ Level:         Information
 Computer:      RDGW-01.corp.local
 Description:
 The user ""CORP\jsmith"", on client computer ""203.0.113.45"", has initiated an outbound connection.","Microsoft TechNet, ""RD Gateway Server Connections"" / ""TS Gateway Server Connections"" event pages (Windows Server 2008 R2 and 2008, learn.microsoft.com/previous-versions/windows/it-pro); message text as quoted there, with its %n inserts shown as named fields. Only logged on a server running the RD Gateway role; which events are recorded is set on the Auditing tab of RD Gateway Manager. When the gateway uses a central NPS server, that server also logs Security 6272/6273 for the connection authorization check.; PureRDS, ""Remote Desktop Gateway Login Failure Auditing"" (purerds.org), for 312 before authentication and 4625 on a wrong password",,illustrative,T1133,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""user"": ""principal"", ""client_computer"": ""ip""}",,,
+80,Microsoft-Windows-WinRM/Operational,Microsoft-Windows-WinRM,Remote access,WinRM client,"Sending the request for operation {operationName} to destination machine and port {destination}:{port}.
+Logged on the client (source) as it sends a WinRM request, naming the destination computer and port. Version caveat: the Server 2019 WinRM manifest this catalogue is built from doesn't define this ID in any WinRM channel; it carries the same message as Analytic 787 (off by default). Which ID and channel you see can depend on the Windows version, so check on your own builds.","Log Name:      Microsoft-Windows-WinRM/Operational
+Source:        Microsoft-Windows-WinRM
+Event ID:      80
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+Sending the request for operation CreateShell to destination machine and port SRV-FILE01.corp.local:5985.","Microsoft TechNet forum thread ""WinRM Client - Access denied to any host (for outgoing connections)"", which quotes the client's WinRM/Operational log with events 80, 166 and 143; Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,T1021.006,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""operation"": ""string"", ""destination"": ""string"", ""port"": ""integer""}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Client,,
+143,Microsoft-Windows-WinRM/Operational,Microsoft-Windows-WinRM,Remote access,WinRM client,"Received the response from Network layer; status: {statusCode} ({statusText}).
+Logged on the client when the destination answers; 200 (HTTP_STATUS_OK) is a success, 401 an authentication challenge or failure. Version caveat: the Server 2019 WinRM manifest this catalogue is built from doesn't define this ID in any WinRM channel; it carries the same message as Analytic 1045/1047/1051 (off by default). Which ID and channel you see can depend on the Windows version, so check on your own builds.","Log Name:      Microsoft-Windows-WinRM/Operational
+Source:        Microsoft-Windows-WinRM
+Event ID:      143
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+Received the response from Network layer; status: 200 (HTTP_STATUS_OK)","Microsoft TechNet forum thread ""WinRM Client - Access denied to any host (for outgoing connections)"", which quotes the client's WinRM/Operational log with events 80, 166 and 143; Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""status_code"": ""integer""}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Client,,
+166,Microsoft-Windows-WinRM/Operational,Microsoft-Windows-WinRM,Remote access,WinRM client,"The chosen authentication mechanism is {authMechanism}.
+Logged on the client: the authentication WinRM picked for the connection, for example Kerberos, Negotiate, NTLM or Basic. Version caveat: the Server 2019 WinRM manifest this catalogue is built from doesn't define this ID in any WinRM channel; it carries the same message as Analytic 1293 (off by default). Which ID and channel you see can depend on the Windows version, so check on your own builds.","Log Name:      Microsoft-Windows-WinRM/Operational
+Source:        Microsoft-Windows-WinRM
+Event ID:      166
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The chosen authentication mechanism is Kerberos","Microsoft TechNet forum thread ""WinRM Client - Access denied to any host (for outgoing connections)"", which quotes the client's WinRM/Operational log with events 80, 166 and 143; Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""authentication_mechanism"": ""string""}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Client,,
+169,Microsoft-Windows-WinRM/Operational,Microsoft-Windows-WinRM,Remote access,User Authentication,"User {User} authenticated successfully using {AuthMethod} authentication.
+Logged on the target when a WinRM connection authenticates: the account and the method (Kerberos, NTLM, Negotiate, Basic, ...). The main WinRM record of who connected in, for PowerShell remoting and WinRS alike. Version caveat: the Server 2019 WinRM manifest this catalogue is built from doesn't define this ID in any WinRM channel; it carries the same message as Analytic 1295 (off by default). Which ID and channel you see can depend on the Windows version, so check on your own builds.","Log Name:      Microsoft-Windows-WinRM/Operational
+Source:        Microsoft-Windows-WinRM
+Event ID:      169
+Task Category: User Authentication
+Level:         Information
+Computer:      SRV-FILE01.corp.local
+Description:
+User CORP\jsmith authenticated successfully using Kerberos authentication","JPCERT/CC ""Tool Analysis Result Sheet"", WinRS (a lab capture of the destination host's WinRM/Operational log); Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,T1021.006,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""user"": ""principal"", ""authentication_method"": ""string""}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+10101,System,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,WinRM service,"The WinRM service is not listening for requests since it failed to listen on at least one address and port.
+Remote management with WinRM (including PowerShell remoting) fails until the listener is fixed; check it with winrm enumerate winrm/config/listener.","Log Name:      System
+Source:        Microsoft-Windows-WinRM
+Event ID:      10101
+Level:         Error
+Computer:      SRV-FILE01.corp.local
+Description:
+The WinRM service is not listening for requests since it failed to listen on at least one address and port.","Microsoft TechNet ""Windows Remote Management"" / WinRM service event pages (Windows Server 2008 R2 and 2008, previous-versions/windows/it-pro) and Microsoft Q&A threads quoting them; the description summarises Microsoft's wording. Logged in the System log by the WinRM service. Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+10102,System,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,WinRM service,"The WinRM service is not listening for requests because there was a failure binding to the URL in HTTP.SYS.
+Another process has registered the WinRM URL prefix in HTTP.SYS.","Log Name:      System
+Source:        Microsoft-Windows-WinRM
+Event ID:      10102
+Level:         Error
+Computer:      SRV-FILE01.corp.local
+Description:
+The WinRM service is not listening for requests because there was a failure binding to the URL in HTTP.SYS.","Microsoft TechNet ""Windows Remote Management"" / WinRM service event pages (Windows Server 2008 R2 and 2008, previous-versions/windows/it-pro) and Microsoft Q&A threads quoting them; the description summarises Microsoft's wording. Logged in the System log by the WinRM service. Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+10111,System,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,WinRM service,"User authentication using Basic authentication scheme failed with an unexpected error from LogonUser.
+An unexpected LogonUser failure, not an ordinary wrong password; Microsoft's suggested fix is restarting the WinRM service. Basic authentication sends credentials that are only protected by HTTPS, so its use is worth reviewing in itself.","Log Name:      System
+Source:        Microsoft-Windows-WinRM
+Event ID:      10111
+Level:         Error
+Computer:      SRV-FILE01.corp.local
+Description:
+User authentication using Basic authentication scheme failed with an unexpected error from LogonUser.","Microsoft TechNet ""Windows Remote Management"" / WinRM service event pages (Windows Server 2008 R2 and 2008, previous-versions/windows/it-pro) and Microsoft Q&A threads quoting them; the description summarises Microsoft's wording. Logged in the System log by the WinRM service. Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+10114,System,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,WinRM service,"The SSL configuration for IP and port is shared with another service, such as Internet Information Services (IIS).
+The HTTPS listener's certificate binding is shared, so changing it for one service affects the other.","Log Name:      System
+Source:        Microsoft-Windows-WinRM
+Event ID:      10114
+Level:         Warning
+Computer:      SRV-FILE01.corp.local
+Description:
+The SSL configuration for IP and port is shared with another service, such as Internet Information Services (IIS).","Microsoft TechNet ""Windows Remote Management"" / WinRM service event pages (Windows Server 2008 R2 and 2008, previous-versions/windows/it-pro) and Microsoft Q&A threads quoting them; the description summarises Microsoft's wording. Logged in the System log by the WinRM service. Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+10119,System,Microsoft-Windows-WinRM,Microsoft-Windows-WinRM,WinRM service,"The WinRM service is unable to start because of a failure during initialization.
+Reported with an error code (234 and 1300 have been seen); winrm quickconfig resets the service to its default configuration.","Log Name:      System
+Source:        Microsoft-Windows-WinRM
+Event ID:      10119
+Level:         Error
+Computer:      SRV-FILE01.corp.local
+Description:
+The WinRM service is unable to start because of a failure during initialization.","Microsoft TechNet ""Windows Remote Management"" / WinRM service event pages (Windows Server 2008 R2 and 2008, previous-versions/windows/it-pro) and Microsoft Q&A threads quoting them; the description summarises Microsoft's wording. Logged in the System log by the WinRM service. Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,

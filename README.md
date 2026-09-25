@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.12` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.13` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -3979,6 +3979,64 @@ at 1500px and 375px, with no page errors and no sideways scrolling. The
 README's description of the Event Trace tab now covers all five traces.
 
 `1.6.12` (PATCH - a new trace within the existing Event Trace tab).
+
+Checked an owner-supplied `WinRM_Operational_Event_IDs.csv` (33 IDs)
+against the catalogue and added the 9 that were missing and could be
+sourced.
+
+- **13 already in WinRM/Operational, unchanged:** 6, 91, 132, 142, 161,
+  164, 172, 192, 208, 210, 213, 215 and 224. The file's descriptions of
+  several contradict the Server 2019 manifest and weren't applied. 91
+  creates a WSMan *shell*, not a session. 142 is "WSMan operation
+  failed", not the "key success event" the file calls it. 210 is "unable
+  to start", not a stop failure. 213 is corrupt configuration, not a
+  security error.
+- **10 exist, but in a different channel:** 774, 775, 1025, 1048, 1291,
+  1295, 1536, 1840 and 1843 are WinRM/Analytic, and 2049 is Debug. They
+  aren't Operational events, so they weren't duplicated. 1291 also means
+  something else (network-layer AutoLogon policy set to Low, not
+  "client authentication success").
+- **4 added to WinRM/Operational:**
+  - 80 (request sent, naming the destination and port), 143 (the
+    destination's HTTP status) and 166 (the authentication mechanism
+    chosen). All three are client-side, sourced from a Microsoft TechNet
+    thread that quotes a client's log.
+  - 169, "User X authenticated successfully using Y authentication",
+    the target's record of who connected in. Sourced from JPCERT/CC's
+    Tool Analysis Result Sheet for WinRS, a lab capture.
+  - Version caveat: the Server 2019 manifest the catalogue is built
+    from doesn't define these four IDs. It carries the same messages in
+    the Analytic channel (787, 1045/1047/1051, 1293 and 1295), so which
+    ID you see can depend on the Windows version. Each row says so, and
+    search finds both.
+- **5 added to the System log**, from the WinRM service: 10101 and 10102
+  (not listening, because a listener address or HTTP.SYS binding
+  failed), 10111 (Basic authentication failed with an unexpected
+  LogonUser error), 10114 (SSL binding shared with another service,
+  such as IIS) and 10119 (service unable to start). Sourced from
+  Microsoft TechNet's WinRM event pages and Microsoft Q&A threads.
+- **1 not added:** 10104. No source was found for it.
+
+Also added a version caveat to the existing WinRM/Operational 192.
+The manifest defines it as "authorization failed", but JPCERT's capture
+shows 192 as a routine "Authorizing the user" on every successful
+request.
+
+**Event Trace:** the PowerShell remoting trace now includes 169 on the
+target, between 4672 and 91. It's marked "Sometimes" because of the
+version caveat. That reverses the `1.6.12` decision to leave 169 out,
+now that a lab capture confirms it. The trace has 23 events, and every
+one is in the catalogue.
+
+Regenerated with `tools/build_windows_events.py` (5,390 -> 5,399
+events). Verified with the build checks and in Playwright: each new
+event is found by its message text alongside its Analytic equivalent,
+and every remoting-trace path still gives the expected trail. All tabs
+were regression-checked in both themes at 1500px and 375px, with no
+page errors.
+
+`1.6.13` (PATCH - nine new Windows events, one caveat added, and one
+event added to an existing trace).
 
 ## Structure
 
