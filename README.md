@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.11` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.12` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,11 +59,13 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — four RDP traces so far: an RDP logon to a
-host (logon, disconnect and logoff, branching on Kerberos vs NTLM, NLA,
-credential success and session reconnect), the same connection seen
-from the machine it was made from, session takeover with `tscon` and
-shadowing, and turning RDP on.
+than one event at a time — five traces so far. Four cover RDP: an RDP
+logon to a host (logon, disconnect and logoff, branching on Kerberos vs
+NTLM, NLA, credential success, session reconnect, RD Gateway and RD
+Connection Broker), the same connection seen from the machine it was
+made from, session takeover with `tscon` and shadowing, and turning RDP
+on. The fifth is PowerShell remoting over WinRM, on the target and on
+the source.
 
 ## Web lookup
 
@@ -3937,6 +3939,46 @@ errors and no sideways scrolling.
 
 `1.6.11` (PATCH - eight new Windows events and a matching Event Trace
 branch; additions to existing tabs).
+
+Added a fifth Event Trace: **PowerShell remoting (WinRM)**. It shows
+what `Enter-PSSession` and `Invoke-Command` leave behind, in two phases,
+using only events already in the Windows Events catalogue:
+
+- **On the target:** the domain controller's Kerberos 4768/4769 (or
+  NTLM 4776), then 4624 type 3 from the source's address, 4672, WinRM
+  91 (a WSMan shell created with the PowerShell resource URI), 4688 for
+  `wsmprovhost.exe`, and classic Windows PowerShell 400 with
+  `HostName=ServerRemoteHost`. Then 4104: the session's commands if
+  Script Block Logging is on, or only the script blocks PowerShell flags
+  as suspicious (Warning level) if it's off. It ends with 4688 for
+  programs the session starts (children of `wsmprovhost.exe`), 403 and
+  4634. A failed logon ends at 4771 on the domain controller for
+  Kerberos, where the target logs nothing, or at 4776 plus 4625 type 3
+  for NTLM.
+- **On the source:** 4104 for the remoting command itself (with Script
+  Block Logging on), 4648 when `-Credential` is used, WinRM 6 (the
+  connection string naming the target), 5156 to port 5985/5986,
+  PowerShell 8194 and WinRM 8 as the session closes.
+
+The trace has four questions: Kerberos, credentials accepted, different
+credentials used, and Script Block Logging on. The last applies to
+both phases. WinRM, PowerShell/Operational and the classic Windows
+PowerShell log each get a legend colour in both themes. The trace sits
+after the four RDP traces in the picker. The event order on each
+computer is approximate, and the footnote says so.
+
+Not used: WinRM 169 ("user authenticated"). It isn't in the Server
+2019 WinRM manifest the catalogue was built from, and the catalogue's
+only 169 is an NSA-guidance row filed under the classic Windows
+PowerShell log.
+
+Verified with the build checks and in Playwright: every path on both
+phases gives the expected trail, all 22 of the trace's events open
+their Microsoft Events entry, and all tabs were checked in both themes
+at 1500px and 375px, with no page errors and no sideways scrolling. The
+README's description of the Event Trace tab now covers all five traces.
+
+`1.6.12` (PATCH - a new trace within the existing Event Trace tab).
 
 ## Structure
 
