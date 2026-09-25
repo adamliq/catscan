@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.14` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.15` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,14 +59,14 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — six traces so far. Four cover RDP: an RDP
+than one event at a time — seven traces so far. Four cover RDP: an RDP
 logon to a host (logon, disconnect and logoff, branching on Kerberos vs
 NTLM, NLA, credential success, session reconnect, RD Gateway and RD
 Connection Broker), the same connection seen from the machine it was
 made from, session takeover with `tscon` and shadowing, and turning RDP
-on. The other two cover lateral movement: PowerShell remoting over
-WinRM, and WMI remote execution — each shown on the target and on the
-source.
+on. The other three cover lateral movement: PowerShell remoting over
+WinRM, WMI remote execution, and PsExec / remote service execution —
+each shown on the target and on the source.
 
 ## Web lookup
 
@@ -4074,6 +4074,42 @@ page errors and no sideways scrolling. The README's Event Trace
 description now covers all six traces.
 
 `1.6.14` (PATCH - a new trace within the existing Event Trace tab).
+
+Added a seventh Event Trace: **PsExec / remote service execution**,
+built only from events already in the Windows Events catalogue. It
+shows what PsExec (and tools that install a service the same way) leave
+behind, in two phases:
+
+- **On the target:** the domain controller's Kerberos 4768/4769 (or
+  NTLM 4776), then 4624 type 3 from the source's address and 4672. Then
+  the PsExec-specific chain: 5140 (the ADMIN$ share accessed), 5145 (the
+  service binary written to ADMIN$, with PSEXESVC.exe as the default
+  Relative Target Name), 7045 (the System-log service install), 4697
+  (the Security-log record of it), 7036 (the service running) and 4688
+  (the command the service runs, a child of services.exe). It ends with
+  4634. A failed logon ends at 4771 on the domain controller for
+  Kerberos, or at 4776 plus 4625 type 3 for NTLM.
+- **On the source:** 4648 when -u/-p supply other credentials, then 4688
+  for psexec.exe and 5156 to port 445 (SMB).
+
+The trace contrasts with the WMI one: PsExec goes over SMB and installs
+a service, so it shows the ADMIN$ share and service-control events that
+WMI (DCOM/RPC) doesn't. It notes that 7045 is always logged, while the
+share and Security service-install events need auditing turned on, so
+7045 is the most dependable signal. It uses only the Security and System
+logs, so it adds no new legend colour. It asks three questions
+(Kerberos, credentials accepted, different credentials used) and sits
+last in the picker, keeping the three lateral-movement traces together.
+
+Verified with the build checks and in Playwright: every path on both
+phases gives the expected trail (Kerberos vs NTLM, success vs failure,
+with and without explicit credentials), all of the trace's events open
+their Microsoft Events entry, and all tabs were regression-checked in
+both themes at 1500px and 375px, with no page errors and no sideways
+scrolling. The README's Event Trace description now covers all seven
+traces.
+
+`1.6.15` (PATCH - a new trace within the existing Event Trace tab).
 
 ## Structure
 
