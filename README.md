@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.16` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.17` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,7 +59,7 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — eight traces so far. Four cover RDP: an RDP
+than one event at a time — nine traces so far. Four cover RDP: an RDP
 logon to a host (logon, disconnect and logoff, branching on Kerberos vs
 NTLM, NLA, credential success, session reconnect, RD Gateway and RD
 Connection Broker), the same connection seen from the machine it was
@@ -67,7 +67,8 @@ made from, session takeover with `tscon` and shadowing, and turning RDP
 on. Three cover lateral movement: PowerShell remoting over WinRM, WMI
 remote execution, and PsExec / remote service execution — each shown on
 the target and on the source. The eighth is an ordinary domain desktop
-logon at the console — logon, lock and unlock, and logoff.
+logon at the console — logon, lock and unlock, and logoff. The ninth is
+accessing a network share, shown on the file server and on the client.
 
 ## Web lookup
 
@@ -4159,6 +4160,43 @@ README's Event Trace description now covers all eight traces.
 
 `1.6.16` (PATCH - a new trace and three supporting Windows events within
 the existing Event Trace and Windows Events tabs).
+
+Added a ninth Event Trace: **Accessing a network share** — what
+opening `\\server\share` (or a mapped drive) leaves on the file server,
+its domain controller, and the client. Two phases:
+
+- **On the file server:** the domain controller's Kerberos 4768/4769
+  (a cifs/ service ticket) or NTLM 4776, branching on whether the
+  credentials were accepted. Then on the file server: 4624 type 3 and
+  4672 for an administrative share. A **Share access allowed?**
+  question then branches: **Yes** continues to 5140 (the share
+  accessed), 5145 (a detailed per-file check, off by default) and 4634;
+  **No** goes to SMBServer/Security 1006 ("the share denied access to
+  the client") and stops there, since the logon succeeded but share or
+  NTFS permissions refused the user. That question disables itself, and
+  the trail stops with its own message, when the logon already failed.
+- **On the client:** 4648 when different credentials are supplied (for
+  example `net use \\server\share /user:`), and 5156 to port 445.
+
+The trace adds one new legend colour, SMBServer, for the 1006 access-
+denial event; a Kerberos/NTLM/failure branch reuses the same shape as
+the PsExec and WMI traces. The footnote is explicit about scope: this
+covers ordinary share access, not SMB signing/encryption downgrade or
+relay activity, which the SMBClient and SMBServer Security-log events
+mostly cover instead - a possible future trace, not built here. No new
+catalogue events were needed; all nine of the trace's events were
+already in the catalogue.
+
+Verified with the build checks and in Playwright: every branch gives
+the expected trail (Kerberos vs NTLM, success vs failure, allowed vs
+denied, with and without explicit client credentials), the "Share
+access allowed?" question disables correctly, all of the trace's events
+open their Microsoft Events entry, and all tabs were regression-checked
+in both themes at 1500px and 375px, with no page errors and no sideways
+scrolling. The README's Event Trace description now covers all nine
+traces.
+
+`1.6.17` (PATCH - a new trace within the existing Event Trace tab).
 
 ## Structure
 
