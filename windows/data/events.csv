@@ -51609,3 +51609,24 @@ Level:         Error
 Computer:      SRV-FILE01.corp.local
 Description:
 The WinRM service is unable to start because of a failure during initialization.","Microsoft TechNet ""Windows Remote Management"" / WinRM service event pages (Windows Server 2008 R2 and 2008, previous-versions/windows/it-pro) and Microsoft Q&A threads quoting them; the description summarises Microsoft's wording. Logged in the System log by the WinRM service. Repo owner-supplied WinRM_Operational_Event_IDs.csv reference",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Remote Management (WinRM)\WinRM Service,,
+1,Microsoft-Windows-User Profile Service/Operational,Microsoft-Windows-User Profile Service,Account Logon,User profile load,"The User Profile Service received the logon notification for a user and began loading the profile. One of the first per-user events at an interactive logon, so it helps time when a session started.","Log Name:      Microsoft-Windows-User Profile Service/Operational
+Source:        Microsoft-Windows-User Profile Service
+Event ID:      1
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The User Profile Service received the logon notification for a user and began loading the profile.","Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, ""User Profile Service Operational log"") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+67,Microsoft-Windows-User Profile Service/Operational,Microsoft-Windows-User Profile Service,Account Logon,User profile load,The User Profile Service recorded the logon type for the session as it loaded the profile. Sits between event 1 (notified) and event 2 (profile loaded).,"Log Name:      Microsoft-Windows-User Profile Service/Operational
+Source:        Microsoft-Windows-User Profile Service
+Event ID:      67
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The User Profile Service recorded the logon type while loading the user profile.","Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, ""User Profile Service Operational log"") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+2,Microsoft-Windows-User Profile Service/Operational,Microsoft-Windows-User Profile Service,Account Logon,User profile load,The User Profile Service finished loading the user profile: the profile is ready and the desktop can start. The completion marker of an interactive logon; event 3 is the matching profile-unload at logoff.,"Log Name:      Microsoft-Windows-User Profile Service/Operational
+Source:        Microsoft-Windows-User Profile Service
+Event ID:      2
+Level:         Information
+Computer:      WKS-0142.corp.local
+Description:
+The User Profile Service finished loading the user profile for the session.","Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, ""User Profile Service Operational log"") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,

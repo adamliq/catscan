@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.15` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.16` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,14 +59,15 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — seven traces so far. Four cover RDP: an RDP
+than one event at a time — eight traces so far. Four cover RDP: an RDP
 logon to a host (logon, disconnect and logoff, branching on Kerberos vs
 NTLM, NLA, credential success, session reconnect, RD Gateway and RD
 Connection Broker), the same connection seen from the machine it was
 made from, session takeover with `tscon` and shadowing, and turning RDP
-on. The other three cover lateral movement: PowerShell remoting over
-WinRM, WMI remote execution, and PsExec / remote service execution —
-each shown on the target and on the source.
+on. Three cover lateral movement: PowerShell remoting over WinRM, WMI
+remote execution, and PsExec / remote service execution — each shown on
+the target and on the source. The eighth is an ordinary domain desktop
+logon at the console — logon, lock and unlock, and logoff.
 
 ## Web lookup
 
@@ -4110,6 +4111,54 @@ scrolling. The README's Event Trace description now covers all seven
 traces.
 
 `1.6.15` (PATCH - a new trace within the existing Event Trace tab).
+
+Added an eighth Event Trace: **Windows desktop logon** — an ordinary
+domain-joined console sign-in, from an owner-supplied logon-event-flow
+reference. Three phases:
+
+- **Logon:** the domain controller's Kerberos 4768/4769 (branching on a
+  cached logon with no DC, which has no Kerberos events and is logon
+  type 11 instead of type 2, and on whether the credentials were
+  accepted); then on the desktop 4624, an admin branch adding the second
+  UAC-split-token 4624 and 4672, 4627 (group membership), the Group
+  Policy 4001/8001 and User Profile Service 1/67/2 profile-load events,
+  the Winlogon 7001 notification, 4688 (userinit -> explorer -> startup),
+  5379 (Credential Manager) and LocalSessionManager 21/22. A failed
+  logon ends at 4771 on the DC (or nothing on the DC for a cached logon)
+  plus 4625.
+- **Lock & unlock:** 4802 (screensaver), 4800 (locked), then a type 7
+  unlock 4624 with 4801/4803, or 4625 if the unlock password is wrong.
+- **Logoff:** 4647, 4634, LocalSessionManager 23 and Winlogon 7002.
+
+The 4624's title switches between "type 2 (console)" and "type 11
+(cached, no DC)" with the cached answer. Two logs are new to the Event
+Trace legend, Group Policy and User Profile Service, each with a colour
+in both themes.
+
+Three **User Profile Service/Operational** events (1, 2 and 67) were
+added to the Windows Events catalogue to back the trace's profile-load
+step; the catalogue had none from this log. Their exact manifest message
+text isn't publicly documented, so the descriptions state their role
+(profile-load timing, well attested as a logon/logoff artefact in DFIR
+references) and the samples are marked illustrative.
+
+One supporting fix: the trace renderer's grouped-branch helper now
+renders a note as well as an event, so a Yes/No branch can end in an
+explanatory note (used for the cached-logon "no DC" case). The existing
+seven traces are unaffected.
+
+Regenerated with `tools/build_windows_events.py` (5,399 -> 5,402
+events). Verified with the build checks and in Playwright: every branch
+gives the expected trail (cached vs domain, admin vs standard, success
+vs failure, unlock success vs failure), the 4624 title switches with the
+cached answer, all of the trace's events open their Microsoft Events
+entry, and one earlier trace was re-run to confirm the shared renderer
+change is safe. All tabs were regression-checked in both themes at
+1500px and 375px, with no page errors and no sideways scrolling. The
+README's Event Trace description now covers all eight traces.
+
+`1.6.16` (PATCH - a new trace and three supporting Windows events within
+the existing Event Trace and Windows Events tabs).
 
 ## Structure
 
