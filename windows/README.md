@@ -193,12 +193,12 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   so `event_id`/`group_policy_path`/`how_to_collect` don't apply and
   aren't reused. Kept in sync with `index.html`'s embedded `DATA.cloud_logs`
   and the page's "N log categories" banner by `tools/build_cloud_logs.py`
-  (see the repo root `README.md`'s Structure section). 218 rows across
+  (see the repo root `README.md`'s Structure section). 220 rows across
   seven platforms:
   - **Entra ID** (13 rows) — all Microsoft Entra ID tenant-wide log
     categories (`AuditLogs`, `SignInLogs`, `RiskyUsers`, etc.).
-  - **Azure** (146 rows) — all 8 Subscription Activity Log categories
-    (`Administrative`, `Security`, `Policy`, etc.) plus 138 Azure
+  - **Azure** (148 rows) — all 8 Subscription Activity Log categories
+    (`Administrative`, `Security`, `Policy`, etc.) plus 140 Azure
     resource-log categories across 47 resource types
     (`Microsoft.KeyVault/vaults`, `Microsoft.Storage/storageAccounts`,
     `Microsoft.ContainerService/managedClusters`,
@@ -324,7 +324,7 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   event in this catalogue to point at).
 
   `cim_mapping` and `windows_equivalent` were populated conservatively
-  throughout — on a bit under a quarter of the 218 rows, where a clean,
+  throughout — on a bit under a quarter of the 220 rows, where a clean,
   confident mapping exists (mostly Authentication, Change.Account_
   Management, Network_Traffic, DLP, Alerts, and bare Change), left blank
   everywhere else (`RiskyUsers`, all the SQL/DocumentDB/Databricks/
