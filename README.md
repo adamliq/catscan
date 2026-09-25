@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.19` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.20` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -4315,6 +4315,37 @@ description-length fix. The Windows Events catalogue itself (events.csv
 `1.6.19` (PATCH - three Windows 365 Cloud Logs categories split out of
 one combined row, plus a new sync script and CI check for the Cloud
 Logs tab's data).
+
+Checked a pasted Azure AI (Azure OpenAI / Cognitive Services /
+Microsoft Foundry) log schema reference against the two existing
+`Microsoft.CognitiveServices/accounts` rows in the Cloud Logs tab.
+
+- **Already there:** `RequestResponse` and `Audit`, both enriched with a
+  little more precision - `RequestResponse` now names an example
+  operation (`ChatCompletions_Create`) and the `AzureDiagnostics`
+  landing table; `Audit` now also names the landing table.
+- **Added:** `AzureOpenAIRequestUsage` (the token/usage-focused,
+  cost-tracking category, distinct from `RequestResponse`'s call-detail
+  focus) and `Trace` (limited availability - only some custom
+  scenarios), both under the same `Microsoft.CognitiveServices/accounts`
+  resource type, matching the four categories Microsoft documents for
+  this resource. Kept to the same one-row-per-documented-category
+  convention as the `1.6.19` Windows 365 split, and to the same terse,
+  under-200-character description length that fix established as the
+  safe ceiling for this file's list-row layout.
+
+Regenerated with `tools/build_cloud_logs.py` (218 -> 220 cloud log
+categories; Azure platform 146 -> 148 rows, 138 -> 140 Azure
+resource-log categories). Verified with all five build checks and in
+Playwright: searching "cognitive services" finds three of the four rows
+(the fourth, `AzureOpenAIRequestUsage`, doesn't happen to repeat that
+exact phrase, and is found separately by "azure openai" or
+"RequestUsage"); each shows the correct `Microsoft.CognitiveServices/
+accounts` badge; the "N log categories" banner reads 220; no page
+errors or sideways scrolling at 1500px or 375px in either theme.
+
+`1.6.20` (PATCH - two Azure AI Cloud Logs categories added and two
+enriched, within the existing Cloud Logs data).
 
 ## Structure
 
