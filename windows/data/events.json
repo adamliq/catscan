@@ -17192,6 +17192,49 @@
   {
     "event_id": "4663",
     "log": "Security",
+    "source": "Microsoft-Windows-Security-Auditing",
+    "category": "Object Access",
+    "subcategory": "Audit File System",
+    "description": "A specific access right was used (or denied) on an already-open file or folder handle. Its Accesses field names the right, for example ReadData, WriteData (or AddFile) or DELETE, which is what tells a read apart from a modification or a deletion attempt. A Failure audit here means that specific right was denied even though the handle itself (4656) was granted.",
+    "sample": "Log Name:      Security\nSource:        Microsoft-Windows-Security-Auditing\nEvent ID:      4663\nTask Category: File System\nLevel:         Information\nKeywords:      Audit Success or Audit Failure\nComputer:      SRV-FILE01.corp.local\nDescription:\nAn attempt was made to access an object.\n\nObject Server:\tSecurity\nObject Type:\tFile\nObject Name:\tD:\\Shares\\Finance\\payroll-2026.xlsx\nHandle ID:\t0x2b8\nAccess Request Information:\n\tAccesses:\tWriteData (or AddFile)",
+    "reference": "Microsoft Learn, \"4656(S, F): A handle to an object was requested\", \"4663(S, F): An attempt was made to access an object\" and \"4660(S): An object was deleted\" (Windows security auditing event reference)",
+    "how_to_collect": "Audit File System",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1005",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Windows Settings\\Security Settings\\Advanced Audit Policy Configuration\\Object Access\\Audit File System",
+    "opposite_event_id": "",
+    "cim_mapping": "Endpoint.Filesystem",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "task_category": "string",
+        "level": "enum",
+        "keywords": "string",
+        "computer": "string",
+        "description": "string"
+      },
+      "subject": {
+        "security_id": "sid",
+        "account_name": "string",
+        "account_domain": "string",
+        "logon_id": "hex"
+      },
+      "object": {
+        "object_server": "string",
+        "object_type": "string",
+        "object_name": "string",
+        "handle_id": "hex"
+      }
+    }
+  },
+  {
+    "event_id": "4663",
+    "log": "Security",
     "source": "Microsoft Windows Security Auditing",
     "category": "Removable Media / Device (PNP)",
     "subcategory": "Removable Storage device.",
@@ -19104,6 +19147,49 @@
         "level": "enum",
         "computer": "string",
         "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "4656",
+    "log": "Security",
+    "source": "Microsoft-Windows-Security-Auditing",
+    "category": "Object Access",
+    "subcategory": "Audit File System",
+    "description": "A handle to a file or folder was requested. Logged as Audit Success if the open succeeded, or Audit Failure if the file or folder's permissions denied the open outright, before any specific access right was attempted. Needs the \"Audit File System\" advanced audit subcategory turned on, plus a SACL (a matching auditing entry) on the file or folder itself.",
+    "sample": "Log Name:      Security\nSource:        Microsoft-Windows-Security-Auditing\nEvent ID:      4656\nTask Category: File System\nLevel:         Information\nKeywords:      Audit Success or Audit Failure\nComputer:      SRV-FILE01.corp.local\nDescription:\nA handle to the following object was requested.\n\nObject Server:\tSecurity\nObject Type:\tFile\nObject Name:\tD:\\Shares\\Finance\\payroll-2026.xlsx\nHandle ID:\t0x2b8\nAccess Request Information:\n\tAccesses:\tREAD_CONTROL\n\t\t\tReadData (or ListDirectory)",
+    "reference": "Microsoft Learn, \"4656(S, F): A handle to an object was requested\", \"4663(S, F): An attempt was made to access an object\" and \"4660(S): An object was deleted\" (Windows security auditing event reference)",
+    "how_to_collect": "Audit File System",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1005",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Windows Settings\\Security Settings\\Advanced Audit Policy Configuration\\Object Access\\Audit File System",
+    "opposite_event_id": "",
+    "cim_mapping": "Endpoint.Filesystem",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "task_category": "string",
+        "level": "enum",
+        "keywords": "string",
+        "computer": "string",
+        "description": "string"
+      },
+      "subject": {
+        "security_id": "sid",
+        "account_name": "string",
+        "account_domain": "string",
+        "logon_id": "hex"
+      },
+      "object": {
+        "object_server": "string",
+        "object_type": "string",
+        "object_name": "string",
+        "handle_id": "hex"
       }
     }
   },
@@ -42846,6 +42932,49 @@
         "keywords": "string",
         "computer": "string",
         "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "4660",
+    "log": "Security",
+    "source": "Microsoft-Windows-Security-Auditing",
+    "category": "Object Access",
+    "subcategory": "Audit File System",
+    "description": "A file or folder was deleted. Needs the \"Audit File System\" subcategory and a delete-auditing SACL. Logged for the deleted object itself; the containing folder can also show a 4663 with a DELETE_CHILD access.",
+    "sample": "Log Name:      Security\nSource:        Microsoft-Windows-Security-Auditing\nEvent ID:      4660\nTask Category: File System\nLevel:         Information\nKeywords:      Audit Success\nComputer:      SRV-FILE01.corp.local\nDescription:\nAn object was deleted.\n\nObject Server:\tSecurity\nObject Type:\tFile\nObject Name:\tD:\\Shares\\Finance\\payroll-2026.xlsx\nHandle ID:\t0x2b8",
+    "reference": "Microsoft Learn, \"4656(S, F): A handle to an object was requested\", \"4663(S, F): An attempt was made to access an object\" and \"4660(S): An object was deleted\" (Windows security auditing event reference)",
+    "how_to_collect": "Audit File System",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1070.004",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "Computer Configuration\\Windows Settings\\Security Settings\\Advanced Audit Policy Configuration\\Object Access\\Audit File System",
+    "opposite_event_id": "",
+    "cim_mapping": "Endpoint.Filesystem",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "task_category": "string",
+        "level": "enum",
+        "keywords": "string",
+        "computer": "string",
+        "description": "string"
+      },
+      "subject": {
+        "security_id": "sid",
+        "account_name": "string",
+        "account_domain": "string",
+        "logon_id": "hex"
+      },
+      "object": {
+        "object_server": "string",
+        "object_type": "string",
+        "object_name": "string",
+        "handle_id": "hex"
       }
     }
   },

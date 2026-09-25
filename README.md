@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.17` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.18` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,7 +59,7 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — nine traces so far. Four cover RDP: an RDP
+than one event at a time — ten traces so far. Four cover RDP: an RDP
 logon to a host (logon, disconnect and logoff, branching on Kerberos vs
 NTLM, NLA, credential success, session reconnect, RD Gateway and RD
 Connection Broker), the same connection seen from the machine it was
@@ -69,6 +69,8 @@ remote execution, and PsExec / remote service execution — each shown on
 the target and on the source. The eighth is an ordinary domain desktop
 logon at the console — logon, lock and unlock, and logoff. The ninth is
 accessing a network share, shown on the file server and on the client.
+The tenth is object-level file and folder access auditing: opening,
+changing and deleting an audited file, and access denied by permissions.
 
 ## Web lookup
 
@@ -4197,6 +4199,54 @@ scrolling. The README's Event Trace description now covers all nine
 traces.
 
 `1.6.17` (PATCH - a new trace within the existing Event Trace tab).
+
+Added a tenth Event Trace: **File and folder access auditing** — what
+Windows logs for an audited file or folder (the "Audit File System"
+advanced audit subcategory plus a SACL on the object itself), as
+distinct from the share-level 5140/5145 the `1.6.17` trace covers. One
+phase:
+
+- **Access granted?** branches: **No** goes to 4656 (Audit Failure) and
+  stops there - NTFS denies the open before any specific access right
+  is attempted, so no 4663 or 4658 follows. **Yes** continues to 4656
+  (Audit Success) and 4663 (the specific access right used, for example
+  ReadData), then two independent questions - **Content modified?**
+  (Yes adds a second 4663 with WriteData/AddFile) and **File deleted?**
+  (Yes adds 4660) - before 4658 closes the handle.
+
+**Catalogue:** three new Security rows were needed, under a new "Audit
+File System" subcategory: 4656, 4663 and 4660. The catalogue already
+had these three IDs, but only under other subcategories - Handle
+Manipulation, Removable Storage, SAM and Kernel Object - none of which
+describe an ordinary NTFS file or folder. Sourced from Microsoft's own
+event reference pages.
+
+**A cross-tab jump-link bug, found and fixed while building this:** the
+"Open in Microsoft Events" link matches an event by ID and log only,
+picking the first row in file order - so a naive append would have sent
+every reader of this trace to the wrong catalogue entry (for 4663, the
+unrelated "Success read or write to removeable media" row). The fix
+places each new row in `events.csv` immediately before the first
+existing row that shares its event ID, not at the end. This is
+`tools/build_windows_events.py`'s existing row-order contract, applied
+correctly for the first time in this project - the CSV's row order now
+matters for cross-tab links, and future additions to an ID that already
+has multiple subcategory rows should insert the same way. All three new
+IDs were checked to land on their own row.
+
+Verified with the build checks and in Playwright: every branch and
+combination (denied vs granted, read-only vs modified vs deleted vs
+both) gives the expected trail, both independent questions disable
+correctly on a denied logon, each event opens its own correct Microsoft
+Events entry (confirmed individually for 4656/4663/4660, not just that
+some link exists), and the two most recent traces were re-run to
+confirm they're unaffected. All tabs were regression-checked in both
+themes at 1500px and 375px, with no page errors and no sideways
+scrolling. The README's Event Trace description now covers all ten
+traces.
+
+`1.6.18` (PATCH - a new trace and three supporting Windows events within
+the existing Event Trace and Windows Events tabs).
 
 ## Structure
 

@@ -5271,6 +5271,22 @@ Level:         Error
 Computer:      WKS-0142.corp.local
 Description:
 Generated checksum {GeneratedChecksum} does not match expected checksum {ExpectedChecksum} for file {FileName}.","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4663,Security,Microsoft-Windows-Security-Auditing,Object Access,Audit File System,"A specific access right was used (or denied) on an already-open file or folder handle. Its Accesses field names the right, for example ReadData, WriteData (or AddFile) or DELETE, which is what tells a read apart from a modification or a deletion attempt. A Failure audit here means that specific right was denied even though the handle itself (4656) was granted.","Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Event ID:      4663
+Task Category: File System
+Level:         Information
+Keywords:      Audit Success or Audit Failure
+Computer:      SRV-FILE01.corp.local
+Description:
+An attempt was made to access an object.
+
+Object Server:	Security
+Object Type:	File
+Object Name:	D:\Shares\Finance\payroll-2026.xlsx
+Handle ID:	0x2b8
+Access Request Information:
+	Accesses:	WriteData (or AddFile)","Microsoft Learn, ""4656(S, F): A handle to an object was requested"", ""4663(S, F): An attempt was made to access an object"" and ""4660(S): An object was deleted"" (Windows security auditing event reference)",Audit File System,illustrative,T1005,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}, ""subject"": {""security_id"": ""sid"", ""account_name"": ""string"", ""account_domain"": ""string"", ""logon_id"": ""hex""}, ""object"": {""object_server"": ""string"", ""object_type"": ""string"", ""object_name"": ""string"", ""handle_id"": ""hex""}}",Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\Object Access\Audit File System,,Endpoint.Filesystem
 4663,Security,Microsoft Windows Security Auditing,Removable Media / Device (PNP),Removable Storage device.,Success read or write to removeable media,"Log Name:      Security
 Source:        Microsoft-Windows-Security-Auditing
 Event ID:      4663
@@ -5823,6 +5839,23 @@ Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
 (no message template provided by the manifest for this event)","Full Windows Server 2019 (1809, build 17763.1457) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue)",,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+4656,Security,Microsoft-Windows-Security-Auditing,Object Access,Audit File System,"A handle to a file or folder was requested. Logged as Audit Success if the open succeeded, or Audit Failure if the file or folder's permissions denied the open outright, before any specific access right was attempted. Needs the ""Audit File System"" advanced audit subcategory turned on, plus a SACL (a matching auditing entry) on the file or folder itself.","Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Event ID:      4656
+Task Category: File System
+Level:         Information
+Keywords:      Audit Success or Audit Failure
+Computer:      SRV-FILE01.corp.local
+Description:
+A handle to the following object was requested.
+
+Object Server:	Security
+Object Type:	File
+Object Name:	D:\Shares\Finance\payroll-2026.xlsx
+Handle ID:	0x2b8
+Access Request Information:
+	Accesses:	READ_CONTROL
+			ReadData (or ListDirectory)","Microsoft Learn, ""4656(S, F): A handle to an object was requested"", ""4663(S, F): An attempt was made to access an object"" and ""4660(S): An object was deleted"" (Windows security auditing event reference)",Audit File System,illustrative,T1005,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}, ""subject"": {""security_id"": ""sid"", ""account_name"": ""string"", ""account_domain"": ""string"", ""logon_id"": ""hex""}, ""object"": {""object_server"": ""string"", ""object_type"": ""string"", ""object_name"": ""string"", ""handle_id"": ""hex""}}",Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\Object Access\Audit File System,,Endpoint.Filesystem
 4656,Security,Microsoft-Windows-Security-Auditing,Object Access,Audit Handle Manipulation,A handle to an object was requested.,"Log Name:      Security
 Source:        Microsoft-Windows-Security-Auditing
 Event ID:      4656
@@ -13047,6 +13080,20 @@ Keywords:      Internal
 Computer:      WKS-0142.corp.local
 Description:
 (no message template provided by the manifest for this event)",Full Windows 11 24H2 Pro (build 26100.1742) ETW event manifest export (security/audit-relevant channels only; the same file also covers ~700 other non-security providers not ingested into this catalogue),,template,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}}",Computer Configuration\Administrative Templates\Windows Components\Windows Hello for Business,,
+4660,Security,Microsoft-Windows-Security-Auditing,Object Access,Audit File System,"A file or folder was deleted. Needs the ""Audit File System"" subcategory and a delete-auditing SACL. Logged for the deleted object itself; the containing folder can also show a 4663 with a DELETE_CHILD access.","Log Name:      Security
+Source:        Microsoft-Windows-Security-Auditing
+Event ID:      4660
+Task Category: File System
+Level:         Information
+Keywords:      Audit Success
+Computer:      SRV-FILE01.corp.local
+Description:
+An object was deleted.
+
+Object Server:	Security
+Object Type:	File
+Object Name:	D:\Shares\Finance\payroll-2026.xlsx
+Handle ID:	0x2b8","Microsoft Learn, ""4656(S, F): A handle to an object was requested"", ""4663(S, F): An attempt was made to access an object"" and ""4660(S): An object was deleted"" (Windows security auditing event reference)",Audit File System,illustrative,T1070.004,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""task_category"": ""string"", ""level"": ""enum"", ""keywords"": ""string"", ""computer"": ""string"", ""description"": ""string""}, ""subject"": {""security_id"": ""sid"", ""account_name"": ""string"", ""account_domain"": ""string"", ""logon_id"": ""hex""}, ""object"": {""object_server"": ""string"", ""object_type"": ""string"", ""object_name"": ""string"", ""handle_id"": ""hex""}}",Computer Configuration\Windows Settings\Security Settings\Advanced Audit Policy Configuration\Object Access\Audit File System,,Endpoint.Filesystem
 4660,Security,Microsoft-Windows-Security-Auditing,Object Access,Audit SAM,An object was deleted.,"Log Name:      Security
 Source:        Microsoft-Windows-Security-Auditing
 Event ID:      4660
