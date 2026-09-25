@@ -191,7 +191,10 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   single category like `AuditLogs` covers many distinct operation types
   rather than being enumerated individually the way Windows events are —
   so `event_id`/`group_policy_path`/`how_to_collect` don't apply and
-  aren't reused. 216 rows across seven platforms:
+  aren't reused. Kept in sync with `index.html`'s embedded `DATA.cloud_logs`
+  and the page's "N log categories" banner by `tools/build_cloud_logs.py`
+  (see the repo root `README.md`'s Structure section). 218 rows across
+  seven platforms:
   - **Entra ID** (13 rows) — all Microsoft Entra ID tenant-wide log
     categories (`AuditLogs`, `SignInLogs`, `RiskyUsers`, etc.).
   - **Azure** (146 rows) — all 8 Subscription Activity Log categories
@@ -270,11 +273,16 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
     logging (`system.debug=true`). A new platform rather than folded
     into Azure, since it's a separate product surface with its own
     auditing model, not an ARM resource with diagnostic settings.
-  - **Microsoft Intune** (2 rows) — tenant-wide device compliance/
-    configuration/app-protection logging, plus Windows 365 Cloud PC
-    provisioning/connection activity (folded in here rather than given
-    its own platform, since Windows 365 is managed entirely through the
-    Intune admin center).
+  - **Microsoft Intune** (4 rows) — tenant-wide device compliance/
+    configuration/app-protection logging, plus three Windows 365 Cloud PC
+    categories split out individually rather than left as one combined
+    row (`Windows365AuditLogs` for create/update/delete/assign/remote-action
+    operations, `Windows365ConnectionLogs` for per-session RDP connection
+    lifecycle, and `Windows365NetworkLogs` for bandwidth/round-trip-time
+    telemetry — the same one-row-per-documented-category convention the
+    Azure Virtual Desktop rows above already use), folded in under Intune
+    rather than given its own platform, since Windows 365 is managed
+    entirely through the Intune admin center.
   - **GitHub** (1 row) — organization/enterprise audit log streaming.
     Included since GitHub is a Microsoft subsidiary whose audit log is
     commonly piped into the same Sentinel/Splunk pipelines as the rest
@@ -316,7 +324,7 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   event in this catalogue to point at).
 
   `cim_mapping` and `windows_equivalent` were populated conservatively
-  throughout — on a bit under a quarter of the 216 rows, where a clean,
+  throughout — on a bit under a quarter of the 218 rows, where a clean,
   confident mapping exists (mostly Authentication, Change.Account_
   Management, Network_Traffic, DLP, Alerts, and bare Change), left blank
   everywhere else (`RiskyUsers`, all the SQL/DocumentDB/Databricks/

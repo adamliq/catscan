@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.18` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.19` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -4248,6 +4248,74 @@ traces.
 `1.6.18` (PATCH - a new trace and three supporting Windows events within
 the existing Event Trace and Windows Events tabs).
 
+Checked a pasted Windows 365 (Cloud PC) log schema reference against
+the Cloud Logs tab. The tab already had one row for it, but as a single
+vague combined category ("CloudPC / Provisioning / Connection logs")
+rather than the three separately documented Log Analytics table names
+Microsoft actually exposes. Split it into `Windows365AuditLogs`,
+`Windows365ConnectionLogs` and `Windows365NetworkLogs` - the same
+one-row-per-documented-category convention the file's own Azure
+Virtual Desktop rows already use - each with its own precise
+description, severity and where-to-enable path:
+
+- **Windows365AuditLogs** - create/update/delete/assign/remote-action
+  operations on Cloud PCs, correlated by ActivityId; the main category
+  exposed through Intune's own Diagnostic settings picker.
+- **Windows365ConnectionLogs** - per-session RDP connection lifecycle
+  (client and session-host details, TransportType: Shortpath, TURN or
+  Websocket), correlated to the audit trail by ActivityId; noted that
+  this surfaces via a Log Analytics workspace rather than the same
+  Diagnostic settings category picker as AuditLogs.
+- **Windows365NetworkLogs** - bandwidth/round-trip-time telemetry for a
+  Cloud PC session, correlated by ActivityId; same Log Analytics
+  surface as ConnectionLogs.
+
+A first pass wrote much longer, more detailed descriptions (500+
+characters, including field-level detail like the fact that
+`OtherAuditEventProperties`/`OtherIdentityProperties` arrive as
+stringified JSON needing a second parse step). That broke the Cloud
+Logs tab's list-row layout at 375px width - a pre-existing CSS
+fragility in the list row's description div, exposed for the first
+time because every other row in this 218-row file happens to be far
+shorter (median 41 characters, and a 276-character pre-existing row
+was the previous ceiling). Rather than touch shared CSS that every
+platform's rows render through, the fix was to write to the file's own
+established terse, one-sentence style instead, well under that ceiling
+- consistent with this file being a category-level index, not a
+column-by-column schema.
+
+A second, unrelated gap found and fixed along the way: unlike
+`events.csv` and the Linux reference tables, `cloud_logs.csv` had no
+build script keeping `index.html`'s embedded `DATA.cloud_logs` or
+`cloud_logs.json` in sync with it - `build_windows_events.py`'s own
+docstring claimed this data had "its own established per-source
+workflow", which turned out not to exist. A hand-edit to the CSV alone
+would have left the running Cloud Logs tab showing the old row
+indefinitely. New `tools/build_cloud_logs.py`, mirroring
+`build_windows_events.py`'s approach (CSV is the single source of
+truth; regenerates the JSON export, the embedded `DATA.cloud_logs`
+array, and the tab's "N log categories" banner count; `--check` mode
+wired into CI as a fifth check), also caught and fixed one small
+pre-existing drift: `cloud_logs.json` didn't byte-for-byte match
+`cloud_logs.csv` even before this change (same row count, minor
+formatting differences) - now regenerated from the CSV like everything
+else that's kept in sync this way.
+
+Regenerated with `tools/build_cloud_logs.py` (216 -> 218 cloud log
+categories). Verified with all five build checks (`check_syntax.js`,
+`build_windows_events.py --check`, `build_linux_reference.py --check`,
+`build_cloud_logs.py --check`, `check_version.py`) and in Playwright:
+searching "windows365" finds all three new rows with the right
+platform/area badges, severity and NIST mapping; the "N log
+categories" banner reads 218; no page errors or sideways scrolling at
+1500px or 375px in either theme, confirmed both before and after the
+description-length fix. The Windows Events catalogue itself (events.csv
+/ Event Trace) is untouched.
+
+`1.6.19` (PATCH - three Windows 365 Cloud Logs categories split out of
+one combined row, plus a new sync script and CI check for the Cloud
+Logs tab's data).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
@@ -4293,7 +4361,20 @@ the existing Event Trace and Windows Events tabs).
     at once instead of one table's own ad hoc, previously-uncommitted
     sync script. `--check` exits non-zero instead of writing anything
     if any key is out of sync, naming which ones.
-  - `.github/workflows/build-check.yml` runs all four on every pull
+  - `tools/build_cloud_logs.py` — the same class of sync script as
+    `build_windows_events.py`, applied to the Windows Events app's Cloud
+    Logs tab instead of its main Events one: regenerates
+    `index.html`'s embedded `DATA.cloud_logs` array and
+    `windows/data/cloud_logs.json` from `windows/data/cloud_logs.csv`,
+    plus the tab's own "N log categories" banner count. Unlike Windows
+    Events and Linux Events, this data source had no sync tooling at
+    all until this script — `build_windows_events.py`'s own docstring
+    assumed the Cloud Logs tab had "its own established per-source
+    workflow", which turned out not to exist, so an edit to
+    `cloud_logs.csv` could silently drift from the embedded copy the
+    same way `events.csv` once did before `1.5.8`. `--check` exits
+    non-zero if `index.html` or `cloud_logs.json` is out of sync.
+  - `.github/workflows/build-check.yml` runs all five on every pull
     request into `main` (and the syntax/sync checks again on every push
     to `main`, so a direct push or an already-open PR's later commit
     can't silently skip them either).
