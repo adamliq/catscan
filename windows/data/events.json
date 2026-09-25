@@ -168536,5 +168536,92 @@
         "description": "string"
       }
     }
+  },
+  {
+    "event_id": "1",
+    "log": "Microsoft-Windows-User Profile Service/Operational",
+    "source": "Microsoft-Windows-User Profile Service",
+    "category": "Account Logon",
+    "subcategory": "User profile load",
+    "description": "The User Profile Service received the logon notification for a user and began loading the profile. One of the first per-user events at an interactive logon, so it helps time when a session started.",
+    "sample": "Log Name:      Microsoft-Windows-User Profile Service/Operational\nSource:        Microsoft-Windows-User Profile Service\nEvent ID:      1\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe User Profile Service received the logon notification for a user and began loading the profile.",
+    "reference": "Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, \"User Profile Service Operational log\") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "67",
+    "log": "Microsoft-Windows-User Profile Service/Operational",
+    "source": "Microsoft-Windows-User Profile Service",
+    "category": "Account Logon",
+    "subcategory": "User profile load",
+    "description": "The User Profile Service recorded the logon type for the session as it loaded the profile. Sits between event 1 (notified) and event 2 (profile loaded).",
+    "sample": "Log Name:      Microsoft-Windows-User Profile Service/Operational\nSource:        Microsoft-Windows-User Profile Service\nEvent ID:      67\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe User Profile Service recorded the logon type while loading the user profile.",
+    "reference": "Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, \"User Profile Service Operational log\") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
+  },
+  {
+    "event_id": "2",
+    "log": "Microsoft-Windows-User Profile Service/Operational",
+    "source": "Microsoft-Windows-User Profile Service",
+    "category": "Account Logon",
+    "subcategory": "User profile load",
+    "description": "The User Profile Service finished loading the user profile: the profile is ready and the desktop can start. The completion marker of an interactive logon; event 3 is the matching profile-unload at logoff.",
+    "sample": "Log Name:      Microsoft-Windows-User Profile Service/Operational\nSource:        Microsoft-Windows-User Profile Service\nEvent ID:      2\nLevel:         Information\nComputer:      WKS-0142.corp.local\nDescription:\nThe User Profile Service finished loading the user profile for the session.",
+    "reference": "Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, \"User Profile Service Operational log\") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",
+    "how_to_collect": "",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "acsc_priority_log": "",
+    "nist_800_53_au": "",
+    "ad_compromise_techniques": "",
+    "group_policy_path": "",
+    "opposite_event_id": "",
+    "cim_mapping": "",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "computer": "string",
+        "description": "string"
+      }
+    }
   }
 ]
