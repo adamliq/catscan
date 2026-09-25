@@ -10,7 +10,7 @@ menu bar) and as the browser-tab favicon (fixed colors, since favicons
 can't reference the page's own light/dark tokens).
 
 A small tag sits next to the wordmark in the menu bar, reading the
-current [`VERSION`](VERSION) (`v1.6.13` as of this line) — this
+current [`VERSION`](VERSION) (`v1.6.14` as of this line) — this
 merge's own version, distinct from any individual source repo's (the
 vendored `threat-detection/` source already has its own `VERSION`/
 `CHANGELOG.md`, tracking that upstream project independently). Cat Scan
@@ -59,13 +59,14 @@ message-ID-prefix reference (see
 for more over time, each keeping
 its own schema shape rather than a forced common one. An **Event Trace**
 menu shows the order events are logged in across a whole activity rather
-than one event at a time — five traces so far. Four cover RDP: an RDP
+than one event at a time — six traces so far. Four cover RDP: an RDP
 logon to a host (logon, disconnect and logoff, branching on Kerberos vs
 NTLM, NLA, credential success, session reconnect, RD Gateway and RD
 Connection Broker), the same connection seen from the machine it was
 made from, session takeover with `tscon` and shadowing, and turning RDP
-on. The fifth is PowerShell remoting over WinRM, on the target and on
-the source.
+on. The other two cover lateral movement: PowerShell remoting over
+WinRM, and WMI remote execution — each shown on the target and on the
+source.
 
 ## Web lookup
 
@@ -4037,6 +4038,42 @@ page errors.
 
 `1.6.13` (PATCH - nine new Windows events, one caveat added, and one
 event added to an existing trace).
+
+Added a sixth Event Trace: **WMI remote execution**, built only from
+events already in the Windows Events catalogue. It shows what running a
+command on another computer over WMI (`wmic /node: process call create`,
+`Invoke-WmiMethod`, `Invoke-CimMethod`) leaves behind, in two phases:
+
+- **On the target:** the domain controller's Kerberos 4768/4769 (or
+  NTLM 4776), then 4624 type 3 from the source's address, 4672, and
+  WMI-Activity 5857 (a WMI provider started an operation). Then it
+  branches: running a command shows 4688 for the created process as a
+  child of `WmiPrvSE.exe`; a persistence subscription shows WMI-Activity
+  5859 and 5861 (a permanent event-consumer binding, MITRE T1546.003).
+  It ends with 4634. A failed logon ends at 4771 on the domain
+  controller for Kerberos, or at 4776 plus 4625 type 3 for NTLM.
+- **On the source:** 4648 when different credentials are supplied, then
+  4688 for `wmic.exe` or PowerShell and 5156 to port 135 (the RPC
+  endpoint mapper) and a dynamic RPC port.
+
+The trace makes the contrast with PsExec explicit: WMI runs over
+DCOM/RPC, so there's no admin-share access and no service install. It
+asks four questions — Kerberos, credentials accepted, persistence
+subscription, and different credentials used — and adds one legend
+colour, WMI-Activity, in both themes. It sits last in the picker, after
+PowerShell remoting, keeping the four RDP traces together and the two
+lateral-movement traces adjacent. The event order on each computer is
+approximate, and the footnote says so.
+
+Verified with the build checks and in Playwright: every path on both
+phases gives the expected trail (command vs subscription, Kerberos vs
+NTLM, success vs failure, with and without explicit credentials), all
+of the trace's events open their Microsoft Events entry, and all tabs
+were regression-checked in both themes at 1500px and 375px, with no
+page errors and no sideways scrolling. The README's Event Trace
+description now covers all six traces.
+
+`1.6.14` (PATCH - a new trace within the existing Event Trace tab).
 
 ## Structure
 
