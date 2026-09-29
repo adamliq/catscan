@@ -634,7 +634,7 @@ color choices. Adding the doctype puts the page in Standards Mode, which
 fixes ordinary inheritance for every table at once.)
 
 Windows's own **Cloud Actions Explorer** sub-tab (next to its Cloud logs
-tab — 5,148 operations across six Microsoft cloud audit/log schemas
+tab — 5,514 operations across six Microsoft cloud audit/log schemas
 (Microsoft Entra ID, Azure resource logs, the Azure Activity Log,
 Microsoft Intune, Microsoft Purview's unified audit log, and Azure
 DevOps), mapped to their category, resource provider, and resource type)
@@ -4346,6 +4346,64 @@ errors or sideways scrolling at 1500px or 375px in either theme.
 
 `1.6.20` (PATCH - two Azure AI Cloud Logs categories added and two
 enriched, within the existing Cloud Logs data).
+
+Checked a pasted copy of Microsoft's own "Operation list - Microsoft
+Fabric" documentation page (the reference the Cloud Actions Explorer's
+existing `"Power BI / Fabric activities"` and `"Fabric activities"` rows
+were themselves sourced from) against the 773 Fabric-related rows already
+in `MicrosoftCloud_Schema.xlsx`, to find and add friendly names for the
+ones appearing in Purview's unified audit log that this repo hadn't
+gotten to yet.
+
+- **Backfilled 373 existing `"Power BI / Fabric activities"` rows** that
+  had only a bare `operation` code (friendly name buried as unstructured
+  text inside `source`) with real, structured `friendly_name` and
+  `description` fields - the same convention the 65 `"Fabric activities"`
+  rows already used. Left the other 335 rows in that category alone: this
+  particular Microsoft Learn page doesn't cover them (they're OneLake
+  data-plane/blob-storage-style operations the page explicitly says to
+  look up via OneLake diagnostics instead), so there's nothing to
+  backfill from this source.
+- **Added 366 new rows** for operations this page documents that weren't
+  in the catalogue at all, under the existing `"Fabric activities"`
+  category (matching its established fully-structured convention rather
+  than the older, bare-`operation`-only style). Two operations the page
+  also lists (`ExternalDataSharesBypassForWorkspaceEnabled`/`Disabled`)
+  were skipped as new rows - they already exist, fully populated, under
+  their own more specific `"Fabric Workspace Inbound External Data Share
+  setting"` category, sourced from a different Purview reference page.
+- Description text is the page's own "Notes" column where it has one
+  (lightly normalized - trimmed, ended with a period); where the page
+  gives no notes at all (about half of the ~740 rows touched), the
+  description is just the friendly name turned into a plain sentence,
+  matching the exact fallback already visible in this file's own
+  pre-existing rows (for example `GitConnectionInitialized` / "Initialized
+  connection to Git" / "Initialized connection to Git.").
+
+**A real gap found and fixed while doing this:** keeping `index.html`'s
+embedded `DATA.cloud_actions` in sync with `MicrosoftCloud_Schema.xlsx`
+was a manual step with no script and no CI check at all - unlike
+`events.csv`, `cloud_logs.csv`, and now this, every other data source in
+the repo has a `tools/build_*.py --check` gate. New
+`tools/build_cloud_actions.py` calls the existing
+`windows/tools/export_schema_json.py` to regenerate
+`MicrosoftCloud_Schema.json` from the xlsx, then splices the result into
+`index.html`'s embedded `DATA.cloud_actions`, with a `--check` mode now
+wired into CI as a sixth check (installing `openpyxl` first, the one new
+CI dependency this needs).
+
+`MicrosoftCloud_Schema.xlsx`/`.json`: 5,148 -> **5,514** Cloud Actions
+Explorer operations. Verified with all six build checks and in Playwright:
+searching "Fabric" in the Cloud Actions Explorer finds the new and
+backfilled rows with real friendly names and descriptions instead of a
+bare operation code; the stats banner reads 5,514; a spot-checked sample
+of both backfilled and brand-new rows opens its detail modal correctly;
+no page errors or sideways scrolling at 1500px or 375px in either theme.
+
+`1.6.22` (PATCH - friendly names and descriptions added to Cloud Actions
+Explorer's Fabric operations, plus a new sync script and CI check for
+that data). Skips `1.6.21`, already claimed by an open, not-yet-merged
+PR (the RHEL SSH Event Trace).
 
 ## Structure
 
