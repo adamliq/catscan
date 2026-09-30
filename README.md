@@ -4405,6 +4405,46 @@ Explorer's Fabric operations, plus a new sync script and CI check for
 that data). Skips `1.6.21`, already claimed by an open, not-yet-merged
 PR (the RHEL SSH Event Trace).
 
+Asked to check the whole site for improvements: went tab by tab -
+Microsoft Events (all six sub-panels: Events, Reference tables, Schema
+explorer, Pivot explorer, Cloud logs, Cloud Actions Explorer), AWS
+Events, Linux Events (all seven sub-panels), Threat Detection (all four
+sub-tabs), Other Events (all eight vendors), Event Trace (all ten traces
+and every phase within each), and Search - at 1500px and 375px in both
+themes, checking for page/console errors and sideways scrolling, plus a
+scripted click-through of every one of the 202 Event Trace nodes
+currently in the catalogue to confirm each one's "Open in catalogue"
+link still resolves to a real row (it does, for all 202).
+
+**One real bug found and fixed:** AWS Events' own intro paragraph names
+its data file inline - `Events_Other/aws_iam_actions_expanded.csv` -
+which is exactly long enough, as one unbroken token, to overflow the
+paragraph's width at 375px and drag the whole page into a few pixels of
+sideways scroll (`overflow-wrap` was left at its default `normal`, which
+doesn't treat `/` as a break point in this browser). Fixed by adding
+`overflow-wrap: anywhere` scoped to just this `<code>` element
+(`#app-aws .aws-header p.sub code`), rather than touching the shared,
+already-correct `p.sub` rule every other app's intro paragraph also
+uses - this is the only spot in the whole file where a `<code>` element
+appears inside a `p.sub` intro, so the narrow fix doesn't leave any
+sibling instance still broken.
+
+Everything else came back clean: no console or page errors anywhere,
+no other sideways scrolling, no duplicate DOM ids, no images missing
+`alt`, no inputs missing a label/`aria-label`/placeholder, no icon-only
+buttons missing an accessible name, and no leftover `TODO`/`FIXME`/
+`console.log` debug markers in the shipped code. Worth flagging as a
+longer-term consideration rather than a bug: `index.html` is now
+**40 MB** raw / **4.3 MB** gzipped, and takes roughly four seconds to
+parse and fire `load` even served locally - a real cost of this
+project's single-self-contained-file architecture, not something a
+small patch can fix (splitting the embedded `DATA` objects into
+separate lazily-fetched files would be a genuine restructuring project
+of its own, and hasn't been asked for).
+
+`1.6.23` (PATCH - a sideways-scroll bug fixed on AWS Events at 375px;
+otherwise a clean full-site audit, reported above).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
