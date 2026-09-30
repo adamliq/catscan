@@ -638,7 +638,7 @@ color choices. Adding the doctype puts the page in Standards Mode, which
 fixes ordinary inheritance for every table at once.)
 
 Windows's own **Cloud Actions Explorer** sub-tab (next to its Cloud logs
-tab — 5,148 operations across six Microsoft cloud audit/log schemas
+tab — 5,514 operations across six Microsoft cloud audit/log schemas
 (Microsoft Entra ID, Azure resource logs, the Azure Activity Log,
 Microsoft Intune, Microsoft Purview's unified audit log, and Azure
 DevOps), mapped to their category, resource provider, and resource type)
@@ -4351,6 +4351,104 @@ errors or sideways scrolling at 1500px or 375px in either theme.
 `1.6.20` (PATCH - two Azure AI Cloud Logs categories added and two
 enriched, within the existing Cloud Logs data).
 
+Checked a pasted copy of Microsoft's own "Operation list - Microsoft
+Fabric" documentation page (the reference the Cloud Actions Explorer's
+existing `"Power BI / Fabric activities"` and `"Fabric activities"` rows
+were themselves sourced from) against the 773 Fabric-related rows already
+in `MicrosoftCloud_Schema.xlsx`, to find and add friendly names for the
+ones appearing in Purview's unified audit log that this repo hadn't
+gotten to yet.
+
+- **Backfilled 373 existing `"Power BI / Fabric activities"` rows** that
+  had only a bare `operation` code (friendly name buried as unstructured
+  text inside `source`) with real, structured `friendly_name` and
+  `description` fields - the same convention the 65 `"Fabric activities"`
+  rows already used. Left the other 335 rows in that category alone: this
+  particular Microsoft Learn page doesn't cover them (they're OneLake
+  data-plane/blob-storage-style operations the page explicitly says to
+  look up via OneLake diagnostics instead), so there's nothing to
+  backfill from this source.
+- **Added 366 new rows** for operations this page documents that weren't
+  in the catalogue at all, under the existing `"Fabric activities"`
+  category (matching its established fully-structured convention rather
+  than the older, bare-`operation`-only style). Two operations the page
+  also lists (`ExternalDataSharesBypassForWorkspaceEnabled`/`Disabled`)
+  were skipped as new rows - they already exist, fully populated, under
+  their own more specific `"Fabric Workspace Inbound External Data Share
+  setting"` category, sourced from a different Purview reference page.
+- Description text is the page's own "Notes" column where it has one
+  (lightly normalized - trimmed, ended with a period); where the page
+  gives no notes at all (about half of the ~740 rows touched), the
+  description is just the friendly name turned into a plain sentence,
+  matching the exact fallback already visible in this file's own
+  pre-existing rows (for example `GitConnectionInitialized` / "Initialized
+  connection to Git" / "Initialized connection to Git.").
+
+**A real gap found and fixed while doing this:** keeping `index.html`'s
+embedded `DATA.cloud_actions` in sync with `MicrosoftCloud_Schema.xlsx`
+was a manual step with no script and no CI check at all - unlike
+`events.csv`, `cloud_logs.csv`, and now this, every other data source in
+the repo has a `tools/build_*.py --check` gate. New
+`tools/build_cloud_actions.py` calls the existing
+`windows/tools/export_schema_json.py` to regenerate
+`MicrosoftCloud_Schema.json` from the xlsx, then splices the result into
+`index.html`'s embedded `DATA.cloud_actions`, with a `--check` mode now
+wired into CI as a sixth check (installing `openpyxl` first, the one new
+CI dependency this needs).
+
+`MicrosoftCloud_Schema.xlsx`/`.json`: 5,148 -> **5,514** Cloud Actions
+Explorer operations. Verified with all six build checks and in Playwright:
+searching "Fabric" in the Cloud Actions Explorer finds the new and
+backfilled rows with real friendly names and descriptions instead of a
+bare operation code; the stats banner reads 5,514; a spot-checked sample
+of both backfilled and brand-new rows opens its detail modal correctly;
+no page errors or sideways scrolling at 1500px or 375px in either theme.
+
+`1.6.22` (PATCH - friendly names and descriptions added to Cloud Actions
+Explorer's Fabric operations, plus a new sync script and CI check for
+that data). Skips `1.6.21`, already claimed by an open, not-yet-merged
+PR (the RHEL SSH Event Trace).
+
+Asked to check the whole site for improvements: went tab by tab -
+Microsoft Events (all six sub-panels: Events, Reference tables, Schema
+explorer, Pivot explorer, Cloud logs, Cloud Actions Explorer), AWS
+Events, Linux Events (all seven sub-panels), Threat Detection (all four
+sub-tabs), Other Events (all eight vendors), Event Trace (all ten traces
+and every phase within each), and Search - at 1500px and 375px in both
+themes, checking for page/console errors and sideways scrolling, plus a
+scripted click-through of every one of the 202 Event Trace nodes
+currently in the catalogue to confirm each one's "Open in catalogue"
+link still resolves to a real row (it does, for all 202).
+
+**One real bug found and fixed:** AWS Events' own intro paragraph names
+its data file inline - `Events_Other/aws_iam_actions_expanded.csv` -
+which is exactly long enough, as one unbroken token, to overflow the
+paragraph's width at 375px and drag the whole page into a few pixels of
+sideways scroll (`overflow-wrap` was left at its default `normal`, which
+doesn't treat `/` as a break point in this browser). Fixed by adding
+`overflow-wrap: anywhere` scoped to just this `<code>` element
+(`#app-aws .aws-header p.sub code`), rather than touching the shared,
+already-correct `p.sub` rule every other app's intro paragraph also
+uses - this is the only spot in the whole file where a `<code>` element
+appears inside a `p.sub` intro, so the narrow fix doesn't leave any
+sibling instance still broken.
+
+Everything else came back clean: no console or page errors anywhere,
+no other sideways scrolling, no duplicate DOM ids, no images missing
+`alt`, no inputs missing a label/`aria-label`/placeholder, no icon-only
+buttons missing an accessible name, and no leftover `TODO`/`FIXME`/
+`console.log` debug markers in the shipped code. Worth flagging as a
+longer-term consideration rather than a bug: `index.html` is now
+**40 MB** raw / **4.3 MB** gzipped, and takes roughly four seconds to
+parse and fire `load` even served locally - a real cost of this
+project's single-self-contained-file architecture, not something a
+small patch can fix (splitting the embedded `DATA` objects into
+separate lazily-fetched files would be a genuine restructuring project
+of its own, and hasn't been asked for).
+
+`1.6.23` (PATCH - a sideways-scroll bug fixed on AWS Events at 375px;
+otherwise a clean full-site audit, reported above).
+
 Added an eleventh Event Trace: **RHEL SSH login** — the first trace built
 from the Linux Events catalogue rather than Windows Events, from an
 owner-supplied SSH event-flow diagram (client, key exchange, host-key
@@ -4415,9 +4513,11 @@ they're unaffected by the hub/tabTarget change. All tabs regression-checked
 in both themes at 1500px and 375px, with no page errors and no sideways
 scrolling.
 
-`1.6.21` (PATCH - a new trace, the first to use the Linux Events
+`1.6.24` (PATCH - a new trace, the first to use the Linux Events
 catalogue, plus eight supporting Linux events, a new sync script, and a
-generalization to Event Trace's catalogue-jump mechanism).
+generalization to Event Trace's catalogue-jump mechanism). Originally
+written to land as `1.6.21`; two other PRs merged first and claimed
+`1.6.22` and `1.6.23`, so this bumps past both.
 
 ## Structure
 

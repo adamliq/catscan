@@ -37,6 +37,9 @@ jobs:
       - name: Cloud Logs data/page sync check
         run: python3 tools/build_cloud_logs.py --check
 
+      - name: Cloud Actions Explorer data/page sync check
+        run: pip install openpyxl && python3 tools/build_cloud_actions.py --check
+
       - name: VERSION bump check
         if: github.event_name == 'pull_request'
         run: python3 tools/check_version.py --base origin/${{ github.base_ref }}
