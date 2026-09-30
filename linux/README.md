@@ -20,7 +20,7 @@ application allow/deny-listing subsystem from auditd — with its own
 shipped default rules, rule-syntax field reference, decision-keyword
 reference, and command reference.
 
-This is a curated **seed catalogue** (77 events), not an exhaustive one —
+This is a curated **seed catalogue** (85 events), not an exhaustive one —
 Windows' Event ID space is large enough that the source repo's bulk ETW
 manifest import alone added thousands of rows; Linux has no equivalent
 single exhaustive registry to import from, so this repo instead prioritizes
@@ -125,7 +125,7 @@ flagged low-confidence entries instead of guessing.
     [`ComplianceAsCode/content`](https://github.com/ComplianceAsCode/content) —
     the project that maintains the `xccdf_org.ssgproject.content_profile_ism_o`
     SCAP profile — fetched directly from the upstream repo rather than
-    guessed. 33 of this catalogue's 77 events are tagged, covering 4 of the
+    guessed. 37 of this catalogue's 85 events are tagged, covering 4 of the
     profile's 41 controls (the ones whose rule list actually corresponds to
     an auditing mechanism this catalogue documents; the other 37 controls
     are about password policy, MFA, SSH hardening, antivirus, and similar,
@@ -150,7 +150,7 @@ flagged low-confidence entries instead of guessing.
     override (the pam_faillock lockout event gets `RHEL-09-654250`
     specifically rather than its subcategory's blanket tag, since that's
     exactly what that STIG ID is about). Populated on 25 events (`cis_control`)
-    and 21 events (`disa_stig_id`) of the 77 — only where a section of the
+    and 21 events (`disa_stig_id`) of the 85 — only where a section of the
     master reference gives an *exact* identifier and this catalogue's own
     event mechanism plausibly corresponds to that section's rule (e.g.
     SELinux/AppArmor AVC *denial* events are deliberately **not** tagged
@@ -655,9 +655,9 @@ font-size is now 16px there while desktop stays at its original
 smaller size.
 
 **Events** — the same design as `Winevent-catalogue`'s, scaled down to
-match this repo's smaller log/category space: search all 77 events by ID
+match this repo's smaller log/category space: search all 85 events by ID
 or keyword; filter by Log or Category via searchable multi-select
-comboboxes (3 log families — `audit`, `ssh`, `systemd` — each with a
+comboboxes (4 log families — `audit`, `ssh`, `systemd`, `utmp` — each with a
 handful of sub-logs, so the plain grouped-combobox approach the Windows
 repo already uses for its 188 logs works here without any further UI work);
 toggle to show only curated priority-signal events, plus a second toggle
