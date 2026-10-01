@@ -4519,6 +4519,59 @@ generalization to Event Trace's catalogue-jump mechanism). Originally
 written to land as `1.6.21`; two other PRs merged first and claimed
 `1.6.22` and `1.6.23`, so this bumps past both.
 
+Asked how best to add a pasted reference file - Azure Monitor's own
+"diagnostic setting log categories per resource type" list, 214 resource
+types and 831 category rows, each with a Log Analytics table name, a
+cost-to-export flag, and an Azure portal config path, but no prose
+description, severity rating, or NIST mapping - into the Cloud Logs tab.
+Investigated first rather than just importing it: the tab's existing 220
+rows (148 of them Azure) have a real human-written `description`,
+`severity_notes`, and `nist_800_53_au` on every single row with zero
+exceptions (`cim_mapping` is the only field ever left blank), so a
+straight dump of 831 rows with those three columns empty would break
+that 100%-populated convention across most of the file at once. Gave the
+owner that tradeoff plus two narrower alternatives (curate a relevant
+subset; backfill only the 48 resource types already covered) - asked to
+do the full raw import anyway, accepting the convention break for
+comprehensive coverage.
+
+Appended 726 new `"Azure Resource Logs"` rows (104 of the source's 830
+category rows were already present, deduplicated case-insensitively on
+resource type since the source and this file don't always agree on ARM
+casing - `Microsoft.AAD/DomainServices` vs. `domainServices`, etc.; the
+file's own existing casing won where a resource type was already
+present). `description`, `severity_notes`, `nist_800_53_au`, and
+`cim_mapping` are blank on all 726, matching the UI's own existing
+fallback rendering for the field (an em dash) rather than leaving it
+looking broken. `config_location` is populated for every new row - the
+file's existing generic phrasing (`Resource -> Monitoring -> Diagnostic
+settings`) for the 674 resource types configurable that way, and the
+source's own "not available in the Azure portal" text verbatim for the
+52 rows across resource types that aren't (Activity Log-only or
+CLI/ARM/Policy-only resources).
+
+**A real bug found and fixed while testing this at the new scale:** the
+Cloud Logs search box has never matched against `resource_type` - only
+`category`/`area`/`description`/`platform` - so searching for a resource
+type name found nothing. Harmless at the old scale, where `area` and
+`description` carried enough unique text to find most rows; a real
+defect now that 866 rows (up from 140) all share the identical
+`"Azure Resource Logs"` area text and most have no description at all,
+making `resource_type` the only distinguishing text for the bulk of the
+tab. Fixed by adding it to the searched string.
+
+`windows/data/cloud_logs.csv`: 220 -> **946** rows. Verified with the
+build check and in Playwright: the "N log categories" banner reads 946;
+searching a newly-added resource type now finds it and opens a detail
+panel that renders cleanly with the severity fallback and no broken
+layout where `description`/`severity_notes` are blank; no page errors or
+sideways scrolling at 1500px or 375px in either theme, including on the
+now much longer result list.
+
+`1.6.25` (PATCH - Azure Monitor's full diagnostic log category reference
+added to Cloud Logs as raw rows, plus a resource-type search bug fixed
+at the new scale).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
