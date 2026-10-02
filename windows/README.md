@@ -193,13 +193,13 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   so `event_id`/`group_policy_path`/`how_to_collect` don't apply and
   aren't reused. Kept in sync with `index.html`'s embedded `DATA.cloud_logs`
   and the page's "N log categories" banner by `tools/build_cloud_logs.py`
-  (see the repo root `README.md`'s Structure section). 220 rows across
+  (see the repo root `README.md`'s Structure section). 946 rows across
   seven platforms:
   - **Entra ID** (13 rows) — all Microsoft Entra ID tenant-wide log
     categories (`AuditLogs`, `SignInLogs`, `RiskyUsers`, etc.).
-  - **Azure** (148 rows) — all 8 Subscription Activity Log categories
-    (`Administrative`, `Security`, `Policy`, etc.) plus 140 Azure
-    resource-log categories across 47 resource types
+  - **Azure** (874 rows) — all 8 Subscription Activity Log categories
+    (`Administrative`, `Security`, `Policy`, etc.) plus 866 Azure
+    resource-log categories across 223 resource types
     (`Microsoft.KeyVault/vaults`, `Microsoft.Storage/storageAccounts`,
     `Microsoft.ContainerService/managedClusters`,
     `Microsoft.Sql/servers/databases`, and dozens more, from
@@ -235,6 +235,18 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
     existing combined category string rather than added as new rows,
     since they're the same resource type's diagnostic settings, just
     described at finer granularity than the first pass had captured.
+    A later, much larger addition (726 rows, taking the resource-type
+    count from 47 to 223) came from Azure Monitor's own published
+    diagnostic-setting log-category reference rather than further manual
+    curation - deliberately a different kind of row from the ones above:
+    no `description`/`severity_notes`/`nist_800_53_au` (the source
+    doesn't supply them, and none were invented), just the real category
+    name, its Log Analytics table, and where to turn it on, for
+    comprehensive breadth over the curated depth the earlier rows have.
+    Deduplicated case-insensitively against the already-present resource
+    types first (104 of the source's rows already existed under a
+    curated row and were skipped), since the source and earlier exports
+    don't always agree on ARM resource-type casing.
   - **Microsoft 365** (28 rows) — the major record types of the
     Microsoft Purview unified audit log: Exchange Online admin/mailbox
     activity, SharePoint Online/OneDrive file and sharing operations,
@@ -324,7 +336,8 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   event in this catalogue to point at).
 
   `cim_mapping` and `windows_equivalent` were populated conservatively
-  throughout — on a bit under a quarter of the 220 rows, where a clean,
+  throughout the original 220 curated rows — on a bit under a quarter of
+  them, where a clean,
   confident mapping exists (mostly Authentication, Change.Account_
   Management, Network_Traffic, DLP, Alerts, and bare Change), left blank
   everywhere else (`RiskyUsers`, all the SQL/DocumentDB/Databricks/
