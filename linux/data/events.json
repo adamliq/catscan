@@ -3327,5 +3327,456 @@
         "ut_time": "datetime"
       }
     }
+  },
+  {
+    "event_id": "1100",
+    "log": "audit/USER",
+    "source": "sudo (pam_unix)",
+    "category": "Account Logon",
+    "subcategory": "Credential Validation",
+    "description": "PAM authentication attempt for a sudo command failed \u2014 wrong password",
+    "sample": "Log Name:      audit/USER\nSource:        sudo (pam_unix)\nEvent ID:      1100 (USER_AUTH)\nLevel:         Warning\nHost:          web01.prod.example.org\nDescription:\nA user's password was checked while starting a sudo session, and the check failed.\ntype=USER_AUTH msg=audit(1732200015.330:48813): pid=18440 uid=1000 auid=1000 ses=12\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:authentication grantors=? acct=\"jsmith\" exe=\"/usr/bin/sudo\"\nhostname=? addr=? terminal=/dev/pts/3 res=failed'",
+    "reference": "See PAM result codes reference table for the full set of `res=`/failure values.",
+    "how_to_collect": "Credential Validation",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1110",
+    "priority_signal": "Yes",
+    "acsc_ism_control": "0582; 1546",
+    "cis_control": "",
+    "disa_stig_id": "",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer",
+        "subj": "string"
+      },
+      "message": {
+        "op": "string",
+        "grantors": "string",
+        "acct": "principal",
+        "hostname": "string",
+        "addr": "ip",
+        "terminal": "path",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1100",
+    "log": "audit/USER",
+    "source": "su (pam_unix)",
+    "category": "Account Logon",
+    "subcategory": "Credential Validation",
+    "description": "PAM authentication attempt for su succeeded",
+    "sample": "Log Name:      audit/USER\nSource:        su (pam_unix)\nEvent ID:      1100 (USER_AUTH)\nLevel:         Notice\nHost:          db01.prod.example.org\nDescription:\nA user's password was checked while starting an su session.\ntype=USER_AUTH msg=audit(1732200095.100:48898): pid=20205 uid=1000 auid=1000 ses=14\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:authentication grantors=pam_unix acct=\"root\" exe=\"/usr/bin/su\"\nhostname=? addr=? terminal=/dev/pts/1 res=success'",
+    "reference": "See PAM result codes reference table for the full set of `res=`/failure values.",
+    "how_to_collect": "Credential Validation",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1078",
+    "priority_signal": "",
+    "acsc_ism_control": "0582; 1546",
+    "cis_control": "",
+    "disa_stig_id": "",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer",
+        "subj": "string"
+      },
+      "message": {
+        "op": "string",
+        "grantors": "string",
+        "acct": "principal",
+        "hostname": "string",
+        "addr": "ip",
+        "terminal": "path",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1101",
+    "log": "audit/USER",
+    "source": "sudo (pam_unix)",
+    "category": "Account Logon",
+    "subcategory": "Credential Validation",
+    "description": "PAM account validation for a sudo session (expiry/lockout checks)",
+    "sample": "Log Name:      audit/USER\nSource:        sudo (pam_unix)\nEvent ID:      1101 (USER_ACCT)\nLevel:         Information\nHost:          web01.prod.example.org\nDescription:\nThe invoking user's account was checked for validity (not expired, not locked)\nafter authentication succeeded.\ntype=USER_ACCT msg=audit(1732200015.600:48815): pid=18441 uid=0 auid=1000 ses=12\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:accounting grantors=pam_unix acct=\"jsmith\" exe=\"/usr/bin/sudo\"\nhostname=? addr=? terminal=/dev/pts/3 res=success'",
+    "reference": "",
+    "how_to_collect": "Credential Validation",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "priority_signal": "",
+    "acsc_ism_control": "0582; 1546",
+    "cis_control": "",
+    "disa_stig_id": "",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer",
+        "subj": "string"
+      },
+      "message": {
+        "op": "string",
+        "acct": "principal",
+        "hostname": "string",
+        "terminal": "string",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1101",
+    "log": "audit/USER",
+    "source": "su (pam_unix)",
+    "category": "Account Logon",
+    "subcategory": "Credential Validation",
+    "description": "PAM account validation for an su session (expiry/lockout checks)",
+    "sample": "Log Name:      audit/USER\nSource:        su (pam_unix)\nEvent ID:      1101 (USER_ACCT)\nLevel:         Information\nHost:          db01.prod.example.org\nDescription:\nThe target account was checked for validity (not expired, not locked)\nafter authentication succeeded.\ntype=USER_ACCT msg=audit(1732200095.300:48899): pid=20206 uid=0 auid=1000 ses=14\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:accounting grantors=pam_unix acct=\"root\" exe=\"/usr/bin/su\"\nhostname=? addr=? terminal=/dev/pts/1 res=success'",
+    "reference": "",
+    "how_to_collect": "Credential Validation",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "priority_signal": "",
+    "acsc_ism_control": "0582; 1546",
+    "cis_control": "",
+    "disa_stig_id": "",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer",
+        "subj": "string"
+      },
+      "message": {
+        "op": "string",
+        "acct": "principal",
+        "hostname": "string",
+        "terminal": "string",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1105",
+    "log": "audit/USER",
+    "source": "sudo (pam_unix)",
+    "category": "Logon/Logoff",
+    "subcategory": "Logon",
+    "description": "PAM session opened for a sudo command",
+    "sample": "Log Name:      audit/USER\nSource:        sudo (pam_unix)\nEvent ID:      1105 (USER_START)\nLevel:         Information\nHost:          web01.prod.example.org\nDescription:\nA session was opened as the target account for the duration of the sudo command.\ntype=USER_START msg=audit(1732200015.900:48816): pid=18442 uid=0 auid=1000 ses=12\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:session_open grantors=pam_unix,pam_limits acct=\"root\"\nexe=\"/usr/bin/sudo\" hostname=? addr=? terminal=/dev/pts/3 res=success'",
+    "reference": "",
+    "how_to_collect": "Logon",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1548.003",
+    "priority_signal": "Yes",
+    "acsc_ism_control": "0582",
+    "cis_control": "6.3.3.11; 6.3.3.12",
+    "disa_stig_id": "RHEL-09-654250; RHEL-09-654255",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer"
+      },
+      "message": {
+        "op": "string",
+        "grantors": "list<string>",
+        "acct": "principal",
+        "hostname": "string",
+        "addr": "ip",
+        "terminal": "string",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1106",
+    "log": "audit/USER",
+    "source": "sudo (pam_unix)",
+    "category": "Logon/Logoff",
+    "subcategory": "Logoff",
+    "description": "PAM session closed at the end of a sudo command",
+    "sample": "Log Name:      audit/USER\nSource:        sudo (pam_unix)\nEvent ID:      1106 (USER_END)\nLevel:         Information\nHost:          web01.prod.example.org\nDescription:\nThe session opened for the sudo command was closed.\ntype=USER_END msg=audit(1732200016.400:48819): pid=18442 uid=0 auid=1000 ses=12\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:session_close grantors=pam_unix,pam_limits acct=\"root\"\nexe=\"/usr/bin/sudo\" hostname=? addr=? terminal=/dev/pts/3 res=success'",
+    "reference": "",
+    "how_to_collect": "Logoff",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "priority_signal": "",
+    "acsc_ism_control": "0582",
+    "cis_control": "6.3.3.11; 6.3.3.12",
+    "disa_stig_id": "RHEL-09-654250; RHEL-09-654255",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer"
+      },
+      "message": {
+        "op": "string",
+        "grantors": "list<string>",
+        "acct": "principal",
+        "hostname": "string",
+        "addr": "ip",
+        "terminal": "string",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1105",
+    "log": "audit/USER",
+    "source": "su (pam_unix)",
+    "category": "Logon/Logoff",
+    "subcategory": "Logon",
+    "description": "PAM session opened for an su session",
+    "sample": "Log Name:      audit/USER\nSource:        su (pam_unix)\nEvent ID:      1105 (USER_START)\nLevel:         Information\nHost:          db01.prod.example.org\nDescription:\nA new login session was opened as root \u2014 everything run inside it from here on\nhas no further audit/USER record of its own unless execve auditing is separately\nconfigured.\ntype=USER_START msg=audit(1732200095.600:48902): pid=20207 uid=0 auid=1000 ses=14\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:session_open grantors=pam_unix,pam_limits acct=\"root\"\nexe=\"/usr/bin/su\" hostname=? addr=? terminal=/dev/pts/1 res=success'",
+    "reference": "",
+    "how_to_collect": "Logon",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1548.003",
+    "priority_signal": "Yes",
+    "acsc_ism_control": "0582",
+    "cis_control": "6.3.3.11; 6.3.3.12",
+    "disa_stig_id": "RHEL-09-654250; RHEL-09-654255",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer"
+      },
+      "message": {
+        "op": "string",
+        "grantors": "list<string>",
+        "acct": "principal",
+        "hostname": "string",
+        "addr": "ip",
+        "terminal": "string",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1106",
+    "log": "audit/USER",
+    "source": "su (pam_unix)",
+    "category": "Logon/Logoff",
+    "subcategory": "Logoff",
+    "description": "PAM session closed at the end of an su session",
+    "sample": "Log Name:      audit/USER\nSource:        su (pam_unix)\nEvent ID:      1106 (USER_END)\nLevel:         Information\nHost:          db01.prod.example.org\nDescription:\nThe root session opened by su was closed (e.g. the user typed `exit`).\ntype=USER_END msg=audit(1732200340.100:48950): pid=20207 uid=0 auid=1000 ses=14\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='op=PAM:session_close grantors=pam_unix,pam_limits acct=\"root\"\nexe=\"/usr/bin/su\" hostname=? addr=? terminal=/dev/pts/1 res=success'",
+    "reference": "",
+    "how_to_collect": "Logoff",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "priority_signal": "",
+    "acsc_ism_control": "0582",
+    "cis_control": "6.3.3.11; 6.3.3.12",
+    "disa_stig_id": "RHEL-09-654250; RHEL-09-654255",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "exe": "path"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer"
+      },
+      "message": {
+        "op": "string",
+        "grantors": "list<string>",
+        "acct": "principal",
+        "hostname": "string",
+        "addr": "ip",
+        "terminal": "string",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1123",
+    "log": "audit/USER",
+    "source": "sudo",
+    "category": "Privilege Use",
+    "subcategory": "Command Execution",
+    "description": "sudo denied the command \u2014 not permitted by sudoers policy",
+    "sample": "Log Name:      audit/USER\nSource:        sudo\nEvent ID:      1123 (USER_CMD)\nLevel:         Warning\nHost:          web01.prod.example.org\nDescription:\nsudo evaluated the command against the sudoers policy and denied it \u2014 the user is\neither not listed at all, or is listed but not for this command/host.\ntype=USER_CMD msg=audit(1732200014.800:48812): pid=18439 uid=1000 auid=1000 ses=12\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='cwd=\"/home/jsmith\" cmd=636174202F6574632F736861646F77\nterminal=/dev/pts/3 res=failed'",
+    "reference": "",
+    "how_to_collect": "Command Execution",
+    "sample_type": "illustrative",
+    "mitre_techniques": "T1548.003",
+    "priority_signal": "Yes",
+    "acsc_ism_control": "0582; 1546",
+    "cis_control": "6.3.3.1; 6.3.3.3",
+    "disa_stig_id": "RHEL-09-654150",
+    "nist_800_53_au": "AU-2, AU-3, AU-12",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer"
+      },
+      "message": {
+        "cwd": "path",
+        "cmd": "hex",
+        "terminal": "path",
+        "res": "enum"
+      }
+    }
+  },
+  {
+    "event_id": "1124",
+    "log": "audit/USER",
+    "source": "su (pam_unix)",
+    "category": "Logon/Logoff",
+    "subcategory": "TTY Tracking",
+    "description": "Controlling TTY recorded for an su session",
+    "sample": "Log Name:      audit/USER\nSource:        su (pam_unix)\nEvent ID:      1124 (USER_TTY)\nLevel:         Information\nHost:          db01.prod.example.org\nDescription:\nThe keystrokes/TTY device associated with the root session were recorded for\nlater replay (e.g. with `aureport --tty`).\ntype=USER_TTY msg=audit(1732200096.100:48905): pid=20207 uid=0 auid=1000 ses=14\nsubj=unconfined_u:unconfined_r:unconfined_t:s0-s0:c0.c1023\nmsg='tty=/dev/pts/1 data=6C730D0A comm=\"su\"'",
+    "reference": "`data` is the hex-encoded keystrokes; decode with `aureport --tty` or `ausearch --tty`.",
+    "how_to_collect": "TTY Tracking",
+    "sample_type": "illustrative",
+    "mitre_techniques": "",
+    "priority_signal": "",
+    "acsc_ism_control": "",
+    "cis_control": "",
+    "disa_stig_id": "",
+    "nist_800_53_au": "AU-3",
+    "field_schema": {
+      "header": {
+        "log_name": "string",
+        "source": "string",
+        "event_id": "integer",
+        "level": "enum",
+        "host": "string",
+        "description": "string"
+      },
+      "process": {
+        "pid": "integer",
+        "comm": "string"
+      },
+      "subject": {
+        "uid": "integer",
+        "auid": "integer",
+        "ses": "integer"
+      },
+      "record": {
+        "tty": "path",
+        "data": "hex"
+      }
+    }
   }
 ]
