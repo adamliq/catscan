@@ -20,7 +20,7 @@ application allow/deny-listing subsystem from auditd — with its own
 shipped default rules, rule-syntax field reference, decision-keyword
 reference, and command reference.
 
-This is a curated **seed catalogue** (85 events), not an exhaustive one —
+This is a curated **seed catalogue** (95 events), not an exhaustive one —
 Windows' Event ID space is large enough that the source repo's bulk ETW
 manifest import alone added thousands of rows; Linux has no equivalent
 single exhaustive registry to import from, so this repo instead prioritizes
@@ -125,7 +125,7 @@ flagged low-confidence entries instead of guessing.
     [`ComplianceAsCode/content`](https://github.com/ComplianceAsCode/content) —
     the project that maintains the `xccdf_org.ssgproject.content_profile_ism_o`
     SCAP profile — fetched directly from the upstream repo rather than
-    guessed. 37 of this catalogue's 85 events are tagged, covering 4 of the
+    guessed. 46 of this catalogue's 95 events are tagged, covering 4 of the
     profile's 41 controls (the ones whose rule list actually corresponds to
     an auditing mechanism this catalogue documents; the other 37 controls
     are about password policy, MFA, SSH hardening, antivirus, and similar,
@@ -150,7 +150,7 @@ flagged low-confidence entries instead of guessing.
     override (the pam_faillock lockout event gets `RHEL-09-654250`
     specifically rather than its subcategory's blanket tag, since that's
     exactly what that STIG ID is about). Populated on 25 events (`cis_control`)
-    and 21 events (`disa_stig_id`) of the 85 — only where a section of the
+    and 26 events (`disa_stig_id`) of the 95 — only where a section of the
     master reference gives an *exact* identifier and this catalogue's own
     event mechanism plausibly corresponds to that section's rule (e.g.
     SELinux/AppArmor AVC *denial* events are deliberately **not** tagged
@@ -160,6 +160,12 @@ flagged low-confidence entries instead of guessing.
     cover). Sections that only say "aligns with 30-stig.rules" without a
     numbered ID contribute a `cis_control` but leave `disa_stig_id` blank,
     rather than citing a non-exact alignment as if it were a verified ID.
+    The sudo/su session-open/close events (`USER_START`/`USER_END`) reuse
+    the sshd session events' `6.3.3.11`/`6.3.3.12` and
+    `RHEL-09-654250`/`RHEL-09-654255` the same way: those CIS/STIG items
+    are about `/var/log/faillock` and `/var/log/lastlog` file watches, a
+    different mechanism serving the same stated objective as the PAM
+    session record it's tagged on here.
   - `nist_800_53_au` — NIST SP 800-53 Audit and Accountability (AU) control
     ID(s): `AU-9` (Protection of Audit Information) for log/audit-tampering
     events, `AU-8` (Time Stamps) for the clock-change event, `AU-4` (Audit
@@ -655,7 +661,7 @@ font-size is now 16px there while desktop stays at its original
 smaller size.
 
 **Events** — the same design as `Winevent-catalogue`'s, scaled down to
-match this repo's smaller log/category space: search all 85 events by ID
+match this repo's smaller log/category space: search all 95 events by ID
 or keyword; filter by Log or Category via searchable multi-select
 comboboxes (4 log families — `audit`, `ssh`, `systemd`, `utmp` — each with a
 handful of sub-logs, so the plain grouped-combobox approach the Windows

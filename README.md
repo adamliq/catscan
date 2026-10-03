@@ -4572,6 +4572,77 @@ now much longer result list.
 added to Cloud Logs as raw rows, plus a resource-type search bug fixed
 at the new scale).
 
+Asked for more Event Trace scenarios, since that had been the most active
+feature area this session - owner picked Linux privilege escalation
+(sudo/su -> root) first, over three other candidates (cron/systemd/
+authorized_keys persistence, an Azure/Entra sign-in trace, an AWS console/
+API login trace).
+
+Diffed the sudo/su gap against the Linux Events catalogue's existing
+coverage: a sudo success path (`USER_AUTH`, cached-timestamp refresh,
+`USER_CMD`, TTY tracking) and an su failure (`USER_AUTH`) already existed,
+but nothing else did. Added 10 new rows - sudo's `USER_AUTH` failure,
+`USER_ACCT`, `USER_START`/`USER_END`, and a sudoers-denied `USER_CMD`;
+su's `USER_AUTH` success, `USER_ACCT`, `USER_START`/`USER_END`, and TTY
+tracking - each with a real sample record and, where the auditd rules
+master reference or an existing row already established the mapping,
+MITRE/CIS/STIG/NIST citations (the sudo session-open/close events reuse
+the sshd session events' `6.3.3.11`/`6.3.3.12` and
+`RHEL-09-654250`/`RHEL-09-654255` the same way the sshd trace already
+did - a file-watch mechanism serving the same stated objective as the PAM
+session record it's tagged on, not a false equivalence).
+
+**A real bug found while building this, affecting the already-shipped SSH
+trace too:** the Event Trace "Open in catalogue" link only ever matched an
+event by `(event_id, log)`, picking whichever row happened to come first
+in `events.csv`. That's fine when an ID only has one source, but six of
+them don't - `1100`, `1103`, `1104`, `1105`, `1112` are each shared by
+`sshd`, `sudo`, and/or `su` rows now - so the SSH trace's own links for
+those IDs had been silently landing on a `sudo`- or `su`-sourced row
+instead of the `sshd`-sourced one they meant, ever since the SSH trace
+shipped. Row reordering (the fix used for a similar Windows Events
+collision before) can't fix this: two different trace nodes legitimately
+need the same ID to resolve to two different rows, and reordering can only
+ever pick one winner. Fixed at the mechanism instead: the Event Trace's
+node tuples take an optional 7th `source` field, threaded through
+`openDetail`, the catalogue-jump handler, and both the Windows and Linux
+hubs' `open()` functions, matching on `(event_id, log, source)` when a
+source is given and falling back to the old `(event_id, log)` match
+otherwise - every other trace's nodes are untouched and keep working
+exactly as before. Retrofitted the SSH trace's eight affected nodes with
+their real `sshd (pam_unix)` source alongside the ten new ones.
+
+Built the trace with two phases, sudo and su. Sudo branches on reusing a
+cached authentication timestamp (skips straight to the account check, no
+fresh `USER_AUTH`), then credentials accepted or not, then sudoers policy
+permitting the command or not; su branches only on credentials accepted or
+not, since it always re-prompts. Both paths end at a shared illustrative
+node - a kernel `SYSCALL` execve record - noting that it only appears if
+execve auditing is separately configured (off by default), since an `su`
+shell's own commands otherwise leave no further `audit/USER` record of
+their own, unlike the single command sudo logs directly.
+
+`linux/data/events.csv`: 85 -> **95** rows. Verified with all six build
+checks and in Playwright: every toggle combination on both phases resolves
+to the correct trail and dead-end message (wrong credentials, sudoers
+denial); each of the sixteen nodes used by this trace opens its own
+correct Linux Events entry, confirmed individually by ID, log, and
+source, not just that some link exists; the SSH trace's eight retrofitted
+nodes were re-checked the same way to confirm the fix actually corrects
+them rather than just adding an unused field; all eleven other traces
+regression-checked for the same jump-link behavior and no change. One
+node's title was long enough to force the mobile "your trail" list wider
+than the 375px viewport - the only layout regression found - shortened to
+match this catalogue's other node titles once the underlying STIG/CIS
+caveat had somewhere else to live (the node's own body text and tag).
+All tabs regression-checked in both themes at 1500px and 375px afterward,
+with no page errors and no sideways scrolling.
+
+`1.6.26` (PATCH - a Linux privilege escalation (sudo/su) trace added to
+Event Trace, with 10 supporting Linux events, plus a fix to the Event
+Trace catalogue-jump mechanism so a shared event ID can resolve to the
+right source, applied retroactively to the SSH trace as well).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
