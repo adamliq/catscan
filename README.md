@@ -4643,6 +4643,53 @@ Event Trace, with 10 supporting Linux events, plus a fix to the Event
 Trace catalogue-jump mechanism so a shared event ID can resolve to the
 right source, applied retroactively to the SSH trace as well).
 
+Asked for additional filtering on the Cloud Logs tab. The tab had grown to
+946 rows since `1.6.25`'s raw Azure Resource Logs import (up from 220) but
+only ever had a search box and a seven-way platform toggle to narrow that
+with - no way to get at either of the two dimensions the import actually
+needed: the 153 distinct Azure resource-provider namespaces now folded
+into one undifferentiated "Azure" platform, and the hard line between the
+220 originally curated rows (real `description`/`severity_notes`/
+`nist_800_53_au`) and the 726 raw import rows (all three blank) that the
+search box can't draw, since those rows still match on `category`/
+`resource_type`/`platform` text.
+
+Added two filters rather than inventing a new UI pattern for them: a
+"Resource type" combobox reusing the Events tab's own Log/Category
+combobox component verbatim (same grouped, searchable, multi-select
+markup and CSS, new JS instance) - grouped by ARM provider namespace via
+the same first-`/`-split convention the Log combobox already uses for
+channel families, since `resource_type` values are already shaped that
+way (`Microsoft.Storage/storageAccounts`); and a "Documented only" toggle
+in the same binary-toggle style as the Events tab's existing ones,
+filtering on a non-blank `description`.
+
+Kept the new JS under its own `cl`-prefixed names throughout (`clSelect
+edResTypes`, `clRenderRestypeList`, `clSyncFilterUI`, and so on) rather
+than reusing the Events tab's own `selectedLogs`/`syncFilterUI`/etc., since
+both live in the same script scope and identical names would have
+silently clobbered the Events tab's own combobox state.
+
+`windows/data/cloud_logs.csv` unchanged (946 rows) - this was a pure UI/JS
+addition, no data changes, confirmed with the existing build check.
+Verified in Playwright: the resource type combobox opens, groups, and
+searches correctly (narrowing to a specific ARM type like
+`Microsoft.Storage/storageAppliances` takes the list from 946 to 3); its
+Clear/Done buttons work and the selection-count pill updates; the
+Documented only toggle takes the list from 946 to exactly 220 - the
+originally curated row count, confirming it draws precisely the line
+intended; no blank descriptions appear in a sample of visible rows with
+it on; the two filters AND together and with the existing search/platform
+filters; the Events tab's own Log/Category comboboxes still work
+unaffected, ruling out the naming-collision risk the `cl`-prefix
+convention was meant to avoid. All tabs regression-checked in both themes
+at 1500px and 375px, including with the new combobox open, with no page
+errors and no sideways scrolling.
+
+`1.6.27` (PATCH - two additional filters added to the Cloud Logs tab -
+resource type and documented-only - addressing the search/platform gap
+left by the previous raw Azure Resource Logs import).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
