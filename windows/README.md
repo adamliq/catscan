@@ -351,16 +351,29 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   captures. The web lookup page's "Cloud logs" tab browses this list
   with the same search/filter/detail-view pattern as the Events tab, a
   seven-way platform toggle (each platform independently on or off,
-  wrapping onto a second row on narrow viewports) in place of the Events
-  tab's Log/Category comboboxes — its list rows show the resource type
-  as their second badge for the Azure Resource Log and Microsoft Purview
-  rows specifically (their `area` field is identical across every row
-  within each of those two groups, so it wouldn't help distinguish
-  anything at a glance; every other platform's `area` already varies
-  meaningfully row to row, so they keep showing it) — and its clickable
-  Splunk CIM / Windows equivalent fields jump into the Reference tables
-  tab and Events tab respectively, reusing
-  `jumpToCimTable()`/`jumpToEvent()` rather than new navigation code.
+  wrapping onto a second row on narrow viewports) alongside the Events
+  tab's own Log/Category comboboxes, reused here for `resource_type`
+  instead — grouped by ARM provider namespace (`Microsoft.Storage`,
+  `Microsoft.Sql`, and so on, split on the first `/` the same way the
+  Events tab's own Log combobox already groups by channel family) where
+  that convention applies, falling back to one option per literal value
+  for the platforms whose `resource_type` isn't ARM-shaped (Entra ID's
+  `Tenant`, Microsoft 365's per-workload values, Defender's per-product
+  values). There's also a "Documented only" toggle (the same style as
+  the Events tab's own binary toggles) for the one filter this tab's
+  data genuinely needed on its own: `description` is blank on the 726
+  raw Azure Resource Logs rows and populated on all 220 originally
+  curated rows, a hard line the search box alone can't draw since those
+  726 rows still match on `category`/`resource_type`/`platform` text.
+  Its list rows show the resource type as their second badge for the
+  Azure Resource Log and Microsoft Purview rows specifically (their
+  `area` field is identical across every row within each of those two
+  groups, so it wouldn't help distinguish anything at a glance; every
+  other platform's `area` already varies meaningfully row to row, so
+  they keep showing it) — and its clickable Splunk CIM / Windows
+  equivalent fields jump into the Reference tables tab and Events tab
+  respectively, reusing `jumpToCimTable()`/`jumpToEvent()` rather than
+  new navigation code.
 
   This remains a snapshot, not a claimed-complete enumeration: not every
   Azure resource type is here (only the ones present in the supplied
