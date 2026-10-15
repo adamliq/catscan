@@ -4690,6 +4690,61 @@ errors and no sideways scrolling.
 resource type and documented-only - addressing the search/platform gap
 left by the previous raw Azure Resource Logs import).
 
+Asked for an export function on Cloud Logs. The Events tab already had
+one - a format choice, a per-field checklist, a download of exactly
+what's currently filtered - so built Cloud Logs' the same way rather than
+inventing a second pattern: same HTML structure and CSS classes
+(`export-panel`/`export-format-row`/`export-confirm-btn`), and reused the
+Events tab's own generic helpers (`winCsvCell()`, `winToCsv()`,
+`winTriggerDownload()`, `winShowToast()`) directly rather than
+duplicating them, since none of the four are tied to the Events tab's own
+field shape. New state (`clExportFields`, `clExportFormat`,
+`CL_EXPORT_FIELDS`) kept under the same `cl`-prefix convention the
+previous filters used, for the same reason - this file's one script scope
+means an identically-named `let` would have silently clobbered the Events
+tab's own export state. Export field list: all ten `cloud_logs.csv`
+columns, all on by default, matching the Events tab's own "everything on"
+default.
+
+**A real bug found while building this, affecting the Events tab's own
+Export button too:** `.combo-panel` opens left-aligned to its trigger
+button at a fixed width, unconditionally. That's only safe when the
+button has room to its right. It happened to hold for the Events tab's
+own Export button, which lands alone at the left edge of its own wrapped
+row at narrow viewports - not by design, just where that particular
+button set happens to wrap. Cloud Logs' new Export button doesn't get
+that same luck: it sits at the right end of its row, behind the
+Documented-only toggle's `margin-left:auto`, so at 375px its 300px-wide
+panel ran straight off the right edge (confirmed: `document.documentElement.
+scrollWidth` 523 against a 375 viewport). Fixed generally rather than
+special-cased to this one button: `clTogglePanel()` now measures the
+trigger button's position against the viewport every time a panel opens,
+and adds an `.align-right` class (`left:auto;right:0`) when a
+left-aligned panel would overflow - covering the Resource type combobox
+too, going forward, not just Export. Left the Events tab's own combobox
+code untouched; fixing the shared `.combo-panel` CSS and giving Cloud
+Logs' own panel-toggle function the smarter check was enough, and safer
+than touching code already relied on elsewhere.
+
+`windows/data/cloud_logs.csv` unchanged - another pure UI/JS addition, no
+data changes, confirmed with the existing build check. Verified in
+Playwright: JSON and CSV downloads both captured and parsed back, each
+containing exactly the row count the active filters implied (220 with
+Documented-only on, matching the curated-row count again) and exactly the
+selected fields; the "no fields selected" case shows a toast and leaves
+the panel open rather than downloading an empty file; the Events tab's
+own Export button, field list, and panel positioning are all unaffected
+by the new shared code path. All tabs regression-checked in both themes
+at 1500px and 375px, including with each combobox open, with no page
+errors and no sideways scrolling - the specific regression this PR fixed
+included.
+
+`1.6.28` (PATCH - an Export button added to the Cloud Logs tab, matching
+the Events tab's own, plus a fix to the shared combobox panel so it can
+no longer open off the right edge of a narrow viewport - a bug this
+surfaced in the Events tab's own Export button too, just not under
+conditions that had been hit yet).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
