@@ -375,6 +375,27 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   respectively, reusing `jumpToCimTable()`/`jumpToEvent()` rather than
   new navigation code.
 
+  It also has an Export button, matching the Events tab's own in style
+  and in the fields it mirrors — a format choice (JSON/CSV), a per-field
+  checklist (all ten CSV columns, all on by default), and a download that
+  exports exactly what's currently filtered/searched, including the
+  Resource type and Documented-only filters. Reuses that export's generic
+  helpers (`winCsvCell()`/`winToCsv()`/`winTriggerDownload()`/
+  `winShowToast()`) rather than duplicating them, since neither is tied to
+  the Events tab's own field shape. Surfaced a real, if latent, bug in the
+  shared combobox panel style while building it: `.combo-panel` always
+  opens left-aligned to its trigger button at a fixed width, which is
+  fine as long as the button has room to its right — true by chance for
+  the Events tab's own Export button at narrow viewports (it happens to
+  land alone at the left edge of its own wrapped row there), but false
+  for Cloud Logs' Export button, which sits at the right end of its row
+  behind the Documented-only toggle's `margin-left:auto`. Fixed generally
+  rather than special-cased: `clTogglePanel()` now measures the trigger
+  button's position against the viewport each time a panel opens and
+  adds an `.align-right` class (flips `left:auto;right:0`) when a
+  left-aligned panel would run off the right edge, covering both of
+  Cloud Logs' own comboboxes going forward, not just this one.
+
   This remains a snapshot, not a claimed-complete enumeration: not every
   Azure resource type is here (only the ones present in the supplied
   exports), Microsoft 365's own record-type list is larger than the 28
