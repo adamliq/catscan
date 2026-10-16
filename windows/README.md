@@ -339,7 +339,27 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   Defender for Endpoint/Identity observe the same underlying Windows
   activity from a different vantage point; nothing in the Microsoft 365
   rows gets one, since Exchange/SharePoint/Teams have no on-premises
-  event in this catalogue to point at).
+  event in this catalogue to point at), `azure_service_category` /
+  `azure_service_name` / `recommended_abbreviation` (which Azure service
+  owns a resource, the section it's grouped under, and Microsoft's own
+  recommended naming-convention abbreviation for it — e.g.
+  `Microsoft.Compute/virtualMachines` → "Compute and web" / "Virtual
+  machine" / `vm`). Sourced from Microsoft's own [Abbreviation
+  recommendations for Azure resources](https://github.com/MicrosoftDocs/cloud-adoption-framework/blob/main/docs/ready/azure-best-practices/resource-abbreviations.md)
+  reference (169 unambiguous resource-provider-namespace entries after
+  stripping its "(kind: ...)" sub-variants), joined against this file's
+  own `resource_type` on the Azure Resource Logs rows only — the one
+  area whose `resource_type` is a real ARM resource provider namespace.
+  Populated on 402 of 946 rows (the 464 Azure Resource Logs rows whose
+  bare namespace either isn't in Microsoft's reference at all, or maps
+  to more than one entry there once the `(kind: ...)` qualifier is
+  dropped — e.g. `Microsoft.CognitiveServices/accounts` alone covers 15
+  different Azure AI services depending on kind, information this
+  catalogue's own data doesn't carry — are left blank rather than
+  guessing which one applies). A further 3 of those 402 have a
+  placeholder abbreviation in Microsoft's own reference (`<*descriptive*>`
+  for an Azure Policy definition, `<*DNS domain name*>` for a DNS zone),
+  left blank here for the same reason.
 
   `cim_mapping` and `windows_equivalent` were populated conservatively
   throughout the original 220 curated rows — on a bit under a quarter of
@@ -383,7 +403,7 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
 
   It also has an Export button, matching the Events tab's own in style
   and in the fields it mirrors — a format choice (JSON/CSV), a per-field
-  checklist (all ten CSV columns, all on by default), and a download that
+  checklist (all thirteen CSV columns, all on by default), and a download that
   exports exactly what's currently filtered/searched, including the
   Resource type and Documented-only filters. Reuses that export's generic
   helpers (`winCsvCell()`/`winToCsv()`/`winTriggerDownload()`/

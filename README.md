@@ -4793,6 +4793,65 @@ category-specific on the 823 rows where it was previously identical
 generic portal-navigation text, using each row's own already-present
 `category` value).
 
+Asked to add the Azure service name and its service category for each
+Cloud Logs row, given an example: Compute | Virtual Machine |
+Microsoft.Compute/virtualMachines | vm. That's Microsoft's own published
+abbreviation recommendation table, not something to invent per-row, so
+fetched the authoritative source rather than guess: the Microsoft Learn
+page itself (`learn.microsoft.com`) is blocked by this session's egress
+policy, but its content is open-source - pulled the exact markdown
+Microsoft Learn renders from `raw.githubusercontent.com/MicrosoftDocs/
+cloud-adoption-framework`, 216 rows across 17 resource categories
+(Compute and web, Networking, Storage, Databases, Security, and so on).
+
+Joined on the bare resource provider namespace (`Microsoft.Compute/
+virtualMachines`), stripping Microsoft's own `(kind: ...)` sub-variant
+qualifier first (`Microsoft.CognitiveServices/accounts` alone covers 15
+different Azure AI services depending on kind - information neither
+Microsoft's table's bare namespace nor this catalogue's own
+`resource_type` column carries). 169 of the resulting 182 distinct
+namespaces resolve to exactly one Azure service after that stripping;
+the other 13 - including that CognitiveServices one, plus Microsoft.Web/
+sites (Function app vs. Web app), Microsoft.Storage/storageAccounts (VM
+storage account vs. Storage account), and ten more - stay genuinely
+ambiguous without more than this catalogue already records, so left
+blank rather than picking one arbitrarily. Also left blank: 3 of the 169
+unambiguous matches where Microsoft's own reference gives a placeholder
+instead of a real fixed abbreviation (`<*descriptive*>` for a Policy
+definition, `<*DNS domain name*>` for a DNS zone).
+
+Added three columns - `azure_service_category`, `azure_service_name`,
+`recommended_abbreviation` - populated only on the Azure Resource Logs
+rows (the one area whose `resource_type` is a real ARM namespace) with
+an unambiguous match: 402 of 946 rows. Surfaced in the detail panel as
+three new fields (Azure service / Service category / Recommended
+abbreviation, the last in the same monospace style already used
+elsewhere for abbreviations), in the list view (the human-readable
+service name now replaces the raw ARM type as the row's second badge
+where a match exists, with the raw type kept as its hover title), and
+in the Export field picker and output.
+
+`windows/data/cloud_logs.csv`: 946 rows unchanged, 3 new trailing
+columns added (blank except on the 402 matched rows). `tools/
+build_cloud_logs.py`'s `FIELDNAMES` list updated to match - the one
+place this script's own field set needed to grow for this change.
+Verified with the build check and in Playwright: the user's own example
+row (`Microsoft.Compute/virtualMachines`) renders exactly as given -
+"Compute and web" / "Virtual machine" / `vm` - in both the list badge
+and the detail panel; an out-of-table resource type (an Oracle.Database
+one, picked because this table is Microsoft Azure's own and was never
+going to cover Oracle's co-located service) falls back to the raw ARM
+type as before; the export's field list and downloaded JSON/CSV both
+carry the three new columns correctly; the Resource type/Documented-only
+filters and Export button from the last two releases are unaffected.
+All tabs regression-checked in both themes at 1500px and 375px, with no
+page errors and no sideways scrolling.
+
+`1.6.30` (PATCH - Azure service name, service category, and Microsoft's
+own recommended naming abbreviation added to Cloud Logs for the 402 rows
+that resolve unambiguously against Microsoft's published abbreviation
+reference).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
