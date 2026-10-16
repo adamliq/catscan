@@ -4745,6 +4745,54 @@ no longer open off the right edge of a narrow viewport - a bug this
 surfaced in the Events tab's own Export button too, just not under
 conditions that had been hit yet).
 
+Told "Where to enable it" is too generic on Cloud Logs. True for 823 of
+946 rows: 811 Azure Resource Logs rows and 12 Entra ID rows all stopped
+at "Resource -> Monitoring -> Diagnostic settings" / "Entra admin center
+-> Monitoring & health -> Diagnostic settings" - accurate as far as it
+goes (that really is the one standardized portal location for every ARM
+resource and for Entra ID alike), but silent on which of a resource's
+several log categories to actually tick once there, since Diagnostic
+settings doesn't present one on/off switch, it presents a checklist.
+
+Fixed with data already in hand rather than new research: every affected
+row already carries its own `category` (`StorageRead`, `AuditEvent`,
+`SignInLogs`, and so on - the same value this tab's own row titles and
+detail headers already show), so appended it as the path's final
+breadcrumb segment - "Resource -> Monitoring -> Diagnostic settings ->
+StorageRead" - turning 823 near-identical instructions into 823 ones that
+actually say what to enable. Scoped to exactly the two exact-match
+strings where the underlying mechanism is confirmed to work this way
+(both are a pick-your-categories Diagnostic settings pane); left every
+other `config_location` value alone, including the subscription Activity
+Log's identical "Monitor -> Activity log -> Export Activity Logs" across
+8 rows, which doesn't fit the same pattern - Activity Log has no
+per-category toggle, it's one subscription-level export covering every
+category at once, so appending a category name there would have
+described a control that doesn't exist. A couple of outlier rows (2 of
+823) have a `category` that's itself a combined list of several
+diagnostic categories in one string - one runs to 204 characters - so
+their path reads long and needs its own internal horizontal scroll to
+read in full; the field's existing `.path` styling already handles
+arbitrary-length single-line text that way everywhere else it's used in
+this app, so no CSS changes were needed for it.
+
+`windows/data/cloud_logs.csv`: no rows added or removed (still 946) -
+only `config_location` changed, on exactly 823 of them, confirmed with
+`git diff --stat` before regenerating. Verified with the build check and
+in Playwright: a short-category row (`StorageRead`) and the longest
+combined-category row both render correctly with no page errors; the
+823-row worst case produces no sideways scrolling at 1500px or 375px in
+either theme, confirming the existing `.path` box contains even a
+253-character line inside its own scroll rather than pushing the page;
+the Resource type/Documented-only filters and the Export button from the
+last two releases are all unaffected, including the exported field
+values now carrying the longer text.
+
+`1.6.29` (PATCH - Cloud Logs' "Where to enable it" field made
+category-specific on the 823 rows where it was previously identical
+generic portal-navigation text, using each row's own already-present
+`category` value).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
