@@ -4900,6 +4900,60 @@ unaffected. All tabs regression-checked in both themes at 1500px and
 ARM's own two-part naming convention, on the 878 rows where it's a real
 ARM resource type).
 
+Asked to add 13 specific `Microsoft.Network`/`Microsoft.Sql` resource
+types (a pasted list, two of them duplicated). Checked each against the
+existing 946 rows first rather than assuming they were all missing: 4
+were already fully present (`virtualNetworkGateways`, `vpnGateways`,
+`dnsResolverPolicies`, `servers/databases` - every real log category
+for each one verified present, not just the resource type itself), and
+the other 9 turned out to have no resource log categories to add at
+all - confirmed against Azure Monitor's own reference rather than
+guessed, since that reference lists metrics and resource logs
+separately per resource type and six of the nine (`VirtualHubs`,
+`expressRouteGateways`, `privateEndpoints`, `privateDnsZones`,
+`dnsResolvers`, `dnsForwardingRulesets`) appear only in the metrics
+column, never the logs one; the other three don't appear in either -
+`inboundEndpoints`/`outboundEndpoints` are DNS private resolver child
+objects Azure Monitor doesn't track independently, and bare
+`Microsoft.Sql/servers` is a management construct whose monitoring
+happens at the `/databases` child level instead. Reported all of this
+back rather than silently adding nothing or inventing categories that
+don't exist - asked to add them anyway, with that absence stated
+explicitly rather than left implicit.
+
+Added the 9 as rows carrying that absence as their content: `category`
+reads "No log categories - metrics only" for the six metrics-only ones
+or "No log categories or metrics" for the three with neither;
+`description` cites the real reason for each; `config_location` points
+at `Monitor -> Metrics` for the metrics-only six and is blank for the
+other three (no portal page to point at); `severity_notes`,
+`cim_mapping`, and `nist_800_53_au` stay blank throughout, since none of
+these nine is an auditable log event to map a control onto.
+`azure_service_category`/`azure_service_name`/`recommended_abbreviation`
+still populate from Microsoft's abbreviation reference where it has an
+unambiguous entry (7 of the 9 do), since that mapping describes the
+Azure service, not the log category, and stays accurate regardless of
+whether the service emits resource logs.
+
+`windows/data/cloud_logs.csv`: 946 -> **955** rows. Verified with the
+build check and in Playwright: a metrics-only row (`privateEndpoints`)
+shows its real Azure service fields and the `Monitor -> Metrics` config
+location, not a fabricated Diagnostic settings path; a no-monitoring row
+(bare `Microsoft.Sql/servers`) correctly shows no "Where to enable it"
+section at all, distinguishing it from the metrics-only six; all 9 are
+findable by search and by the Resource type combobox; the Documented-only
+filter count rose from 220 to 229, correctly counting these as real
+curated content rather than blank-field import rows, since each one
+carries a specific, cited description. All tabs regression-checked in
+both themes at 1500px and 375px, with no page errors and no sideways
+scrolling.
+
+`1.6.32` (PATCH - 9 Azure resource types added to Cloud Logs with no
+diagnostic log categories of their own, each explicitly labeled
+metrics-only or unmonitored rather than left absent, after verifying
+against Azure Monitor's own reference that 4 other requested types were
+already fully covered).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
