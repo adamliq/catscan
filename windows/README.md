@@ -306,7 +306,13 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   `description`, `severity_notes` (including license-tier caveats like
   "P1/P2" or "requires Microsoft 365 E5 / Advanced Audit"),
   `config_location` (the Diagnostic Settings / Purview Audit / Defender
-  XDR connector path — the cloud analog of `group_policy_path`),
+  XDR connector path — the cloud analog of `group_policy_path`; the 811
+  Azure Resource Logs rows and 12 Entra ID rows whose path ends in
+  "Diagnostic settings" have the row's own `category` appended as the
+  final breadcrumb segment — e.g. "Resource -> Monitoring -> Diagnostic
+  settings -> StorageRead" — rather than stopping at the generic portal
+  path common to every ARM resource type, since the portal page itself
+  doesn't say which of a resource's several log categories to tick),
   `cim_mapping` (reuses `splunk_cim_data_models.csv` — CIM is
   platform-agnostic, so e.g. `SignInLogs` and Defender for Endpoint's
   `DeviceLogonEvents` both map to `Authentication` exactly like Windows
