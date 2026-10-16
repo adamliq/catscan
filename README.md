@@ -4852,6 +4852,54 @@ own recommended naming abbreviation added to Cloud Logs for the 402 rows
 that resolve unambiguously against Microsoft's published abbreviation
 reference).
 
+Asked to add `{Resource-Provider-Namespace}/{Resource-Type-Name}` for
+each row. Asked which of two readings was meant - restoring the raw ARM
+type string's visibility (the previous release had replaced it with the
+friendly service name as the list's second badge, keeping the raw string
+only as a hover title), or splitting `resource_type` into two separate
+columns along that exact template - and got the second.
+
+Split `resource_type` at its first `/` only, not every `/`: ARM nests
+child resource types under their parent (`Microsoft.Sql/servers/
+databases`, `Microsoft.Storage/storageAccounts/blobServices`, 90 rows
+across 30 distinct nested types), so the "resource type name" half of
+the template can legitimately contain further slashes of its own -
+re-splitting those would have cut a real nested type name in half.
+Populated on 878 of 946 rows, wherever `resource_type` actually contains
+a `/`; left blank on the other 68, which are two genuinely different
+non-cases rather than one: 67 are non-ARM platforms' own pseudo-resource-
+type labels (`Tenant`, `Subscription`, `Devices`, and 22 more like them)
+that were never a real provider namespace to begin with, and one
+(`Microsoft.AzureArcData`) is a bare namespace recorded with no type
+suffix at all - splitting either would have manufactured a part of the
+template that was never there.
+
+Added `resource_provider_namespace` and `resource_type_name` as two new
+trailing columns, no new external sourcing needed this time - this one
+only re-shapes `resource_type`, already in hand. Surfaced in the detail
+panel as two new monospace fields, placed right before the Azure service
+fields from the last release so the two sets of resource-identity
+information sit together, and added to the Export field picker/output.
+Did not touch the list view's badges or `config_location`, both of which
+already carry the full `resource_type` string or build on it.
+
+`windows/data/cloud_logs.csv`: 946 rows unchanged, 2 new trailing
+columns. `tools/build_cloud_logs.py`'s `FIELDNAMES` list updated again.
+Verified with the build check and in Playwright: a nested type
+(`Microsoft.Sql/servers/databases`) splits to `Microsoft.Sql` /
+`servers/databases`, not three separate fragments; a simple type
+(`Microsoft.Compute/virtualMachines`) splits cleanly; a non-ARM row
+(Entra ID) correctly shows neither new field; the export field list and
+downloaded JSON/CSV both carry the two new columns; the Resource type/
+Documented-only filters and Export button from earlier releases are
+unaffected. All tabs regression-checked in both themes at 1500px and
+375px, with no page errors and no sideways scrolling.
+
+`1.6.31` (PATCH - Cloud Logs' `resource_type` split into
+`resource_provider_namespace` and `resource_type_name` columns following
+ARM's own two-part naming convention, on the 878 rows where it's a real
+ARM resource type).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
