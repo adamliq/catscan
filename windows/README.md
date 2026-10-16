@@ -339,7 +339,18 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   Defender for Endpoint/Identity observe the same underlying Windows
   activity from a different vantage point; nothing in the Microsoft 365
   rows gets one, since Exchange/SharePoint/Teams have no on-premises
-  event in this catalogue to point at), `azure_service_category` /
+  event in this catalogue to point at), `resource_provider_namespace` /
+  `resource_type_name` (`resource_type` itself split at its first `/`
+  into ARM's own two-part naming convention — e.g.
+  `Microsoft.Sql/servers/databases` → `Microsoft.Sql` / `servers/databases`,
+  the type name kept whole rather than re-split further, since a nested
+  ARM resource type can itself contain more slashes. Populated on the
+  878 of 946 rows whose `resource_type` actually contains a `/`; the other
+  68 are non-ARM platforms' own pseudo-resource-type labels — `Tenant`,
+  `Subscription`, `Devices`, and the like — that were never a real
+  provider namespace to split, plus one single `Microsoft.AzureArcData`
+  row whose `resource_type` is a bare namespace with no type suffix
+  recorded at all), `azure_service_category` /
   `azure_service_name` / `recommended_abbreviation` (which Azure service
   owns a resource, the section it's grouped under, and Microsoft's own
   recommended naming-convention abbreviation for it — e.g.
@@ -403,7 +414,7 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
 
   It also has an Export button, matching the Events tab's own in style
   and in the fields it mirrors — a format choice (JSON/CSV), a per-field
-  checklist (all thirteen CSV columns, all on by default), and a download that
+  checklist (all fifteen CSV columns, all on by default), and a download that
   exports exactly what's currently filtered/searched, including the
   Resource type and Documented-only filters. Reuses that export's generic
   helpers (`winCsvCell()`/`winToCsv()`/`winTriggerDownload()`/

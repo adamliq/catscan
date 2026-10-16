@@ -43,7 +43,7 @@ DATA_DECL = 'const DATA = '
 FIELDNAMES = ['platform', 'area', 'resource_type', 'category', 'description',
               'severity_notes', 'config_location', 'cim_mapping', 'nist_800_53_au',
               'windows_equivalent', 'azure_service_category', 'azure_service_name',
-              'recommended_abbreviation']
+              'recommended_abbreviation', 'resource_provider_namespace', 'resource_type_name']
 
 
 def load_csv_rows():
