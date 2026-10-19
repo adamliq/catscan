@@ -1,0 +1,2742 @@
+{
+  "title": "Azure Virtual Desktop Event Hub field schema catalogue",
+  "version": "1.0",
+  "export_date": "2026-10-19",
+  "destination": "Azure Event Hubs",
+  "requested_resource_category_pairs": 22,
+  "documented_pairs_with_field_references": 19,
+  "documented_pairs_without_verified_field_schema": 2,
+  "requested_pairs_not_listed_in_supported_categories": 1,
+  "tenant_capture_verified": false,
+  "scope": "All 22 requested resource/category pairs, keyed by resource type and category.",
+  "notes": [
+    "Repeated category names are separate entries because their resource types differ.",
+    "Log Analytics fields and types are preserved; raw Event Hub paths are not asserted.",
+    "Standard Log Analytics columns are separated and must not be required in raw Event Hub payloads.",
+    "Allow missing, null and additional fields.",
+    "Resource diagnostic Management logs are not a replacement for the Azure Activity Log when auditing ARM control-plane changes.",
+    "This catalogue is not a strict JSON Schema validator."
+  ],
+  "references": {
+    "resource_log_envelope": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema"
+  },
+  "event_hub_envelope": {
+    "scope": "Azure Monitor resource-log common envelope; validate per category",
+    "batch_path": "records[] when present",
+    "record_fields": [
+      {
+        "name": "time",
+        "json_type": "string (date-time)",
+        "required": true
+      },
+      {
+        "name": "resourceId",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "category",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "operationName",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "operationVersion",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "level",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultType",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultSignature",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultDescription",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "durationMs",
+        "json_type": "number",
+        "required": false
+      },
+      {
+        "name": "callerIpAddress",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "correlationId",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "identity",
+        "json_type": "object",
+        "required": false
+      },
+      {
+        "name": "location",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "properties",
+        "json_type": "object",
+        "required": false
+      }
+    ],
+    "requiredness_basis": "Azure Monitor common resource-log specification; category may alternatively be represented by type for certain services."
+  },
+  "categories": [
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::Checkpoint",
+      "category": "Checkpoint",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDCheckpoints",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdcheckpoints",
+      "fields": [
+        {
+          "name": "ActivityType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Parameters",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::Error",
+      "category": "Error",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDErrors",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvderrors",
+      "fields": [
+        {
+          "name": "ActivityType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Code",
+          "published_type": "long",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CodeSymbolic",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Operation",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServiceError",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::Management",
+      "category": "Management",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDManagement",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdmanagement",
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ArmObjectScope",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientSideIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsCreated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsDeleted",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsFetched",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsUpdated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningCorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Route",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::Connection",
+      "category": "Connection",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDConnections",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdconnections",
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientSideIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConnectionType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "GatewayRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsClientPrivateLink",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsSessionHostPrivateLink",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "PredecessorConnectionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceAlias",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostAgentVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostAzureVmId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostJoinType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostOSDescription",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostOSVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostPoolType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostSessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostSxSStackVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "State",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TransportType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::HostRegistration",
+      "category": "HostRegistration",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDHostRegistrations",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdhostregistrations",
+      "fields": [
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsSessionHostPrivateLink",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/workspaces::Management",
+      "category": "Management",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/workspaces",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-workspaces-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDManagement",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdmanagement",
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ArmObjectScope",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientSideIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsCreated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsDeleted",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsFetched",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsUpdated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningCorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Route",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/workspaces::Feed",
+      "category": "Feed",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/workspaces",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-workspaces-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDFeeds",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdfeeds",
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientSideIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IconFail",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IconTotal",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsClientPrivateLink",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RDPFail",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RDPTotal",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/applicationgroups::Management",
+      "category": "Management",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/applicationgroups",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-applicationgroups-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDManagement",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdmanagement",
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ArmObjectScope",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientSideIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsCreated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsDeleted",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsFetched",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsUpdated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningCorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Route",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/applicationgroups::Feed",
+      "category": "Feed",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/applicationgroups",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-applicationgroups-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "category_support": "not_listed_in_current_published_supported_categories",
+      "coverage": "schema_not_verified_for_requested_resource",
+      "reference_table": null,
+      "fields": [],
+      "notes": [
+        "The published application-group list includes Checkpoint, Error and Management, but does not list Feed.",
+        "Workspace Feed maps to WVDFeeds; that schema is not asserted for an application-group stream.",
+        "Verify categories exposed by the actual resource before configuring this entry."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/appAttachPackages::Management",
+      "category": "Management",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/appAttachPackages",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-appattachpackages-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDManagement",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdmanagement",
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ArmObjectScope",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientSideIPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsCreated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsDeleted",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsFetched",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObjectsUpdated",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningCorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Route",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization.",
+        "The appAttachPackages supported-category reference explicitly maps Management to WVDManagement."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/applicationgroups::Checkpoint",
+      "category": "Checkpoint",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/applicationgroups",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-applicationgroups-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDCheckpoints",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdcheckpoints",
+      "fields": [
+        {
+          "name": "ActivityType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Parameters",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization.",
+        "The supported-category table leaves the destination table blank, but the WVDCheckpoints table reference explicitly lists this resource type."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/applicationgroups::Error",
+      "category": "Error",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/applicationgroups",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-applicationgroups-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDErrors",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvderrors",
+      "fields": [
+        {
+          "name": "ActivityType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Code",
+          "published_type": "long",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CodeSymbolic",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Operation",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServiceError",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::AgentHealthStatus",
+      "category": "AgentHealthStatus",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDAgentHealthStatus",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdagenthealthstatus",
+      "fields": [
+        {
+          "name": "ActiveSessions",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AgentVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AllowNewSessions",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InactiveSessions",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastHeartBeat",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastUpgradeTimeStamp",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OSVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostHealthCheckResult",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionHostResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Status",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "StatusTimeStamp",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SxSStackVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpgradeErrorMsg",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpgradeState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::AutoscaleEvaluationPooled",
+      "category": "AutoscaleEvaluationPooled",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDAutoscaleEvaluationPooled",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdautoscaleevaluationpooled",
+      "fields": [
+        {
+          "name": "ActiveSessionHostCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActiveSessionHostsPercent",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConfigCapacityThresholdPercent",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConfigMinActiveSessionHostsPercent",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConfigScheduleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConfigSchedulePhase",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ExcludedSessionHostCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MaxSessionLimitPerSessionHost",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScalingEvaluationStartTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScalingPlanResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScalingReasonMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionOccupancyPercent",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TotalSessionHostCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UnhealthySessionHostCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::ConnectionGraphicsData",
+      "category": "ConnectionGraphicsData",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDConnectionGraphicsDataPreview",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdconnectiongraphicsdatapreview",
+      "fields": [
+        {
+          "name": "ClientSkippedFramesPercentage",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CompressedFrameSizeInBytes",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DecodingTimeOnClientInMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EncodingDelayOnServerInMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EndToEndDelayInMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EstAvailableBandwidthKBps",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EstRoundTripTimeInMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "NetworkSkippedFramesPercentage",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RenderingTimeOnClientInMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerSkippedFramesPercentage",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization.",
+        "Published table name includes Preview; verify feature and regional availability."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::MultiLinkAdd",
+      "category": "MultiLinkAdd",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDMultiLinkAdd",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdmultilinkadd",
+      "fields": [
+        {
+          "name": "Category",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientNatIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientTransportIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientTransportType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientTURNIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "GatewayRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LinkId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerNatIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerTransportIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerTransportType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerTURNIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::NetworkData",
+      "category": "NetworkData",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDConnectionNetworkData",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdconnectionnetworkdata",
+      "fields": [
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EstAvailableBandwidthKBps",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EstRoundTripTimeInMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/hostpools::SessionHostManagement",
+      "category": "SessionHostManagement",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/hostpools",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-hostpools-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDSessionHostManagement",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdsessionhostmanagement",
+      "fields": [
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "FailedSessionHostCleanupPolicy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "FromInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "FromSessionHostConfigVer",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningCanaryPolicy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningStatus",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScheduledDateTime",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScheduledDateTimeZone",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ToInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ToSessionHostConfigVer",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpdateDeleteOriginalVm",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpdateMaxVmsRemoved",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpdateMethod",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpdateStartWindowInMinutes",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/repositoryfolders::Management",
+      "category": "Management",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/repositoryfolders",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-repositoryfolders-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "category_support": "documented",
+      "coverage": "category_documented_field_schema_not_verified",
+      "reference_table": null,
+      "fields": [],
+      "notes": [
+        "The supported-category reference lists this category but leaves the destination table unspecified.",
+        "No fields have been borrowed from another resource type. Capture an exported event to establish its schema."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/scalingplans::Autoscale",
+      "category": "Autoscale",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/scalingplans",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-scalingplans-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "category_support": "documented",
+      "coverage": "category_documented_field_schema_not_verified",
+      "reference_table": null,
+      "fields": [],
+      "notes": [
+        "The supported-category reference lists this category but leaves the destination table unspecified.",
+        "No fields have been borrowed from another resource type. Capture an exported event to establish its schema."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/workspaces::Checkpoint",
+      "category": "Checkpoint",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/workspaces",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-workspaces-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDCheckpoints",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvdcheckpoints",
+      "fields": [
+        {
+          "name": "ActivityType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Parameters",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization.",
+        "The supported-category table leaves the destination table blank, but the WVDCheckpoints table reference explicitly lists this resource type."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    },
+    {
+      "schema_key": "Microsoft.DesktopVirtualization/workspaces::Error",
+      "category": "Error",
+      "platform": "Azure",
+      "product": "Azure Virtual Desktop",
+      "resource_type": "Microsoft.DesktopVirtualization/workspaces",
+      "supported_categories_reference": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-desktopvirtualization-workspaces-logs",
+      "tenant_capture_verified": false,
+      "event_hub_paths_verified": false,
+      "reference_table": "WVDErrors",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/wvderrors",
+      "fields": [
+        {
+          "name": "ActivityType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Code",
+          "published_type": "long",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CodeSymbolic",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Operation",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServiceError",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "category_support": "documented",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "notes": [
+        "Published Log Analytics columns do not establish exact Event Hub casing, nesting or serialization."
+      ],
+      "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+    }
+  ],
+  "ingestion_guidance": [
+    "Use resourceId together with category to select a schema.",
+    "Split records[] batches where present.",
+    "Retain CorrelationId and event time for cross-table correlation where supplied.",
+    "Do not merge Feed and Connection into a single session-event schema.",
+    "Verify blank-schema and unlisted-category entries against the actual resource."
+  ]
+}
