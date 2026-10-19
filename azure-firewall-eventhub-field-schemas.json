@@ -1,0 +1,1856 @@
+{
+  "title": "Azure Firewall Event Hub field schema catalogue",
+  "version": "1.0",
+  "export_date": "2026-10-19",
+  "destination": "Azure Event Hubs",
+  "resource_type": "Microsoft.Network/azureFirewalls",
+  "dataset_count": 16,
+  "requested_group_label": "AZFW* tables",
+  "group_label_interpretation": "Wildcard group, not an additional diagnostic category. Expanded into the 13 individually listed AZFW categories.",
+  "scope": "Three legacy diagnostic categories and 13 structured categories. Full public table column dictionaries are retained for the structured categories, with Log Analytics standard columns separated.",
+  "tenant_capture_verified": false,
+  "references": {
+    "supported_categories": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-network-azurefirewalls-logs",
+    "firewall_monitoring": "https://learn.microsoft.com/en-us/azure/firewall/monitor-firewall",
+    "resource_log_envelope": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema"
+  },
+  "notes": [
+    "Published Log Analytics columns are not asserted to be exact raw JSON names, types or paths.",
+    "Preserve original payloads and distinguish legacy msg strings from structured fields.",
+    "Category-specific requiredness is unspecified; allow missing, null and additional fields.",
+    "The common envelope specification and documentation examples do not replace tenant capture validation.",
+    "This catalogue is not a strict JSON Schema validator."
+  ],
+  "event_hub_envelope": {
+    "scope": "Azure Monitor resource-log common envelope; validate per category",
+    "batch_path": "records[] when present",
+    "record_fields": [
+      {
+        "name": "time",
+        "json_type": "string (date-time)",
+        "required": true
+      },
+      {
+        "name": "resourceId",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "category",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "operationName",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "operationVersion",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "level",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultType",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultSignature",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultDescription",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "durationMs",
+        "json_type": "number",
+        "required": false
+      },
+      {
+        "name": "callerIpAddress",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "correlationId",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "identity",
+        "json_type": "object",
+        "required": false
+      },
+      {
+        "name": "location",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "properties",
+        "json_type": "object",
+        "required": false
+      }
+    ],
+    "requiredness_basis": "Azure Monitor common resource-log specification; category may alternatively be represented by type for certain services."
+  },
+  "categories": [
+    {
+      "category": "AzureFirewallApplicationRule",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_table": "AzureDiagnostics",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/firewall/monitor-firewall#legacy-azure-diagnostics-logs",
+      "coverage": "documented_raw_JSON_example_shape",
+      "event_hub_paths_verified": false,
+      "documentation_raw_example_paths_verified": true,
+      "operation_name_example": "AzureFirewallApplicationRuleLog",
+      "fields": [
+        {
+          "name": "msg",
+          "published_type": "string",
+          "event_hub_json_path": "properties.msg",
+          "required": null
+        }
+      ],
+      "notes": [
+        "Connection or DNS details are embedded in the msg string; they are not independent raw JSON fields.",
+        "AzureDiagnostics may expose this payload as msg_s; that suffix is not the raw Event Hub field name.",
+        "Published examples establish shape only; tenant captures were not inspected."
+      ]
+    },
+    {
+      "category": "AzureFirewallNetworkRule",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_table": "AzureDiagnostics",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/firewall/monitor-firewall#legacy-azure-diagnostics-logs",
+      "coverage": "documented_raw_JSON_example_shape",
+      "event_hub_paths_verified": false,
+      "documentation_raw_example_paths_verified": true,
+      "operation_name_example": "AzureFirewallNetworkRuleLog",
+      "fields": [
+        {
+          "name": "msg",
+          "published_type": "string",
+          "event_hub_json_path": "properties.msg",
+          "required": null
+        }
+      ],
+      "notes": [
+        "Connection or DNS details are embedded in the msg string; they are not independent raw JSON fields.",
+        "AzureDiagnostics may expose this payload as msg_s; that suffix is not the raw Event Hub field name.",
+        "Published examples establish shape only; tenant captures were not inspected."
+      ]
+    },
+    {
+      "category": "AzureFirewallDnsProxy",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_table": "AzureDiagnostics",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/firewall/monitor-firewall#legacy-azure-diagnostics-logs",
+      "coverage": "documented_raw_JSON_example_shape",
+      "event_hub_paths_verified": false,
+      "documentation_raw_example_paths_verified": true,
+      "operation_name_example": "AzureFirewallDnsProxyLog",
+      "fields": [
+        {
+          "name": "msg",
+          "published_type": "string",
+          "event_hub_json_path": "properties.msg",
+          "required": null
+        }
+      ],
+      "notes": [
+        "Connection or DNS details are embedded in the msg string; they are not independent raw JSON fields.",
+        "AzureDiagnostics may expose this payload as msg_s; that suffix is not the raw Event Hub field name.",
+        "Published examples establish shape only; tenant captures were not inspected."
+      ]
+    },
+    {
+      "category": "AZFWApplicationRule",
+      "requested_label": "AZFWApplicationRule",
+      "reference_table": "AZFWApplicationRule",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwapplicationrule",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActionReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Fqdn",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsExplicitProxyRequest",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsTlsInspected",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetUrl",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "WebCategory",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AZFWApplicationRuleAggregation",
+      "requested_label": "AZFWApplicationRuleAggregation",
+      "reference_table": "AZFWApplicationRuleAggregation",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwapplicationruleaggregation",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActionReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ApplicationRuleCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Fqdn",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetUrl",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "purpose": "Aggregated data for Policy Analytics; not an individual connection-event stream."
+    },
+    {
+      "category": "AZFWDnsAdditional",
+      "requested_label": "AZFWDnsAdditional",
+      "reference_table": "AZFWDnsFlowTrace",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwdnsflowtrace",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "MsgType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "QueryMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "QueryTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SocketFamily",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "mapping_note": "Diagnostic category and destination table names differ."
+    },
+    {
+      "category": "AZFWDnsQuery",
+      "requested_label": "AZFWDnsQuery",
+      "reference_table": "AZFWDnsQuery",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwdnsquery",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "DnssecOkBit",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EDNS0BufferSize",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ErrorMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ErrorNumber",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "QueryClass",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "QueryId",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "QueryName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "QueryType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestDurationSecs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestSize",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseCode",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseFlags",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseSize",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AZFWFatFlow",
+      "requested_label": "AZFWFatFlow",
+      "reference_table": "AZFWFatFlow",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwfatflow",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "FlowRate",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "notes": [
+        "Top-flow logging requires separate feature enablement; not a complete record of all flows."
+      ]
+    },
+    {
+      "category": "AZFWFlowTrace",
+      "requested_label": "AZFWFlowTrace",
+      "reference_table": "AZFWFlowTrace",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwflowtrace",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActionReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Flag",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "notes": [
+        "Flow-trace logging requires feature configuration; verify current SKU and enablement requirements."
+      ]
+    },
+    {
+      "category": "AZFWFqdnResolveFailure",
+      "requested_label": "AZFWFqdnResolveFailure",
+      "reference_table": "AZFWInternalFqdnResolutionFailure",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwinternalfqdnresolutionfailure",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Error",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Fqdn",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "mapping_note": "Firewall monitoring documentation links internal FQDN failure logs to AZFWInternalFqdnResolutionFailure; the supported-category list names AZFWFqdnResolveFailure but leaves its table cell empty. Validate this mapping against the resource and received events."
+    },
+    {
+      "category": "AZFWIdpsSignature",
+      "requested_label": "AZFWIdpsSignature",
+      "reference_table": "AZFWIdpsSignature",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwidpssignature",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Category",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Description",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Severity",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SignatureId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AZFWNatRule",
+      "requested_label": "AZFWNatRule",
+      "reference_table": "AZFWNatRule",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwnatrule",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TranslatedIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TranslatedPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AZFWNatRuleAggregation",
+      "requested_label": "AZFWNatRuleAggregation",
+      "reference_table": "AZFWNatRuleAggregation",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwnatruleaggregation",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "NatRuleCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TranslatedIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TranslatedPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "purpose": "Aggregated data for Policy Analytics; not an individual connection-event stream."
+    },
+    {
+      "category": "AZFWNetworkRule",
+      "requested_label": "AZFWNetworkRule",
+      "reference_table": "AZFWNetworkRule",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwnetworkrule",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActionReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AZFWNetworkRuleAggregation",
+      "requested_label": "AZFWNetworkRuleAggregation",
+      "reference_table": "AZFWNetworkRuleAggregation",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwnetworkruleaggregation",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActionReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsDefaultRule",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "NetworkRuleCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Policy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Rule",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleCollectionGroup",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "purpose": "Aggregated data for Policy Analytics; not an individual connection-event stream."
+    },
+    {
+      "category": "AZFWThreatIntel",
+      "requested_label": "AZFWThreatIntel",
+      "reference_table": "AZFWThreatIntel",
+      "platform": "Azure",
+      "product": "Azure Firewall",
+      "resource_type": "Microsoft.Network/azureFirewalls",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/azfwthreatintel",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DestinationPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Fqdn",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsTlsInspected",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Protocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetUrl",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ThreatDescription",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    }
+  ],
+  "ingestion_guidance": [
+    "Route by resourceId and category.",
+    "Process each records[] element when a batch wrapper is present.",
+    "Do not parse structured AZFW events with legacy message regular expressions.",
+    "Keep aggregated Policy Analytics data separate from per-connection events.",
+    "Check duplicate semantic coverage before enabling both legacy and structured categories.",
+    "Verify the diagnostic category names exposed by the deployed resource."
+  ],
+  "verification_command": "az monitor diagnostic-settings categories list --resource \"<azure-firewall-resource-id>\" --output json"
+}
