@@ -1,0 +1,1493 @@
+{
+  "title": "Microsoft Entra ID diagnostic log field schema catalogue",
+  "version": "1.0",
+  "export_date": "2026-10-19",
+  "destination": "Azure Event Hubs",
+  "scope": "JSON export of the preceding field-schema summary; selected fields, not the complete linked field dictionaries.",
+  "event_hub_wire_schema_verified": false,
+  "notes": [
+    "Category fields below retain published Log Analytics column names and types. They are not verified Event Hub JSON paths.",
+    "Validate actual casing, nesting, optionality and JSON types using captured Event Hub records.",
+    "Microsoft Graph API schemas, Log Analytics schemas and Event Hub payloads are distinct.",
+    "No category field is asserted to be mandatory. Missing fields and new fields should be accepted.",
+    "dynamic denotes structured or variable JSON content in Log Analytics; it is not a native JSON type."
+  ],
+  "references": {
+    "resource_log_envelope": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema",
+    "entra_schema_overview": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-activity-log-schemas"
+  },
+  "event_hub_envelope": {
+    "source": "Azure Monitor resource-log common schema",
+    "fields": [
+      {
+        "name": "time",
+        "json_type": "string",
+        "format": "date-time",
+        "required": false
+      },
+      {
+        "name": "resourceId",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "category",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "operationName",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "operationVersion",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultType",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultSignature",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "resultDescription",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "callerIpAddress",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "correlationId",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "level",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "location",
+        "json_type": "string",
+        "required": false
+      },
+      {
+        "name": "durationMs",
+        "json_type": "number",
+        "required": false
+      },
+      {
+        "name": "identity",
+        "json_type": "object",
+        "required": false
+      },
+      {
+        "name": "properties",
+        "json_type": "object",
+        "required": false
+      }
+    ]
+  },
+  "categories": [
+    {
+      "category": "AuditLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/auditlogs",
+      "reference_table": "AuditLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AADTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActivityDisplayName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AADOperationType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LoggedByService",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Result",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActivityDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InitiatedBy",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetResources",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AdditionalDetails",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "SignInLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/signinlogs",
+      "reference_table": "SigninLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserPrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppDisplayName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientAppUsed",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationProtocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationRequirement",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConditionalAccessStatus",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HomeTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLevelAggregated",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLevelDuringSignIn",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsInteractive",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DeviceDetail",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LocationDetails",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConditionalAccessPolicies",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "NonInteractiveUserSignInLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadnoninteractiveusersigninlogs",
+      "reference_table": "AADNonInteractiveUserSignInLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserPrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IncomingTokenType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginalRequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UniqueTokenIdentifier",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceIdentity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DeviceDetail",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Status",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConditionalAccessPolicies",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LocationDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsInteractive",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsRisky",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "ServicePrincipalSignInLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadserviceprincipalsigninlogs",
+      "reference_table": "AADServicePrincipalSignInLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppOwnerTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCredentialType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalCredentialKeyId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalCredentialThumbprint",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "FederatedCredentialId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceIdentity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceServicePrincipalId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ConditionalAccessStatus",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UniqueTokenIdentifier",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "long",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "ManagedIdentitySignInLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadmanagedidentitysigninlogs",
+      "reference_table": "AADManagedIdentitySignInLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ManagedServiceIdentity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceAppClientId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceIdentity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceServicePrincipalId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceOwnerTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCredentialType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "long",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "ProvisioningLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadprovisioninglogs",
+      "reference_table": "AADProvisioningLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AADTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "JobId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CycleId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ChangeId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningAction",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InitiatedBy",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipal",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceIdentity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetIdentity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ModifiedProperties",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningSteps",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProvisioningStatusInfo",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultDescription",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "long",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "ADFSSignInLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/adfssigninlogs",
+      "reference_table": "ADFSSignInLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserPrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AlternateSignInName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TokenIssuerName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TokenIssuerType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginalRequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UniqueTokenIdentifier",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationRequirement",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AuthenticationProcessingDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DeviceDetail",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Status",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsInteractive",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "RiskyUsers",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadriskyusers",
+      "reference_table": "AADRiskyUsers",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserDisplayName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserPrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLevel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskDetail",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsDeleted",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsProcessing",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLastUpdatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "notes": [
+        "Id identifies the risky user."
+      ]
+    },
+    {
+      "category": "RiskyServicePrincipals",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadriskyserviceprincipals",
+      "reference_table": "AADRiskyServicePrincipals",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DisplayName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLevel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskDetail",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AccountEnabled",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IsProcessing",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLastUpdatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "notes": [
+        "Id identifies the risky service principal."
+      ]
+    },
+    {
+      "category": "UserRiskEvents",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aaduserriskevents",
+      "reference_table": "AADUserRiskEvents",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserDisplayName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserPrincipalName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Activity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskEventType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLevel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskDetail",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DetectionTimingType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IpAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TokenIssuerType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActivityDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DetectedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastUpdatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AdditionalInfo",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Location",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "ServicePrincipalRiskEvents",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/aadserviceprincipalriskevents",
+      "reference_table": "AADServicePrincipalRiskEvents",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalDisplayName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Activity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskEventType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskLevel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskState",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RiskDetail",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DetectionTimingType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IpAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TokenIssuerType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ActivityDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DetectedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastUpdatedDateTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AdditionalInfo",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "KeyIds",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Location",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "MicrosoftGraphActivityLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/microsoftgraphactivitylogs",
+      "reference_table": "MicrosoftGraphActivityLogs",
+      "field_name_convention": "Log Analytics published column names",
+      "coverage": "selected_fields",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AadTenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientRequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestMethod",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestUri",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ApiVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServicePrincipalId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IPAddress",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAgent",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Roles",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Scopes",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Wids",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DeviceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SignInActivityId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UniqueTokenId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IdentityProvider",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientAuthMethod",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseStatusCode",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseSizeBytes",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TokenIssuedAt",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "CustomSecurityAttributeAuditLogs",
+      "platform": "Microsoft Entra ID",
+      "reference_url": "https://learn.microsoft.com/en-us/entra/identity/monitoring-health/concept-diagnostic-settings-logs-options#custom-security-attribute-audit-logs",
+      "coverage": "field_schema_not_verified",
+      "event_hub_paths_verified": false,
+      "fields": [],
+      "notes": [
+        "A separate field-by-field Event Hub schema was not verified.",
+        "Audit-style actor, target and property-change extraction is a candidate mapping only; confirm from captured records."
+      ],
+      "routing_roles": [
+        "Attribute Log Administrator",
+        "Security Administrator"
+      ]
+    }
+  ],
+  "ingestion_guidance": [
+    "Route by the record category and retain original JSON.",
+    "Preserve structured objects and arrays.",
+    "Keep event time, risk-detection time and transport arrival time separately.",
+    "Allow missing and additional fields.",
+    "Do not require Log Analytics enrichment columns in Event Hub payloads."
+  ],
+  "workspace_columns_not_required_in_event_hub": [
+    "_BilledSize",
+    "_IsBillable",
+    "Type",
+    "TenantId"
+  ]
+}
