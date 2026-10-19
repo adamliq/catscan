@@ -1,0 +1,1300 @@
+{
+  "title": "Azure Application Gateway Event Hub field schema catalogue",
+  "version": "1.0",
+  "export_date": "2026-10-19",
+  "destination": "Azure Event Hubs",
+  "resource_type": "Microsoft.Network/applicationGateways",
+  "dataset_count": 3,
+  "tenant_capture_verified": false,
+  "scope": "Published Log Analytics field dictionaries plus raw JSON example paths where Microsoft provides parseable examples.",
+  "references": {
+    "monitoring_data": "https://learn.microsoft.com/en-us/azure/application-gateway/monitor-application-gateway-reference",
+    "diagnostic_logs": "https://learn.microsoft.com/en-us/azure/application-gateway/application-gateway-diagnostics",
+    "supported_categories": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-network-applicationgateways-logs",
+    "resource_log_envelope": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema"
+  },
+  "notes": [
+    "Log Analytics field names and types are not an exact Event Hub contract.",
+    "Example JSON types describe the published example only; they are not universal required types.",
+    "Raw layouts and casing can differ by gateway SKU and schema version.",
+    "Allow missing, null and additional fields.",
+    "Standard Log Analytics columns are listed separately; do not require them in Event Hub payloads.",
+    "Paths are relative to one record; process each item if a records[] wrapper is present."
+  ],
+  "categories": [
+    {
+      "category": "ApplicationGatewayAccessLog",
+      "platform": "Azure",
+      "product": "Azure Application Gateway",
+      "resource_type": "Microsoft.Network/applicationGateways",
+      "reference_table": "AGWAccessLogs",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/agwaccesslogs",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference plus available raw JSON example paths",
+      "tenant_capture_verified": false,
+      "fields": [
+        {
+          "name": "AdvancedRoutingConditionSetName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AdvancedRoutingMapName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AdvancedRoutingRulePriority",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "BackendPoolName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "BackendSettingName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "BackendSslCipher",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "BackendSslProtocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientResponseTime",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ErrorInfo",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Host",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpMethod",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpStatus",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InstanceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ListenerName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginalHost",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginalRequestUriWithArgs",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReceivedBytes",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestQuery",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestUri",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SentBytes",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerConnectTime",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerHeaderTime",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerResponseLatency",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerRouted",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerStatus",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslCipher",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslClientCertificateFingerprint",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslClientCertificateIssuerName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslClientVerify",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslEnabled",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslProtocol",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeTaken",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TransactionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UpstreamSourcePort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAgent",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "WafEvaluationTime",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "WafMode",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "WafPolicyId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "raw_example_variants": [
+        {
+          "basis": "Microsoft raw JSON example, not tenant capture",
+          "fields": [
+            {
+              "name": "timeStamp",
+              "event_hub_json_path": "timeStamp",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "resourceId",
+              "event_hub_json_path": "resourceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "listenerName",
+              "event_hub_json_path": "listenerName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "ruleName",
+              "event_hub_json_path": "ruleName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "backendPoolName",
+              "event_hub_json_path": "backendPoolName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "backendSettingName",
+              "event_hub_json_path": "backendSettingName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "operationName",
+              "event_hub_json_path": "operationName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "category",
+              "event_hub_json_path": "category",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "properties",
+              "event_hub_json_path": "properties",
+              "example_json_type": "object",
+              "required": null
+            },
+            {
+              "name": "instanceId",
+              "event_hub_json_path": "properties.instanceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "clientIP",
+              "event_hub_json_path": "properties.clientIP",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "clientPort",
+              "event_hub_json_path": "properties.clientPort",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "httpMethod",
+              "event_hub_json_path": "properties.httpMethod",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "originalRequestUriWithArgs",
+              "event_hub_json_path": "properties.originalRequestUriWithArgs",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "requestUri",
+              "event_hub_json_path": "properties.requestUri",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "requestQuery",
+              "event_hub_json_path": "properties.requestQuery",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "userAgent",
+              "event_hub_json_path": "properties.userAgent",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "httpStatus",
+              "event_hub_json_path": "properties.httpStatus",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "httpVersion",
+              "event_hub_json_path": "properties.httpVersion",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "receivedBytes",
+              "event_hub_json_path": "properties.receivedBytes",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "sentBytes",
+              "event_hub_json_path": "properties.sentBytes",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "clientResponseTime",
+              "event_hub_json_path": "properties.clientResponseTime",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "timeTaken",
+              "event_hub_json_path": "properties.timeTaken",
+              "example_json_type": "number",
+              "required": null
+            },
+            {
+              "name": "WAFEvaluationTime",
+              "event_hub_json_path": "properties.WAFEvaluationTime",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "WAFMode",
+              "event_hub_json_path": "properties.WAFMode",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "transactionId",
+              "event_hub_json_path": "properties.transactionId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "sslEnabled",
+              "event_hub_json_path": "properties.sslEnabled",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "sslCipher",
+              "event_hub_json_path": "properties.sslCipher",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "sslProtocol",
+              "event_hub_json_path": "properties.sslProtocol",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "sslClientVerify",
+              "event_hub_json_path": "properties.sslClientVerify",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "sslClientCertificateFingerprint",
+              "event_hub_json_path": "properties.sslClientCertificateFingerprint",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "sslClientCertificateIssuerName",
+              "event_hub_json_path": "properties.sslClientCertificateIssuerName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "serverRouted",
+              "event_hub_json_path": "properties.serverRouted",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "serverStatus",
+              "event_hub_json_path": "properties.serverStatus",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "serverResponseLatency",
+              "event_hub_json_path": "properties.serverResponseLatency",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "serverConnectTime",
+              "event_hub_json_path": "properties.serverConnectTime",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "serverHeaderTime",
+              "event_hub_json_path": "properties.serverHeaderTime",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "upstreamSourcePort",
+              "event_hub_json_path": "properties.upstreamSourcePort",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "originalHost",
+              "event_hub_json_path": "properties.originalHost",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "host",
+              "event_hub_json_path": "properties.host",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "error_info",
+              "event_hub_json_path": "properties.error_info",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "contentType",
+              "event_hub_json_path": "properties.contentType",
+              "example_json_type": "string",
+              "required": null
+            }
+          ],
+          "documentation_syntax_repair": "Inserted missing comma after serverHeaderTime in Microsoft example.",
+          "sku": "v2"
+        },
+        {
+          "basis": "Microsoft raw JSON example, not tenant capture",
+          "fields": [
+            {
+              "name": "resourceId",
+              "event_hub_json_path": "resourceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "operationName",
+              "event_hub_json_path": "operationName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "time",
+              "event_hub_json_path": "time",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "category",
+              "event_hub_json_path": "category",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "properties",
+              "event_hub_json_path": "properties",
+              "example_json_type": "object",
+              "required": null
+            },
+            {
+              "name": "instanceId",
+              "event_hub_json_path": "properties.instanceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "clientIP",
+              "event_hub_json_path": "properties.clientIP",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "clientPort",
+              "event_hub_json_path": "properties.clientPort",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "httpMethod",
+              "event_hub_json_path": "properties.httpMethod",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "requestUri",
+              "event_hub_json_path": "properties.requestUri",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "requestQuery",
+              "event_hub_json_path": "properties.requestQuery",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "userAgent",
+              "event_hub_json_path": "properties.userAgent",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "httpStatus",
+              "event_hub_json_path": "properties.httpStatus",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "httpVersion",
+              "event_hub_json_path": "properties.httpVersion",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "receivedBytes",
+              "event_hub_json_path": "properties.receivedBytes",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "sentBytes",
+              "event_hub_json_path": "properties.sentBytes",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "timeTaken",
+              "event_hub_json_path": "properties.timeTaken",
+              "example_json_type": "integer",
+              "required": null
+            },
+            {
+              "name": "sslEnabled",
+              "event_hub_json_path": "properties.sslEnabled",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "host",
+              "event_hub_json_path": "properties.host",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "originalHost",
+              "event_hub_json_path": "properties.originalHost",
+              "example_json_type": "string",
+              "required": null
+            }
+          ],
+          "documentation_syntax_repair": null,
+          "sku": "v1"
+        }
+      ],
+      "sku_notes": [
+        "Raw examples include different SKU layouts; verify the layout emitted by your gateway."
+      ],
+      "units": {
+        "TimeTaken": "seconds",
+        "ClientResponseTime": "seconds",
+        "ServerConnectTime": "seconds",
+        "ServerHeaderTime": "seconds",
+        "ServerResponseLatency": "seconds",
+        "WafEvaluationTime": "seconds",
+        "ReceivedBytes": "bytes",
+        "SentBytes": "bytes"
+      },
+      "raw_timeTaken_units_by_sku": {
+        "v1": "milliseconds",
+        "v2": "seconds"
+      },
+      "notes": [
+        "Published sources differ in the wording of ClientResponseTime; validate its precise interpretation before using it in latency calculations."
+      ]
+    },
+    {
+      "category": "ApplicationGatewayPerformanceLog",
+      "platform": "Azure",
+      "product": "Azure Application Gateway",
+      "resource_type": "Microsoft.Network/applicationGateways",
+      "reference_table": "AGWPerformanceLogs",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/agwperformancelogs",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference plus available raw JSON example paths",
+      "tenant_capture_verified": false,
+      "fields": [
+        {
+          "name": "FailedRequestCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HealthyHostCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InstanceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Latency",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Throughput",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UnHealthyHostCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "raw_example_variants": [
+        {
+          "basis": "Microsoft raw JSON example, not tenant capture",
+          "fields": [
+            {
+              "name": "resourceId",
+              "event_hub_json_path": "resourceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "operationName",
+              "event_hub_json_path": "operationName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "time",
+              "event_hub_json_path": "time",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "category",
+              "event_hub_json_path": "category",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "properties",
+              "event_hub_json_path": "properties",
+              "example_json_type": "object",
+              "required": null
+            },
+            {
+              "name": "instanceId",
+              "event_hub_json_path": "properties.instanceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "healthyHostCount",
+              "event_hub_json_path": "properties.healthyHostCount",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "unHealthyHostCount",
+              "event_hub_json_path": "properties.unHealthyHostCount",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "requestCount",
+              "event_hub_json_path": "properties.requestCount",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "latency",
+              "event_hub_json_path": "properties.latency",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "failedRequestCount",
+              "event_hub_json_path": "properties.failedRequestCount",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "throughput",
+              "event_hub_json_path": "properties.throughput",
+              "example_json_type": "string",
+              "required": null
+            }
+          ],
+          "documentation_syntax_repair": null,
+          "sku": "v1 only"
+        }
+      ],
+      "sku_availability": "v1 only; v2 performance data is exposed through Azure Monitor metrics",
+      "units": {
+        "Latency": "milliseconds",
+        "Throughput": "bytes per second"
+      }
+    },
+    {
+      "category": "ApplicationGatewayFirewallLog",
+      "platform": "Azure",
+      "product": "Azure Application Gateway",
+      "resource_type": "Microsoft.Network/applicationGateways",
+      "reference_table": "AGWFirewallLogs",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/agwfirewalllogs",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference plus available raw JSON example paths",
+      "tenant_capture_verified": false,
+      "fields": [
+        {
+          "name": "Action",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIp",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientPort",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DetailedData",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DetailedMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "FileDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Hostname",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InstanceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LineDetails",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParanoiaLevel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "PolicyId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "PolicyScope",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "PolicyScopeName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestUri",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleSetType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RuleSetVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Site",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TransactionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "raw_example_variants": [
+        {
+          "basis": "Microsoft raw JSON example, not tenant capture",
+          "fields": [
+            {
+              "name": "timeStamp",
+              "event_hub_json_path": "timeStamp",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "resourceId",
+              "event_hub_json_path": "resourceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "operationName",
+              "event_hub_json_path": "operationName",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "category",
+              "event_hub_json_path": "category",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "properties",
+              "event_hub_json_path": "properties",
+              "example_json_type": "object",
+              "required": null
+            },
+            {
+              "name": "instanceId",
+              "event_hub_json_path": "properties.instanceId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "clientIp",
+              "event_hub_json_path": "properties.clientIp",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "clientPort",
+              "event_hub_json_path": "properties.clientPort",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "requestUri",
+              "event_hub_json_path": "properties.requestUri",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "ruleSetType",
+              "event_hub_json_path": "properties.ruleSetType",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "ruleSetVersion",
+              "event_hub_json_path": "properties.ruleSetVersion",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "ruleId",
+              "event_hub_json_path": "properties.ruleId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "message",
+              "event_hub_json_path": "properties.message",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "action",
+              "event_hub_json_path": "properties.action",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "site",
+              "event_hub_json_path": "properties.site",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "details",
+              "event_hub_json_path": "properties.details",
+              "example_json_type": "object",
+              "required": null
+            },
+            {
+              "name": "message",
+              "event_hub_json_path": "properties.details.message",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "data",
+              "event_hub_json_path": "properties.details.data",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "file",
+              "event_hub_json_path": "properties.details.file",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "line",
+              "event_hub_json_path": "properties.details.line",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "hostname",
+              "event_hub_json_path": "properties.hostname",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "transactionId",
+              "event_hub_json_path": "properties.transactionId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "policyId",
+              "event_hub_json_path": "properties.policyId",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "policyScope",
+              "event_hub_json_path": "properties.policyScope",
+              "example_json_type": "string",
+              "required": null
+            },
+            {
+              "name": "policyScopeName",
+              "event_hub_json_path": "properties.policyScopeName",
+              "example_json_type": "string",
+              "required": null
+            }
+          ],
+          "documentation_syntax_repair": null,
+          "sku": "example SKU not explicitly asserted"
+        }
+      ],
+      "notes": [
+        "Multiple rule violations can share one transaction identifier; WAF events are not one-to-one with requests."
+      ]
+    }
+  ]
+}
