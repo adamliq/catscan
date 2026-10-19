@@ -1,0 +1,3471 @@
+{
+  "title": "Application Insights, autoscale and DCR Event Hub field schema catalogue",
+  "version": "1.0",
+  "export_date": "2026-10-19",
+  "destination": "Azure Event Hubs",
+  "requested_label_count": 22,
+  "unique_diagnostic_category_count": 15,
+  "scope": "All 22 requested labels, including seven Application Insights aliases, represented by 15 canonical diagnostic categories.",
+  "tenant_capture_verified": false,
+  "notes": [
+    "App* columns are published Log Analytics definitions; exact Event Hub field casing, nesting and serialization remain unverified.",
+    "Alias entries use schema_ref to avoid duplicating the canonical field dictionary.",
+    "Standard Log Analytics columns are separated and must not be required in raw Event Hub payloads.",
+    "Allow missing, null and additional fields.",
+    "This is a reference catalogue, not a strict JSON Schema validator."
+  ],
+  "references": {
+    "application_insights_categories": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-insights-components-logs",
+    "autoscale_categories": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-insights-autoscalesettings-logs",
+    "dcr_categories": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-insights-datacollectionrules-logs",
+    "telemetry_alias_mapping": "https://learn.microsoft.com/en-us/azure/azure-monitor/app/data-model-complete",
+    "resource_log_envelope": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema"
+  },
+  "event_hub_envelope": {
+    "basis": "Azure Monitor common resource-log specification; validate per category",
+    "fields": [
+      {
+        "name": "time",
+        "json_type": "string",
+        "format": "date-time",
+        "required": true
+      },
+      {
+        "name": "resourceId",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "operationName",
+        "json_type": "string",
+        "required": true
+      },
+      {
+        "name": "category_or_type",
+        "json_type": "string",
+        "required": true,
+        "note": "The common specification identifies type as the category field for Application Insights exports. Validate actual messages; do not require category alone."
+      },
+      {
+        "name": "properties",
+        "json_type": "object",
+        "required": false
+      }
+    ],
+    "batch_handling": "Process each records[] item when present; actual message framing must be validated."
+  },
+  "categories": [
+    {
+      "requested_label": "Requests",
+      "category": "Requests",
+      "diagnostic_category": "AppRequests",
+      "alias_of": "AppRequests",
+      "application_insights_query_table": "requests",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppRequests",
+      "schema_ref": "#/categories/15",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/apprequests",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "requested_label": "Dependencies",
+      "category": "Dependencies",
+      "diagnostic_category": "AppDependencies",
+      "alias_of": "AppDependencies",
+      "application_insights_query_table": "dependencies",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppDependencies",
+      "schema_ref": "#/categories/9",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appdependencies",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "requested_label": "Exceptions",
+      "category": "Exceptions",
+      "diagnostic_category": "AppExceptions",
+      "alias_of": "AppExceptions",
+      "application_insights_query_table": "exceptions",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppExceptions",
+      "schema_ref": "#/categories/11",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appexceptions",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "requested_label": "Traces",
+      "category": "Traces",
+      "diagnostic_category": "AppTraces",
+      "alias_of": "AppTraces",
+      "application_insights_query_table": "traces",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppTraces",
+      "schema_ref": "#/categories/17",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/apptraces",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "requested_label": "PageViews",
+      "category": "PageViews",
+      "diagnostic_category": "AppPageViews",
+      "alias_of": "AppPageViews",
+      "application_insights_query_table": "pageViews",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppPageViews",
+      "schema_ref": "#/categories/13",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/apppageviews",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "requested_label": "CustomEvents",
+      "category": "CustomEvents",
+      "diagnostic_category": "AppEvents",
+      "alias_of": "AppEvents",
+      "application_insights_query_table": "customEvents",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppEvents",
+      "schema_ref": "#/categories/10",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appevents",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "requested_label": "AvailabilityResults",
+      "category": "AvailabilityResults",
+      "diagnostic_category": "AppAvailabilityResults",
+      "alias_of": "AppAvailabilityResults",
+      "application_insights_query_table": "availabilityResults",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppAvailabilityResults",
+      "schema_ref": "#/categories/7",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appavailabilityresults",
+      "coverage": "alias_mapping_to_canonical_field_dictionary",
+      "fields": null,
+      "event_hub_paths_verified": false,
+      "notes": [
+        "Requested telemetry name is represented by the canonical App* diagnostic category. See schema_ref for fields; do not configure this alias as an additional export category."
+      ]
+    },
+    {
+      "category": "AppAvailabilityResults",
+      "diagnostic_category": "AppAvailabilityResults",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppAvailabilityResults",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appavailabilityresults",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Location",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Success",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppBrowserTimings",
+      "diagnostic_category": "AppBrowserTimings",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppBrowserTimings",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appbrowsertimings",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "NetworkDurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProcessingDurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReceiveDurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SendDurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TotalDurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Url",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppDependencies",
+      "diagnostic_category": "AppDependencies",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppDependencies",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appdependencies",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Data",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DependencyType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReferencedItemId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReferencedType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultCode",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Success",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Target",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppEvents",
+      "diagnostic_category": "AppEvents",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppEvents",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appevents",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppExceptions",
+      "diagnostic_category": "AppExceptions",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppExceptions",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appexceptions",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Assembly",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Details",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ExceptionType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HandledAt",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InnermostAssembly",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InnermostMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InnermostMethod",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InnermostType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Method",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OuterAssembly",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OuterMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OuterMethod",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OuterType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProblemId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SeverityLevel",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppMetrics",
+      "diagnostic_category": "AppMetrics",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppMetrics",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appmetrics",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Max",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Min",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Sum",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppPageViews",
+      "diagnostic_category": "AppPageViews",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppPageViews",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/apppageviews",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Url",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppPerformanceCounters",
+      "diagnostic_category": "AppPerformanceCounters",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppPerformanceCounters",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appperformancecounters",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Category",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Counter",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Instance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Value",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppRequests",
+      "diagnostic_category": "AppRequests",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppRequests",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/apprequests",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DurationMs",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReferencedItemId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReferencedType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultCode",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Source",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Success",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Url",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppSystemEvents",
+      "diagnostic_category": "AppSystemEvents",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppSystemEvents",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/appsystemevents",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "EventType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Name",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AppTraces",
+      "diagnostic_category": "AppTraces",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "AppTraces",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/apptraces",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AppRoleInstance",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppRoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AppVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientBrowser",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCity",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientCountryOrRegion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIP",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientModel",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientOS",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientStateOrProvince",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "IKey",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ItemCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Measurements",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ParentId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Properties",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReferencedItemId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ReferencedType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceGUID",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SDKVersion",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SessionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SeverityLevel",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SyntheticSource",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAccountId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAuthenticatedId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "OTelResources",
+      "diagnostic_category": "OTelResources",
+      "platform": "Azure",
+      "product": "Application Insights",
+      "resource_type": "Microsoft.Insights/components",
+      "reference_table": "OTelResources",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/otelresources",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Attributes",
+          "published_type": "dynamic",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Id",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RoleName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServiceInstanceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServiceName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServiceNamespace",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "notes": [
+        "The Application Insights supported-category list includes OTelResources, while the public table reference lists Microsoft.OperationalInsights/workspaces as its resource type. The fields here are a table dictionary, not a verified diagnostic export contract."
+      ],
+      "table_reference_resource_type": "Microsoft.OperationalInsights/workspaces"
+    },
+    {
+      "category": "AutoscaleEvaluations",
+      "diagnostic_category": "AutoscaleEvaluations",
+      "platform": "Azure",
+      "product": "Azure Monitor autoscale",
+      "resource_type": "Microsoft.Insights/autoscalesettings",
+      "reference_table": "AutoscaleEvaluationsLog",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/autoscaleevaluationslog",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "AutoscaleMetricName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "AvailabilitySet",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Category",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CloudServiceName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CloudServiceRole",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CoolDown",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CurrentInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DefaultInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "DeploymentSlot",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EstimateScaleResult",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EvaluationResult",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "EvaluationTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InstanceUpdateReason",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastScaleActionOperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastScaleActionOperationStatus",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "LastScaleActionTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MaximumInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MetricData",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MetricEndTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MetricNamespace",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MetricStartTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MetricTimeGrain",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MinimumInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "NewInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ObservedValue",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Operator",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Profile",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProfileEvaluationTime",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ProfileSelected",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Projection",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultDescription",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SelectedAutoscaleProfile",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ServerFarm",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ShouldUpdateInstance",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SkipCurrentAutoscaleEvaluation",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SkipRuleEvaluationForCooldown",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Threshold",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeAggregationType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGrainStatistic",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeWindow",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Webspace",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "AutoscaleScaleActions",
+      "diagnostic_category": "AutoscaleScaleActions",
+      "platform": "Azure",
+      "product": "Azure Monitor autoscale",
+      "resource_type": "Microsoft.Insights/autoscalesettings",
+      "reference_table": "AutoscaleScaleActionsLog",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/autoscalescaleactionslog",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "Category",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedAsyncScaleActionJob",
+          "published_type": "bool",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CreatedAsyncScaleActionJobId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CurrentInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "NewInstanceCount",
+          "published_type": "int",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultDescription",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResultType",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScaleActionMessage",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScaleActionOperationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScaleActionOperationStatus",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ScaleDirection",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TargetResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    },
+    {
+      "category": "LogErrors",
+      "diagnostic_category": "LogErrors",
+      "platform": "Azure",
+      "product": "Azure Monitor data collection rules",
+      "resource_type": "Microsoft.Insights/dataCollectionRules",
+      "reference_table": "DCRLogErrors",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/tables/dcrlogerrors",
+      "coverage": "all_columns_in_retrieved_public_Log_Analytics_reference",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "ClientRequestId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CorrelationId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "InputStreamId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Message",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OperationName",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "log_analytics_standard_columns": [
+        {
+          "name": "_BilledSize",
+          "published_type": "real",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_IsBillable",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_ResourceId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SourceSystem",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "_SubscriptionId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TenantId",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeGenerated",
+          "published_type": "datetime",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Type",
+          "published_type": "string",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ]
+    }
+  ],
+  "ingestion_guidance": [
+    "Deduplicate alias names before configuring exports.",
+    "Use resourceId with category or type to identify the schema.",
+    "Preserve correlation fields such as OperationId and ParentId where supplied.",
+    "Treat Properties, Measurements and other dynamic fields as structured or variably serialized content until inspected.",
+    "Keep event time and Event Hub receipt times separately."
+  ],
+  "verification_command": "az monitor diagnostic-settings categories list --resource \"<resource-id>\" --output json"
+}
