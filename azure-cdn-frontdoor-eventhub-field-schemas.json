@@ -1,0 +1,816 @@
+{
+  "title": "Azure CDN and Front Door diagnostic log field schema catalogue",
+  "version": "1.0",
+  "export_date": "2026-10-19",
+  "destination": "Azure Event Hubs",
+  "resource_type": "Microsoft.Cdn/profiles",
+  "scope": "Documented field lists and raw-example paths for the four requested categories; reference catalogue, not a strict JSON Schema validator.",
+  "event_hub_wire_schema_verified": false,
+  "notes": [
+    "No tenant Event Hub capture was available.",
+    "Published field labels, example JSON types and inferred logical types are distinguished.",
+    "Unknown field types remain null. Do not derive JSON casing automatically from documentation labels.",
+    "Fields are optional or of unspecified requiredness; accept nulls, missing fields and additional fields.",
+    "When records[] is present, process each record separately; paths below are relative to one record."
+  ],
+  "references": {
+    "supported_categories": "https://learn.microsoft.com/en-us/azure/azure-monitor/reference/supported-logs/microsoft-cdn-profiles-logs",
+    "resource_log_envelope": "https://learn.microsoft.com/en-us/azure/azure-monitor/logs/resource-logs-schema",
+    "configuration": "https://learn.microsoft.com/en-us/azure/frontdoor/standard-premium/how-to-logs"
+  },
+  "event_hub_envelope": {
+    "fields": [
+      {
+        "name": "records",
+        "json_type": "array",
+        "scope": "batch wrapper",
+        "required": null
+      },
+      {
+        "name": "time",
+        "json_type": "string",
+        "scope": "record",
+        "required": null,
+        "format": "date-time"
+      },
+      {
+        "name": "resourceId",
+        "json_type": "string",
+        "scope": "record",
+        "required": null
+      },
+      {
+        "name": "category",
+        "json_type": "string",
+        "scope": "record",
+        "required": null
+      },
+      {
+        "name": "operationName",
+        "json_type": "string",
+        "scope": "record",
+        "required": null
+      },
+      {
+        "name": "properties",
+        "json_type": "object",
+        "scope": "record",
+        "required": null
+      }
+    ]
+  },
+  "categories": [
+    {
+      "platform": "Azure",
+      "resource_type": "Microsoft.Cdn/profiles",
+      "log_analytics_table": "AzureDiagnostics",
+      "category": "AzureCdnAccessLog",
+      "product": "Azure CDN from Microsoft",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/cdn/monitoring-and-access-log",
+      "coverage": "documented_raw_log_property_list",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "BackendHostname",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "CacheStatus",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIp",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientPort",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpMethod",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpStatusCode",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpStatusDetails",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpVersion",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "POP",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestBytes",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestUri",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseBytes",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RoutingRuleName",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RulesEngineMatchNames",
+          "published_type": null,
+          "logical_type": "collection",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SecurityProtocol",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SentToOriginShield",
+          "published_type": null,
+          "logical_type": "boolean",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "isReceivedFromClient",
+          "published_type": null,
+          "logical_type": "boolean",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeTaken",
+          "published_type": null,
+          "logical_type": "number",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TrackingReference",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAgent",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ErrorInfo",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeToFirstByte",
+          "published_type": null,
+          "logical_type": "number",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Result",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SNI",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslJA4",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "units": {
+        "TimeTaken": "seconds",
+        "TimeToFirstByte": "milliseconds"
+      },
+      "notes": [
+        "Property labels are preserved; raw casing and paths need sample validation.",
+        "SentToOriginShield is deprecated; the documented raw name is isSentToOriginShield, replaced by isReceivedFromClient."
+      ]
+    },
+    {
+      "platform": "Azure",
+      "resource_type": "Microsoft.Cdn/profiles",
+      "log_analytics_table": "AzureDiagnostics",
+      "category": "FrontDoorAccessLog",
+      "product": "Azure Front Door Standard/Premium",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/frontdoor/monitor-front-door?pivots=front-door-standard-premium#access-log",
+      "coverage": "documented_access_log_property_list",
+      "event_hub_paths_verified": false,
+      "fields": [
+        {
+          "name": "TrackingReference",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Time",
+          "published_type": null,
+          "logical_type": "datetime",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpMethod",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpVersion",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestUri",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HostName",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestBytes",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ResponseBytes",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "UserAgent",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientIp",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SocketIp",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimeTaken",
+          "published_type": null,
+          "logical_type": "number",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RequestProtocol",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SecurityProtocol",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SecurityCipher",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Endpoint",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "HttpStatusCode",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Pop",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Cache Status",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "MatchedRulesSetName",
+          "published_type": null,
+          "logical_type": "collection",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "RouteName",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ClientPort",
+          "published_type": null,
+          "logical_type": "integer",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "SslJA4",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Referrer",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "TimetoFirstByte",
+          "published_type": null,
+          "logical_type": "number",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "ErrorInfo",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginURL",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginIP",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "OriginName",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Result",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        },
+        {
+          "name": "Sni",
+          "published_type": null,
+          "logical_type": "string",
+          "type_basis": "inferred_from_documented_semantics",
+          "event_hub_json_path": null,
+          "required": null
+        }
+      ],
+      "units": {
+        "TimeTaken": "seconds",
+        "TimetoFirstByte": "seconds"
+      },
+      "notes": [
+        "Names are documentation labels, not verified raw paths.",
+        "ClientIp can derive from X-Forwarded-For; SocketIp identifies the direct peer."
+      ]
+    },
+    {
+      "platform": "Azure",
+      "resource_type": "Microsoft.Cdn/profiles",
+      "log_analytics_table": "AzureDiagnostics",
+      "category": "FrontDoorHealthProbeLog",
+      "product": "Azure Front Door Standard/Premium",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/frontdoor/monitor-front-door?pivots=front-door-standard-premium#health-probe-log",
+      "coverage": "documented_raw_json_example",
+      "event_hub_paths_verified": false,
+      "documentation_raw_example_paths_verified": true,
+      "fields": [
+        {
+          "name": "healthProbeId",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.healthProbeId",
+          "required": null
+        },
+        {
+          "name": "POP",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.POP",
+          "required": null
+        },
+        {
+          "name": "httpVerb",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.httpVerb",
+          "required": null
+        },
+        {
+          "name": "result",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.result",
+          "required": null
+        },
+        {
+          "name": "httpStatusCode",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "integer",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.httpStatusCode",
+          "required": null
+        },
+        {
+          "name": "probeURL",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.probeURL",
+          "required": null
+        },
+        {
+          "name": "originName",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.originName",
+          "required": null
+        },
+        {
+          "name": "originIP",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.originIP",
+          "required": null
+        },
+        {
+          "name": "totalLatencyMilliseconds",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "number",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.totalLatencyMilliseconds",
+          "required": null
+        },
+        {
+          "name": "connectionLatencyMilliseconds",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "number",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.connectionLatencyMilliseconds",
+          "required": null
+        },
+        {
+          "name": "DNSLatencyMicroseconds",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "number",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.DNSLatencyMicroseconds",
+          "required": null
+        }
+      ],
+      "units": {
+        "totalLatencyMilliseconds": "milliseconds",
+        "connectionLatencyMilliseconds": "milliseconds",
+        "DNSLatencyMicroseconds": "microseconds"
+      },
+      "notes": [
+        "Failed probes are logged; do not treat this as a complete probe-success stream.",
+        "Numeric values are strings in the Microsoft example.",
+        "Paths are supported by a published example, not tenant capture."
+      ]
+    },
+    {
+      "platform": "Azure",
+      "resource_type": "Microsoft.Cdn/profiles",
+      "log_analytics_table": "AzureDiagnostics",
+      "category": "FrontDoorWebApplicationFirewallLog",
+      "product": "Azure Front Door Standard/Premium",
+      "reference_url": "https://learn.microsoft.com/en-us/azure/web-application-firewall/afds/waf-front-door-monitor?pivots=front-door-standard-premium",
+      "coverage": "documented_raw_json_example_and_property_list",
+      "event_hub_paths_verified": false,
+      "documentation_raw_example_paths_verified": true,
+      "fields": [
+        {
+          "name": "clientIP",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.clientIP",
+          "required": null
+        },
+        {
+          "name": "clientPort",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "integer",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.clientPort",
+          "required": null
+        },
+        {
+          "name": "socketIP",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.socketIP",
+          "required": null
+        },
+        {
+          "name": "requestUri",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.requestUri",
+          "required": null
+        },
+        {
+          "name": "ruleName",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.ruleName",
+          "required": null
+        },
+        {
+          "name": "policy",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.policy",
+          "required": null
+        },
+        {
+          "name": "action",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.action",
+          "required": null
+        },
+        {
+          "name": "host",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.host",
+          "required": null
+        },
+        {
+          "name": "trackingReference",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.trackingReference",
+          "required": null
+        },
+        {
+          "name": "policyMode",
+          "published_type": null,
+          "example_json_type": "string",
+          "logical_type": "string",
+          "type_basis": "JSON_type_from_documented_example; logical_type_inferred",
+          "event_hub_json_path": "properties.policyMode",
+          "required": null
+        },
+        {
+          "name": "details",
+          "example_json_type": "object",
+          "logical_type": "object",
+          "event_hub_json_path": "properties.details",
+          "required": null
+        },
+        {
+          "name": "matches",
+          "example_json_type": "array",
+          "logical_type": "array<object>",
+          "event_hub_json_path": "properties.details.matches",
+          "required": null
+        },
+        {
+          "name": "matchVariableName",
+          "example_json_type": "string",
+          "logical_type": "string",
+          "event_hub_json_path": "properties.details.matches[].matchVariableName",
+          "required": null
+        },
+        {
+          "name": "matchVariableValue",
+          "example_json_type": "string",
+          "logical_type": "string",
+          "event_hub_json_path": "properties.details.matches[].matchVariableValue",
+          "required": null
+        }
+      ],
+      "notes": [
+        "Microsoft's raw example spells category FrontdoorWebApplicationFirewallLog; retain incoming casing.",
+        "AzureDiagnostics suffixes such as action_s are not raw JSON names.",
+        "A request may match several rules."
+      ]
+    }
+  ],
+  "ingestion_guidance": [
+    "Retain raw payload and category casing.",
+    "Normalize numeric strings only after validating values.",
+    "Use trackingReference for access/WAF correlation where populated.",
+    "Keep latency units category-specific."
+  ]
+}
