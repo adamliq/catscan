@@ -433,6 +433,23 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   left-aligned panel would run off the right edge, covering both of
   Cloud Logs' own comboboxes going forward, not just this one.
 
+  Nine rows are a deliberate exception to "every row is a real log
+  category": `category` reads "No log categories - metrics only" (six
+  rows — `Microsoft.Network/VirtualHubs`, `expressRouteGateways`,
+  `privateEndpoints`, `privateDnsZones`, `dnsResolvers`,
+  `dnsForwardingRulesets`) or "No log categories or metrics" (three rows
+  — the DNS private resolver's `inboundEndpoints`/`outboundEndpoints`
+  child objects, and the bare `Microsoft.Sql/servers` resource, whose
+  monitoring happens at the `/databases` child level instead), confirmed
+  against Azure Monitor's own [resource log reference index](https://github.com/MicrosoftDocs/azure-monitor-docs/blob/main/articles/azure-monitor/reference/logs-index.md)
+  rather than left silently absent. `config_location` points at
+  `Monitor -> Metrics` instead of Diagnostic settings for the first six,
+  and is blank for the three with neither (no portal page to point at);
+  `severity_notes`, `cim_mapping`, and `nist_800_53_au` are blank on all
+  nine, since none of them is an auditable log event. They still count
+  toward "Documented only," since each carries a real, specific,
+  cited reason rather than an import's blank field.
+
   This remains a snapshot, not a claimed-complete enumeration: not every
   Azure resource type is here (only the ones present in the supplied
   exports), Microsoft 365's own record-type list is larger than the 28
