@@ -4954,6 +4954,93 @@ follow-up fix for it this time).
 page, covering SQL Server Audit's full 83-row action group/action
 taxonomy from a supplied export, next to Cloud Actions Explorer).
 
+Asked to add Windows Event ID 33205 to the Microsoft Events page, and
+to put a reference to the new SQL Audit tab on it - the natural next
+step after that tab shipped, since 33205 is the one Windows Event ID
+every SQL Server Audit action writes under, regardless of which action
+group fired. Researched it properly rather than from memory: Microsoft's
+own pages don't actually state the numeric ID anywhere (confirmed by
+grepping the fetched source of both "SQL Server Audit Records" and
+"Write SQL Server Audit events to the Security log" for "33205" - zero
+matches in either), so corroborated it across independent sources
+instead - a SigmaHQ detection rule (`EventID: 33205`,
+`Provider_Name|contains: 'MSSQL'`, Application log), a Datadog detection
+rule, and several practitioner write-ups (SQLskills, NXLog, ManageEngine,
+a Microsoft Q&A answer) that agree on the ID, the dual Application-log/
+Security-log destination, and the `MSSQLSERVER$AUDIT` source name - then
+pulled the real field schema from Microsoft's own current "SQL Server
+Audit Records" page (dated 10/20/2025) via its GitHub source, the same
+`raw.githubusercontent.com` route used for the Cloud Logs Azure sourcing
+earlier this session, since `learn.microsoft.com` itself is blocked for
+this session.
+
+Added the row with a `source` of `MSSQLSERVER$AUDIT` (the registered
+Security-log sub-key name confirmed by an independent SQLskills
+troubleshooting post and two community threads, not just one source),
+`log` of `Application` (SigmaHQ's own rule scopes to this one, and it's
+documented as the lower-permission, more common default versus
+Security), and a `field_schema` built from Microsoft's real 40-plus
+-column audit record table, trimmed to the ~30 columns that actually
+apply to an on-premises Windows event log record rather than Azure SQL
+Database exclusives (`duration_milliseconds`, `response_rows`,
+`connection_id`, and similar, each marked "Applies to: Azure SQL
+Database" only in Microsoft's own table). `opposite_event_id` points at
+33204, the documented write-failure counterpart - not added as its own
+row, since only 33205 was asked for. The sample's own `action_id:LGIS`
+line is tied to the real `SUCCESSFUL_LOGIN_GROUP` row already in the SQL
+Audit tab's own data, not an invented group name - caught and fixed a
+first draft that named a plausible-sounding but nonexistent group before
+this went in.
+
+Added the "put reference to sql audit page" half as a dedicated,
+event-scoped "See also" section (not the general `reference` field,
+which is free text and already serves a different purpose - the
+citations above) with a real cross-tab jump link, `winJumpToSqlAudit()`,
+mirroring the existing `jumpToRefSearch()`/`winJumpToEvent()` pattern.
+Exposing it on `window` turned out not to be optional: Cat Scan's inline
+`onclick="..."` handlers run in global scope, and the pattern every
+other cross-tab jump function already follows - the function body
+itself private to the IIFE, a `window.winJumpToX = winJumpToX;`
+assignment alongside the sibling jump functions making it reachable -
+is there for exactly this reason. Missed it on the first pass (caught by
+Playwright surfacing `winJumpToSqlAudit is not defined` as a real page
+error), fixed by adding the same assignment next to
+`window.winJumpToEvent`.
+
+**A real, broader bug found and fixed while verifying this at 375px:**
+`section.block` (every "Related"/"See also"/"Sample"/etc. block in the
+Events tab's own detail panel) had no `overflow-wrap` set at all. It
+hadn't surfaced before because every existing `reference` field's long
+citation text either wrapped at spaces that happened to fall often
+enough, or got linkified into an `<a>` by `linkifyReference()` (which
+only matches `https://`-prefixed URLs) and so didn't overflow by luck of
+formatting - not because the underlying CSS was actually safe. 91
+existing rows cite a reference by bare domain/path text with no
+`https://` prefix, the same shape as this row's own citations, so any of
+them could have hit the same failure with a long enough unbroken
+path - this wasn't unique to the new row, just the first one to surface
+it. Fixed at the shared `#app-win section.block` rule
+(`overflow-wrap: anywhere`) rather than reformatting this row's own
+citation text to dodge the symptom, so the fix covers those 91 rows too,
+not just this one.
+
+`windows/data/events.csv`: 5405 -> **5406** events. Verified with the
+build check and in Playwright: event 33205 is findable by search, its
+detail panel renders the full ~30-field schema, the illustrative sample,
+all three citations, and the new "See also" link; clicking that link
+switches to the SQL Audit tab with no console error; no sideways
+scrolling at 1500px or 375px in either theme on the new event's own
+detail page specifically (the regression this fix targets), confirmed
+both before the CSS fix (reproduced the overflow) and after (confirmed
+it's gone); the SQL Audit tab's own filters/export and the rest of the
+Events tab are unaffected.
+
+`1.6.34` (PATCH - Windows Event ID 33205 (SQL Server Audit's single
+Event ID for every audited action) added to Microsoft Events, with a
+cross-link to the SQL Audit tab, plus a fix to a latent sideways-scroll
+bug in the Events tab's own detail-panel citation rendering that 91
+existing rows could have hit too).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.

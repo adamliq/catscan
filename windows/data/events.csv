@@ -51677,3 +51677,33 @@ Level:         Information
 Computer:      WKS-0142.corp.local
 Description:
 The User Profile Service finished loading the user profile for the session.","Owner-supplied windows-logon-event-flow.html reference, corroborated by DFIR references (e.g. inversecos, ""User Profile Service Operational log"") that use this log for logon/logoff timing. The exact manifest message text isn't reproduced, so the sample is illustrative. This log records profile load/unload timing and is a useful cross-check on the Security-log logon events.",,illustrative,,,,,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}}",,,
+33205,Application,MSSQLSERVER$AUDIT,Database Auditing,SQL Server Audit,"SQL Server Audit wrote an audit record. Every SQL Server Audit event uses this one Event ID regardless of which action fired -- the specific action is identified by the record's own action_id field (e.g. LGIS/LGIF for a successful/failed login), not a separate Windows Event ID per action. Fired for any action covered by an enabled server-level, database-level, or audit-level action group or action -- see the SQL Audit tab for the complete list. Targets either the Application log (lower permission requirement, the common default) or the Security log (higher assurance, requires extra configuration) depending on how the audit's target was set; a write failure to the Security log is logged separately as event 33204 in the Application log.","Log Name:      Application
+Source:        MSSQLSERVER$AUDIT
+Event ID:      33205
+Level:         Information
+Computer:      SQL01.corp.local
+Description:
+SUCCESSFUL_LOGIN_GROUP
+
+Audit Record:
+	event_time:		2026-10-29T14:02:11.401Z
+	sequence_number:	1
+	action_id:		LGIS
+	succeeded:		true
+	session_id:		62
+	server_principal_id:	273
+	server_principal_name:	CORP\jsmith
+	server_principal_sid:	S-1-5-21-...-1118
+	database_principal_name:
+	target_server_principal_name:
+	server_instance_name:	SQL01
+	database_name:
+	schema_name:
+	object_name:
+	statement:
+	additional_information:
+	file_name:
+	audit_schema_version:	1
+	client_ip:		10.20.4.17
+	application_name:	Microsoft SQL Server Management Studio
+	host_name:		WKS-0142","Microsoft Learn, ""SQL Server Audit Records"" (learn.microsoft.com/en-us/sql/relational-databases/security/auditing/sql-server-audit-records) — the audit record field schema this event carries; Microsoft Learn, ""Write SQL Server Audit events to the Security log"" (learn.microsoft.com/en-us/sql/relational-databases/security/auditing/write-sql-server-audit-events-to-the-security-log) — Security-log configuration and the event 33204 write-failure path; SigmaHQ, ""MSSQL Disable Audit Settings"" (github.com/SigmaHQ/sigma, rules/windows/builtin/application/mssqlserver/win_mssql_disable_audit_settings.yml) — confirms Event ID 33205 with a Provider_Name containing MSSQL in the Application log","Enable a server or database audit specification (see the SQL Audit tab for the full action group/action list this event can fire for), then set the audit's target to the Application or Security event log (CREATE SERVER AUDIT ... TO APPLICATION_LOG / TO SECURITY_LOG). Writing to the Security log additionally needs auditpol /set /subcategory:""application generated"" /success:enable /failure:enable, the SQL Server service account granted the ""Generate security audits"" user right, and that account given access to the EventLog\Security registry key.",illustrative,,,"AU-2, AU-3, AU-12",,"{""header"": {""log_name"": ""string"", ""source"": ""string"", ""event_id"": ""integer"", ""level"": ""enum"", ""computer"": ""string"", ""description"": ""string""}, ""audit_record"": {""event_time"": ""string"", ""sequence_number"": ""integer"", ""action_id"": ""enum"", ""succeeded"": ""enum"", ""session_id"": ""integer"", ""server_principal_id"": ""integer"", ""server_principal_name"": ""principal"", ""server_principal_sid"": ""sid"", ""database_principal_id"": ""integer"", ""database_principal_name"": ""principal"", ""target_server_principal_id"": ""integer"", ""target_server_principal_name"": ""principal"", ""target_database_principal_id"": ""integer"", ""target_database_principal_name"": ""principal"", ""object_id"": ""integer"", ""object_name"": ""string"", ""class_type"": ""string"", ""server_instance_name"": ""string"", ""database_name"": ""string"", ""schema_name"": ""string"", ""statement"": ""string"", ""additional_information"": ""string"", ""file_name"": ""path"", ""audit_schema_version"": ""integer"", ""client_ip"": ""ip"", ""application_name"": ""string"", ""host_name"": ""string"", ""session_context"": ""string"", ""transaction_id"": ""integer"", ""database_transaction_id"": ""integer""}}",,33204,
