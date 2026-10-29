@@ -5041,6 +5041,47 @@ cross-link to the SQL Audit tab, plus a fix to a latent sideways-scroll
 bug in the Events tab's own detail-panel citation rendering that 91
 existing rows could have hit too).
 
+Added two more lookup tables to the SQL Audit tab itself, both decoding
+fields of the audit record format that Event ID 33205 (see `1.6.34`
+above) writes: `class_type`/`class_type_desc` (28 rows - what kind of
+server or database object the audited action acted on, e.g. `D` =
+`DATABASE`, `LX` = `LOGIN`) and `action_id` (175 rows - the short code
+identifying exactly which action or action group fired, e.g. `LGIS` =
+`LOGIN SUCCEEDED`). Both from user-supplied, Microsoft-sourced CSVs
+(`sql_server_audit_class_types.csv`, `sql_server_audit_action_ids.csv`);
+verified no duplicate codes in either before adding.
+
+Rendered as two collapsible sections below the existing actions/groups
+list+detail split, reusing the Reference tables tab's own look
+(`ref-section`/`table-scroll`/`ref-table`) but under new `sa-ref-*`
+class names rather than reusing `ref-toggle` directly - the Reference
+tab's own click handler does a bare `.ref-toggle` query across the whole
+app and derives the section it's toggling from `win-sec-${dataset}`,
+which would have resolved to a nonexistent element for these new
+`win-sa-sec-*` sections and thrown on click. Verified in Playwright that
+clicking a toggle in either location only ever toggles that location's
+own section. The action-IDs table (175 rows) gets its own local search
+box; the class-types table (28 rows) doesn't need one and is just shown
+in full. Both start expanded, since they're the only content under
+their respective headings.
+
+`tools/build_sql_audit.py` extended from one CSV/JSON/DATA-key pair to a
+small table of three (`sql_audit`, `sql_audit_class_types`,
+`sql_audit_action_ids`), each with its own dedup-key check, rather than
+adding two near-identical copies of the original single-dataset script.
+
+`windows/data/sql_audit_class_types.csv` (new, 28 rows),
+`windows/data/sql_audit_action_ids.csv` (new, 175 rows). Verified with
+the build check and in Playwright: both tables render with the right
+row/badge counts, the action-IDs search filters correctly, collapsing
+and re-expanding either section works, the pre-existing Reference tab's
+own toggle behavior is unaffected, and there's no sideways scroll at
+375px in either theme with both sections expanded.
+
+`1.6.35` (PATCH - two new reference lookups added to the SQL Audit tab,
+decoding the `class_type` and `action_id` fields of a SQL Server Audit
+record).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.

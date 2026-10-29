@@ -1,0 +1,1052 @@
+[
+  {
+    "action_id": "AS",
+    "name": "ACCESS",
+    "numeric_filter_value": "538989377",
+    "notes": ""
+  },
+  {
+    "action_id": "APRL",
+    "name": "ADD MEMBER",
+    "numeric_filter_value": "1280462913",
+    "notes": ""
+  },
+  {
+    "action_id": "ADSC",
+    "name": "ADD SENSITIVITY CLASSIFICATION",
+    "numeric_filter_value": "1129530433",
+    "notes": "SQL 2019+"
+  },
+  {
+    "action_id": "AL",
+    "name": "ALTER",
+    "numeric_filter_value": "538987585",
+    "notes": ""
+  },
+  {
+    "action_id": "ALCN",
+    "name": "ALTER CONNECTION",
+    "numeric_filter_value": "1313033281",
+    "notes": ""
+  },
+  {
+    "action_id": "ALLR",
+    "name": "ALTER LEDGER",
+    "numeric_filter_value": "1380731969",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "ALRC",
+    "name": "ALTER LEDGER CONFIGURATION",
+    "numeric_filter_value": "1129466945",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "ALRS",
+    "name": "ALTER RESOURCES",
+    "numeric_filter_value": "1397902401",
+    "notes": ""
+  },
+  {
+    "action_id": "ALSS",
+    "name": "ALTER SERVER STATE",
+    "numeric_filter_value": "1397967937",
+    "notes": ""
+  },
+  {
+    "action_id": "ALST",
+    "name": "ALTER SETTINGS",
+    "numeric_filter_value": "1414745153",
+    "notes": ""
+  },
+  {
+    "action_id": "ALTR",
+    "name": "ALTER TRACE",
+    "numeric_filter_value": "1381256257",
+    "notes": ""
+  },
+  {
+    "action_id": "PWAR",
+    "name": "APPLICATION_ROLE_CHANGE_PASSWORD_GROUP",
+    "numeric_filter_value": "1380013904",
+    "notes": ""
+  },
+  {
+    "action_id": "AUSC",
+    "name": "AUDIT SESSION CHANGED",
+    "numeric_filter_value": "1129534785",
+    "notes": ""
+  },
+  {
+    "action_id": "AUSF",
+    "name": "AUDIT SHUTDOWN ON FAILURE",
+    "numeric_filter_value": "1179866433",
+    "notes": ""
+  },
+  {
+    "action_id": "CNAU",
+    "name": "AUDIT_CHANGE_GROUP",
+    "numeric_filter_value": "1430343235",
+    "notes": ""
+  },
+  {
+    "action_id": "AUTH",
+    "name": "AUTHENTICATE",
+    "numeric_filter_value": "1213486401",
+    "notes": ""
+  },
+  {
+    "action_id": "BA",
+    "name": "BACKUP",
+    "numeric_filter_value": "538984770",
+    "notes": ""
+  },
+  {
+    "action_id": "BAL",
+    "name": "BACKUP LOG",
+    "numeric_filter_value": "541868354",
+    "notes": ""
+  },
+  {
+    "action_id": "BRDB",
+    "name": "BACKUP_RESTORE_GROUP",
+    "numeric_filter_value": "1111773762",
+    "notes": ""
+  },
+  {
+    "action_id": "BCM",
+    "name": "BATCH COMPLETED",
+    "numeric_filter_value": "541934402",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "BST",
+    "name": "BATCH STARTED",
+    "numeric_filter_value": "542397250",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "BCMG",
+    "name": "BATCH_COMPLETED_GROUP",
+    "numeric_filter_value": "1196245826",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "BSTG",
+    "name": "BATCH_STARTED_GROUP",
+    "numeric_filter_value": "1196708674",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "LGB",
+    "name": "BROKER LOGIN",
+    "numeric_filter_value": "541214540",
+    "notes": ""
+  },
+  {
+    "action_id": "LGBG",
+    "name": "BROKER_LOGIN_GROUP",
+    "numeric_filter_value": "1195525964",
+    "notes": ""
+  },
+  {
+    "action_id": "ADBO",
+    "name": "BULK ADMIN",
+    "numeric_filter_value": "1329742913",
+    "notes": ""
+  },
+  {
+    "action_id": "LGDB",
+    "name": "CHANGE DEFAULT DATABASE",
+    "numeric_filter_value": "1111770956",
+    "notes": ""
+  },
+  {
+    "action_id": "LGLG",
+    "name": "CHANGE DEFAULT LANGUAGE",
+    "numeric_filter_value": "1196181324",
+    "notes": ""
+  },
+  {
+    "action_id": "CCLG",
+    "name": "CHANGE LOGIN CREDENTIAL",
+    "numeric_filter_value": "1196180291",
+    "notes": ""
+  },
+  {
+    "action_id": "PWCS",
+    "name": "CHANGE OWN PASSWORD",
+    "numeric_filter_value": "1396922192",
+    "notes": ""
+  },
+  {
+    "action_id": "PWC",
+    "name": "CHANGE PASSWORD",
+    "numeric_filter_value": "541284176",
+    "notes": ""
+  },
+  {
+    "action_id": "USLG",
+    "name": "CHANGE USERS LOGIN",
+    "numeric_filter_value": "1196184405",
+    "notes": ""
+  },
+  {
+    "action_id": "USAF",
+    "name": "CHANGE USERS LOGIN AUTO",
+    "numeric_filter_value": "1178686293",
+    "notes": ""
+  },
+  {
+    "action_id": "CP",
+    "name": "CHECKPOINT",
+    "numeric_filter_value": "538988611",
+    "notes": ""
+  },
+  {
+    "action_id": "CO",
+    "name": "CONNECT",
+    "numeric_filter_value": "538988355",
+    "notes": ""
+  },
+  {
+    "action_id": "USTC",
+    "name": "COPY PASSWORD",
+    "numeric_filter_value": "1129599829",
+    "notes": ""
+  },
+  {
+    "action_id": "CR",
+    "name": "CREATE",
+    "numeric_filter_value": "538989123",
+    "notes": ""
+  },
+  {
+    "action_id": "CMLG",
+    "name": "CREDENTIAL MAP TO LOGIN",
+    "numeric_filter_value": "1196182851",
+    "notes": ""
+  },
+  {
+    "action_id": "DBAF",
+    "name": "DATABASE AUTHENTICATION FAILED",
+    "numeric_filter_value": "1178681924",
+    "notes": ""
+  },
+  {
+    "action_id": "DBAS",
+    "name": "DATABASE AUTHENTICATION SUCCEEDED",
+    "numeric_filter_value": "1396785732",
+    "notes": ""
+  },
+  {
+    "action_id": "DABO",
+    "name": "DATABASE BULK ADMIN",
+    "numeric_filter_value": "1329742148",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "DBL",
+    "name": "DATABASE LOGOUT",
+    "numeric_filter_value": "541868612",
+    "notes": ""
+  },
+  {
+    "action_id": "LGM",
+    "name": "DATABASE MIRRORING LOGIN",
+    "numeric_filter_value": "541935436",
+    "notes": ""
+  },
+  {
+    "action_id": "MNDB",
+    "name": "DATABASE_CHANGE_GROUP",
+    "numeric_filter_value": "1111772749",
+    "notes": ""
+  },
+  {
+    "action_id": "DAGL",
+    "name": "DATABASE_LOGOUT_GROUP",
+    "numeric_filter_value": "1279738180",
+    "notes": ""
+  },
+  {
+    "action_id": "LGMG",
+    "name": "DATABASE_MIRRORING_LOGIN_GROUP",
+    "numeric_filter_value": "1196246860",
+    "notes": ""
+  },
+  {
+    "action_id": "ACDO",
+    "name": "DATABASE_OBJECT_ACCESS_GROUP",
+    "numeric_filter_value": "1329873729",
+    "notes": ""
+  },
+  {
+    "action_id": "MNDO",
+    "name": "DATABASE_OBJECT_CHANGE_GROUP",
+    "numeric_filter_value": "1329876557",
+    "notes": ""
+  },
+  {
+    "action_id": "TODO",
+    "name": "DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP",
+    "numeric_filter_value": "1329876820",
+    "notes": ""
+  },
+  {
+    "action_id": "GRDO",
+    "name": "DATABASE_OBJECT_PERMISSION_CHANGE_GROUP",
+    "numeric_filter_value": "1329877575",
+    "notes": ""
+  },
+  {
+    "action_id": "OPDB",
+    "name": "DATABASE_OPERATION_GROUP",
+    "numeric_filter_value": "1111773263",
+    "notes": ""
+  },
+  {
+    "action_id": "TODB",
+    "name": "DATABASE_OWNERSHIP_CHANGE_GROUP",
+    "numeric_filter_value": "1111773012",
+    "notes": ""
+  },
+  {
+    "action_id": "GRDB",
+    "name": "DATABASE_PERMISSION_CHANGE_GROUP",
+    "numeric_filter_value": "1111773767",
+    "notes": ""
+  },
+  {
+    "action_id": "MNDP",
+    "name": "DATABASE_PRINCIPAL_CHANGE_GROUP",
+    "numeric_filter_value": "1346653773",
+    "notes": ""
+  },
+  {
+    "action_id": "IMDP",
+    "name": "DATABASE_PRINCIPAL_IMPERSONATION_GROUP",
+    "numeric_filter_value": "1346653513",
+    "notes": ""
+  },
+  {
+    "action_id": "ADDP",
+    "name": "DATABASE_ROLE_MEMBER_CHANGE_GROUP",
+    "numeric_filter_value": "1346651201",
+    "notes": ""
+  },
+  {
+    "action_id": "DBCC",
+    "name": "DBCC",
+    "numeric_filter_value": "1128481348",
+    "notes": ""
+  },
+  {
+    "action_id": "DBCG",
+    "name": "DBCC_GROUP",
+    "numeric_filter_value": "1195590212",
+    "notes": ""
+  },
+  {
+    "action_id": "DL",
+    "name": "DELETE",
+    "numeric_filter_value": "538987588",
+    "notes": ""
+  },
+  {
+    "action_id": "D",
+    "name": "DENY",
+    "numeric_filter_value": "538976324",
+    "notes": ""
+  },
+  {
+    "action_id": "DWC",
+    "name": "DENY WITH CASCADE",
+    "numeric_filter_value": "541284164",
+    "notes": ""
+  },
+  {
+    "action_id": "LGDA",
+    "name": "DISABLE",
+    "numeric_filter_value": "1094993740",
+    "notes": ""
+  },
+  {
+    "action_id": "DR",
+    "name": "DROP",
+    "numeric_filter_value": "538989124",
+    "notes": ""
+  },
+  {
+    "action_id": "DPRL",
+    "name": "DROP MEMBER",
+    "numeric_filter_value": "1280462916",
+    "notes": ""
+  },
+  {
+    "action_id": "DRSC",
+    "name": "DROP SENSITIVITY CLASSIFICATION",
+    "numeric_filter_value": "1129534020",
+    "notes": "SQL 2019+"
+  },
+  {
+    "action_id": "LGEA",
+    "name": "ENABLE",
+    "numeric_filter_value": "1095059276",
+    "notes": ""
+  },
+  {
+    "action_id": "ENLR",
+    "name": "ENABLE LEDGER",
+    "numeric_filter_value": "1380732485",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EX",
+    "name": "EXECUTE",
+    "numeric_filter_value": "538990661",
+    "notes": ""
+  },
+  {
+    "action_id": "XA",
+    "name": "EXTERNAL ACCESS ASSEMBLY",
+    "numeric_filter_value": "538984792",
+    "notes": ""
+  },
+  {
+    "action_id": "EADS",
+    "name": "EXTERNAL GOVERNANCE ATTRIBUTES DELTA SYNCHRONIZATION",
+    "numeric_filter_value": "1396982085",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EAFS",
+    "name": "EXTERNAL GOVERNANCE ATTRIBUTES FULL SYNCHRONIZATION",
+    "numeric_filter_value": "1397113157",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EGDP",
+    "name": "EXTERNAL GOVERNANCE POLICY DELTA PULL",
+    "numeric_filter_value": "1346651973",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EGFP",
+    "name": "EXTERNAL GOVERNANCE POLICY FULL PULL",
+    "numeric_filter_value": "1346783045",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EGTF",
+    "name": "EXTERNAL GOVERNANCE TURNED OFF",
+    "numeric_filter_value": "1179928389",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EGTO",
+    "name": "EXTERNAL GOVERNANCE TURNED ON",
+    "numeric_filter_value": "1330923333",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "EGOG",
+    "name": "EXTGOV_OPERATION_GROUP",
+    "numeric_filter_value": "1196377925",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "DAGF",
+    "name": "FAILED_DATABASE_AUTHENTICATION_GROUP",
+    "numeric_filter_value": "1179074884",
+    "notes": ""
+  },
+  {
+    "action_id": "LGFL",
+    "name": "FAILED_LOGIN_GROUP",
+    "numeric_filter_value": "1279674188",
+    "notes": ""
+  },
+  {
+    "action_id": "FWDL",
+    "name": "FIREWALL DELETE",
+    "numeric_filter_value": "1279547206",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "FWUD",
+    "name": "FIREWALL UPDATE",
+    "numeric_filter_value": "1146443590",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "FT",
+    "name": "FULLTEXT",
+    "numeric_filter_value": "538989638",
+    "notes": ""
+  },
+  {
+    "action_id": "FTG",
+    "name": "FULLTEXT_GROUP",
+    "numeric_filter_value": "541545542",
+    "notes": ""
+  },
+  {
+    "action_id": "GDLR",
+    "name": "GENERATE LEDGER DIGEST",
+    "numeric_filter_value": "1380729927",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "LGG",
+    "name": "GLOBAL TRANSACTIONS LOGIN",
+    "numeric_filter_value": "541542220",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "LGGG",
+    "name": "GLOBAL_TRANSACTIONS_LOGIN_GROUP",
+    "numeric_filter_value": "1195853644",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "G",
+    "name": "GRANT",
+    "numeric_filter_value": "538976327",
+    "notes": ""
+  },
+  {
+    "action_id": "GWG",
+    "name": "GRANT WITH GRANT",
+    "numeric_filter_value": "541546311",
+    "notes": ""
+  },
+  {
+    "action_id": "IMP",
+    "name": "IMPERSONATE",
+    "numeric_filter_value": "542133577",
+    "notes": ""
+  },
+  {
+    "action_id": "IN",
+    "name": "INSERT",
+    "numeric_filter_value": "538988105",
+    "notes": ""
+  },
+  {
+    "action_id": "OPLR",
+    "name": "LEDGER_OPERATION_GROUP",
+    "numeric_filter_value": "1380733007",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "LGIF",
+    "name": "LOGIN FAILED",
+    "numeric_filter_value": "1179207500",
+    "notes": ""
+  },
+  {
+    "action_id": "LGIS",
+    "name": "LOGIN SUCCEEDED",
+    "numeric_filter_value": "1397311308",
+    "notes": ""
+  },
+  {
+    "action_id": "PWCG",
+    "name": "LOGIN_CHANGE_PASSWORD_GROUP",
+    "numeric_filter_value": "1195595600",
+    "notes": ""
+  },
+  {
+    "action_id": "LGO",
+    "name": "LOGOUT",
+    "numeric_filter_value": "542066508",
+    "notes": ""
+  },
+  {
+    "action_id": "LO",
+    "name": "LOGOUT_GROUP",
+    "numeric_filter_value": "538988364",
+    "notes": ""
+  },
+  {
+    "action_id": "PWMC",
+    "name": "MUST CHANGE PASSWORD",
+    "numeric_filter_value": "1129142096",
+    "notes": ""
+  },
+  {
+    "action_id": "LGNM",
+    "name": "NAME CHANGE",
+    "numeric_filter_value": "1296975692",
+    "notes": ""
+  },
+  {
+    "action_id": "NMLG",
+    "name": "NO CREDENTIAL MAP TO LOGIN",
+    "numeric_filter_value": "1196182862",
+    "notes": ""
+  },
+  {
+    "action_id": "OP",
+    "name": "OPEN",
+    "numeric_filter_value": "538988623",
+    "notes": ""
+  },
+  {
+    "action_id": "PWEX",
+    "name": "PASSWORD EXPIRATION",
+    "numeric_filter_value": "1480939344",
+    "notes": ""
+  },
+  {
+    "action_id": "PWPL",
+    "name": "PASSWORD POLICY",
+    "numeric_filter_value": "1280333648",
+    "notes": ""
+  },
+  {
+    "action_id": "RC",
+    "name": "RECEIVE",
+    "numeric_filter_value": "538985298",
+    "notes": ""
+  },
+  {
+    "action_id": "RF",
+    "name": "REFERENCES",
+    "numeric_filter_value": "538986066",
+    "notes": ""
+  },
+  {
+    "action_id": "PWRS",
+    "name": "RESET OWN PASSWORD",
+    "numeric_filter_value": "1397905232",
+    "notes": ""
+  },
+  {
+    "action_id": "PWR",
+    "name": "RESET PASSWORD",
+    "numeric_filter_value": "542267216",
+    "notes": ""
+  },
+  {
+    "action_id": "RS",
+    "name": "RESTORE",
+    "numeric_filter_value": "538989394",
+    "notes": ""
+  },
+  {
+    "action_id": "R",
+    "name": "REVOKE",
+    "numeric_filter_value": "538976338",
+    "notes": ""
+  },
+  {
+    "action_id": "RWC",
+    "name": "REVOKE WITH CASCADE",
+    "numeric_filter_value": "541284178",
+    "notes": ""
+  },
+  {
+    "action_id": "RWG",
+    "name": "REVOKE WITH GRANT",
+    "numeric_filter_value": "541546322",
+    "notes": ""
+  },
+  {
+    "action_id": "RCM",
+    "name": "RPC COMPLETED",
+    "numeric_filter_value": "541934418",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "RST",
+    "name": "RPC STARTED",
+    "numeric_filter_value": "542397266",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "ACO",
+    "name": "SCHEMA_OBJECT_ACCESS_GROUP",
+    "numeric_filter_value": "542065473",
+    "notes": ""
+  },
+  {
+    "action_id": "MNO",
+    "name": "SCHEMA_OBJECT_CHANGE_GROUP",
+    "numeric_filter_value": "542068301",
+    "notes": ""
+  },
+  {
+    "action_id": "TOO",
+    "name": "SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP",
+    "numeric_filter_value": "542068564",
+    "notes": ""
+  },
+  {
+    "action_id": "GRO",
+    "name": "SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP",
+    "numeric_filter_value": "542069319",
+    "notes": ""
+  },
+  {
+    "action_id": "SL",
+    "name": "SELECT",
+    "numeric_filter_value": "538987603",
+    "notes": ""
+  },
+  {
+    "action_id": "SN",
+    "name": "SEND",
+    "numeric_filter_value": "538988115",
+    "notes": ""
+  },
+  {
+    "action_id": "SBC",
+    "name": "SENSITIVE BATCH COMPLETED",
+    "numeric_filter_value": "541278803",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "SRC",
+    "name": "SENSITIVE RPC COMPLETED",
+    "numeric_filter_value": "541282899",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "SBCG",
+    "name": "SENSITIVE_BATCH_COMPLETED_GROUP",
+    "numeric_filter_value": "1195590227",
+    "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "SCCG",
+    "name": "SENSITIVITY_CLASSIFICATION_CHANGE_GROUP",
+    "numeric_filter_value": "1195590483",
+    "notes": "SQL 2019+"
+  },
+  {
+    "action_id": "SVCN",
+    "name": "SERVER CONTINUE",
+    "numeric_filter_value": "1313035859",
+    "notes": ""
+  },
+  {
+    "action_id": "SVPD",
+    "name": "SERVER PAUSED",
+    "numeric_filter_value": "1146115667",
+    "notes": ""
+  },
+  {
+    "action_id": "SVSD",
+    "name": "SERVER SHUTDOWN",
+    "numeric_filter_value": "1146312275",
+    "notes": ""
+  },
+  {
+    "action_id": "SVSR",
+    "name": "SERVER STARTED",
+    "numeric_filter_value": "1381193299",
+    "notes": ""
+  },
+  {
+    "action_id": "MNSO",
+    "name": "SERVER_OBJECT_CHANGE_GROUP",
+    "numeric_filter_value": "1330859597",
+    "notes": ""
+  },
+  {
+    "action_id": "TOSO",
+    "name": "SERVER_OBJECT_OWNERSHIP_CHANGE_GROUP",
+    "numeric_filter_value": "1330859860",
+    "notes": ""
+  },
+  {
+    "action_id": "GRSO",
+    "name": "SERVER_OBJECT_PERMISSION_CHANGE_GROUP",
+    "numeric_filter_value": "1330860615",
+    "notes": ""
+  },
+  {
+    "action_id": "OPSV",
+    "name": "SERVER_OPERATION_GROUP",
+    "numeric_filter_value": "1448300623",
+    "notes": ""
+  },
+  {
+    "action_id": "GRSV",
+    "name": "SERVER_PERMISSION_CHANGE_GROUP",
+    "numeric_filter_value": "1448301127",
+    "notes": ""
+  },
+  {
+    "action_id": "MNSP",
+    "name": "SERVER_PRINCIPAL_CHANGE_GROUP",
+    "numeric_filter_value": "1347636813",
+    "notes": ""
+  },
+  {
+    "action_id": "IMSP",
+    "name": "SERVER_PRINCIPAL_IMPERSONATION_GROUP",
+    "numeric_filter_value": "1347636553",
+    "notes": ""
+  },
+  {
+    "action_id": "ADSP",
+    "name": "SERVER_ROLE_MEMBER_CHANGE_GROUP",
+    "numeric_filter_value": "1347634241",
+    "notes": ""
+  },
+  {
+    "action_id": "STSV",
+    "name": "SERVER_STATE_CHANGE_GROUP",
+    "numeric_filter_value": "1448301651",
+    "notes": ""
+  },
+  {
+    "action_id": "SPLN",
+    "name": "SHOW PLAN",
+    "numeric_filter_value": "1313624147",
+    "notes": ""
+  },
+  {
+    "action_id": "UNDO",
+    "name": "STATEMENT ROLLBACK",
+    "numeric_filter_value": "1329876565",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "UNDG",
+    "name": "STATEMENT_ROLLBACK_GROUP",
+    "numeric_filter_value": "1195658837",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "LGS",
+    "name": "STORAGE LOGIN",
+    "numeric_filter_value": "542328652",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "LGSG",
+    "name": "STORAGE_LOGIN_GROUP",
+    "numeric_filter_value": "1196640076",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "SUQN",
+    "name": "SUBSCRIBE QUERY NOTIFICATION",
+    "numeric_filter_value": "1313953107",
+    "notes": ""
+  },
+  {
+    "action_id": "DAGS",
+    "name": "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP",
+    "numeric_filter_value": "1397178692",
+    "notes": ""
+  },
+  {
+    "action_id": "LGSD",
+    "name": "SUCCESSFUL_LOGIN_GROUP",
+    "numeric_filter_value": "1146308428",
+    "notes": ""
+  },
+  {
+    "action_id": "TO",
+    "name": "TAKE OWNERSHIP",
+    "numeric_filter_value": "538988372",
+    "notes": ""
+  },
+  {
+    "action_id": "C2OF",
+    "name": "TRACE AUDIT C2OFF",
+    "numeric_filter_value": "1179595331",
+    "notes": ""
+  },
+  {
+    "action_id": "C2ON",
+    "name": "TRACE AUDIT C2ON",
+    "numeric_filter_value": "1313813059",
+    "notes": ""
+  },
+  {
+    "action_id": "TASA",
+    "name": "TRACE AUDIT START",
+    "numeric_filter_value": "1095975252",
+    "notes": ""
+  },
+  {
+    "action_id": "TASP",
+    "name": "TRACE AUDIT STOP",
+    "numeric_filter_value": "1347633492",
+    "notes": ""
+  },
+  {
+    "action_id": "TRCG",
+    "name": "TRACE_CHANGE_GROUP",
+    "numeric_filter_value": "1195594324",
+    "notes": ""
+  },
+  {
+    "action_id": "TXBG",
+    "name": "TRANSACTION BEGIN",
+    "numeric_filter_value": "1195530324",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TRBC",
+    "name": "TRANSACTION BEGIN COMPLETED",
+    "numeric_filter_value": "1128419924",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRBS",
+    "name": "TRANSACTION BEGIN STARTING",
+    "numeric_filter_value": "1396855380",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TXCM",
+    "name": "TRANSACTION COMMIT",
+    "numeric_filter_value": "1296259156",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TRCC",
+    "name": "TRANSACTION COMMIT COMPLETED",
+    "numeric_filter_value": "1128485460",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRCS",
+    "name": "TRANSACTION COMMIT STARTING",
+    "numeric_filter_value": "1396920916",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRPC",
+    "name": "TRANSACTION PROMOTE COMPLETED",
+    "numeric_filter_value": "1129337428",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRPS",
+    "name": "TRANSACTION PROMOTE STARTING",
+    "numeric_filter_value": "1397772884",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRGC",
+    "name": "TRANSACTION PROPAGATE COMPLETED",
+    "numeric_filter_value": "1128747604",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRGS",
+    "name": "TRANSACTION PROPAGATE STARTING",
+    "numeric_filter_value": "1397183060",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TXRB",
+    "name": "TRANSACTION ROLLBACK",
+    "numeric_filter_value": "1112692820",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TRRC",
+    "name": "TRANSACTION ROLLBACK COMPLETED",
+    "numeric_filter_value": "1129468500",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRRS",
+    "name": "TRANSACTION ROLLBACK STARTING",
+    "numeric_filter_value": "1397903956",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRSC",
+    "name": "TRANSACTION SAVEPOINT COMPLETED",
+    "numeric_filter_value": "1129534036",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TRSS",
+    "name": "TRANSACTION SAVEPOINT STARTING",
+    "numeric_filter_value": "1397969492",
+    "notes": "SQL 2017+"
+  },
+  {
+    "action_id": "TXGG",
+    "name": "TRANSACTION_BEGIN_GROUP",
+    "numeric_filter_value": "1195858004",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TXCG",
+    "name": "TRANSACTION_COMMIT_GROUP",
+    "numeric_filter_value": "1195595860",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TX",
+    "name": "TRANSACTION_GROUP",
+    "numeric_filter_value": "538990676",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TXRG",
+    "name": "TRANSACTION_ROLLBACK_GROUP",
+    "numeric_filter_value": "1196578900",
+    "notes": "SQL 2016+"
+  },
+  {
+    "action_id": "TRO",
+    "name": "TRANSFER",
+    "numeric_filter_value": "542069332",
+    "notes": ""
+  },
+  {
+    "action_id": "PWU",
+    "name": "UNLOCK ACCOUNT",
+    "numeric_filter_value": "542463824",
+    "notes": ""
+  },
+  {
+    "action_id": "XU",
+    "name": "UNSAFE ASSEMBLY",
+    "numeric_filter_value": "538989912",
+    "notes": ""
+  },
+  {
+    "action_id": "UP",
+    "name": "UPDATE",
+    "numeric_filter_value": "538988629",
+    "notes": ""
+  },
+  {
+    "action_id": "UDAU",
+    "name": "USER DEFINED AUDIT",
+    "numeric_filter_value": "1430340693",
+    "notes": ""
+  },
+  {
+    "action_id": "UCGP",
+    "name": "USER_CHANGE_PASSWORD_GROUP",
+    "numeric_filter_value": "1346847573",
+    "notes": ""
+  },
+  {
+    "action_id": "UDAG",
+    "name": "USER_DEFINED_AUDIT_GROUP",
+    "numeric_filter_value": "1195459669",
+    "notes": ""
+  },
+  {
+    "action_id": "VFLR",
+    "name": "VERIFY LEDGER",
+    "numeric_filter_value": "1380730454",
+    "notes": "SQL 2022+"
+  }
+]
