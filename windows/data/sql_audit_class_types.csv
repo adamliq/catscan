@@ -1,0 +1,29 @@
+class_type,class_type_desc,description
+A,SERVER AUDIT,Server Audit object
+AG,AVAILABILITY GROUP,Always On Availability Group
+AS,ASSEMBLY,CLR Assembly
+C,CHECK CONSTRAINT,Check Constraint
+D,DATABASE,Database
+FL,FULLTEXT CATALOG,Full-Text Catalog
+FN,FUNCTION SCALAR SQL,Scalar T-SQL User-Defined Function
+FS,FUNCTION SCALAR ASSEMBLY,CLR Scalar Function
+FT,FUNCTION TABLE-VALUED SQL,Table-Valued Function
+IF,FUNCTION TABLE-VALUED INLINE SQL,Inline Table-Valued Function
+IT,INTERNAL TABLE,Internal / System Table
+LX,LOGIN,SQL or Windows Login
+P,STORED PROCEDURE,T-SQL Stored Procedure
+PC,STORED PROCEDURE ASSEMBLY,CLR Stored Procedure
+PK,PRIMARY KEY,Primary Key Constraint
+R,ROLE,Database Role
+RF,STORED PROCEDURE REPLICATION FILTER,Replication Filter Procedure
+RL,ROLE,Role (frequently used with membership changes)
+S,SYSTEM TABLE,System Table
+SN,SYNONYM,Synonym
+SO,SEQUENCE OBJECT,Sequence Object
+SQ,SERVICE QUEUE,Service Broker Queue
+T,TABLE,Table (less common; U is more usual)
+TR,TRIGGER,Trigger
+U,USER TABLE,User-Defined Table
+V,VIEW,View
+X,XML SCHEMA COLLECTION,XML Schema Collection
+XX,TYPE,User-Defined Type / Alias Type

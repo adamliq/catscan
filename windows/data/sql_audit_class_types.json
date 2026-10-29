@@ -1,0 +1,142 @@
+[
+  {
+    "class_type": "A",
+    "class_type_desc": "SERVER AUDIT",
+    "description": "Server Audit object"
+  },
+  {
+    "class_type": "AG",
+    "class_type_desc": "AVAILABILITY GROUP",
+    "description": "Always On Availability Group"
+  },
+  {
+    "class_type": "AS",
+    "class_type_desc": "ASSEMBLY",
+    "description": "CLR Assembly"
+  },
+  {
+    "class_type": "C",
+    "class_type_desc": "CHECK CONSTRAINT",
+    "description": "Check Constraint"
+  },
+  {
+    "class_type": "D",
+    "class_type_desc": "DATABASE",
+    "description": "Database"
+  },
+  {
+    "class_type": "FL",
+    "class_type_desc": "FULLTEXT CATALOG",
+    "description": "Full-Text Catalog"
+  },
+  {
+    "class_type": "FN",
+    "class_type_desc": "FUNCTION SCALAR SQL",
+    "description": "Scalar T-SQL User-Defined Function"
+  },
+  {
+    "class_type": "FS",
+    "class_type_desc": "FUNCTION SCALAR ASSEMBLY",
+    "description": "CLR Scalar Function"
+  },
+  {
+    "class_type": "FT",
+    "class_type_desc": "FUNCTION TABLE-VALUED SQL",
+    "description": "Table-Valued Function"
+  },
+  {
+    "class_type": "IF",
+    "class_type_desc": "FUNCTION TABLE-VALUED INLINE SQL",
+    "description": "Inline Table-Valued Function"
+  },
+  {
+    "class_type": "IT",
+    "class_type_desc": "INTERNAL TABLE",
+    "description": "Internal / System Table"
+  },
+  {
+    "class_type": "LX",
+    "class_type_desc": "LOGIN",
+    "description": "SQL or Windows Login"
+  },
+  {
+    "class_type": "P",
+    "class_type_desc": "STORED PROCEDURE",
+    "description": "T-SQL Stored Procedure"
+  },
+  {
+    "class_type": "PC",
+    "class_type_desc": "STORED PROCEDURE ASSEMBLY",
+    "description": "CLR Stored Procedure"
+  },
+  {
+    "class_type": "PK",
+    "class_type_desc": "PRIMARY KEY",
+    "description": "Primary Key Constraint"
+  },
+  {
+    "class_type": "R",
+    "class_type_desc": "ROLE",
+    "description": "Database Role"
+  },
+  {
+    "class_type": "RF",
+    "class_type_desc": "STORED PROCEDURE REPLICATION FILTER",
+    "description": "Replication Filter Procedure"
+  },
+  {
+    "class_type": "RL",
+    "class_type_desc": "ROLE",
+    "description": "Role (frequently used with membership changes)"
+  },
+  {
+    "class_type": "S",
+    "class_type_desc": "SYSTEM TABLE",
+    "description": "System Table"
+  },
+  {
+    "class_type": "SN",
+    "class_type_desc": "SYNONYM",
+    "description": "Synonym"
+  },
+  {
+    "class_type": "SO",
+    "class_type_desc": "SEQUENCE OBJECT",
+    "description": "Sequence Object"
+  },
+  {
+    "class_type": "SQ",
+    "class_type_desc": "SERVICE QUEUE",
+    "description": "Service Broker Queue"
+  },
+  {
+    "class_type": "T",
+    "class_type_desc": "TABLE",
+    "description": "Table (less common; U is more usual)"
+  },
+  {
+    "class_type": "TR",
+    "class_type_desc": "TRIGGER",
+    "description": "Trigger"
+  },
+  {
+    "class_type": "U",
+    "class_type_desc": "USER TABLE",
+    "description": "User-Defined Table"
+  },
+  {
+    "class_type": "V",
+    "class_type_desc": "VIEW",
+    "description": "View"
+  },
+  {
+    "class_type": "X",
+    "class_type_desc": "XML SCHEMA COLLECTION",
+    "description": "XML Schema Collection"
+  },
+  {
+    "class_type": "XX",
+    "class_type_desc": "TYPE",
+    "description": "User-Defined Type / Alias Type"
+  }
+]
