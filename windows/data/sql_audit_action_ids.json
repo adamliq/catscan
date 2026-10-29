@@ -1048,5 +1048,11 @@
     "name": "VERIFY LEDGER",
     "numeric_filter_value": "1380730454",
     "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "VW",
+    "name": "VIEW",
+    "numeric_filter_value": "538990422",
+    "notes": ""
   }
 ]

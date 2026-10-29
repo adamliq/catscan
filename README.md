@@ -5082,6 +5082,38 @@ own toggle behavior is unaffected, and there's no sideways scroll at
 decoding the `class_type` and `action_id` fields of a SQL Server Audit
 record).
 
+Asked to check whether a user-supplied, 65-row list of `action_id`
+codes (grouped by category - Authentication, Password administration,
+Permissions, etc. - with a plain-English `meaning` for each) was fully
+covered by the 175-row `sql_audit_action_ids.csv` added in `1.6.35`.
+Cross-checked programmatically rather than by eye: 64 of 65 matched an
+existing row by code, with the uploaded `meaning` and our own `name`
+agreeing in substance (e.g. `LGIS`/"Login succeeded" vs. our
+`LOGIN SUCCEEDED`) even where phrased differently. One code was
+genuinely missing: `VW` ("View", under "Object access" - the same
+category as the already-present `AS`/ACCESS and `OP`/OPEN).
+
+Rather than inventing a `numeric_filter_value` for the new row (the
+uploaded list didn't include one), reverse-engineered the actual
+packing formula SQL Server uses - a `char(4)` action_id, right-padded
+with spaces, read as a little-endian `int` - by testing it against
+known pairs already in the dataset (`'D'` &rarr; 538976324, `'CO'`
+&rarr; 538988355, `'SL'` &rarr; 538987603, and others), then validated
+it against *all* 175 existing rows before trusting it: zero
+mismatches. Used that same formula to compute `VW`'s value
+(538990422), confirmed it doesn't collide with any existing value, and
+added the row (`VW,VIEW,538990422,`) rather than guess a number that
+would have looked plausible but been wrong.
+
+`windows/data/sql_audit_action_ids.csv`: 175 -> **176** rows. Verified
+with the build check and in Playwright: the action-IDs badge reads 176,
+and the new row is findable by searching either `VW` or `view`.
+
+`1.6.36` (PATCH - one missing `action_id` row, `VW` (VIEW), added to
+the SQL Audit tab's action-IDs lookup, found by cross-checking a
+user-supplied list against the existing 175-row table and filling the
+one gap with a formula-derived rather than guessed numeric value).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
