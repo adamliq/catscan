@@ -1048,5 +1048,29 @@
     "name": "VERIFY LEDGER",
     "numeric_filter_value": "1380730454",
     "notes": "SQL 2022+"
+  },
+  {
+    "action_id": "VW",
+    "name": "VIEW",
+    "numeric_filter_value": "538990422",
+    "notes": ""
+  },
+  {
+    "action_id": "VWCT",
+    "name": "VIEW CHANGE TRACKING",
+    "numeric_filter_value": "1413699414",
+    "notes": ""
+  },
+  {
+    "action_id": "VDST",
+    "name": "VIEW DATABASE STATE",
+    "numeric_filter_value": "1414743126",
+    "notes": ""
+  },
+  {
+    "action_id": "VSST",
+    "name": "VIEW SERVER STATE",
+    "numeric_filter_value": "1414746966",
+    "notes": ""
   }
 ]
