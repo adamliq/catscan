@@ -5114,6 +5114,40 @@ the SQL Audit tab's action-IDs lookup, found by cross-checking a
 user-supplied list against the existing 175-row table and filling the
 one gap with a formula-derived rather than guessed numeric value).
 
+Asked to check a second, independent user-supplied list - 115
+`action_id`/`name` pairs this time, with no numeric values at all -
+against the now-176-row table. Same cross-check approach as `1.6.36`:
+112 of 115 matched an existing row by both code and name (zero name
+mismatches, a useful independent confirmation that the existing data
+and this new list describe the same real thing). Three were missing:
+`VDST` (VIEW DATABASE STATE), `VSST` (VIEW SERVER STATE), and `VWCT`
+(VIEW CHANGETRACKING - normalized to Microsoft's actual documented
+permission name, `VIEW CHANGE TRACKING`, two words, confirmed via a
+search landing on Databricks'/Fivetran's own `GRANT VIEW CHANGE
+TRACKING` syntax examples and Microsoft's "Manage Change Tracking"
+page, rather than kept as the user's one-word spelling).
+
+Reused the same little-endian `char(4)` packing formula validated in
+`1.6.36` to derive all three numeric values (`VDST` &rarr; 1414743126,
+`VSST` &rarr; 1414746966, `VWCT` &rarr; 1413699414) - no padding
+ambiguity this time since all three codes are already a full 4
+characters. Along the way this incidentally caught a labeling error in
+a third-party source (an MSSQLTips article had attributed Microsoft's
+own documented `'SL'` &rarr; 538987603 example value to `'VSST'`
+instead) - the formula-derived value for `VSST` is a different, much
+larger number, as expected for a 4-character code, confirming the
+MSSQLTips mislabeling rather than any ambiguity in the formula itself.
+Checked all three new values for collisions against the existing 176
+rows before adding: none.
+
+`windows/data/sql_audit_action_ids.csv`: 176 -> **179** rows. Verified
+with the build check and in Playwright: the action-IDs badge reads 179,
+and all three new rows are findable by searching `view`.
+
+`1.6.37` (PATCH - three more missing `action_id` rows - `VDST`, `VSST`,
+`VWCT` - added to the SQL Audit tab's action-IDs lookup, found by
+cross-checking a second user-supplied list against the table).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
