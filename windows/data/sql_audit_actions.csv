@@ -1,0 +1,84 @@
+level,action,description
+Server-level,APPLICATION_ROLE_CHANGE_PASSWORD_GROUP,Raised whenever a password is changed for an application role.
+Server-level,AUDIT_CHANGE_GROUP,"Raised whenever any audit or audit specification is created, modified, or deleted. Any change to an audit is audited in that audit."
+Server-level,BACKUP_RESTORE_GROUP,Raised whenever a backup or restore command is issued.
+Server-level,BATCH_COMPLETED_GROUP,"Raised whenever any batch text, stored procedure, or transaction management operation completes executing. Audits the entire batch or stored procedure text (including the result). Applies to: SQL Server 2022 (16.x) and later."
+Server-level,BATCH_STARTED_GROUP,"Raised whenever any batch text, stored procedure, or transaction management operation starts to execute. Audits the entire batch or stored procedure text. Applies to: SQL Server 2022 (16.x) and later."
+Server-level,BROKER_LOGIN_GROUP,Raised to report audit messages related to Service Broker transport security.
+Server-level,DATABASE_CHANGE_GROUP,"Raised when a database is created, altered, or dropped."
+Server-level,DATABASE_LOGOUT_GROUP,Raised when a contained database user signs out of a database.
+Server-level,DATABASE_MIRRORING_LOGIN_GROUP,Raised to report audit messages related to database mirroring transport security.
+Server-level,DATABASE_OBJECT_ACCESS_GROUP,"Raised whenever database objects (such as message types, assemblies, contracts) are accessed. Note: Can produce large audit records."
+Server-level,DATABASE_OBJECT_CHANGE_GROUP,"Raised when a CREATE, ALTER, or DROP statement is executed on database objects (such as schemas). Note: Can produce large quantities of audit records."
+Server-level,DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP,Raised when the owner of objects within database scope is changed.
+Server-level,DATABASE_OBJECT_PERMISSION_CHANGE_GROUP,"Raised when a GRANT, REVOKE, or DENY is issued for database objects (such as assemblies and schemas)."
+Server-level,DATABASE_OPERATION_GROUP,Raised when operations in a database (such as checkpoint or subscribe query notification) occur.
+Server-level,DATABASE_OWNERSHIP_CHANGE_GROUP,Raised when ALTER AUTHORIZATION is used to change the owner of a database.
+Server-level,DATABASE_PERMISSION_CHANGE_GROUP,"Raised whenever a GRANT, REVOKE, or DENY is issued for a statement permission by any principal (database-only events)."
+Server-level,DATABASE_PRINCIPAL_CHANGE_GROUP,"Raised when principals (such as users) are created, altered, or dropped from a database. Also covers certain deprecated role-related stored procedures."
+Server-level,DATABASE_PRINCIPAL_IMPERSONATION_GROUP,"Raised when an impersonation operation occurs in database scope (e.g., EXECUTE AS <principal>)."
+Server-level,DATABASE_ROLE_MEMBER_CHANGE_GROUP,Raised whenever a login is added to or removed from a database role.
+Server-level,DBCC_GROUP,Raised whenever a principal issues any DBCC command.
+Server-level,EXTGOV_OPERATION_GROUP,"Raised on external governance feature enablement/disablement, policy synchronization, and policy-based permissions enforcement."
+Server-level,FAILED_DATABASE_AUTHENTICATION_GROUP,Indicates that a principal tried to log on to a contained database and failed.
+Server-level,FAILED_LOGIN_GROUP,Indicates that a principal tried to log on to SQL Server and failed. Does not apply to Azure SQL Database.
+Server-level,FULLTEXT_GROUP,Indicates a full-text event occurred.
+Server-level,LOGIN_CHANGE_PASSWORD_GROUP,Raised whenever a login password is changed (via ALTER LOGIN or sp_password).
+Server-level,LOGOUT_GROUP,Indicates that a principal has logged out of SQL Server.
+Server-level,SCHEMA_OBJECT_ACCESS_GROUP,Raised whenever an object permission has been used in the schema.
+Server-level,SCHEMA_OBJECT_CHANGE_GROUP,"Raised when a CREATE, ALTER, or DROP operation is performed on a schema."
+Server-level,SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP,"Raised when the permissions to change the owner of a schema object (table, procedure, function, etc.) are checked (via ALTER AUTHORIZATION)."
+Server-level,SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP,"Raised whenever a GRANT, DENY, or REVOKE is performed against a schema object."
+Server-level,SENSITIVE_BATCH_COMPLETED_GROUP,"Raised whenever any batch text, stored procedure, or transaction management operation completes executing on sensitive data classified with SQL Data Discovery & Classification. Applies to: SQL Server 2022 (16.x) and later."
+Server-level,SERVER_OBJECT_CHANGE_GROUP,"Raised for CREATE, ALTER, or DROP operations on server objects."
+Server-level,SERVER_OBJECT_OWNERSHIP_CHANGE_GROUP,Raised when the owner is changed for objects in server scope.
+Server-level,SERVER_OBJECT_PERMISSION_CHANGE_GROUP,"Raised whenever a GRANT, REVOKE, or DENY is issued for a server object permission."
+Server-level,SERVER_OPERATION_GROUP,"Raised when Security Audit operations (altering settings, resources, external access, or authorization) are used, or a statement requiring VIEW SERVER STATE is run."
+Server-level,SERVER_PERMISSION_CHANGE_GROUP,"Raised when a GRANT, REVOKE, or DENY is issued for permissions in the server scope."
+Server-level,SERVER_PRINCIPAL_CHANGE_GROUP,"Raised when server principals are created, altered, or dropped. Also covers certain login-related stored procedures and ALTER LOGIN."
+Server-level,SERVER_PRINCIPAL_IMPERSONATION_GROUP,"Raised when an impersonation occurs within server scope (e.g., EXECUTE AS <login>)."
+Server-level,SERVER_ROLE_MEMBER_CHANGE_GROUP,Raised whenever a login is added to or removed from a fixed server role.
+Server-level,SERVER_STATE_CHANGE_GROUP,Raised when the SQL Server service state is modified.
+Server-level,SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,Indicates that a principal successfully logged in to a contained database.
+Server-level,SUCCESSFUL_LOGIN_GROUP,Indicates that a principal has successfully logged in to SQL Server.
+Server-level,TRACE_CHANGE_GROUP,Raised for all statements that check for the ALTER TRACE permission.
+Server-level,TRANSACTION_GROUP,Raised for BEGIN/ROLLBACK/COMMIT TRANSACTION operations (explicit and implicit) and UNDO operations caused by transaction rollback.
+Server-level,USER_CHANGE_PASSWORD_GROUP,Raised whenever the password of a contained database user is changed (via ALTER USER).
+Server-level,USER_DEFINED_AUDIT_GROUP,Monitors events raised by sp_audit_write (typically from triggers or stored procedures).
+Server-level,LEDGER_OPERATION_GROUP,Raised for GENERATE LEDGER DIGEST and VERIFY LEDGER actions. Applies to: Azure SQL Database.
+Database-level,APPLICATION_ROLE_CHANGE_PASSWORD_GROUP,Raised whenever a password is changed for an application role.
+Database-level,AUDIT_CHANGE_GROUP,"Raised whenever any audit or audit specification is created, modified, or deleted."
+Database-level,BACKUP_RESTORE_GROUP,Raised whenever a backup or restore command is issued.
+Database-level,BATCH_COMPLETED_GROUP,"Raised whenever any batch text, stored procedure, or transaction management operation completes executing. Applies to: SQL Server 2019 (15.x) and later."
+Database-level,BATCH_STARTED_GROUP,"Raised whenever any batch text, stored procedure, or transaction management operation starts to execute. Applies to: SQL Server 2019 (15.x) and later."
+Database-level,DATABASE_CHANGE_GROUP,"Raised when a database is created, altered, or dropped."
+Database-level,DATABASE_LOGOUT_GROUP,Raised when a contained database user signs out from a database.
+Database-level,DATABASE_OBJECT_ACCESS_GROUP,Raised whenever database objects (such as certificates and asymmetric keys) are accessed.
+Database-level,DATABASE_OBJECT_CHANGE_GROUP,"Raised when a CREATE, ALTER, or DROP statement is executed on database objects (such as schemas)."
+Database-level,DATABASE_OBJECT_OWNERSHIP_CHANGE_GROUP,Raised when the owner of objects within database scope is changed.
+Database-level,DATABASE_OBJECT_PERMISSION_CHANGE_GROUP,"Raised when a GRANT, REVOKE, or DENY is issued for database objects (such as assemblies and schemas)."
+Database-level,DATABASE_OPERATION_GROUP,Raised when operations in a database (such as checkpoint or subscribe query notification) occur.
+Database-level,DATABASE_OWNERSHIP_CHANGE_GROUP,Raised when ALTER AUTHORIZATION is used to change the owner of a database.
+Database-level,DATABASE_PERMISSION_CHANGE_GROUP,"Raised whenever a GRANT, REVOKE, or DENY is issued for a statement permission (database-only events)."
+Database-level,DATABASE_PRINCIPAL_CHANGE_GROUP,"Raised when principals (such as users) are created, altered, or dropped from a database. Also covers certain deprecated role-related stored procedures."
+Database-level,DATABASE_PRINCIPAL_IMPERSONATION_GROUP,"Raised when an impersonation occurs within database scope (e.g., EXECUTE AS <user>)."
+Database-level,DATABASE_ROLE_MEMBER_CHANGE_GROUP,Raised whenever a login is added to or removed from a database role.
+Database-level,DBCC_GROUP,Raised whenever a principal issues any DBCC command.
+Database-level,FAILED_DATABASE_AUTHENTICATION_GROUP,Indicates that a principal tried to log on to a contained database and failed.
+Database-level,SCHEMA_OBJECT_ACCESS_GROUP,Raised whenever an object permission has been used in the schema.
+Database-level,SCHEMA_OBJECT_CHANGE_GROUP,"Raised when a CREATE, ALTER, or DROP operation is performed on a schema."
+Database-level,SCHEMA_OBJECT_OWNERSHIP_CHANGE_GROUP,Raised when the permissions to change the owner of a schema object are checked (via ALTER AUTHORIZATION).
+Database-level,SCHEMA_OBJECT_PERMISSION_CHANGE_GROUP,"Raised whenever a GRANT, DENY, or REVOKE is issued for a schema object."
+Database-level,SENSITIVE_BATCH_COMPLETED_GROUP,"Raised whenever any batch text, stored procedure, or transaction management operation completes executing on sensitive data classified with SQL Data Discovery & Classification. When configured at database scope, only captures batches that originate from and complete in the current database. Applies to: SQL Server 2022 (16.x) and later."
+Database-level,SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP,Indicates that a principal successfully logged in to a contained database.
+Database-level,USER_CHANGE_PASSWORD_GROUP,Raised whenever the password of a contained database user is changed (via ALTER USER).
+Database-level,USER_DEFINED_AUDIT_GROUP,Monitors events raised by sp_audit_write.
+Database-level,LEDGER_OPERATION_GROUP,"Raised for ENABLE LEDGER, ALTER LEDGER, and ALTER LEDGER CONFIGURATION. Applies to: Azure SQL Database."
+Database-level action,SELECT,Raised whenever a SELECT is issued.
+Database-level action,UPDATE,Raised whenever an UPDATE is issued.
+Database-level action,INSERT,Raised whenever an INSERT is issued.
+Database-level action,DELETE,Raised whenever a DELETE is issued.
+Database-level action,EXECUTE,Raised whenever an EXECUTE is issued.
+Database-level action,RECEIVE,Raised whenever a RECEIVE is issued.
+Database-level action,REFERENCES,Raised whenever a REFERENCES permission is checked.
+Audit-level,AUDIT_CHANGE_GROUP,"Raised whenever one of the following commands is issued: CREATE/ALTER/DROP SERVER AUDIT, CREATE/ALTER/DROP SERVER AUDIT SPECIFICATION, or CREATE/ALTER/DROP DATABASE AUDIT SPECIFICATION."

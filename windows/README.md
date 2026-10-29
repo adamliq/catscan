@@ -533,6 +533,28 @@ Activity, Task Scheduler, ESENT, and Windows DNS Server analytic events.
   itself for the rows whose own `operation` is `N/A`) that open the same
   detail modal a table row does. The search box and Service filter both
   apply to whichever view is active.
+- `data/sql_audit_actions.csv` / `.json` — SQL Server Audit's full action
+  group and action taxonomy, 83 rows, one `(level, action)` per row:
+  the 47 server-level and 28 database-level action groups you `ADD` to a
+  `CREATE SERVER AUDIT SPECIFICATION`/`CREATE DATABASE AUDIT
+  SPECIFICATION`, the 7 database-level actions (`SELECT`/`INSERT`/
+  `UPDATE`/`DELETE`/`EXECUTE`/`RECEIVE`/`REFERENCES`) auditable at
+  object granularity within a database-level specification, and the 1
+  audit-level group (`AUDIT_CHANGE_GROUP`, raised for changes to the
+  audit/specification objects themselves). Supplied directly as a
+  complete, ready-to-use export rather than built up from a primary
+  source over several passes the way `cloud_logs.csv` and
+  `cloud_actions.csv` were — every row already carried its own
+  Microsoft-sourced description. Powers the web lookup page's SQL Audit
+  tab, next to Cloud Actions Explorer: the same search/level-filter/
+  list-detail/export pattern as Cloud Logs (reusing its `cl-platform-*`
+  toggle styling and the Events tab's generic export helpers), kept
+  under its own `sa`-prefixed JS names so it can't collide with either
+  tab's state in the same script scope. No `windows_equivalent` or
+  `nist_800_53_au`-style compliance columns here — SQL Server Audit
+  groups don't map cleanly to this catalogue's other Windows-specific or
+  cloud-specific control fields, and forcing a mapping would have meant
+  guessing rather than citing.
 - `data/reference/audit_configuration.csv` / `.json` — how to configure
   auditing to collect events, one row per audit subcategory (or
   product-specific setting): the Group Policy / registry path, the steps to

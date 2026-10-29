@@ -4900,6 +4900,60 @@ unaffected. All tabs regression-checked in both themes at 1500px and
 ARM's own two-part naming convention, on the 878 rows where it's a real
 ARM resource type).
 
+Asked for a new "SQL Audit" menu item on the Microsoft Events page, next
+to Cloud Actions Explorer, populated from an uploaded CSV of SQL Server
+Audit's action groups and actions. Unlike the recent Cloud Logs passes,
+this one needed no primary-source research of its own - the file was
+already a complete, ready-to-use export with every row's own real
+Microsoft-sourced description, so the work was building the tab around
+it rather than building the data: 83 rows (47 server-level groups, 28
+database-level groups, 7 database-level actions - the `SELECT`/`INSERT`/
+`UPDATE`/`DELETE`/`EXECUTE`/`RECEIVE`/`REFERENCES` actions auditable at
+object granularity, and 1 audit-level group).
+
+New files: `windows/data/sql_audit_actions.csv`/`.json` (header
+converted to this repo's `level`/`action`/`description` snake_case
+convention, CRLF line endings matching every other data file here) and
+`tools/build_sql_audit.py`, mirroring `build_cloud_logs.py`'s approach -
+same embedded-DATA-object patching logic, same `--check` mode, wired
+into `build-check.yml` alongside the other five data/page sync checks
+rather than left uncovered.
+
+Built the tab itself as the same search/level-filter/list-detail/export
+pattern Cloud Logs already established, reusing rather than inventing:
+the `cl-platform-toggle`/`cl-platform-btn` classes for the four-level
+filter chips (Server-level/Database-level/Database-level action/
+Audit-level - generic toggle styling, nothing cloud-specific baked in,
+confirmed before reusing it), the `.split`/`.list`/`.detail`/`.row`/
+`.field-grid` layout classes, and the Events tab's generic export
+helpers (`winCsvCell`/`winToCsv`/`winTriggerDownload`/`winShowToast`).
+Kept the new JS under its own `sa`-prefixed names (`saFiltered`,
+`saRender`, `SA_EXPORT_FIELDS`, and so on) for the same reason the last
+few Cloud Logs passes did - this file's one script scope means an
+identically-named `let`/`const` would silently clobber another tab's
+state, `cl`'s and `ca`'s included. No compliance-mapping columns
+(`nist_800_53_au`, `windows_equivalent`) on this data - SQL Server Audit
+groups don't correspond cleanly to this catalogue's other control
+fields, and a forced mapping would have meant guessing instead of
+citing, the opposite of how every other data source here has been built
+this session.
+
+Verified with the new build check and in Playwright: the tab appears
+immediately after Cloud Actions Explorer in the nav, as asked; search,
+each of the four level filters (including an exact count check against
+the source file's own 47/28/7/1 split), and export (JSON and CSV, field
+picker, correct row/field counts) all work; no collision with Cloud
+Logs' or Cloud Actions Explorer's own state in the same script scope,
+confirmed by exercising all three tabs in the same session; no page
+errors or sideways scrolling at 1500px or 375px in either theme,
+including with the new tab's own Export panel open (reusing Cloud Logs'
+`align-right` overflow guard from the start rather than needing a
+follow-up fix for it this time).
+
+`1.6.33` (PATCH - a new SQL Audit tab added to the Microsoft Events
+page, covering SQL Server Audit's full 83-row action group/action
+taxonomy from a supplied export, next to Cloud Actions Explorer).
+
 ## Structure
 
 - `index.html` — the merged lookup page described above.
