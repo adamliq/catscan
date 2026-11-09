@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Juniper Routers &amp; Switches Log Specification</title>
+<style>
+:root{
+  --bg:#EEF1F3;--surface:#FFFFFF;--sunk:#E6EAED;--ink:#18212B;--muted:#56616D;--rule:#CBD2D8;
+  --syslog:#1C7A70;--syslog-bg:#DDF0EC;--local:#5A4AA6;--local-bg:#E7E4F6;--disk:#4F5964;--disk-bg:#E3E7EA;
+  --crit:#B02A1F;--high:#C25A17;--med:#8E7410;--low:#63717E;--accent:#1D4E89;--accent-bg:#DCE7F5;--on-accent:#FFFFFF;
+  --sans:"Atkinson Hyperlegible",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --hdr:58px;
+  color-scheme:light;box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#10161C;--surface:#18212A;--sunk:#141C24;--ink:#E6EBEF;--muted:#9AA6B1;--rule:#2D3945;
+  --syslog:#5CC4B6;--syslog-bg:#12312E;--local:#A99BF0;--local-bg:#251F45;--disk:#A6B0BA;--disk-bg:#232D36;
+  --crit:#F0786C;--high:#F29A5C;--med:#D9BE4F;--low:#9AA8B4;--accent:#7FB0F0;--accent-bg:#1A2C44;--on-accent:#0E1620;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10161C;--surface:#18212A;--sunk:#141C24;--ink:#E6EBEF;--muted:#9AA6B1;--rule:#2D3945;
+  --syslog:#5CC4B6;--syslog-bg:#12312E;--local:#A99BF0;--local-bg:#251F45;--disk:#A6B0BA;--disk-bg:#232D36;
+  --crit:#F0786C;--high:#F29A5C;--med:#D9BE4F;--low:#9AA8B4;--accent:#7FB0F0;--accent-bg:#1A2C44;--on-accent:#0E1620;color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr) + 12px);height:100%}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.55}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+code,.mono{font-family:var(--mono);font-size:.86em;overflow-wrap:anywhere}
+h1,h2,h3,h4{line-height:1.2;margin:0}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* header */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--surface)}
+.hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--rule);height:var(--hdr)}
+.hdr .in{max-width:1440px;margin:0 auto;height:100%;display:flex;align-items:center;gap:14px;padding:0 20px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);font-weight:700;white-space:nowrap}
+.brand .mk{width:26px;height:26px;border-radius:6px;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-family:var(--mono);font-size:.72rem}
+.brand small{font-weight:400;color:var(--muted);font-size:.85rem}
+.srch{position:relative;flex:1;max-width:520px;margin-left:auto}
+.srch input{width:100%;font:inherit;font-size:.95rem;padding:8px 12px 8px 34px;border:1px solid var(--rule);border-radius:8px;background:var(--bg);color:var(--ink)}
+.srch svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.srch kbd{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:.72rem;color:var(--muted);border:1px solid var(--rule);border-radius:4px;padding:0 5px}
+.sres{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--surface);border:1px solid var(--rule);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.14);max-height:min(70vh,520px);overflow:auto;z-index:70;padding:6px}
+.sres a{display:block;padding:8px 10px;border-radius:7px;text-decoration:none;color:var(--ink)}
+.sres a.on,.sres a:hover{background:var(--accent-bg)}
+.sres .k{font-family:var(--mono);font-size:.74rem;color:var(--muted);margin-right:8px}
+.sres .s{display:block;font-size:.84rem;color:var(--muted)}
+.sres .none{padding:10px;color:var(--muted);font-size:.92rem}
+.btn.menu{display:none}
+main:focus{outline:none}
+@media (max-width:980px){.btn.menu{display:inline-flex}.brand small{display:none}.srch kbd{display:none}}
+@media (max-width:560px){.brand span.t{display:none}#theme .full{display:none}}
+#theme .short{display:none}@media (max-width:560px){#theme .short{display:inline}}
+
+/* layout */
+.layout{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:262px minmax(0,1fr)}
+.side{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdr));height:calc(100vh - var(--hdr) - env(safe-area-inset-top,0px));overflow:auto;padding:22px 14px 40px 20px;border-right:1px solid var(--rule)}
+.side h5{margin:18px 0 6px;font-size:.76rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.side h5:first-child{margin-top:0}
+.side a{display:block;text-decoration:none;color:var(--ink);padding:6px 10px;border-radius:7px;font-size:.95rem}
+.side a:hover{background:var(--sunk)}
+.side a[aria-current="page"]{background:var(--accent-bg);color:var(--accent);font-weight:700}
+.side .poc{margin-top:24px;font-size:.82rem;color:var(--muted);padding:0 10px}
+main{min-width:0;padding:34px 44px 80px;overflow-wrap:break-word}
+.page{max-width:1080px}
+@media (max-width:980px){
+  .layout{grid-template-columns:minmax(0,1fr)}
+  .side{position:fixed;z-index:80;top:0;left:0;bottom:0;width:min(300px,86vw);height:auto;background:var(--surface);transform:translateX(-102%);transition:transform .2s;padding-top:calc(env(safe-area-inset-top,0px) + 20px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+  .side.open{transform:none;box-shadow:0 0 40px rgba(0,0,0,.25)}
+  .scrim{position:fixed;inset:0;z-index:75;background:rgba(0,0,0,.35)}
+  main{padding:26px 18px 70px}
+}
+@media (prefers-reduced-motion:reduce){.side{transition:none}}
+
+/* typography */
+.crumb{font-size:.88rem;color:var(--muted);margin:0 0 .6rem}
+.crumb a{color:var(--muted)}
+.page>h1{font-size:clamp(1.8rem,3.6vw,2.6rem);letter-spacing:-.01em;margin-bottom:.5rem}
+.lede{color:var(--muted);max-width:72ch;margin:0 0 1.6rem;font-size:1.06rem}
+.page h2{font-size:1.45rem;margin:2.6rem 0 .5rem}
+.page h3{font-size:1.12rem;margin:1.8rem 0 .6rem}
+.page p{max-width:76ch}
+.sub{color:var(--muted);max-width:72ch;margin:-.2rem 0 1rem;font-size:.95rem}
+ul.plain,ol.plain{padding-left:1.3rem;max-width:76ch}.plain li{margin-bottom:.45rem}
+.note{border-left:3px solid var(--accent);background:var(--surface);padding:12px 16px;border-radius:0 8px 8px 0;margin:1rem 0;max-width:80ch;font-size:.95rem}
+.note.warn{border-left-color:var(--high)}
+.idtag{font-family:var(--mono);font-size:.8rem;color:var(--muted);background:var(--sunk);border-radius:5px;padding:2px 7px}
+
+/* controls */
+.btn{font:inherit;font-size:.92rem;background:transparent;color:var(--ink);border:1px solid var(--rule);border-radius:7px;padding:7px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--accent)}
+.btn.sm{font-size:.82rem;padding:4px 10px}
+.btn.pri{border-color:var(--accent);color:var(--accent)}
+.btn[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:0 0 1rem}
+.filters input[type=search]{font:inherit;font-size:.95rem;padding:7px 12px;border:1px solid var(--rule);border-radius:7px;background:var(--surface);color:var(--ink);min-width:min(260px,100%)}
+.filters .lab{font-size:.85rem;color:var(--muted);margin-right:2px}
+.fsep{width:1px;height:24px;background:var(--rule);margin:0 4px}
+
+/* tags */
+.tag{display:inline-block;font-size:.78rem;padding:2px 9px;border-radius:999px;white-space:nowrap}
+.tag.syslog{background:var(--syslog-bg);color:var(--syslog)}
+.tag.local{background:var(--local-bg);color:var(--local)}
+.tag.disk{background:var(--disk-bg);color:var(--disk)}
+.tag.neutral{background:var(--sunk);color:var(--muted)}
+.lvl{font-weight:700;font-size:.84rem;text-transform:capitalize}
+.lvl.critical{color:var(--crit)}.lvl.high{color:var(--high)}.lvl.medium{color:var(--med)}.lvl.low{color:var(--low)}
+.dchip{display:inline-block;font-family:var(--mono);font-size:.76rem;padding:2px 7px;margin:0 4px 4px 0;border-radius:5px;border:1px solid var(--rule);color:var(--accent);text-decoration:none;background:transparent;cursor:pointer}
+.dchip:hover{border-color:var(--accent)}
+.sw{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* tables */
+.tw{overflow-x:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px;margin:0 0 1rem}
+table{border-collapse:collapse;width:100%;font-size:.9rem}
+th,td{text-align:left;padding:9px 13px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:700;color:var(--muted);font-size:.82rem;background:var(--surface)}
+tr:last-child td{border-bottom:none}
+tr.click{cursor:pointer}tr.click:hover td{background:var(--accent-bg)}
+td.path,.path{font-family:var(--mono);font-size:.8rem;overflow-wrap:anywhere}
+td.ck,th.ck{text-align:center;white-space:nowrap}
+td.ck{color:var(--syslog);font-weight:700}td.no{color:var(--muted);font-weight:400}
+.empty-row{padding:16px;color:var(--muted)}
+
+/* code */
+.block{background:var(--surface);border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:0 0 1rem}
+.block header{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--rule)}
+.block header h4{font-size:.92rem;font-weight:700}
+.block pre{margin:0;padding:13px 15px;overflow-x:auto;font-family:var(--mono);font-size:.8rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.block>p{margin:0;padding:10px 14px;border-top:1px solid var(--rule);font-size:.86rem;color:var(--muted);max-width:none}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.g2,.g3{grid-template-columns:minmax(0,1fr)}}
+
+/* cards */
+.card{display:block;background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:18px 18px 16px;text-decoration:none;color:var(--ink)}
+a.card:hover{border-color:var(--accent)}
+.card h3{margin:0 0 .35rem;font-size:1.05rem}
+.card p{margin:0;color:var(--muted);font-size:.92rem}
+.stat{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:16px 18px}
+.stat b{display:block;font-size:2rem;line-height:1.1}
+.stat span{color:var(--muted);font-size:.9rem}
+
+/* spec */
+.spec{display:grid;grid-template-columns:200px minmax(0,1fr);background:var(--surface);border:1px solid var(--rule);border-radius:10px;overflow:hidden;margin:0 0 1rem}
+.spec dt,.spec dd{padding:10px 14px;border-bottom:1px solid var(--rule);margin:0}
+.spec dt{color:var(--muted);font-size:.88rem;background:var(--sunk)}
+.spec dd{font-size:.93rem;overflow-wrap:anywhere}
+.spec dt:last-of-type,.spec dd:last-of-type{border-bottom:none}
+@media (max-width:640px){.spec{grid-template-columns:minmax(0,1fr)}.spec dt{border-bottom:none;padding-bottom:2px}}
+.pn{display:flex;justify-content:space-between;gap:12px;margin-top:2.5rem;padding-top:1.2rem;border-top:1px solid var(--rule);flex-wrap:wrap}
+.pn a{text-decoration:none;max-width:48%}
+.pn small{display:block;color:var(--muted)}
+.comp{display:inline-flex;gap:4px}
+.comp span{font-family:var(--mono);font-size:.72rem;width:20px;height:20px;display:grid;place-items:center;border-radius:4px;background:var(--sunk);color:var(--muted)}
+.comp span.y{background:var(--accent-bg);color:var(--accent);font-weight:700}
+
+/* chain */
+.chain{display:grid;grid-template-columns:repeat(5,minmax(0,1fr))}
+.stage{display:flex;flex-direction:column;position:relative;background:var(--surface);border:1px solid var(--rule);border-left:none;padding:15px 16px 16px;text-align:left;font:inherit;color:inherit;cursor:pointer;text-decoration:none}
+.stage:first-child{border-left:1px solid var(--rule);border-radius:10px 0 0 10px}
+.stage:last-child{border-radius:0 10px 10px 0}
+.stage::after{content:"";position:absolute;right:-9px;top:50%;width:16px;height:16px;background:var(--surface);border-top:1px solid var(--rule);border-right:1px solid var(--rule);transform:translateY(-50%) rotate(45deg);z-index:1}
+.stage:last-child::after{display:none}
+.stage:hover,.stage:hover::after{background:var(--accent-bg)}
+.stage strong{font-size:1rem;margin-bottom:.3rem}
+.stage .d{font-size:.86rem;color:var(--muted)}
+.stage .ft{margin-top:auto;padding-top:.7rem;font-family:var(--mono);font-size:.74rem;color:var(--muted)}
+.stage .ft b{display:block;color:var(--accent);font-weight:500}
+@media (max-width:900px){
+  .chain{grid-template-columns:minmax(0,1fr)}
+  .stage,.stage:first-child,.stage:last-child{border:1px solid var(--rule);border-top:none;border-radius:0}
+  .stage:first-child{border-top:1px solid var(--rule);border-radius:10px 10px 0 0}
+  .stage:last-child{border-radius:0 0 10px 10px}
+  .stage::after{right:auto;left:26px;top:auto;bottom:-9px;transform:rotate(135deg)}
+}
+
+/* explorer */
+.exhead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px;margin:0 0 1.1rem}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.86rem;color:var(--muted)}
+.explorer{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr) minmax(0,1.2fr);grid-template-rows:auto 1fr;grid-template-areas:"t d l" "x d l";column-gap:44px}
+.ex-t{grid-area:t}.ex-d{grid-area:d}.ex-l{grid-area:l}
+.explorer h4{font-size:.88rem;color:var(--muted);font-weight:400;margin-bottom:.5rem}
+.list{display:flex;flex-direction:column;gap:5px}
+.item{position:relative;z-index:2;display:flex;align-items:center;gap:8px;width:100%;text-align:left;font:inherit;font-size:.88rem;color:var(--ink);background:var(--surface);border:1px solid var(--rule);border-radius:7px;padding:6px 9px;cursor:pointer;transition:opacity .15s}
+.item:hover{border-color:var(--accent)}
+.item .id{font-family:var(--mono);font-size:.74rem;color:var(--muted);min-width:2.5em}
+.item .lv{width:4px;align-self:stretch;border-radius:2px;flex:none}
+.item.syslog{background:var(--syslog-bg);border-color:transparent}
+.item.local{background:var(--local-bg);border-color:transparent}
+.item.disk{background:var(--disk-bg);border-color:transparent}
+.item .p{font-family:var(--mono);font-size:.76rem;overflow-wrap:anywhere}
+.item.dim{opacity:.22}.item.sel{outline:2px solid var(--accent);outline-offset:1px}.item.rel{border-color:var(--accent)}
+.explorer.only .item.dim{display:none}
+#wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:visible}
+#wires path{fill:none;stroke:var(--accent);stroke-width:1.4;opacity:.55}
+.detail{grid-area:x;align-self:start;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdr) + 14px);margin-top:1.4rem;z-index:3;max-height:calc(100vh - var(--hdr) - 30px);overflow:auto;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:16px 18px}
+.detail .t{font-size:1.08rem;font-weight:700;margin:0 0 .3rem}
+.detail .m{color:var(--muted);font-size:.88rem;margin:0 0 .6rem}
+.detail p{font-size:.92rem;margin:.4rem 0}
+.detail pre{margin:.6rem 0 0;background:var(--bg);border-radius:6px;padding:9px 11px;font-family:var(--mono);font-size:.76rem;white-space:pre-wrap;overflow-wrap:anywhere}
+@media (max-width:900px){.explorer{grid-template-columns:minmax(0,1fr);grid-template-rows:none;grid-template-areas:"t" "d" "l" "x";row-gap:24px}#wires{display:none}.detail{position:static;margin-top:0;max-height:none}}
+
+/* schema explorer */
+.schema{display:grid;grid-template-columns:minmax(200px,250px) minmax(0,1fr);gap:28px;align-items:start}
+@media (max-width:900px){.schema{grid-template-columns:minmax(0,1fr);gap:18px}}
+.slist{display:flex;flex-direction:column;gap:4px;position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdr) + 14px)}
+@media (max-width:900px){.slist{position:static;flex-direction:row;flex-wrap:wrap}}
+.slist .grp{font-size:.78rem;color:var(--muted);margin:.6rem 0 .1rem;text-transform:uppercase;letter-spacing:.05em}
+.slist .grp:first-child{margin-top:0}
+@media (max-width:900px){.slist .grp{width:100%}}
+.sbtn{display:flex;align-items:center;gap:6px;text-align:left;font:inherit;font-size:.88rem;color:var(--ink);background:transparent;border:1px solid transparent;border-radius:7px;padding:5px 9px;cursor:pointer;text-decoration:none}
+.sbtn:hover{border-color:var(--rule)}
+.sbtn[aria-current="true"]{background:var(--surface);border-color:var(--accent)}
+.sbtn .sw{margin:0;flex:none}
+@media (max-width:900px){.sbtn{border-color:var(--rule)}}
+.smeta{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin:.5rem 0 1rem;font-size:.88rem;color:var(--muted)}
+.ssample{margin:0;font-family:var(--mono);font-size:.82rem;line-height:1.9;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:13px 15px;white-space:pre-wrap;overflow-wrap:anywhere}
+.ssample mark{background:transparent;color:inherit;border-bottom:2px solid var(--accent);padding:1px 0;border-radius:2px}
+.ssample.plain mark{border-bottom-color:transparent}
+.ssample mark.on{background:var(--accent);color:var(--on-accent);border-bottom-color:var(--accent)}
+.shead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin:1.4rem 0 .6rem}
+.shead h4{font-size:1rem}
+.ftable tr.on td{background:var(--accent-bg)}
+.ftable td:first-child{font-family:var(--mono);font-size:.8rem;white-space:nowrap}
+.ftable .val{font-family:var(--mono);font-size:.78rem;overflow-wrap:anywhere;max-width:220px}
+.ftable .ty{font-size:.8rem;color:var(--muted);white-space:nowrap}
+@media (max-width:900px){
+  .ftable thead{display:none}
+  .ftable,.ftable tbody,.ftable tr,.ftable td{display:block;width:auto}
+  .ftable tr{padding:11px 13px;border-bottom:1px solid var(--rule)}
+  .ftable tr:last-child{border-bottom:none}
+  .ftable td{border:none;padding:2px 0}
+  .ftable td:nth-child(1),.ftable td:nth-child(2){display:inline-block;margin-right:10px}
+  .ftable td:nth-child(1){font-weight:700}
+  .ftable .val{max-width:none}
+  .ftable td.val::before{content:"Sample: ";color:var(--muted);font-family:var(--sans)}
+  .ftable td:empty{display:none}
+  .ftable tr.on{background:var(--accent-bg)}.ftable tr.on td{background:transparent}
+}
+
+/* triage */
+textarea{width:100%;min-height:150px;font-family:var(--mono);font-size:.82rem;line-height:1.5;padding:12px 14px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);color:var(--ink);resize:vertical}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0 0}
+.err{color:var(--crit);font-size:.9rem;margin:8px 0 0}
+.res{margin-top:1.4rem;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px}
+@media (max-width:900px){.res{grid-template-columns:minmax(0,1fr)}}
+.hit{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--rule);border-radius:0 10px 10px 0;padding:13px 15px;margin-bottom:10px}
+.hit .h{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline}
+.hit p{margin:.3rem 0 .5rem;font-size:.9rem;color:var(--muted)}
+.kv{align-self:start;background:var(--surface);border:1px solid var(--rule);border-radius:10px;padding:13px 15px}
+.kv dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:5px 14px;margin:0;font-size:.86rem}
+.kv dt{color:var(--muted)}.kv dd{margin:0;font-family:var(--mono);font-size:.8rem;overflow-wrap:anywhere}
+
+details.smp summary{cursor:pointer;color:var(--accent);font-size:.86rem}
+details.smp pre{margin:.5rem 0 0;background:var(--bg);border-radius:6px;padding:9px 11px;font-family:var(--mono);font-size:.76rem;white-space:pre-wrap;overflow-wrap:anywhere}
+
+/* architecture diagrams */
+.dg{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:20px;margin:0 0 1.3rem;scroll-margin-top:calc(var(--hdr) + 16px)}
+.dg figcaption{font-size:.86rem;color:var(--muted);margin-top:14px}
+.nrow{display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:12px}
+.nd{border:1px solid var(--rule);border-radius:9px;padding:10px 12px;background:var(--bg);text-align:center;min-width:0}
+.nd b{display:block;font-size:.95rem}.nd span{display:block;font-size:.8rem;color:var(--muted);overflow-wrap:anywhere}
+.nd.ctl{background:var(--accent-bg);border-color:var(--accent)}.nd.edge{background:var(--syslog-bg);border-color:var(--syslog)}
+.nd.ext{border-style:dashed}.nd.fw{background:var(--disk-bg);border-color:var(--disk)}
+.conn{display:flex;flex-direction:column;align-items:center;margin:4px 0;font-size:.8rem;color:var(--muted);text-align:center}
+.conn::before{content:"";width:2px;height:16px;background:var(--accent)}
+.conn::after{content:"";border:6px solid transparent;border-top-color:var(--accent);border-bottom:0}
+.conn span:empty{display:none}.conn span{padding:2px 0}
+.flow{display:flex;flex-direction:column;align-items:stretch;max-width:560px;margin:0 auto}
+.hbar{margin-top:12px;border-top:2px solid var(--syslog);text-align:center;font-size:.8rem;color:var(--muted);padding-top:6px}
+.lbls{font-size:.76rem;color:var(--muted);text-align:center;margin-top:6px}
+.band{border-radius:9px;padding:12px 14px;margin-bottom:8px;border-left:4px solid;background:var(--bg)}
+.band b{display:block}.band span{font-size:.88rem;color:var(--muted)}
+.band.b1{border-color:var(--local)}.band.b2{border-color:var(--accent)}.band.b3{border-color:var(--syslog)}
+.zone{border:1px dashed var(--rule);border-radius:10px;padding:11px 14px;background:var(--bg);text-align:center}
+.zone b{display:block}.zone span{font-size:.84rem;color:var(--muted)}
+.zone.z0{border-color:var(--crit)}.zone.z1{border-color:var(--high)}.zone.z2{border-color:var(--accent)}.zone.z3{border-color:var(--syslog)}
+.pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr);gap:10px;align-items:center}
+.pair.up{font-size:.76rem;color:var(--muted);text-align:center;margin:8px 0}
+.hlink{position:relative;text-align:center;font-size:.78rem;color:var(--muted)}
+.hlink::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px solid var(--syslog);z-index:0}
+.hlink span{position:relative;background:var(--surface);padding:0 6px;display:inline-block}
+@media (max-width:560px){.dg{padding:14px}.nrow{gap:6px}.nd{padding:8px 6px}.nd b{font-size:.84rem}.nd span{font-size:.72rem}}
+@media print{
+  .hdr,.side,.scrim,.filters,.btn,#wires,.pn{display:none!important}
+  .layout{display:block}main{padding:0}body{background:#fff;color:#000}
+  .detail,.slist{position:static}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="in">
+    <button class="btn sm menu" id="menu" type="button" aria-controls="side" aria-expanded="false">Menu</button>
+    <a class="brand" href="#overview"><span class="mk">LS</span><span class="t">Juniper Log Specification</span><small>POC</small></a>
+    <div class="srch" role="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search logs, fields, detections" aria-label="Search the site" autocomplete="off" aria-controls="sres" aria-expanded="false">
+      <kbd>/</kbd>
+      <div class="sres" id="sres" hidden role="listbox"></div>
+    </div>
+    <button class="btn sm" id="theme" type="button">Dark mode</button>
+  </div>
+</header>
+<div class="layout">
+  <nav class="side" id="side" aria-label="Site"></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+<div class="scrim" id="scrim" hidden></div>
+<script>
+const LOGS=[{"k": "system", "id": "LS-01", "name": "System, kernel and process health", "scope": "Both", "source": "/var/log/messages (configured file); remote syslog", "facility": "any info", "events": "Process restart, resource pressure, boot and kernel messages", "fields": "process, pid, message, node, severity", "condition": "Collect system events; not every health metric emits a log. Supplement with polling or telemetry.", "verify": "show log messages\nshow system uptime\nshow system core-dumps", "detect": "D09 D10 D16"}, {"k": "auth", "id": "LS-02", "name": "Management authentication and AAA", "scope": "Both", "source": "Configured authorization file; remote syslog", "facility": "authorization any", "events": "sshd authentication; UI_LOGIN_EVENT; login failures", "fields": "user, src_ip, src_port, authentication_method, outcome", "condition": "Local login, SSH and external AAA results vary in detail. Add RADIUS/TACACS+ server logs to resolve policy and failure reasons.", "verify": "show log authorization\nshow configuration system authentication-order", "detect": "D01 D02"}, {"k": "commands", "id": "LS-03", "name": "CLI and management command audit", "scope": "Both", "source": "/var/log/interactive-commands (configured); remote syslog", "facility": "interactive-commands any", "events": "UI_CMDLINE_READ_LINE and command audit messages", "fields": "user, command, process, pid", "condition": "Includes supported client-issued commands; do not assume complete NETCONF RPC payloads or shell command auditing. Command text can contain sensitive values.", "verify": "show log interactive-commands", "detect": "D03 D04 D05"}, {"k": "commit", "id": "LS-04", "name": "Configuration change and commit audit", "scope": "Both", "source": "/var/log/change-log (configured); remote syslog", "facility": "change-log any; retain general daemon events", "events": "UI_COMMIT / UI_COMMIT_COMPLETED family; configuration edits", "fields": "user, command, message, commit_time", "condition": "Commit event is not a full configuration diff. Correlate account, device and time with archived configurations and change approval. Verify exact tags in the release catalogue.", "verify": "show system commit\nshow configuration | compare rollback 1\nshow log change-log", "detect": "D03 D04 D05"}, {"k": "interfaces", "id": "LS-05", "name": "Interface state and physical links", "scope": "Both", "source": "messages; remote syslog; optional SNMP traps", "facility": "any info", "events": "SNMP_TRAP_LINK_DOWN / SNMP_TRAP_LINK_UP", "fields": "interface, ifIndex, admin_status, oper_status", "condition": "A syslog message containing SNMP_TRAP is distinct from an SNMP trap packet. Counters, optics and error rates require polling/telemetry.", "verify": "show interfaces terse\nshow interfaces extensive", "detect": "D06 D09"}, {"k": "bgp", "id": "LS-06", "name": "BGP adjacency and routing control", "scope": "Both", "source": "messages; remote syslog; targeted routing trace file", "facility": "any info", "events": "RPD_BGP_NEIGHBOR_STATE_CHANGED; BGP notifications", "fields": "peer_ip, peer_as, old_state, new_state, routing_instance", "condition": "MX/PTX/ACX routers and EX/QFX switches only where BGP is supported and enabled. Updates/prefix changes are not a complete feed in normal syslog; add BMP or telemetry if supported.", "verify": "show bgp summary\nshow log messages | match RPD_BGP", "detect": "D07 D08"}, {"k": "igp", "id": "LS-07", "name": "OSPF, IS-IS and BFD", "scope": "Both", "source": "messages; remote syslog; protocol traceoptions", "facility": "any info", "events": "RPD/OSPF/ISIS/BFD event families (release-specific)", "fields": "neighbor, interface, old_state, new_state, reason", "condition": "Protocol and family support depends on model and licensing. Detail may need scoped, temporary traceoptions; do not enable all packet tracing as a baseline.", "verify": "show ospf neighbor\nshow isis adjacency\nshow bfd session", "detect": "D07"}, {"k": "mpls", "id": "LS-08", "name": "MPLS, LDP and RSVP", "scope": "Router", "source": "messages; remote syslog; targeted protocol trace", "facility": "any info", "events": "Routing protocol session and LSP event families", "fields": "peer_ip, lsp_name, interface, reason", "condition": "Router service profile only; not every router supports every MPLS function. Logs identify faults, not per-packet MPLS activity.", "verify": "show mpls lsp\nshow ldp session\nshow rsvp session", "detect": "D07 D09"}, {"k": "evpn", "id": "LS-09", "name": "EVPN and VXLAN fabric", "scope": "Both", "source": "messages; remote syslog; EVPN operational state", "facility": "any info", "events": "EVPN/BGP events; MAC mobility and duplicate MAC events where supported", "fields": "routing_instance, vni, vlan, mac, peer_ip, interface", "condition": "Common on QFX and supported EX/MX/ACX roles. Collect EVPN state and MAC tables for context; exact duplicate/move tags depend on release.", "verify": "show evpn instance\nshow evpn database", "detect": "D08 D12"}, {"k": "stp", "id": "LS-10", "name": "Spanning tree and loop protection", "scope": "Switch", "source": "messages; remote syslog; protocol state", "facility": "any info", "events": "STP/RSTP/MSTP topology, root and BPDU protection events", "fields": "interface, vlan, instance, root_bridge, reason", "condition": "Only applicable when configured. Message availability and daemon names vary between ELS and non-ELS platforms; baseline topology from operational state.", "verify": "show spanning-tree bridge\nshow spanning-tree interface", "detect": "D11"}, {"k": "lacp", "id": "LS-11", "name": "LACP and redundant links", "scope": "Both", "source": "messages; remote syslog; optional trace", "facility": "any info", "events": "LACP/aggregated Ethernet member and partner changes", "fields": "interface, ae_interface, partner_system_id, state", "condition": "Applicable to enabled link aggregation. Do not treat every state change as malicious; maintenance and partner restart are common causes.", "verify": "show lacp interfaces\nshow interfaces terse", "detect": "D06 D11"}, {"k": "mac", "id": "LS-12", "name": "MAC limits, learning and moves", "scope": "Switch", "source": "messages; remote syslog; switching tables", "facility": "any info", "events": "MAC limiting, MAC move limiting and learning error events", "fields": "mac, vlan, interface, limit, reason", "condition": "Enhanced L2 error syslogs introduced in 23.4R1 for specified EX/MX/QFX support. Check exact platform/release. These are error events, not an inventory of all MAC learning. Bridging MX can also apply.", "verify": "show ethernet-switching table\nshow log messages | match \"MAC|mac\"", "detect": "D12"}, {"k": "storm", "id": "LS-13", "name": "Storm control and port protection", "scope": "Switch", "source": "messages; remote syslog; counters", "facility": "any info", "events": "Storm control / RTG / protection error events", "fields": "interface, vlan, traffic_type, action, reason", "condition": "Requires configured feature and supported model/release. Enhanced L2 event support is release-dependent; use counters if no event is produced.", "verify": "show log messages | match storm\nshow interfaces extensive", "detect": "D11 D13"}, {"k": "dot1x", "id": "LS-14", "name": "802.1X and MAC RADIUS access", "scope": "Switch", "source": "messages; remote syslog; RADIUS server logs", "facility": "any info", "events": "DOT1XD_USR_SESSION_HELD and supported DOT1XD session events", "fields": "user, mac, interface, vlan, reason, outcome", "condition": "Enable the access authentication feature independently. MAB/MAC RADIUS and dynamic VLAN outcomes require server-side correlation. Do not infer user identity from MAC alone.", "verify": "show dot1x interface\nshow log messages | match DOT1X", "detect": "D14"}, {"k": "dhcp", "id": "LS-15", "name": "DHCP snooping, DAI and IP source guard", "scope": "Switch", "source": "messages; remote syslog; binding tables and counters", "facility": "any info", "events": "DAI violations and supported DHCP security events", "fields": "src_ip, mac, interface, vlan, packet_type, reason", "condition": "Requires configured protections and correct trusted ports/bindings. ELS/non-ELS syntax differs; a missing per-packet log does not prove that a packet was permitted. Supported MX bridge domains can also apply.", "verify": "show dhcp-security binding\nshow dhcp-security arp inspection statistics", "detect": "D15"}, {"k": "firewall", "id": "LS-16", "name": "Stateless firewall filter syslog", "scope": "Both", "source": "Configured firewall file; remote syslog", "facility": "firewall any", "events": "Filter packet-header records; DFWD_ / PFE_FW_ operational events", "fields": "src_ip, dest_ip, src_port, dest_port, protocol, interface, action", "condition": "A matching filter term needs a supported syslog action for packet records. DFWD/PFE_FW operational events do not prove packet matches. Not equivalent to SRX RT_FLOW sessions.", "verify": "show log firewall\nshow configuration firewall", "detect": "D08 D15"}, {"k": "buffer", "id": "LS-17", "name": "Firewall in-memory log buffer", "scope": "Both", "source": "show firewall log", "facility": "Local buffer \u2014 not a syslog destination", "events": "Packet-header entries from a supported filter log action", "fields": "filter, action, interface, protocol, src_ip, dest_ip", "condition": "The log action uses a rotating memory buffer; remote system syslog configuration does not export that buffer. Use syslog action where supported for remote packet logging.", "verify": "show firewall log", "detect": "D08"}, {"k": "chassis", "id": "LS-18", "name": "Chassis, RE, FPC and environment", "scope": "Both", "source": "messages; remote syslog; alarms and telemetry", "facility": "any info", "events": "CHASSIS / CHASSISD / alarm and hardware event families", "fields": "component, slot, node, alarm, temperature, reason", "condition": "Physical models differ; chassis and system alarms plus sensor polling provide context. Preserve originating RE/node where present.", "verify": "show chassis alarms\nshow system alarms\nshow chassis environment\nshow chassis routing-engine", "detect": "D09 D10"}, {"k": "vc", "id": "LS-19", "name": "Virtual Chassis and redundancy", "scope": "Switch", "source": "messages; remote syslog; Virtual Chassis state", "facility": "any info", "events": "Member, mastership and virtual chassis port state changes", "fields": "member_id, serial, role, interface, reason", "condition": "Only supported and configured Virtual Chassis systems. For dual-RE routers use chassis/RE collection instead. Observe source identity during master changes.", "verify": "show virtual-chassis\nshow virtual-chassis vc-port", "detect": "D09 D10"}, {"k": "trace", "id": "LS-20", "name": "Traceoptions and diagnostic artifacts", "scope": "Both", "source": "Operator-named /var/log trace files; support bundles; core dumps", "facility": "Local / on-demand", "events": "Protocol trace records; diagnostic output", "fields": "process, peer_ip, interface, timestamp, message", "condition": "Not automatically forwarded by system syslog. Scope tracing, bound size/retention and remove after troubleshooting. Handle cores/support bundles as sensitive files.", "verify": "show log\nshow system core-dumps", "detect": "D07 D09"}, {"k": "flows", "id": "LS-21", "name": "Traffic flow and counter telemetry", "scope": "Both", "source": "Separate flow collector or telemetry receiver", "facility": "Separate channel", "events": "J-Flow/IPFIX, sFlow or streaming telemetry where supported", "fields": "src_ip, dest_ip, ports, bytes, packets, observation_point", "condition": "Not a syslog file or universal feature. Platform support, sampling and templates determine coverage. Useful for traffic visibility absent from control-plane syslog.", "verify": "Check model-specific flow/telemetry configuration and collector ingestion", "detect": "D08 D16"}];
+const DETS=[{"id": "D01", "title": "Management authentication failures", "level": "high", "keys": ["auth"], "logic": "Count failures by device, source and user over 5 minutes; start with 10 failures and tune to the environment.", "context": "Correlate AAA failures and successful logins; automation credentials and scanner activity can be benign."}, {"id": "D02", "title": "Successful privileged login from a new source", "level": "high", "keys": ["auth"], "logic": "Compare successful privileged management login source/user pairs against an approved inventory or 30-day baseline.", "context": "Require actual outcome, source and account fields. A new source alone is not compromise."}, {"id": "D03", "title": "Sensitive configuration change", "level": "high", "keys": ["commands", "commit"], "logic": "Identify changes to login users, authentication-order, services, routing policy or firewall configuration; correlate with commit and approved change.", "context": "Command text proves intent; a successful commit plus configuration diff establishes the effective change."}, {"id": "D04", "title": "Logging impairment or deletion", "level": "critical", "keys": ["commands", "commit", "system"], "logic": "Look for syslog/trace configuration removal or clear log commands; correlate with remote event loss and configuration archive.", "context": "A legitimate maintenance change can match. A quiet device is not independently proof of tampering."}, {"id": "D05", "title": "Unexpected management command or automation", "level": "high", "keys": ["commands", "commit"], "logic": "Find rare command/account combinations, shell entry or unapproved management automation; join by device, account and time.", "context": "Do not assume UI command audit contains every shell command or every NETCONF RPC."}, {"id": "D06", "title": "Repeated interface or LAG flaps", "level": "medium", "keys": ["interfaces", "lacp"], "logic": "Count down/up transitions per device/interface over 10 minutes; initial triage threshold 5 transitions.", "context": "Check optics, cabling, admin changes and partner state before classifying an attack."}, {"id": "D07", "title": "Routing session disruption", "level": "high", "keys": ["bgp", "igp", "mpls", "trace"], "logic": "Detect repeated adjacency loss or unexpected transitions away from established/up; join BFD and physical link failures.", "context": "Routing maintenance and link faults are common. State field parsing is event-specific."}, {"id": "D08", "title": "Unexpected peer or traffic path", "level": "high", "keys": ["bgp", "evpn", "firewall", "buffer", "flows"], "logic": "Compare peers, ASNs and observed traffic against approved routing and network policy inventories.", "context": "Syslog cannot establish complete route history. Use routing snapshots/BMP and flow telemetry when needed."}, {"id": "D09", "title": "Infrastructure fault or restart", "level": "high", "keys": ["system", "interfaces", "mpls", "chassis", "vc", "trace"], "logic": "Correlate device restart, process crash or chassis alarms with service/peer impact.", "context": "Distinguish isolated control-plane restart, RE switchover and full device reboot."}, {"id": "D10", "title": "Unexpected redundancy role or member change", "level": "high", "keys": ["system", "chassis", "vc"], "logic": "Compare RE/Virtual Chassis member or role changes to inventory and maintenance windows.", "context": "Capture serial/member/node identifiers; an expected failover still requires service validation."}, {"id": "D11", "title": "Layer 2 topology instability", "level": "high", "keys": ["stp", "lacp", "storm"], "logic": "Correlate unexpected root/role changes, BPDU protection or loop events with link and storm activity.", "context": "Requires configured L2 features and a known topology; no single universal Junos tag covers these cases."}, {"id": "D12", "title": "MAC mobility or learning violation", "level": "high", "keys": ["evpn", "mac"], "logic": "Find duplicate MAC, MAC move-limit or MAC-limit events and compare ports/VLANs with endpoint inventory.", "context": "VM migration, multihoming and failover can cause legitimate MAC movement."}, {"id": "D13", "title": "Traffic storm or protection activation", "level": "high", "keys": ["storm"], "logic": "Alert on repeated storm/protection events; correlate ingress rates, drop counters and downstream reachability.", "context": "Protection counters are essential on releases without matching system log events."}, {"id": "D14", "title": "Endpoint access authentication anomaly", "level": "high", "keys": ["dot1x"], "logic": "Aggregate held/failed access sessions by MAC/user/interface; correlate RADIUS reason and assigned VLAN.", "context": "A held state is not necessarily bad credentials; use the explicit reason. Reauthentication can be normal."}, {"id": "D15", "title": "Spoofing or policy violation", "level": "high", "keys": ["dhcp", "firewall"], "logic": "Correlate DAI/IP source guard violations or explicitly logged filter drops with bindings, interface and VLAN.", "context": "Avoid inferring spoofing from a missing binding alone; DHCP churn and static hosts need consideration."}, {"id": "D16", "title": "Collection gap or timestamp drift", "level": "medium", "keys": ["system", "flows"], "logic": "Compare last received event, collector health, expected inventory and device reachability; check event-to-ingest delay.", "context": "Quiet devices need polling or an approved heartbeat test. Distinguish source silence from a broken pipeline."}];
+const SOURCES=[["Junos system logging: formats, facilities, severity and Evolved differences", "https://www.juniper.net/documentation/us/en/software/junos/network-mgmt/topics/topic-map/system-logging.html"], ["Remote system log destinations and structured data", "https://www.juniper.net/documentation/us/en/software/junos/network-mgmt/topics/topic-map/directing-system-log-messages-to-a-remote-destination.html"], ["System Log Explorer \u2014 verify exact tags against the deployed release", "https://apps.juniper.net/syslog-explorer/"], ["Firewall filter logging actions", "https://www.juniper.net/documentation/us/en/software/junos/routing-policy/topics/concept/firewall-filter-option-logging-packet-headers-filter-actions.html"], ["show firewall log field definitions", "https://www.juniper.net/documentation/us/en/software/junos/cli-reference/topics/ref/command/show-firewall-log.html"], ["802.1X session state and held-reason logging", "https://www.juniper.net/documentation/us/en/software/junos/user-access/topics/concept/802.1x-supplicant.html"], ["Junos 23.4R1: enhanced layer 2 error logging", "https://www.juniper.net/documentation/us/en/software/junos/release-notes/23.4/junos-release-notes-23.4r1/topics/new-features/feature-descriptions/network-management-and-monitoring-12.html"], ["ELS IP source guard and dynamic ARP inspection", "https://www.juniper.net/documentation/us/en/software/junos/security-services/topics/example/port-security-protect-from-spoofing-els.html"], ["Port security overview and platform differences", "https://www.juniper.net/documentation/us/en/software/junos/security-services/topics/topic-map/overview-port-security.html"]];
+const $=s=>document.querySelector(s), esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const table=(heads,rows)=>`<div class="tw"><table><thead><tr>${heads.map(h=>`<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+const note=t=>`<div class="note">${t}</div>`, code=(t,s)=>`<div class="block"><header><h4>${esc(t)}</h4><button class="btn sm" data-copy>Copy</button></header><pre>${esc(s)}</pre></div>`;
+const link=l=>`<a href="#spec-${l.k}">${l.id} · ${esc(l.name)}</a>`, dlink=d=>`<a class="dchip" href="#det-${d.id}">${d.id}</a>`;
+const NAV=[['Start',[['overview','Overview'],['architecture','Architecture'],['threat','Threat and tradecraft']]],['Specification',[['spec','Log specification'],['schemas','Schema explorer'],['formats','Formats and severity'],['components','Components and sources']]],['Detection',[['detections','Detections'],['hunt','Hunt explorer'],['triage','Triage a log line']]],['Operations',[['enable','Enable logging'],['parsing','SIEM parsing'],['hardening','Hardening']]],['Reference',[['about','About and sources']]]];
+const COMMON=[['timestamp','datetime','Device event time; retain timezone. Traditional format may omit year/zone.'],['host','string','Originating device from the syslog header; preserve collector separately.'],['process','string','Reporting daemon/application; not an endpoint process.'],['pid','integer / nullable','Daemon process identifier when emitted; not a durable correlation ID.'],['event_id','string / nullable','Junos message tag / structured MSGID; some messages have none.'],['severity','integer / nullable','Syslog priority modulo 8 when PRI exists. Not the detection risk.'],['facility','integer / nullable','Floor(PRI/8); remote facility remapping may apply.'],['message','string','Original message body; preserve raw event.'],['device_role','enrichment','Router/switch role from inventory, not inferred solely from model or text.'],['model / os_version / site','enrichment','Authoritative inventory attributes, not guaranteed native log fields.']];
+const SAMPLES=[
+{name:'BGP transition',key:'bgp',raw:'<30>Nov 10 08:14:22 mx-edge-01 rpd[1472]: RPD_BGP_NEIGHBOR_STATE_CHANGED: BGP peer 192.0.2.2 (External AS 64512) changed state from Established to Idle (event Stop) (instance master)'},
+{name:'CLI command',key:'commands',raw:"<190>Nov 10 08:15:10 ex-access-01 mgd[2241]: UI_CMDLINE_READ_LINE: User 'netops', command 'show interfaces terse'"},
+{name:'SSH failure',key:'auth',raw:'<38>Nov 10 08:15:42 qfx-leaf-01 sshd[3021]: Failed password for netops from 192.0.2.45 port 52010 ssh2'},
+{name:'Structured command',key:'commands',raw:'<190>1 2026-11-10T08:15:10.000+11:00 ex-access-01 mgd 2241 UI_CMDLINE_READ_LINE [junos@2636.1.1.1.2.35 username="netops" command="show interfaces terse"] User command executed'},
+{name:'802.1X held',key:'dot1x',raw:'<29>Nov 10 08:18:10 ex-access-01 dot1xd[1250]: DOT1XD_USR_SESSION_HELD: Dot1x User test-user session with MacAddress 02:00:00:00:00:10 interface ge-0/0/10.0 vlan users is held due to reason Invalid credential'}
+];
+function parse(s){let f={},m;
+if(m=s.match(/^<(\d{1,3})>/)){let p=+m[1];if(p<=191){f.pri=p;f.facility=Math.floor(p/8);f.severity=p%8;}}
+if(m=s.match(/^(?:<\d+>)?1 (\S+) (\S+) (\S+) (\S+) (\S+) /)){['timestamp','host','process','pid','event_id'].forEach((k,i)=>{if(m[i+1]!=='-')f[k]=m[i+1]});f.format='IETF structured header';}
+else if(m=s.match(/^(?:<\d+>)?([A-Z][a-z]{2}\s+\d+\s+\d\d:\d\d:\d\d(?:\.\d+)?)\s+(\S+)\s+([\w.-]+)(?:\[(\d+)\])?:\s*(.*)$/)){['timestamp','host','process','pid'].forEach((k,i)=>{if(m[i+1])f[k]=m[i+1]});f.format='Traditional sample format';const tag=m[5].match(/^([A-Z][A-Z0-9_]+):/);if(tag)f.event_id=tag[1];}
+const patterns={user:/User '([^']+)'|(?:Failed password|Accepted \S+) for (?:invalid user )?(\S+)|username="([^"]+)"/,src_ip:/from ([\da-fA-F:.]+) port/,src_port:/from [\da-fA-F:.]+ port (\d+)/,command:/command '([^']+)'|command="([^"]+)"/,peer_ip:/BGP peer (\S+)/,peer_as:/External AS (\d+)/,old_state:/changed state from (\w+)/,new_state:/changed state from \w+ to (\w+)/,routing_instance:/\(instance ([^)]+)\)/,mac:/MacAddress ([\da-fA-F:]+)/,interface:/interface ([\w./:-]+)/,reason:/held due to reason (.+)/};
+Object.entries(patterns).forEach(([k,r])=>{let v=s.match(r);if(v)f[k]=v.slice(1).find(Boolean)});
+return f;}
+function matches(s){let k=[];if(/UI_CMDLINE|command=/.test(s))k.push('commands');if(/sshd|UI_LOGIN|LOGIN_FAILED/.test(s))k.push('auth');if(/UI_COMMIT/.test(s))k.push('commit');if(/RPD_BGP/.test(s))k.push('bgp');if(/DOT1X/.test(s))k.push('dot1x');if(/SNMP_TRAP_LINK/.test(s))k.push('interfaces');return k;}
+let filterScope='All',filterText='';
+function controls(){return `<div class="filters"><label>Device role <select id="scope" class="btn">${['All','Router','Switch'].map(v=>`<option ${v===filterScope?'selected':''}>${v}</option>`).join('')}</select></label><input id="filter" type="search" aria-label="Filter specifications" placeholder="Filter names, fields or events" value="${esc(filterText)}"><button class="btn sm" id="export">Export filtered CSV</button></div><div id="rows"></div>`;}
+function filtered(){return LOGS.filter(l=>(filterScope==='All'||l.scope==='Both'||l.scope===filterScope)&&JSON.stringify(l).toLowerCase().includes(filterText.toLowerCase()));}
+function specRows(){const ls=filtered();$('#rows').innerHTML=`<p class="sub">${ls.length} of ${LOGS.length} collection categories · Both means applicable to configured features in either role.</p>`+table(['ID / category','Role','Source / collection','Facility / baseline','Key events'],ls.map(l=>[link(l),esc(l.scope),esc(l.source),`<code>${esc(l.facility)}</code>`,esc(l.events)]));}
+function specDetail(l){return `<p class="crumb"><a href="#spec">Log specification</a> / ${l.id}</p><h1>${esc(l.name)}</h1><p class="lede">${esc(l.events)}</p><dl class="spec">${[['Device role',l.scope],['Source / collection',l.source],['Logging selection',l.facility],['Event-specific fields',l.fields],['Proposed SIEM classification',l.k==='flows'?'Separate flow/telemetry sourcetype':l.k==='trace'||l.k==='buffer'?'Separate diagnostic collection':'juniper:junos:syslog (custom example)']].map(([a,b])=>`<dt>${a}</dt><dd>${esc(b)}</dd>`).join('')}</dl>${note(esc(l.condition))}${code('Verification commands — only where supported',l.verify)}<h2>Detection use cases</h2>${DETS.filter(d=>d.keys.includes(l.k)).map(d=>`<p>${dlink(d)} ${esc(d.title)}</p>`).join('')}<a class="btn" href="#schemas-${l.k}">Inspect schema</a>`;}
+function detection(d){return `<p class="crumb"><a href="#detections">Detections</a> / ${d.id}</p><h1>${esc(d.title)}</h1><p class="lede"><span class="lvl ${d.level}">${d.level}</span> · Candidate analytic; tune and test before alerting.</p><h2>Logic</h2><p>${esc(d.logic)}</p><h2>Required evidence</h2>${d.keys.map(k=>`<p>${link(LOGS.find(l=>l.k===k))}</p>`).join('')}${note(esc(d.context))}<h2>Validation</h2><p>Generate an approved representative event, confirm raw delivery and extracted fields, replay a positive and a benign example, then verify suppression and alert ownership.</p>`;}
+function schema(k){let l=LOGS.find(l=>l.k===k)||LOGS[0], sample=SAMPLES.find(s=>s.key===l.k);return `<h1>Schema explorer</h1><p class="lede">Common header fields plus category-specific evidence. Fields are conditional, not a universal Junos event schema.</p><div class="schema"><div class="slist">${LOGS.map(x=>`<a class="sbtn" aria-current="${x.k===l.k}" href="#schemas-${x.k}">${x.id} ${esc(x.name)}</a>`).join('')}</div><div><h2 style="margin-top:0">${esc(l.name)}</h2>${table(['Field','Type','Meaning'],COMMON.map(r=>r.map(esc)))}<h3>Event-specific field checklist</h3><p><code>${esc(l.fields)}</code></p>${note('Extract only when present. Interface, VLAN, reason and outcome are not populated by every event. Obtain inventory fields through enrichment.')}<h3>Sample</h3>${sample?code('Synthetic illustration — not a captured device event',sample.raw)+table(['Extracted field','Value'],Object.entries(parse(sample.raw)).map(r=>r.map(esc))):'<p>No exact sample asserted for this category. Capture a representative event from the deployed model/release and verify its tag in System Log Explorer.</p>'}</div></div>`;}
+const CONFIG=`# Example addresses: replace with your collector and device source IP.
+set system syslog host 192.0.2.50 any info
+set system syslog host 192.0.2.50 authorization any
+set system syslog host 192.0.2.50 interactive-commands any
+set system syslog host 192.0.2.50 change-log any
+set system syslog host 192.0.2.50 structured-data
+set system syslog source-address 192.0.2.10
+
+# Proposed local filenames; they are not all factory defaults.
+set system syslog file messages any info
+set system syslog file authorization authorization any
+set system syslog file interactive-commands interactive-commands any
+set system syslog file change-log change-log any
+set system syslog file messages archive size 10m
+set system syslog file messages archive files 10
+
+# Validate and review before committing.
+show | compare
+commit check`;
+const PAGES={
+overview:()=>`<h1>Juniper routers &amp; switches</h1><p class="lede">Log specification and evidence guide for Junos OS and Junos OS Evolved. Adapted from the supplied SD-WAN specification template.</p><div class="g3"><div class="stat"><b>${LOGS.length}</b><span>collection categories</span></div><div class="stat"><b>${DETS.length}</b><span>detection use cases</span></div><div class="stat"><b>2</b><span>device-role views</span></div></div><h2>Choose your starting point</h2><div class="g2">${[['spec','Log specification','Browse sources and filter by router or switch.'],['components','Platform coverage','MX, PTX, ACX, EX and QFX with feature conditions.'],['schemas','Schema explorer','Inspect fields and synthetic sample extraction.'],['enable','Enable logging','Baseline configuration and acceptance checklist.']].map(([k,t,p])=>`<a class="card" href="#${k}"><h3>${t}</h3><p>${p}</p></a>`).join('')}</div>${note('Scope: device-native Junos logging. SRX security sessions, Mist cloud audit, Security Director and Apstra controller audit are separate sources and are not assumed to be collected here.')}<h2>Baseline collection</h2><p>Start with remote system, authorization, command and change logs. Add protocol and switching evidence for the functions actually enabled. Use operational state and telemetry to cover gaps that event logs cannot establish.</p><p class="sub">Version 1 · Documentation reviewed 10 November 2026 · Configuration and detections are implementation examples.</p>`,
+architecture:()=>`<h1>Collection architecture</h1><p class="lede">Keep source device identity and collection method explicit through the pipeline.</p><div class="chain">${[['Device','Junos routers / switches','System and feature events'],['Export','Remote syslog','Configured facility + severity'],['Collector','SC4S or syslog relay','Preserve original header; queue where supported'],['Ingestion','Splunk input / HEC','Apply tested timestamp and parsing'],['Evidence','Search and detections','Enrich with model, site and role']].map(([a,b,c])=>`<div class="stage"><strong>${a}</strong><span class="d">${b}</span><span class="ft">${c}</span></div>`).join('')}</div><h2>Parallel evidence channels</h2>${table(['Channel','Evidence','Boundary'],[['SNMP / telemetry','Interface counters, sensors, uptime and operational state','Separate collector; not obtained simply by enabling syslog.'],['Flow export','Sampled traffic records','Separate supported J-Flow/IPFIX/sFlow configuration.'],['AAA / management controllers','Authentication policy, API caller, orchestration activity','Correlate by device/account/time; controller logs are separate.'],['Configuration archive','Committed before/after configuration','Diff corroborates changes that command audit alone cannot prove.'],['Diagnostics','Trace files, core dumps and support bundles','On-demand retrieval; not automatic system syslog export.']].map(r=>r.map(esc)))}${note('The baseline uses ordinary remote system syslog, commonly UDP/514. Do not assume TCP/TLS support from SRX security-log documentation. Verify the system-syslog transport on each release; protect the device-to-collector path and use an authenticated encrypted collector-to-SIEM hop where configured.')}`,
+threat:()=>`<h1>Threat and tradecraft</h1><p class="lede">Evidence-led hypotheses for network infrastructure compromise. These are generic scenarios, not claims about a Juniper-specific campaign.</p>${table(['Scenario','Primary evidence','Corroboration'],[['Stolen administrator credentials','Authorization / SSH / UI login','AAA outcome, management source inventory'],['Unauthorized reconfiguration','CLI commands, change and commit events','Archived configuration diff and approved change'],['Logging impairment','Syslog changes, log clearing, event gaps','Collector health and device reachability'],['Traffic redirection','BGP/EVPN change and configuration evidence','Routing snapshots, flow records, peer allowlist'],['Access-layer abuse','802.1X, DAI, MAC or storm events','RADIUS, DHCP binding, VLAN and port ownership'],['Disruption','Routing/link transitions, process or hardware events','Counters, topology and maintenance schedule']].map(r=>r.map(esc)))}${note('A log event is an observation, not a verdict. Correlate multiple sources and record what the available evidence cannot prove.')}`,
+spec:()=>`<h1>Log specification</h1><p class="lede">Collection categories can share the same physical syslog stream; they are not necessarily separate files.</p>${controls()}`,
+components:()=>`<h1>Components and sources</h1><p class="lede">Device role and configured services determine coverage. A routing-capable switch can produce routing evidence; an MX bridge domain can produce switching evidence.</p>${table(['Family / role','Shared baseline','Conditional additions'],[['MX routers','System, AAA, commands, commit, interfaces, chassis','BGP/IGP/BFD, MPLS, EVPN, bridge security, filters, flow telemetry'],['PTX routers','System, AAA, commands, commit, interfaces, chassis','Core routing, MPLS and telemetry per platform/release'],['ACX routers','System, AAA, commands, commit, interfaces, chassis','Access/aggregation routing, MPLS/EVPN where supported'],['EX switches','System, AAA, commands, commit, interfaces, chassis','STP, LACP, 802.1X, DHCP security, MAC/storm protection, Virtual Chassis; routing where supported'],['QFX switches','System, AAA, commands, commit, interfaces, chassis','Fabric BGP/EVPN/VXLAN, LACP, L2 protection; access security / Virtual Chassis on supported models']].map(r=>r.map(esc)))}<h2>OS and topology distinctions</h2><p>Junos OS Evolved uses a system journal and node-aware logging. Its default hostname can include the node name. Preserve that original identity and normalize it to inventory without losing the node. Validate RE failover and member changes against actual collector observations.</p>${note('ELS and non-ELS syntax differ. Do not apply switch feature configuration universally across EX/QFX or assume every member of a router family supports the same service.')}`,
+formats:()=>`<h1>Formats and severity</h1>${code('Traditional envelope','<PRI>Mon DD hh:mm:ss hostname process[pid]: EVENT_TAG: message')}${code('Structured envelope','<PRI>1 TIMESTAMP HOSTNAME APP-NAME PROCID MSGID [SD-ID key="value"] message')}<p>These are simplified envelopes. Junos explicit-priority, node/RE names, optional PIDs, relay prefixes and Evolved formats can change the record. Structured-data identifiers and parameter names are message-specific; do not hard-code a single enterprise suffix for every event.</p>${table(['Severity','Junos name'],['emergency','alert','critical','error','warning','notice','info','debug'].map((s,i)=>[i,esc(s)]))}<p>A configured severity selects that level and more severe levels. <code>any</code> includes all levels; <code>none</code> disables that facility at that destination. PRI, when present and valid, yields severity = PRI mod 8 and facility = floor(PRI / 8).</p><h2>Facility mapping</h2><p>Preserve the numeric facility received. Junos can remap facilities for remote destinations: for example, interactive commands commonly map to local7 and change-log to local6. Detection criticality is independent of syslog severity.</p><h2>Time and duplicates</h2><p>Prefer an explicit timestamp with year and zone. For traditional timestamps, define device timezone and year inference at ingestion and test year rollover. Repeated-message summaries, duplicate suppression and rate limits mean event count may differ from action count.</p>`,
+detections:()=>`<h1>Detection catalogue</h1><p class="lede">${DETS.length} candidate analytics. Thresholds are starting points, not vendor-prescribed defaults.</p>${table(['ID','Use case','Priority','Log categories'],DETS.map(d=>[dlink(d),`<a href="#det-${d.id}">${esc(d.title)}</a>`,`<span class="lvl ${d.level}">${d.level}</span>`,d.keys.map(k=>link(LOGS.find(l=>l.k===k))).join('<br>')]))}`,
+hunt:()=>`<h1>Hunt explorer</h1><p class="lede">Select a use case to trace its required collection categories and known evidence limits.</p><label>Use case <select id="huntSelect" class="btn">${DETS.map(d=>`<option value="${d.id}">${d.id} · ${esc(d.title)}</option>`).join('')}</select></label><div id="huntResult"></div>`,
+triage:()=>`<h1>Triage a log line</h1><p class="lede">Local-only illustrative parser for traditional and IETF sample envelopes. Paste one event. No text is sent to a server.</p>${note('Category matches suggest evidence sources, not confirmed detections. Unsupported envelopes remain unparsed; this is not a complete Junos parser.')}<label for="tin">Raw event</label><textarea id="tin" spellcheck="false"></textarea><div class="row"><button class="btn pri" id="parse">Inspect event</button>${SAMPLES.map((s,i)=>`<button class="btn sm" data-example="${i}">${s.name}</button>`).join('')}</div><div id="result" aria-live="polite"></div>`,
+enable:()=>`<h1>Enable logging</h1><p class="lede">A reviewable starting point for both device roles. Merge with existing settings; do not replace production configuration blindly.</p>${code('Shared Junos system syslog baseline',CONFIG)}${note('Example source-address must exist on the device and have a route to the collector. Management routing instances, IPv6, dual REs and Evolved nodes need platform-specific validation. Structured-data support must be checked on the deployed release.')}<h2>Conditional firewall collection</h2>${code('Destination only — does not enable filter packet logging','set system syslog host 192.0.2.50 firewall any\nset system syslog file firewall firewall any')}<p>For packet-header events, separately configure a supported filter term with a syslog action and an explicit forwarding decision. Review traffic volume and hardware support first. The log action alone populates a local buffer.</p><h2>Router additions</h2><p>Verify BGP, IGP/BFD and MPLS event delivery for configured services. Use short-lived protocol traceoptions only when normal events lack required detail. Add flow/BMP/telemetry collection as separate projects where needed.</p><h2>Switch additions</h2><p>Enable and validate the actual STP, MAC protection, storm control, 802.1X and DHCP security controls. Syslog selection alone does not turn them on. Use the exact ELS/non-ELS guide for the model and verify whether an event or only a counter is available.</p><h2>Acceptance checklist</h2><ol class="plain"><li>Record model, OS release, role, site, hostname/node, source address and time synchronization.</li><li>Review candidate configuration and run commit check; apply through approved change control.</li><li>Generate a test login failure and a benign command; make a documented test commit where appropriate.</li><li>Confirm raw event arrival, original hostname, event time, message ID and user/source fields.</li><li>Validate a role-specific event in a lab or maintenance window; avoid disruptive testing on live links.</li><li>Test collector restart, event gaps, rotation and failover; record transport loss limitations.</li><li>Establish retention, access control, daily source health checks and detection ownership.</li></ol>`,
+parsing:()=>`<h1>SIEM parsing</h1><p class="lede">Splunk-oriented examples. The name <code>juniper:junos:syslog</code> is a proposed custom sourcetype, not a claim about an installed add-on.</p><h2>Ingestion contract</h2>${table(['Keep','Purpose'],[['Original _raw','Preserve headers, structured data, message and provenance'],['_time and receive time','Compare event time with ingestion delay'],['host / collector_host','Keep device and relay identities separate'],['event_id, process, pid','Match event-specific schemas; optional fields remain null'],['user, src_ip, interface, peer_ip','Extract only from supported message patterns'],['model, os_version, device_role, site','Enrich from asset inventory'],['event_category / outcome','Normalize with a tested event mapping, not a universal text guess']].map(r=>r.map(esc)))}${code('Search-time extraction example — traditional BGP events only',String.raw`index=network sourcetype="juniper:junos:syslog" "RPD_BGP_NEIGHBOR_STATE_CHANGED"
+| rex field=_raw "BGP peer (?<peer_ip>\S+)"
+| rex field=_raw "External AS (?<peer_as>\d+)"
+| rex field=_raw "changed state from (?<old_state>\w+) to (?<new_state>\w+)"
+| stats count values(old_state) as previous values(new_state) as current by host peer_ip peer_as`)}${code('Collection freshness — reports only devices with events in the time window',String.raw`index=network sourcetype="juniper:junos:syslog" earliest=-24h
+| stats latest(_time) as last_event max(_indextime) as last_ingest by host
+| eval event_age_seconds=now()-last_event, ingest_age_seconds=now()-last_ingest`)}${note('Join freshness results to expected device inventory to detect devices with zero events. Use a syslog-aware parser for IETF structured data, including escaped values; the demo parser is not production extraction logic.')}<h2>Validation fixtures</h2><p>Test traditional and structured headers, IPv4/IPv6, absent PID/MSGID, multiword reasons, Evolved node identity, timezone/year rollover, relayed headers, long messages and repeated-message summaries. Compare extracted values with raw samples and leave unknown outcomes unknown.</p>`,
+hardening:()=>`<h1>Hardening and operations</h1>${table(['Control','Implementation intent'],[['Management access','Limit management sources; use individual accounts and approved AAA. Audit service and user changes.'],['Log transport','Use a restricted management path; verify native transport support before selecting it. Monitor relay queues and loss.'],['Evidence preservation','Centralize logs, protect access and retain configuration archives. Separate collectors from device administrators where practical.'],['Time and identity','Use approved time sources and preserve node/RE/member identity. Verify inventory mapping after failover.'],['Volume and diagnostics','Size storage and retention from measured rates. Avoid broad debug and packet logging in the baseline.'],['Sensitive content','Limit access to command logs, traces and support bundles; they can contain sensitive configuration.'],['Coverage review','Re-test collection after software upgrades, role changes or replacement hardware. Maintain an explicit unsupported/not-enabled list.']].map(r=>r.map(esc)))}`,
+about:()=>`<h1>About and sources</h1><p class="lede">Standalone HTML specification adapted from the supplied template. Reference review: 10 November 2026.</p><p>All sample log lines are synthetic illustrations. Event families without exact samples are intentional validation targets, not an assertion that every model emits identical messages. Configuration, SIEM field names and detection thresholds are proposed implementation choices.</p><h2>Primary references</h2>${SOURCES.map(([t,u],i)=>`<p>[${i+1}] <a href="${u}" target="_blank" rel="noopener">${esc(t)}</a></p>`).join('')}<h2>Reference mapping</h2>${table(['Coverage','References'],[['Facilities, severity, formats and OS Evolved','1–2'],['Exact message identifiers and release checks','3'],['Firewall syslog versus memory buffer','4–5'],['802.1X held state','6'],['MAC/storm L2 error logging release dependency','7'],['DHCP snooping, DAI and port protection','8–9']])}<p>The page operates offline, including search, filtering, triage and CSV export. Reference links require internet access. No external fonts, scripts or analytics are loaded.</p>`
+};
+function render(){const h=location.hash.slice(1)||'overview';let body,title;
+if(h.startsWith('spec-')){let l=LOGS.find(l=>l.k===h.slice(5));body=l?specDetail(l):PAGES.spec();title=l?.name||'Specification';}
+else if(h.startsWith('det-')){let d=DETS.find(d=>d.id===h.slice(4));body=d?detection(d):PAGES.detections();title=d?.title||'Detections';}
+else if(h.startsWith('schemas')){body=schema(h.slice(8));title='Schema explorer';}
+else{body=(PAGES[h]||PAGES.overview)();title=NAV.flatMap(g=>g[1]).find(i=>i[0]===h)?.[1]||'Overview';}
+$('#main').innerHTML=`<div class="page">${body}</div>`;document.title=title+' · Juniper Log Specification';document.querySelectorAll('[data-nav]').forEach(a=>a.setAttribute('aria-current',h===a.dataset.nav||h.startsWith(a.dataset.nav+'-')||a.dataset.nav==='detections'&&h.startsWith('det-')?'page':'false'));
+if($('#rows')){specRows();$('#scope').onchange=e=>{filterScope=e.target.value;specRows()};$('#filter').oninput=e=>{filterText=e.target.value;specRows()};$('#export').onclick=exportCSV;}
+if($('#huntSelect')){const update=()=>{const d=DETS.find(x=>x.id===$('#huntSelect').value);$('#huntResult').innerHTML=`<h2>${esc(d.title)}</h2><p>${esc(d.logic)}</p>${table(['Evidence','Collection','Limit'],d.keys.map(k=>{let l=LOGS.find(l=>l.k===k);return[link(l),esc(l.source),esc(l.condition)]}))}`};$('#huntSelect').onchange=update;update();}
+if($('#parse'))$('#parse').onclick=triage;
+closeMenu();scrollTo(0,0);$('#main').focus({preventScroll:true});}
+function triage(){const s=$('#tin').value.trim();if(!s){$('#result').innerHTML=note('Paste an event or select a sample.');return}if(s.split('\n').length>1){$('#result').innerHTML=note('Please inspect one event at a time.');return}const f=parse(s),ks=matches(s);$('#result').innerHTML='<h2>Extracted fields</h2>'+(!f.format?note('Unrecognized header. Any values below are partial body matches; validate the original format.'):'')+table(['Field','Value'],Object.entries(f).map(r=>r.map(esc)))+'<h2>Candidate evidence categories</h2>'+(ks.length?ks.map(k=>`<p>${link(LOGS.find(l=>l.k===k))}</p>`).join(''):'<p>No category match. This does not mean the event is harmless or invalid.</p>')+note('No incident verdict is produced. Use the detection catalogue with baselines, counts and corroborating evidence.');}
+function exportCSV(){const keys=['id','name','scope','source','facility','events','fields','condition','verify','detect'];const quote=s=>'"'+String(s??'').replace(/"/g,'""')+'"';const text=[keys,...filtered().map(l=>keys.map(k=>l[k]))].map(r=>r.map(quote).join(',')).join('\r\n');const u=URL.createObjectURL(new Blob(['\ufeff'+text],{type:'text/csv;charset=utf-8'}));let a=document.createElement('a');a.href=u;a.download='juniper-log-specification.csv';a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
+$('#side').innerHTML=NAV.map(([t,a])=>`<h5>${t}</h5>${a.map(([k,n])=>`<a href="#${k}" data-nav="${k}">${n}</a>`).join('')}`).join('')+'<p class="poc">Implementation reference. Validate against your models and Junos releases.</p>';
+function closeMenu(){$('#side').classList.remove('open');$('#scrim').hidden=true;$('#menu').setAttribute('aria-expanded','false');}
+$('#menu').onclick=()=>{let on=$('#side').classList.toggle('open');$('#scrim').hidden=!on;$('#menu').setAttribute('aria-expanded',String(on))};$('#scrim').onclick=closeMenu;
+function themeLabel(){$('#theme').textContent=document.documentElement.dataset.theme==='dark'?'Light mode':'Dark mode'}
+try{document.documentElement.dataset.theme=localStorage.getItem('juniper-spec-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch(e){}themeLabel();$('#theme').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('juniper-spec-theme',t)}catch(e){}themeLabel()};
+document.addEventListener('click',async e=>{const b=e.target.closest('[data-copy]');if(b){const pre=b.closest('.block').querySelector('pre');try{await navigator.clipboard.writeText(pre.textContent);b.textContent='Copied'}catch(e){let r=document.createRange();r.selectNodeContents(pre);let s=getSelection();s.removeAllRanges();s.addRange(r);b.textContent='Selected'}setTimeout(()=>b.textContent='Copy',1500)}const ex=e.target.closest('[data-example]');if(ex){$('#tin').value=SAMPLES[+ex.dataset.example].raw;triage();}if(!e.target.closest('.srch')){$('#sres').hidden=true;$('#q').setAttribute('aria-expanded','false')}});
+let searchIndex=-1;
+$('#q').oninput=()=>{const v=$('#q').value.toLowerCase().trim(),terms=v.split(/\s+/);const all=[...NAV.flatMap(g=>g[1].map(([k,t])=>({h:k,t,x:t}))),...LOGS.map(l=>({h:'spec-'+l.k,t:l.id+' · '+l.name,x:JSON.stringify(l)})),...DETS.map(d=>({h:'det-'+d.id,t:d.id+' · '+d.title,x:JSON.stringify(d)}))];const found=all.filter(i=>terms.every(t=>i.x.toLowerCase().includes(t))).slice(0,14);$('#sres').innerHTML=found.length?found.map(i=>`<a role="option" href="#${i.h}">${esc(i.t)}</a>`).join(''):'<div class="none">No matches.</div>';$('#sres').hidden=!v;$('#q').setAttribute('aria-expanded',String(!!v));searchIndex=-1;};
+$('#q').onkeydown=e=>{const a=[...$('#sres').querySelectorAll('a')];if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();if(a.length){searchIndex=(searchIndex+(e.key==='ArrowDown'?1:-1)+a.length)%a.length;a.forEach((v,i)=>v.classList.toggle('on',i===searchIndex));a[searchIndex].scrollIntoView({block:'nearest'})}}if(e.key==='Enter'&&a.length){e.preventDefault();a[Math.max(0,searchIndex)].click()}};
+$('#sres').onclick=()=>{$('#sres').hidden=true;$('#q').value='';$('#q').setAttribute('aria-expanded','false')};
+addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();$('#sres').hidden=true;$('#q').setAttribute('aria-expanded','false')}if(e.key==='/'&&!/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)){e.preventDefault();$('#q').focus()}});
+addEventListener('hashchange',render);render();
+
+</script>
+</body></html>
