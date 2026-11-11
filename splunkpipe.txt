@@ -1,0 +1,291 @@
+<#
+.SYNOPSIS
+  Tests data retrieval from Splunk Cloud for the Ingest Processor replay.
+  Read-only: nothing is sent to HEC.
+
+.DESCRIPTION
+  Runs these checks for one time window (-Start to -End, treated as UTC):
+    1. TCP connectivity to the REST API port (8089).
+    2. Token authentication (shows the user and roles).
+    3. Expected event count from a count search.
+    4. Export of the events using the same search the replay script uses.
+    5. Field checks (epoch, host, source, sourcetype, _raw), sourcetype
+       breakdown, time range, sample events.
+    6. Exported count vs expected count.
+    7. Preview of the HEC payload the replay script would build.
+
+  Token is read from $env:SPLUNK_TOKEN.
+
+  Use -OutFile to save the retrieved events to a file. -OutFormat controls
+  the layout:
+    Json  one JSON object per line: time, host, source, sourcetype, raw (default)
+    Hec   one HEC payload per line, exactly what the replay script would post
+    Raw   the original event text only
+    Csv   time, host, source, sourcetype, raw
+
+.EXAMPLE
+  $env:SPLUNK_TOKEN = '...'
+  .\Test-SplunkExport.ps1 -Stack mystack -Index myindex `
+      -Start '2026-11-01 00:00' -End '2026-11-01 00:15'
+
+.EXAMPLE
+  .\Test-SplunkExport.ps1 -Stack mystack -Index myindex `
+      -Start '2026-11-01 00:00' -End '2026-11-01 00:15' `
+      -OutFile .\events.csv -OutFormat Csv
+#>
+[CmdletBinding()]
+param(
+    [Parameter(Mandatory)][string]$Stack,
+    [Parameter(Mandatory)][string]$Index,
+    [Parameter(Mandatory)][datetime]$Start,
+    [Parameter(Mandatory)][datetime]$End,
+    [string]$Filter = '',
+    [int]$SampleCount = 3,
+    [string]$ReplaySourcetype = 'replay:azure',
+    [string]$ScratchIndex = 'replay_scratch',
+    [string]$WorkDir = (Join-Path $PWD 'replay-test'),
+    [string]$OutFile = '',
+    [ValidateSet('Json', 'Hec', 'Raw', 'Csv')][string]$OutFormat = 'Json',
+    [switch]$KeepExport
+)
+
+$ErrorActionPreference = 'Stop'
+$ProgressPreference = 'SilentlyContinue'
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
+if (-not $env:SPLUNK_TOKEN) { throw 'Set $env:SPLUNK_TOKEN first.' }
+if ($End -le $Start)        { throw '-End must be after -Start.' }
+
+$apiHost   = "$Stack.splunkcloud.com"
+$baseUrl   = "https://${apiHost}:8089"
+$exportUrl = "$baseUrl/services/search/v2/jobs/export"
+$headers   = @{ Authorization = "Bearer $($env:SPLUNK_TOKEN)" }
+$inv       = [cultureinfo]::InvariantCulture
+$results   = New-Object 'System.Collections.Generic.List[object]'
+New-Item -ItemType Directory -Force -Path $WorkDir | Out-Null
+
+function Add-Result([string]$Check, [bool]$Pass, [string]$Detail) {
+    $results.Add([pscustomobject]@{ Check = $Check; Result = $(if ($Pass) { 'PASS' } else { 'FAIL' }); Detail = $Detail })
+    $color = if ($Pass) { 'Green' } else { 'Red' }
+    Write-Host ("[{0}] {1} - {2}" -f $(if ($Pass) { 'PASS' } else { 'FAIL' }), $Check, $Detail) -ForegroundColor $color
+}
+
+function ConvertTo-Epoch([datetime]$dt) {
+    $utc = [datetime]::SpecifyKind($dt, [DateTimeKind]::Utc)
+    return ([DateTimeOffset]$utc).ToUnixTimeSeconds()
+}
+
+function Invoke-Export([string]$Search, [string]$Path) {
+    Invoke-WebRequest -Uri $exportUrl -Method Post -UseBasicParsing -Headers $headers `
+        -Body @{ search = $Search; output_mode = 'json' } -OutFile $Path
+}
+
+function Finish {
+    Write-Host ''
+    $results | Format-Table -AutoSize | Out-String | Write-Host
+    $failed = @($results | Where-Object Result -eq 'FAIL').Count
+    if ($failed -gt 0) { Write-Host "$failed check(s) failed." -ForegroundColor Red; exit 1 }
+    Write-Host 'All checks passed. Retrieval is ready for the replay script.' -ForegroundColor Green
+    exit 0
+}
+
+$earliest = ConvertTo-Epoch $Start
+$latest   = ConvertTo-Epoch $End
+Write-Host "Window: $($Start.ToString('u')) to $($End.ToString('u'))  (epoch $earliest to $latest)`n"
+
+# 1. Connectivity
+try {
+    $tcp = New-Object Net.Sockets.TcpClient
+    $ok  = $tcp.ConnectAsync($apiHost, 8089).Wait(10000) -and $tcp.Connected
+    $tcp.Close()
+    Add-Result 'Connectivity' $ok "${apiHost}:8089"
+} catch {
+    Add-Result 'Connectivity' $false $_.Exception.InnerException.Message
+    $ok = $false
+}
+if (-not $ok) {
+    Write-Host 'Port 8089 is unreachable. Check that your public IP is on the search-api allow list.' -ForegroundColor Yellow
+    Finish
+}
+
+# 2. Authentication
+try {
+    $ctx  = Invoke-RestMethod -Uri "$baseUrl/services/authentication/current-context?output_mode=json" -Headers $headers
+    $c    = $ctx.entry[0].content
+    Add-Result 'Authentication' $true "user=$($c.username) roles=$($c.roles -join ',')"
+} catch {
+    Add-Result 'Authentication' $false $_.Exception.Message
+    Finish
+}
+
+# 3. Expected count
+$expected = $null
+$countFile = Join-Path $WorkDir 'count.json'
+try {
+    $countSearch = if ($Filter) {
+        "search index=`"$Index`" earliest=$earliest latest=$latest $Filter | stats count"
+    } else {
+        "| tstats count where index=`"$Index`" earliest=$earliest latest=$latest"
+    }
+    Invoke-Export $countSearch $countFile
+    foreach ($line in [IO.File]::ReadLines($countFile)) {
+        if ([string]::IsNullOrWhiteSpace($line)) { continue }
+        $o = $line | ConvertFrom-Json
+        if ($o.preview -eq $true -or -not $o.result) { continue }
+        $expected = [long]$o.result.count
+    }
+    if ($null -eq $expected) { $expected = 0 }
+    Add-Result 'Count search' $true "$expected events expected"
+} catch {
+    Add-Result 'Count search' $false $_.Exception.Message
+} finally {
+    Remove-Item $countFile -Force -ErrorAction SilentlyContinue
+}
+
+# 4. Export
+$exportFile = Join-Path $WorkDir "$Index-$earliest.export.json"
+$search = "search index=`"$Index`" earliest=$earliest latest=$latest $Filter " +
+          '| eval epoch=_time | fields epoch host source sourcetype _raw'
+try {
+    $sw = [Diagnostics.Stopwatch]::StartNew()
+    Invoke-Export $search $exportFile
+    $sw.Stop()
+    $mb = [math]::Round((Get-Item $exportFile).Length / 1MB, 2)
+    Add-Result 'Export' $true "$mb MB in $([math]::Round($sw.Elapsed.TotalSeconds, 1))s"
+} catch {
+    Add-Result 'Export' $false $_.Exception.Message
+    Finish
+}
+
+# 5. Parse and inspect
+$required = 'epoch', 'host', 'source', 'sourcetype', '_raw'
+$missing  = @{}; foreach ($f in $required) { $missing[$f] = 0 }
+$bySourcetype = @{}
+$samples  = New-Object 'System.Collections.Generic.List[object]'
+$count = 0; $badLines = 0; $rawBytes = 0L; $maxEvent = 0
+$minEpoch = [double]::MaxValue; $maxEpoch = [double]::MinValue
+
+function ConvertTo-CsvField([string]$Value) { '"' + $Value.Replace('"', '""') + '"' }
+
+$writer = $null; $written = 0; $outPath = ''
+if ($OutFile) {
+    $outPath = $ExecutionContext.SessionState.Path.GetUnresolvedProviderPathFromPSPath($OutFile)
+    $outDir  = Split-Path $outPath -Parent
+    if ($outDir) { New-Item -ItemType Directory -Force -Path $outDir | Out-Null }
+    $writer = New-Object IO.StreamWriter($outPath, $false, (New-Object Text.UTF8Encoding($false)))
+    if ($OutFormat -eq 'Csv') { $writer.WriteLine('time,host,source,sourcetype,raw') }
+}
+
+try {
+foreach ($line in [IO.File]::ReadLines($exportFile)) {
+    if ([string]::IsNullOrWhiteSpace($line)) { continue }
+    try { $o = $line | ConvertFrom-Json } catch { $badLines++; continue }
+    if ($o.preview -eq $true -or -not $o.result) { continue }
+    $r = $o.result
+    $count++
+
+    foreach ($f in $required) { if ([string]::IsNullOrEmpty("$($r.$f)")) { $missing[$f]++ } }
+
+    $st = "$($r.sourcetype)"
+    if ($bySourcetype.ContainsKey($st)) { $bySourcetype[$st]++ } else { $bySourcetype[$st] = 1 }
+
+    $size = [Text.Encoding]::UTF8.GetByteCount("$($r._raw)")
+    $rawBytes += $size
+    if ($size -gt $maxEvent) { $maxEvent = $size }
+
+    $e = 0.0
+    if ([double]::TryParse("$($r.epoch)", [Globalization.NumberStyles]::Float, $inv, [ref]$e)) {
+        if ($e -lt $minEpoch) { $minEpoch = $e }
+        if ($e -gt $maxEpoch) { $maxEpoch = $e }
+    }
+    if ($samples.Count -lt $SampleCount) { $samples.Add($r) }
+
+    if ($writer) {
+        switch ($OutFormat) {
+            'Raw' { $writer.WriteLine("$($r._raw)") }
+            'Csv' {
+                $writer.WriteLine((@("$($r.epoch)", "$($r.host)", "$($r.source)", "$($r.sourcetype)", "$($r._raw)") |
+                    ForEach-Object { ConvertTo-CsvField $_ }) -join ',')
+            }
+            'Hec' {
+                $writer.WriteLine(([ordered]@{
+                    time       = "$($r.epoch)"
+                    host       = "$($r.host)"
+                    source     = "$($r.source)"
+                    sourcetype = $ReplaySourcetype
+                    index      = $ScratchIndex
+                    event      = "$($r._raw)"
+                    fields     = @{ orig_sourcetype = "$($r.sourcetype)" }
+                } | ConvertTo-Json -Compress -Depth 4))
+            }
+            default {
+                $writer.WriteLine(([ordered]@{
+                    time       = "$($r.epoch)"
+                    host       = "$($r.host)"
+                    source     = "$($r.source)"
+                    sourcetype = "$($r.sourcetype)"
+                    raw        = "$($r._raw)"
+                } | ConvertTo-Json -Compress))
+            }
+        }
+        $written++
+    }
+}
+} finally {
+    if ($writer) { $writer.Dispose() }
+}
+
+Add-Result 'Parse' ($badLines -eq 0) "$count events parsed, $badLines unparseable lines"
+if ($OutFile) {
+    $outMb = [math]::Round((Get-Item $outPath).Length / 1MB, 2)
+    Add-Result 'File export' ($written -eq $count) "$written events ($OutFormat, $outMb MB) -> $outPath"
+}
+
+$missingText = ($required | Where-Object { $missing[$_] -gt 0 } | ForEach-Object { "$_=$($missing[$_])" }) -join ', '
+Add-Result 'Required fields' (-not $missingText) $(if ($missingText) { "events missing: $missingText" } else { 'all present on every event' })
+
+if ($count -gt 0) {
+    $inRange = ($minEpoch -ge $earliest) -and ($maxEpoch -lt $latest)
+    $from = [DateTimeOffset]::FromUnixTimeMilliseconds([long]($minEpoch * 1000)).UtcDateTime.ToString('u')
+    $to   = [DateTimeOffset]::FromUnixTimeMilliseconds([long]($maxEpoch * 1000)).UtcDateTime.ToString('u')
+    Add-Result 'Time range' $inRange "$from to $to"
+    Add-Result 'Event size' ($maxEvent -lt 800000) "largest event $maxEvent bytes, total raw $([math]::Round($rawBytes / 1MB, 2)) MB"
+}
+
+# 6. Count comparison
+if ($null -ne $expected) {
+    Add-Result 'Count match' ($count -eq $expected) "exported=$count expected=$expected"
+}
+if ($count -eq 0) { Write-Host 'No events in this window. Try a window you know has data.' -ForegroundColor Yellow }
+
+# Details
+if ($count -gt 0) {
+    Write-Host "`nSourcetypes:"
+    $bySourcetype.GetEnumerator() | Sort-Object Value -Descending |
+        ForEach-Object { [pscustomobject]@{ Sourcetype = $_.Key; Events = $_.Value } } |
+        Format-Table -AutoSize | Out-String | Write-Host
+
+    Write-Host 'Sample events:'
+    foreach ($s in $samples) {
+        $raw = "$($s._raw)"; if ($raw.Length -gt 200) { $raw = $raw.Substring(0, 200) + '...' }
+        Write-Host "  time=$($s.epoch) host=$($s.host) source=$($s.source) sourcetype=$($s.sourcetype)"
+        Write-Host "  $raw`n"
+    }
+
+    # 7. HEC payload preview (not sent)
+    $s = $samples[0]
+    Write-Host 'HEC payload the replay script would build for the first event (not sent):'
+    [ordered]@{
+        time       = "$($s.epoch)"
+        host       = "$($s.host)"
+        source     = "$($s.source)"
+        sourcetype = $ReplaySourcetype
+        index      = $ScratchIndex
+        event      = "$($s._raw)"
+        fields     = @{ orig_sourcetype = "$($s.sourcetype)" }
+    } | ConvertTo-Json -Depth 4 | Write-Host
+}
+
+if ($KeepExport) { Write-Host "`nExport kept: $exportFile" } else { Remove-Item $exportFile -Force -ErrorAction SilentlyContinue }
+
+Finish
